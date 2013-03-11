@@ -5,6 +5,7 @@
 
 var express = require('express')
   , cons = require('consolidate')
+  , swig = require('swig')
   , routes = require('./routes')
   , user = require('./routes/user')
   , http = require('http')
@@ -12,7 +13,7 @@ var express = require('express')
 
 var app = express();
 
-cons.swig.init({ root: __dirname + '/views', allowErrors: true });
+swig.init({ root: __dirname + '/views', allowErrors: true });
 
 app.configure(function(){
   app.set('port', process.env.PORT || 8080);
