@@ -17,7 +17,7 @@ swig.init({ root: __dirname + '/views', allowErrors: true });
 
 app.configure(function(){
   app.set('port', process.env.PORT || 8080);
-  app.engine('html', swig);
+  app.engine('html', cons.swig);
   app.set('views', __dirname + '/views');
   app.set('view engine', 'html');
   app.set('view options', {layout: false});
