@@ -4,6 +4,7 @@
  */
 
 var express = require('express')
+  , cons = require('consolidate')
   , routes = require('./routes')
   , user = require('./routes/user')
   , http = require('http')
@@ -13,8 +14,10 @@ var app = express();
 
 app.configure(function(){
   app.set('port', process.env.PORT || 8080);
+  app.engine('html', swig);
   app.set('views', __dirname + '/views');
-  app.set('view engine', 'ejs');
+  app.set('view engine', 'html');
+  app.set('view options', {layout: false});
   app.use(express.favicon());
   app.use(express.logger('dev'));
   app.use(express.bodyParser());
