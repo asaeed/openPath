@@ -5,6 +5,7 @@
 
 var express = require('express')
   , cons = require('consolidate')
+  , swig = require('swig')
   , routes = require('./routes')
   , user = require('./routes/user')
   , http = require('http')
@@ -14,7 +15,7 @@ var app = express();
 
 app.configure(function(){
   app.set('port', process.env.PORT || 8080);
-  app.engine('html', cons.swig);
+  app.engine('html', swig);
   app.set('views', __dirname + '/views');
   app.set('view engine', 'html');
   app.set('view options', {layout: false});
