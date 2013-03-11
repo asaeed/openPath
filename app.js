@@ -34,8 +34,13 @@ app.configure('development', function(){
 });
 
 app.get('/', routes.index);
-app.get('/users', user.list);
+
+app.get('/users', user.findAll);
+app.get('/users/:id', user.findById);
+app.post('/users', user.addItem);
+app.put('/users/:id', user.updateItem);
+app.delete('/users/:id', user.deleteItem);
 
 http.createServer(app).listen(app.get('port'), function(){
-  console.log("Express server listening on port " + app.get('port'));
+  console.log("Server listening on port " + app.get('port'));
 });
