@@ -27,10 +27,16 @@ app.configure(function(){
   app.use(express.methodOverride());
   app.use(app.router);
   app.use(express.static(path.join(__dirname, 'public')));
+  app.use(express.cookieParser());
+  app.use(express.session({secret: "mozillapersona"}));
 });
 
 app.configure('development', function(){
   app.use(express.errorHandler());
+});
+
+require("../index.js")(app, {
+  audience: "http://localhost:3000"
 });
 
 app.get('/', routes.index);
