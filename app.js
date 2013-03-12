@@ -35,7 +35,7 @@ app.configure('development', function(){
   app.use(express.errorHandler());
 });
 
-require("../index.js")(app, {
+require("express-persona")(app, {
   audience: "http://localhost:3000"
 });
 
