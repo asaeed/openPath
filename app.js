@@ -29,6 +29,7 @@ app.configure(function(){
   app.use(express.static(path.join(__dirname, 'public')));
   app.use(express.cookieParser());
   app.use(express.session({secret: "mozillapersona"}));
+  app.use(express.csrf());
 });
 
 app.configure('development', function(){
@@ -36,7 +37,7 @@ app.configure('development', function(){
 });
 
 function requireLogin(req, res, next) {
-  if (req.session.loggedIn) {
+  if (req.session.secret == "mozillapersona") {
     next(); // allow the next route to run
   } else {
     // require the user to log in
