@@ -11,6 +11,10 @@ var express = require('express')
   , http = require('http')
   , path = require('path');
 
+var persona = require("express-persona")(app, {
+  audience: "http://ec2-23-20-219-99.compute-1.amazonaws.com:8080",
+});
+
 var app = express();
 
 swig.init({ root: __dirname + '/views', allowErrors: true });
@@ -49,9 +53,7 @@ app.configure('development', function(){
 //           // just move on to the next route handler
 // });
 
-require("express-persona")(app, {
-  audience: "http://ec2-23-20-219-99.compute-1.amazonaws.com:8080",
-});
+
 
 app.get('/', routes.index);
 
