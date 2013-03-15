@@ -44,7 +44,7 @@ function requireLogin(req, res, next) {
     res.redirect("/"); // or render a form, etc.
   }
 }
-app.all("/*", requireLogin, function(req, res, next) {
+app.all("/users/*", requireLogin, function(req, res, next) {
   next(); // if the middleware allowed us to get here,
           // just move on to the next route handler
 });
