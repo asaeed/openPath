@@ -29,7 +29,7 @@ app.configure(function(){
   app.use(express.static(path.join(__dirname, 'public')));
   app.use(express.cookieParser());
   app.use(express.session({secret: "mozillapersona"}));
-  //app.use(express.csrf());
+  app.use(express.csrf());
 });
 
 app.configure('development', function(){
