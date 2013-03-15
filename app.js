@@ -35,8 +35,21 @@ app.configure('development', function(){
   app.use(express.errorHandler());
 });
 
+function requireLogin(req, res, next) {
+  if (req.session.loggedIn) {
+    next(); // allow the next route to run
+  } else {
+    // require the user to log in
+    res.redirect("/"); // or render a form, etc.
+  }
+}
+app.all("/*", requireLogin, function(req, res, next) {
+  next(); // if the middleware allowed us to get here,
+          // just move on to the next route handler
+});
+
 require("express-persona")(app, {
-  audience: "http://ec2-23-20-219-99.compute-1.amazonaws.com:8080"
+  audience: "http://ec2-23-20-219-99.compute-1.amazonaws.com:8080",
 });
 
 app.get('/', routes.index);
