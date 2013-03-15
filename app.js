@@ -50,7 +50,7 @@ app.configure('development', function(){
 // });
 
 require("express-persona")(app, {
-  audience: "http://ec2-23-20-219-99.compute-1.amazonaws.com:8080/users",
+  audience: "http://ec2-23-20-219-99.compute-1.amazonaws.com:8080",
 });
 
 app.get('/', routes.index);
