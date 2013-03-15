@@ -53,6 +53,10 @@ require("express-persona")(app, {
   audience: "http://ec2-23-20-219-99.compute-1.amazonaws.com:8080",
 });
 
+require("express-persona")(app, {
+  audience: "http://ec2-23-20-219-99.compute-1.amazonaws.com:8080/users",
+});
+
 app.get('/', routes.index);
 
 app.get('/users', user.findAll);
