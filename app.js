@@ -11,11 +11,11 @@ var express = require('express')
   , http = require('http')
   , path = require('path');
 
+var app = express();
+
 var persona = require("express-persona")(app, {
   audience: "http://ec2-23-20-219-99.compute-1.amazonaws.com:8080",
 });
-
-var app = express();
 
 swig.init({ root: __dirname + '/views', allowErrors: true });
 
