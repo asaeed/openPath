@@ -37,7 +37,7 @@ app.configure('development', function(){
 });
 
 function requireLogin(req, res, next) {
-  if (req.session.secret == "mozillapersona") {
+  if (req.session && req.session.secret == "mozillapersona") {
     next(); // allow the next route to run
   } else {
     // require the user to log in
