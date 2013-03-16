@@ -13,10 +13,11 @@ exports.status = function authStatus(req, res) {
   }, function(e, r, body) {
     if(body && body.email) {
       req.session.email = body.email;
-      res.json({ success: true });
+      //res.json({ success: true });
     } else {
-      res.json({ success: false });
+      //res.json({ success: false });
     }
+    res.json(body);
   });
 };
 
