@@ -11,6 +11,7 @@ var express = require('express')
   //, auth = require('./routes/auth')
   , http = require('http')
   , path = require('path');
+  , request = require('request')
 
 var app = express();
 
