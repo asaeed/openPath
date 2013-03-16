@@ -2,7 +2,7 @@
 
 const
 qs = require('querystring'),
-md = require('node-markdown').Markdown,
+//md = require('node-markdown').Markdown,
 utils = require('../lib/utils'),
 request = require('request'),
 VERIFIER_HOST = 'verifier.login.persona.org',
@@ -26,7 +26,7 @@ exports.status = function authStatus(req, res) {
 exports.logout = function authLogout(req, res) {
   req.session.destroy();
   var content = {
-    md: md,
+    //md: md,
     content: utils.getContent('loggedout')
   };
   res.render('loggedout', content, function(err, html) {
@@ -51,7 +51,7 @@ exports.login = function authLogin(req, res) {
     } else {
       // Render text to explain how this works
       var content = {
-        md: md,
+        //md: md,
         response: JSON.stringify(result, null, 2),
         assertion: JSON.stringify(utils.unpackAssertion(req.body.assertion), null, 2),
         content: utils.getContent('loggedin')
