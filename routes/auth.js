@@ -21,6 +21,7 @@ exports.status = function authStatus(req, res) {
 
 
 exports.logout = function authLogout(req, res) {
+  // this still allows reloading prior page loads
   //req.session = null;
   req.session.destroy();
   res.redirect('/');
