@@ -10,8 +10,7 @@ var express = require('express')
   , user = require('./routes/user')
   //, auth = require('./routes/auth')
   , http = require('http')
-  , path = require('path')
-  , request = require('request');
+  , path = require('path');
 
 var app = express();
 
@@ -39,6 +38,8 @@ app.configure(function(){
 app.configure('development', function(){
   app.use(express.errorHandler());
 });
+
+var request = require('request');
 
 
 // var persona = require("express-persona")(app, {
