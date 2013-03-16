@@ -84,6 +84,9 @@ var request = require('request');
 // app.post('/auth/login', auth.login);
 // app.post('/auth/logout', auth.logout);
 
+app.get('/', routes.index);
+
+
 app.get('/logout', function(req, res) {
   req.session = null;
   res.redirect('/');
@@ -106,7 +109,7 @@ app.post('/auth', function(req, res) {
   });
 });
 
-app.get('/', routes.index);
+
 
 app.get('/users', user.findAll);
 app.get('/users/:id', user.findById);
