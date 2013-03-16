@@ -1,5 +1,5 @@
 
-var request = require('request'),
+var request = require('request');
 
 exports.logout = function authLogout(req, res) {
   req.session = null;
