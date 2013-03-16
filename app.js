@@ -10,8 +10,10 @@ var express = require('express')
   , user = require('./routes/user')
   //, auth = require('./routes/auth')
   , http = require('http')
-  , path = require('path');
-
+  , path = require('path')
+  , request = require('request');
+  , store = new express.session.MemoryStore;
+  
 var app = express();
 
 swig.init({ root: __dirname + '/views', allowErrors: true });
@@ -27,9 +29,9 @@ app.configure(function(){
   app.use(express.bodyParser());
   app.use(express.methodOverride());
   app.use(app.router);
-  app.use(express.static(path.join(__dirname, 'public')));
+  app.use(express.static(__dirname + '/public'));
   app.use(express.cookieParser());
-  app.use(express.session({secret: "coldhands"}));
+  app.use(express.session({secret: "coldhands", store: store}));
   //app.use(express.session({key: 'myapp', cookie: {maxAge: 60000}}));
   //app.use(express.cookieSession({secret: "meh"}));
   //app.use(express.csrf());
@@ -39,7 +41,6 @@ app.configure('development', function(){
   app.use(express.errorHandler());
 });
 
-var request = require('request');
 
 
 // var persona = require("express-persona")(app, {
