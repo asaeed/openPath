@@ -15,6 +15,10 @@ var express = require('express')
 
 var app = express();
 
+//
+// CONFIG
+//
+
 swig.init({ root: __dirname + '/views', allowErrors: true });
 
 app.configure(function(){
@@ -38,6 +42,24 @@ app.configure('development', function(){
   app.use(express.errorHandler());
 });
 
+//
+// ROUTES
+//
+
+app.get('/', routes.index);
+
+app.post('/auth/status', auth.status);
+app.get('/auth/logout', auth.logout);
+
+app.get('/users', user.findAll);
+app.get('/users/:id', user.findById);
+app.post('/users', user.addItem);
+app.put('/users/:id', user.updateItem);
+app.delete('/users/:id', user.deleteItem);
+
+//
+// SECURE
+//
 
 function requireLogin(req, res, next) {
   if (req.session.email == "asaeed@gmail.com") {
@@ -47,20 +69,8 @@ function requireLogin(req, res, next) {
   }
 }
 
-// app.all("/users", requireLogin, function(req, res, next) {
-//   next();
-// });
-
-app.get('/', routes.index);
-
-app.post('/auth/status', auth.status);
-app.get('/auth/logout', auth.logout);
-
-app.get('/users', requireLogin, user.findAll);
-app.get('/users/:id', requireLogin, user.findById);
-app.post('/users', requireLogin, user.addItem);
-app.put('/users/:id', requireLogin, user.updateItem);
-app.delete('/users/:id', requireLogin, user.deleteItem);
+app.all("/users", requireLogin, function(req, res, next) {next();});
+app.all("/users/*", requireLogin, function(req, res, next) {next();});
 
 http.createServer(app).listen(app.get('port'), function(){
   console.log("Server listening on port " + app.get('port'));
