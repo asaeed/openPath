@@ -1,8 +1,6 @@
 
 var request = require('request');
 
-
-
 exports.status = function authStatus(req, res) {
   request.post({
     url: 'https://login.persona.org/verify',
@@ -23,6 +21,7 @@ exports.status = function authStatus(req, res) {
 
 
 exports.logout = function authLogout(req, res) {
-  req.session = null;
+  //req.session = null;
+  req.session.destroy();
   res.redirect('/');
 };
