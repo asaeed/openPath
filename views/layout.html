@@ -32,7 +32,7 @@
         },
         onlogout: function() {
           var xhr = new XMLHttpRequest();
-          xhr.open("POST", "/auth/logout", true);
+          xhr.open("GET", "/auth/logout", true);
           xhr.addEventListener("loadend", function(e) {
             document.querySelector("#user").textContent = "logged out";
             document.querySelector("#login").disabled = "";
