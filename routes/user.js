@@ -1,13 +1,4 @@
 
-/*
- * GET users listing.
- */
-
-//exports.list = function(req, res){
-//  res.send("respond with a resource");
-//};
-
-
 var mongo = require('mongodb');
 var http = require('http');
 

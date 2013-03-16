@@ -125,13 +125,13 @@
 	  navigator.id.watch({
         onlogin: function(assertion) {
           var xhr = new XMLHttpRequest();
-          xhr.open("POST", "/auth", true);
+          xhr.open("POST", "/auth/status", true);
           xhr.setRequestHeader("Content-Type", "application/json");
           xhr.addEventListener("loadend", function(e) {
 
 
           	console.log(this.responseText)
-          	
+
             var data = JSON.parse(this.responseText);
             if (data && data.status === "okay") {
               document.querySelector("#user").textContent = data.email;
@@ -146,7 +146,7 @@
         },
         onlogout: function() {
           var xhr = new XMLHttpRequest();
-          xhr.open("POST", "/logout", true);
+          xhr.open("POST", "/auth/logout", true);
           xhr.addEventListener("loadend", function(e) {
             document.querySelector("#user").textContent = "logged out";
             document.querySelector("#login").disabled = "";

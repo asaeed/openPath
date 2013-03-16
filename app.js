@@ -8,7 +8,7 @@ var express = require('express')
   , swig = require('swig')
   , routes = require('./routes')
   , user = require('./routes/user')
-  //, auth = require('./routes/auth')
+  , auth = require('./routes/auth')
   , http = require('http')
   , path = require('path')
   , request = require('request');
@@ -38,76 +38,10 @@ app.configure('development', function(){
   app.use(express.errorHandler());
 });
 
-
-
-// var persona = require("express-persona")(app, {
-//   audience: "http://ec2-23-20-219-99.compute-1.amazonaws.com:8080",
-// });
-// function requireLogin(req, res, next) {
-
-//   var options = {
-//     host: 'localhost',
-//     path: '/persona/verify',
-//     //port: 8080,
-//     method: 'POST'
-//   };
-
-//   callback = function(response) {
-//     var str = '';
-//     //another chunk of data has been recieved, so append it to `str`
-//     response.on('data', function (chunk) {
-//       str += chunk;
-//     });
-//     //the whole response has been recieved, so we just print it out here
-//     response.on('end', function () {
-//       console.log(str);
-//     });
-//   }
-//   http.request(options, callback).end();
-
-//   if (req.session && req.session.secret == "mozillapersona") {
-//     next(); // allow the next route to run
-//   } else {
-//     // require the user to log in
-//     res.redirect("/"); // or render a form, etc.
-//   }
-// }
-// app.all("/users", requireLogin, function(req, res, next) {
-//   next(); // if the middleware allowed us to get here,
-//           // just move on to the next route handler
-// });
-
-
-// app.get('/auth/status', auth.status);
-// app.post('/auth/login', auth.login);
-// app.post('/auth/logout', auth.logout);
+app.get('/auth/status', auth.status);
+app.post('/auth/logout', auth.logout);
 
 app.get('/', routes.index);
-
-
-app.get('/logout', function(req, res) {
-  req.session = null;
-  res.redirect('/');
-});
-
-app.post('/auth', function(req, res) {
-  request.post({
-    url: 'https://login.persona.org/verify',
-    json: {
-      assertion: req.body.assertion,
-      audience: "http://ec2-23-20-219-99.compute-1.amazonaws.com:8080"
-    }
-  }, function(e, r, body) {
-    if(body && body.email) {
-      req.session.email = body.email;
-      res.json({ success: true });
-    } else {
-      res.json({ success: false });
-    }
-  });
-});
-
-
 
 app.get('/users', user.findAll);
 app.get('/users/:id', user.findById);
