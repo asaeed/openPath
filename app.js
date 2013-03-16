@@ -43,21 +43,6 @@ app.configure('development', function(){
 });
 
 //
-// ROUTES
-//
-
-app.get('/', routes.index);
-
-app.post('/auth/status', auth.status);
-app.get('/auth/logout', auth.logout);
-
-app.get('/users', user.findAll);
-app.get('/users/:id', user.findById);
-app.post('/users', user.addItem);
-app.put('/users/:id', user.updateItem);
-app.delete('/users/:id', user.deleteItem);
-
-//
 // SECURE
 //
 
@@ -71,6 +56,21 @@ function requireLogin(req, res, next) {
 
 app.all("/users", requireLogin, function(req, res, next) {next();});
 app.all("/users/*", requireLogin, function(req, res, next) {next();});
+
+//
+// ROUTES
+//
+
+app.get('/', routes.index);
+
+app.post('/auth/status', auth.status);
+app.get('/auth/logout', auth.logout);
+
+app.get('/users', user.findAll);
+app.get('/users/:id', user.findById);
+app.post('/users', user.addItem);
+app.put('/users/:id', user.updateItem);
+app.delete('/users/:id', user.deleteItem);
 
 http.createServer(app).listen(app.get('port'), function(){
   console.log("Server listening on port " + app.get('port'));
