@@ -128,6 +128,10 @@
           xhr.open("POST", "/auth", true);
           xhr.setRequestHeader("Content-Type", "application/json");
           xhr.addEventListener("loadend", function(e) {
+
+
+          	console.log(this.responseText)
+          	
             var data = JSON.parse(this.responseText);
             if (data && data.status === "okay") {
               document.querySelector("#user").textContent = data.email;
