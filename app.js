@@ -47,7 +47,7 @@ function requireLogin(req, res, next) {
   }
 }
 
-app.all("/users*", requireLogin, function(req, res, next) {
+app.all("/users", requireLogin, function(req, res, next) {
   next();
 });
 
