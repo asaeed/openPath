@@ -47,6 +47,7 @@ app.configure('development', function(){
 //
 
 function requireLogin(req, res, next) {
+  auth.status(req, res);
   if (req.session.email == "asaeed@gmail.com") {
     next();
   } else {

@@ -13,6 +13,7 @@ exports.status = function authStatus(req, res) {
       req.session.email = body.email;
       //res.json({ success: true });
     } else {
+      req.session.destroy();
       //res.json({ success: false });
     }
     res.json(body);
@@ -21,8 +22,7 @@ exports.status = function authStatus(req, res) {
 
 
 exports.logout = function authLogout(req, res) {
-  // this still allows reloading prior page loads
-  //req.session = null;
+  //req.session = null;  // this still allows reloading prior page loads
   req.session.destroy();
   res.redirect('/');
 };
