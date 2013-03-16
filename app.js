@@ -10,8 +10,8 @@ var express = require('express')
   , user = require('./routes/user')
   //, auth = require('./routes/auth')
   , http = require('http')
-  , path = require('path');
-  , request = require('request')
+  , path = require('path')
+  , request = require('request');
 
 var app = express();
 
