@@ -4,7 +4,7 @@ var request = require('request');
 exports.logout = function authLogout(req, res) {
   req.session = null;
   res.redirect('/');
-});
+};
 
 exports.status = function authStatus(req, res) {
   request.post({
@@ -21,5 +21,5 @@ exports.status = function authStatus(req, res) {
       res.json({ success: false });
     }
   });
-});
+};
 
