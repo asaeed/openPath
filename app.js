@@ -43,7 +43,7 @@ app.configure('development', function(){
 });
 
 //
-// SECURE
+// Security Middleware (must go before Routes)
 //
 
 function requireLogin(req, res, next) {
