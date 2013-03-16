@@ -38,6 +38,19 @@ app.configure('development', function(){
   app.use(express.errorHandler());
 });
 
+
+function requireLogin(req, res, next) {
+  if (req.session.email) {
+    next();
+  } else {
+    res.redirect("/");
+  }
+}
+
+app.all("/users/*", requireLogin, function(req, res, next) {
+  next();
+});
+
 app.get('/', routes.index);
 
 app.post('/auth/status', auth.status);
