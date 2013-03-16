@@ -170,20 +170,12 @@
   {% endblock %}
 </head>
 <body>
-<!--
-  <ul class="persona">
-    <li class="loggedout">
-      <a href='#', id='login'>Login</a>
-    </li>
-    <li class="loggedin">
-      Logged in as <span class="email"></span>
-      <a href='#' id="logout">Logout</a>
-     </li>
-     <li class="loading">
-       Loading ...
-     </li>
-  </ul>
--->
+
+  <h1>Hello, openPath</h1>
+  <p>Current user is: <span id="user">logged out</span></p>
+  <button id="login">Login</button>
+  <button id="logout" disabled="disabled">Logout</button>
+
   {% block content %}{% endblock %}
 </body>
 </html>
