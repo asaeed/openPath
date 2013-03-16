@@ -3,7 +3,7 @@
 const
 qs = require('querystring'),
 //md = require('node-markdown').Markdown,
-utils = require('../lib/utils'),
+//utils = require('../lib/utils'),
 request = require('request'),
 VERIFIER_HOST = 'verifier.login.persona.org',
 VERIFIER_PATH = '/verify';
@@ -27,7 +27,7 @@ exports.logout = function authLogout(req, res) {
   req.session.destroy();
   var content = {
     //md: md,
-    content: utils.getContent('loggedout')
+    //content: utils.getContent('loggedout')
   };
   res.render('loggedout', content, function(err, html) {
     res.send({status: "okay", html: html});
@@ -54,7 +54,7 @@ exports.login = function authLogin(req, res) {
         //md: md,
         response: JSON.stringify(result, null, 2),
         assertion: JSON.stringify(utils.unpackAssertion(req.body.assertion), null, 2),
-        content: utils.getContent('loggedin')
+        //content: utils.getContent('loggedin')
       };
       res.render('loggedin', content, function(err, html) {
         req.session.loggedInUser = result.email;
