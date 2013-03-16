@@ -8,7 +8,7 @@ var express = require('express')
   , swig = require('swig')
   , routes = require('./routes')
   , user = require('./routes/user')
-  , auth = require('./routes/auth')
+  //, auth = require('./routes/auth')
   , http = require('http')
   , path = require('path');
 
@@ -29,8 +29,8 @@ app.configure(function(){
   app.use(app.router);
   app.use(express.static(path.join(__dirname, 'public')));
   app.use(express.cookieParser());
-  app.use(express.session({key: 'myapp', cookie: {maxAge: 60000}}));
-  //app.use(express.session({secret: "mozillapersona"}));
+  //app.use(express.session({key: 'myapp', cookie: {maxAge: 60000}}));
+  app.use(express.session({secret: "coldhands"}));
   app.use(express.csrf());
 });
 
@@ -77,9 +77,31 @@ app.configure('development', function(){
 // });
 
 
-app.get('/auth/status', auth.status);
-app.post('/auth/login', auth.login);
-app.post('/auth/logout', auth.logout);
+// app.get('/auth/status', auth.status);
+// app.post('/auth/login', auth.login);
+// app.post('/auth/logout', auth.logout);
+
+app.get('/logout', function(req, res) {
+  req.session = null;
+  res.redirect('/');
+});
+
+app.post('/auth', function(req, res) {
+  request.post({
+    url: 'https://login.persona.org/verify',
+    json: {
+      assertion: req.body.assertion,
+      audience: "http://ec2-23-20-219-99.compute-1.amazonaws.com:8080"
+    }
+  }, function(e, r, body) {
+    if(body && body.email) {
+      req.session.email = body.email;
+      res.json({ success: true });
+    } else {
+      res.json({ success: false });
+    }
+  });
+});
 
 app.get('/', routes.index);
 

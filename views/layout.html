@@ -10,103 +10,103 @@
   <link rel="stylesheet" href="stylesheets/style.css">
 
   <script src="https://login.persona.org/include.js"></script>
+  <!--
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+-->
   <script>
 
 
-	(function() {
-	  var currentLoggedInUser = null;
+	// (function() {
+	//   var currentLoggedInUser = null;
 
-	  // function getCSRF() {
-	  //   return $('#_csrf').val();
-	  // }
+	//   // function getCSRF() {
+	//   //   return $('#_csrf').val();
+	//   // }
 
-	  function refreshAuthUI(data) {
-	    data = data || {};
-	    currentLoggedInUser = data.email;
-	    var html = data.html || "";
+	//   function refreshAuthUI(data) {
+	//     data = data || {};
+	//     currentLoggedInUser = data.email;
+	//     var html = data.html || "";
 
-	    if (html) $("#content").html(html);
-	    $("#persona li").hide();
-	    if (currentLoggedInUser) {
-	      $("#loggedin #email").text(currentLoggedInUser);
-	      $("#loggedin").show();
-	    } else {
-	      $("#loggedin #email").text("");
-	      $("#loggedout").show();
-	    }
-	    $("#login").removeAttr('disabled').css('opacity', '1');
-	  }
+	//     if (html) $("#content").html(html);
+	//     $("#persona li").hide();
+	//     if (currentLoggedInUser) {
+	//       $("#loggedin #email").text(currentLoggedInUser);
+	//       $("#loggedin").show();
+	//     } else {
+	//       $("#loggedin #email").text("");
+	//       $("#loggedout").show();
+	//     }
+	//     $("#login").removeAttr('disabled').css('opacity', '1');
+	//   }
 
-	  // Check the login status
-	  $.get('/auth/status', function(data) {
-	    console.log(JSON.stringify(data));
-	    navigator.id.watch({
-	      loggedInUser: currentLoggedInUser,
+	//   // Check the login status
+	//   $.get('/auth/status', function(data) {
+	//     console.log(JSON.stringify(data));
+	//     navigator.id.watch({
+	//       loggedInUser: currentLoggedInUser,
 
-	      onlogin: function(assertion) {
-	        console.log("onlogin called");
-	        $("#persona li").hide();
-	        $("#loading").text('Ok, hang on while I do some stuff ...').show();
-	        $.post(
-	          '/auth/login',
-	          {assertion: assertion, _csrf: getCSRF()},
-	          function success(data, status, xhr) {
-	            try {
-	              if (status !== 'success') throw data;
-	              if (data.status !== 'okay') throw data.reason;
-	              refreshAuthUI(data);
-	            } catch (err) {
-	              alert(err);
-	            }
-	          }
-	        );
-	      },
+	//       onlogin: function(assertion) {
+	//         console.log("onlogin called");
+	//         $("#persona li").hide();
+	//         $("#loading").text('Ok, hang on while I do some stuff ...').show();
+	//         $.post(
+	//           '/auth/login',
+	//           {assertion: assertion, _csrf: getCSRF()},
+	//           function success(data, status, xhr) {
+	//             try {
+	//               if (status !== 'success') throw data;
+	//               if (data.status !== 'okay') throw data.reason;
+	//               refreshAuthUI(data);
+	//             } catch (err) {
+	//               alert(err);
+	//             }
+	//           }
+	//         );
+	//       },
 
-	      onlogout: function() {
-	        console.log("onlogout called");
-	        $.post(
-	          '/auth/logout',
-	          {_csrf: getCSRF()},
-	          function success(data, status, xhr) {
-	            try {
-	              refreshAuthUI(data);
-	            } catch (err) {
-	              alert(err);
-	            }
-	          }
-	        );
-	      },
-	      onready: function() {
-	        console.log("onready called");
-	        refreshAuthUI(data);
-	      }
-	    });
+	//       onlogout: function() {
+	//         console.log("onlogout called");
+	//         $.post(
+	//           '/auth/logout',
+	//           {_csrf: getCSRF()},
+	//           function success(data, status, xhr) {
+	//             try {
+	//               refreshAuthUI(data);
+	//             } catch (err) {
+	//               alert(err);
+	//             }
+	//           }
+	//         );
+	//       },
+	//       onready: function() {
+	//         console.log("onready called");
+	//         refreshAuthUI(data);
+	//       }
+	//     });
 
-	    $("#login").click(function(evt) {
-	      console.log("login button clicked");
-	      evt.preventDefault();
+	//     $("#login").click(function(evt) {
+	//       console.log("login button clicked");
+	//       evt.preventDefault();
 
-	      $("#login").attr('disabled', 'true').css('opacity', 0.3);
-	      navigator.id.request({
-	        //termsOfService: '/tos.txt',
-	        //privacyPolicy: '/pp.txt',
-	        siteName: 'Persona Demonstration',
-	        oncancel: function() {
-	          $("#login").removeAttr('disabled').css('opacity', '1');
-	        }
-	      });
-	    });
+	//       $("#login").attr('disabled', 'true').css('opacity', 0.3);
+	//       navigator.id.request({
+	//         //termsOfService: '/tos.txt',
+	//         //privacyPolicy: '/pp.txt',
+	//         siteName: 'Persona Demonstration',
+	//         oncancel: function() {
+	//           $("#login").removeAttr('disabled').css('opacity', '1');
+	//         }
+	//       });
+	//     });
 
-	    $("#logout").click(function(evt) {
-	      console.log("logout button clicked");
-	      evt.preventDefault();
-	      navigator.id.logout();
-	    });
-	  });
-	})();
-
-
+	//     $("#logout").click(function(evt) {
+	//       console.log("logout button clicked");
+	//       evt.preventDefault();
+	//       navigator.id.logout();
+	//     });
+	//   });
+	// })();
 
 
 
@@ -120,51 +120,53 @@
 
 
 
-	  // navigator.id.watch({
-   //      onlogin: function(assertion) {
-   //        var xhr = new XMLHttpRequest();
-   //        xhr.open("POST", "/persona/verify", true);
-   //        xhr.setRequestHeader("Content-Type", "application/json");
-   //        xhr.addEventListener("loadend", function(e) {
-   //          var data = JSON.parse(this.responseText);
-   //          if (data && data.status === "okay") {
-   //            document.querySelector("#user").textContent = data.email;
-   //            document.querySelector("#login").disabled = "disabled";
-   //            document.querySelector("#logout").disabled = "";
-   //          }
-   //        }, false);
 
-   //        xhr.send(JSON.stringify({
-   //          assertion: assertion
-   //        }));
-   //      },
-   //      onlogout: function() {
-   //        var xhr = new XMLHttpRequest();
-   //        xhr.open("POST", "/persona/logout", true);
-   //        xhr.addEventListener("loadend", function(e) {
-   //          document.querySelector("#user").textContent = "logged out";
-   //          document.querySelector("#login").disabled = "";
-   //          document.querySelector("#logout").disabled = "disabled";
-   //        });
-   //        xhr.send();
-   //      }
-   //    });
 
-   //    document.addEventListener("DOMContentLoaded", function() {
-   //      document.querySelector("#login").addEventListener("click", function() {
-   //        navigator.id.request();
-   //      }, false);
+	  navigator.id.watch({
+        onlogin: function(assertion) {
+          var xhr = new XMLHttpRequest();
+          xhr.open("POST", "/auth", true);
+          xhr.setRequestHeader("Content-Type", "application/json");
+          xhr.addEventListener("loadend", function(e) {
+            var data = JSON.parse(this.responseText);
+            if (data && data.status === "okay") {
+              document.querySelector("#user").textContent = data.email;
+              document.querySelector("#login").disabled = "disabled";
+              document.querySelector("#logout").disabled = "";
+            }
+          }, false);
 
-   //      document.querySelector("#logout").addEventListener("click", function() {
-   //        navigator.id.logout();
-   //      }, false);
-   //    }, false);
+          xhr.send(JSON.stringify({
+            assertion: assertion
+          }));
+        },
+        onlogout: function() {
+          var xhr = new XMLHttpRequest();
+          xhr.open("POST", "/logout", true);
+          xhr.addEventListener("loadend", function(e) {
+            document.querySelector("#user").textContent = "logged out";
+            document.querySelector("#login").disabled = "";
+            document.querySelector("#logout").disabled = "disabled";
+          });
+          xhr.send();
+        }
+      });
+
+      document.addEventListener("DOMContentLoaded", function() {
+        document.querySelector("#login").addEventListener("click", function() {
+          navigator.id.request();
+        }, false);
+
+        document.querySelector("#logout").addEventListener("click", function() {
+          navigator.id.logout();
+        }, false);
+      }, false);
   </script>
 
   {% endblock %}
 </head>
 <body>
-
+<!--
   <ul class="persona">
     <li class="loggedout">
       <a href='#', id='login'>Login</a>
@@ -177,7 +179,7 @@
        Loading ...
      </li>
   </ul>
-
+-->
   {% block content %}{% endblock %}
 </body>
 </html>
