@@ -29,10 +29,10 @@ app.configure(function(){
   app.use(express.methodOverride());
   app.use(app.router);
   app.use(express.static(path.join(__dirname, 'public')));
-  //app.use(express.cookieParser());
+  app.use(express.cookieParser());
   //app.use(express.session({key: 'myapp', cookie: {maxAge: 60000}}));
-  //app.use(express.session({secret: "coldhands"}));
-  app.use(express.cookieSession({secret: "meh"}));
+  app.use(express.session({secret: "coldhands"}));
+  //app.use(express.cookieSession({secret: "meh"}));
   //app.use(express.csrf());
 });
 
