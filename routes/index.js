@@ -4,5 +4,5 @@
  */
 
 exports.index = function(req, res){
-  res.render('index', { title: 'openPath', email: /*req.session.email ||*/ null });
+  res.render('index', { title: 'openPath', email: req.session.email || null });
 };
