@@ -37,43 +37,47 @@ app.configure('development', function(){
 });
 
 
-var persona = require("express-persona")(app, {
-  audience: "http://ec2-23-20-219-99.compute-1.amazonaws.com:8080",
-});
-function requireLogin(req, res, next) {
+// var persona = require("express-persona")(app, {
+//   audience: "http://ec2-23-20-219-99.compute-1.amazonaws.com:8080",
+// });
+// function requireLogin(req, res, next) {
 
-  var options = {
-    host: 'localhost',
-    path: '/persona/verify',
-    port: 8080,
-    method: 'POST'
-  };
+//   var options = {
+//     host: 'localhost',
+//     path: '/persona/verify',
+//     //port: 8080,
+//     method: 'POST'
+//   };
 
-  callback = function(response) {
-    var str = '';
-    //another chunk of data has been recieved, so append it to `str`
-    response.on('data', function (chunk) {
-      str += chunk;
-    });
-    //the whole response has been recieved, so we just print it out here
-    response.on('end', function () {
-      console.log(str);
-    });
-  }
-  http.request(options, callback).end();
+//   callback = function(response) {
+//     var str = '';
+//     //another chunk of data has been recieved, so append it to `str`
+//     response.on('data', function (chunk) {
+//       str += chunk;
+//     });
+//     //the whole response has been recieved, so we just print it out here
+//     response.on('end', function () {
+//       console.log(str);
+//     });
+//   }
+//   http.request(options, callback).end();
 
-  if (req.session && req.session.secret == "mozillapersona") {
-    next(); // allow the next route to run
-  } else {
-    // require the user to log in
-    res.redirect("/"); // or render a form, etc.
-  }
-}
-app.all("/users", requireLogin, function(req, res, next) {
-  next(); // if the middleware allowed us to get here,
-          // just move on to the next route handler
-});
+//   if (req.session && req.session.secret == "mozillapersona") {
+//     next(); // allow the next route to run
+//   } else {
+//     // require the user to log in
+//     res.redirect("/"); // or render a form, etc.
+//   }
+// }
+// app.all("/users", requireLogin, function(req, res, next) {
+//   next(); // if the middleware allowed us to get here,
+//           // just move on to the next route handler
+// });
 
+
+app.get('/auth/status', auth.status);
+app.post('/auth/login', auth.login);
+app.post('/auth/logout', auth.logout);
 
 app.get('/', routes.index);
 
