@@ -11,10 +11,10 @@ var express = require('express')
   //, auth = require('./routes/auth')
   , http = require('http')
   , path = require('path')
-  , request = require('request')
-  , store = new express.session.MemoryStore;
+  , request = require('request');
 
-var app = express();
+var app = express()
+  , store = new express.session.MemoryStore;
 
 swig.init({ root: __dirname + '/views', allowErrors: true });
 
