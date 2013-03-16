@@ -29,7 +29,8 @@ app.configure(function(){
   app.use(app.router);
   app.use(express.static(path.join(__dirname, 'public')));
   app.use(express.cookieParser());
-  app.use(express.session({secret: "mozillapersona"}));
+  app.use(express.session({key: 'myapp', cookie: {maxAge: 60000}}));
+  //app.use(express.session({secret: "mozillapersona"}));
   app.use(express.csrf());
 });
 
