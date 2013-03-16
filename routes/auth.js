@@ -13,7 +13,7 @@ exports.status = function authStatus(req, res) {
       req.session.email = body.email;
       //res.json({ success: true });
     } else {
-      req.session.destroy();
+      //req.session.destroy();
       //res.json({ success: false });
     }
     res.json(body);
