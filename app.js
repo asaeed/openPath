@@ -38,10 +38,10 @@ app.configure('development', function(){
   app.use(express.errorHandler());
 });
 
-app.get('/auth/status', auth.status);
-app.post('/auth/logout', auth.logout);
-
 app.get('/', routes.index);
+
+app.post('/auth/status', auth.status);
+app.get('/auth/logout', auth.logout);
 
 app.get('/users', user.findAll);
 app.get('/users/:id', user.findById);
