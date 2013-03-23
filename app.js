@@ -49,14 +49,14 @@ app.configure('development', function(){
 //
 
 function requireLogin(req, res, next) {
-  auth.status(req, res, function(){
-    //if (req.session.email == "asaeed@gmail.com") {
-    console.log("checking auth - user email: " + JSON.stringify(res.body));
-    //if (res.email && res.email != "") {
+  //auth.status(req, res, function(){
+  if (req.session.email == "asaeed@gmail.com") {
+    //console.log("checking auth - user email: " + JSON.stringify(res.body));
+    if (res.email && res.email != "") {
       next();
-    //} else {
-    //  res.redirect("/");
-    //}
+    } else {
+      res.redirect("/");
+    }
   });
 
 }
