@@ -1,5 +1,6 @@
 
 var request = require('request')
+  , routes = require('./routes') 
   , user = require('./routes/user');
 
 exports.status = function authStatus(req, res) {
