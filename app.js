@@ -52,6 +52,7 @@ function requireLogin(req, res, next) {
   //auth.status(req, res, function(){
   //  console.log("checking auth - user email: " + JSON.stringify(res.body));
   //}
+
   //if (req.session.email == "asaeed@gmail.com") {
   if (req.session && req.session.email) {
     next();
@@ -60,12 +61,14 @@ function requireLogin(req, res, next) {
   }
 }
 
+
 app.all("/users", requireLogin, function(req, res, next) {next();});
 app.all("/users/*", requireLogin, function(req, res, next) {next();});
 app.all("/sessions", requireLogin, function(req, res, next) {next();});
 app.all("/sessions/*", requireLogin, function(req, res, next) {next();});
 app.all("/events", requireLogin, function(req, res, next) {next();});
 app.all("/events/*", requireLogin, function(req, res, next) {next();});
+
 
 //
 // ROUTES
