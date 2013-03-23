@@ -10,6 +10,7 @@ var express = require('express')
   , auth = require('./routes/auth')
   , user = require('./routes/user')
   , user = require('./routes/event')
+  , user = require('./routes/chatSession')
   , http = require('http')
   , path = require('path')
   , request = require('request');
@@ -58,6 +59,8 @@ function requireLogin(req, res, next) {
 
 app.all("/users", requireLogin, function(req, res, next) {next();});
 app.all("/users/*", requireLogin, function(req, res, next) {next();});
+app.all("/sessions", requireLogin, function(req, res, next) {next();});
+app.all("/sessions/*", requireLogin, function(req, res, next) {next();});
 app.all("/events", requireLogin, function(req, res, next) {next();});
 app.all("/events/*", requireLogin, function(req, res, next) {next();});
 
@@ -75,6 +78,12 @@ app.get('/users/:id', user.findById);
 app.post('/users', user.addItem);
 app.put('/users/:id', user.updateItem);
 app.delete('/users/:id', user.deleteItem);
+
+app.get('/sessions', user.findAll);
+app.get('/sessions/:id', user.findById);
+app.post('/sessions', user.addItem);
+app.put('/sessions/:id', user.updateItem);
+app.delete('/sessions/:id', user.deleteItem);
 
 app.get('/events', user.findAll);
 app.get('/events/:id', user.findById);
