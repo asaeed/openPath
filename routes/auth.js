@@ -15,7 +15,7 @@ exports.status = function authStatus(req, res) {
     } else {
       //req.session.destroy();
       //res.json({ success: false });
-      
+
       // if not authenticated, is user a guest?
       if (req.session.email == "guest"){
         res.json('{"name": "Guest1234", "status": "okay"}');
@@ -36,6 +36,6 @@ exports.logout = function authLogout(req, res) {
 
 exports.guest = function authGuest(req, res) {
   req.session.email = "guest";
-  res.json('{"name": "Guest1234", "status": "okay"}');
+  res.json({"name": "Guest1234", "status": "okay"});
 
 };
