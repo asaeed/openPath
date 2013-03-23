@@ -1,7 +1,7 @@
 
 var request = require('request');
 
-exports.status = function authStatus(req, res) {
+exports.status = function authStatus(req, res, callback) {
   request.post({
     url: 'https://login.persona.org/verify',
     json: {
@@ -17,9 +17,10 @@ exports.status = function authStatus(req, res) {
       //res.json({ success: false });
     }
     res.json(body);
+    typeof callback == "function" && callback();
   });
 
-  //typeof callback == "function" && callback();
+  
 };
 
 exports.logout = function authLogout(req, res) {
