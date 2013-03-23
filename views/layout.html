@@ -13,6 +13,7 @@
   <script>
 
 	  navigator.id.watch({
+
         onlogin: function(assertion) {
           var xhr = new XMLHttpRequest();
           xhr.open("POST", "/auth/status", true);
@@ -22,6 +23,7 @@
             if (data && data.status === "okay") {
               document.querySelector("#user").textContent = data.email;
               document.querySelector("#login").disabled = "disabled";
+              document.querySelector("#guest").disabled = "disabled";
               document.querySelector("#logout").disabled = "";
             }
           }, false);
@@ -30,19 +32,23 @@
             assertion: assertion
           }));
         },
+
         onlogout: function() {
           var xhr = new XMLHttpRequest();
           xhr.open("GET", "/auth/logout", true);
           xhr.addEventListener("loadend", function(e) {
             document.querySelector("#user").textContent = "logged out";
             document.querySelector("#login").disabled = "";
+            document.querySelector("#guest").disabled = "";
             document.querySelector("#logout").disabled = "disabled";
           });
           xhr.send();
         }
+
       });
 
       document.addEventListener("DOMContentLoaded", function() {
+
         document.querySelector("#login").addEventListener("click", function() {
           navigator.id.request();
         }, false);
@@ -50,6 +56,19 @@
         document.querySelector("#logout").addEventListener("click", function() {
           navigator.id.logout();
         }, false);
+
+        document.querySelector("#guest").addEventListener("click", function() {
+          var xhr = new XMLHttpRequest();
+          xhr.open("GET", "/auth/guest", true);
+          xhr.addEventListener("loadend", function(e) {
+            document.querySelector("#user").textContent = "logged out";
+            document.querySelector("#login").disabled = "disabled";
+            document.querySelector("#guest").disabled = "disabled";
+            document.querySelector("#logout").disabled = "";
+          });
+          xhr.send();
+        }, false);
+
       }, false);
 
   </script>
@@ -60,7 +79,8 @@
 
   <h1>Hello, openPath</h1>
   <p>Current user is: <span id="user">logged out</span></p>
-  <button id="login">Login</button>
+  <button id="login">Login with Persona</button>
+  <button id="guest">Enter as Guest</button>
   <button id="logout" disabled="disabled">Logout</button>
 
   {% block content %}{% endblock %}

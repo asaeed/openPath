@@ -20,9 +20,12 @@ exports.status = function authStatus(req, res) {
   });
 };
 
-
 exports.logout = function authLogout(req, res) {
   //req.session = null;  // this still allows reloading prior page loads
   req.session.destroy();
   res.redirect('/');
+};
+
+exports.guest = function authLogout(req, res) {
+  res.json('{name: "Guest1234"}');
 };
