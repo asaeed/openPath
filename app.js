@@ -50,7 +50,8 @@ app.configure('development', function(){
 
 function requireLogin(req, res, next) {
   auth.status(req, res);
-  if (req.session.email == "asaeed@gmail.com") {
+  //if (req.session.email == "asaeed@gmail.com") {
+  if (res.email && res.email != "") {}
     next();
   } else {
     res.redirect("/");
