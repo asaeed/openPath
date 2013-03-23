@@ -9,8 +9,8 @@ var express = require('express')
   , routes = require('./routes') 
   , auth = require('./routes/auth')
   , user = require('./routes/user')
-  , user = require('./routes/event')
-  , user = require('./routes/chatSession')
+  , eventRoute = require('./routes/event')
+  , sessionRoute = require('./routes/session')
   , http = require('http')
   , path = require('path')
   , request = require('request');
@@ -79,17 +79,17 @@ app.post('/users', user.addItem);
 app.put('/users/:id', user.updateItem);
 app.delete('/users/:id', user.deleteItem);
 
-app.get('/sessions', user.findAll);
-app.get('/sessions/:id', user.findById);
-app.post('/sessions', user.addItem);
-app.put('/sessions/:id', user.updateItem);
-app.delete('/sessions/:id', user.deleteItem);
+app.get('/sessions', sessionRoute.findAll);
+app.get('/sessions/:id', sessionRoute.findById);
+app.post('/sessions', sessionRoute.addItem);
+app.put('/sessions/:id', sessionRoute.updateItem);
+app.delete('/sessions/:id', sessionRoute.deleteItem);
 
-app.get('/events', user.findAll);
-app.get('/events/:id', user.findById);
-app.post('/events', user.addItem);
-app.put('/events/:id', user.updateItem);
-app.delete('/events/:id', user.deleteItem);
+app.get('/events', eventRoute.findAll);
+app.get('/events/:id', eventRoute.findById);
+app.post('/events', eventRoute.addItem);
+app.put('/events/:id', eventRoute.updateItem);
+app.delete('/events/:id', eventRoute.deleteItem);
 
 http.createServer(app).listen(app.get('port'), function(){
   console.log("Server listening on port " + app.get('port'));
