@@ -61,7 +61,8 @@
           var xhr = new XMLHttpRequest();
           xhr.open("GET", "/auth/guest", true);
           xhr.onload = function() {
-            console.log(this.responseText);
+            console.log("responseText: " + this.responseText);
+            console.log("response: " + this.response);
           };
           xhr.addEventListener("loadend", function(e) {
             document.querySelector("#user").textContent = "logged out";
