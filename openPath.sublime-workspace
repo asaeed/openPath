@@ -1,0 +1,372 @@
+{
+	"auto_complete":
+	{
+		"selected_items":
+		[
+		]
+	},
+	"buffers":
+	[
+		{
+			"file": "app.js",
+			"settings":
+			{
+				"buffer_size": 1846,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "views/layout.html",
+			"settings":
+			{
+				"buffer_size": 2048,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "routes/index.js",
+			"settings":
+			{
+				"buffer_size": 145,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "routes/auth.js",
+			"settings":
+			{
+				"buffer_size": 694,
+				"line_ending": "Windows"
+			}
+		}
+	],
+	"build_system": "",
+	"command_palette":
+	{
+		"height": 311.0,
+		"selected_items":
+		[
+			[
+				"Package Control: ",
+				"Package Control: Install Package"
+			]
+		],
+		"width": 416.0
+	},
+	"console":
+	{
+		"height": 0.0
+	},
+	"distraction_free":
+	{
+		"menu_visible": true,
+		"show_minimap": false,
+		"show_open_files": false,
+		"show_tabs": false,
+		"side_bar_visible": false,
+		"status_bar_visible": false
+	},
+	"file_history":
+	[
+		"/C/Users/saeed/Dropbox/code/python/InternetRobot/webServer.py",
+		"/C/Users/saeed/Dropbox/code/python/InternetRobot/robot.py",
+		"/C/Users/saeed/Dropbox/code/python/InternetRobot/index.html",
+		"/C/Users/saeed/Dropbox/code/python/InternetRobot/arduino/src/sketch.ino",
+		"/C/Users/saeed/Dropbox/code/nodejs/20130308.openPath/routes/user.js",
+		"/C/Users/saeed/Dropbox/code/nodejs/20130308.openPath/views/index.html",
+		"/C/Users/saeed/Dropbox/code/nodejs/20130308.openPath/routes/auth.js",
+		"/C/Users/saeed/Dropbox/code/nodejs/20130308.openPath/routes/index.js",
+		"/C/Users/saeed/Dropbox/code/python/RaspiInternetCom/index.html",
+		"/C/Users/saeed/Dropbox/code/python/RaspiRobotServer/serialProcess.py",
+		"/C/Users/saeed/Dropbox/code/python/RaspiInternetCom/raspi.py",
+		"/C/Users/saeed/Dropbox/code/python/RaspiInternetCom/server.py",
+		"/C/Users/saeed/Dropbox/code/python/InternetRobot/robotServer.py",
+		"/C/Users/saeed/Dropbox/code/python/RaspiRobotServer/index.html",
+		"/C/Users/saeed/Dropbox/code/python/RaspiRobotServer/server.py",
+		"/C/Users/saeed/Dropbox/code/python/RaspiRobotServer/arduino/src/sketch.ino",
+		"/C/Users/saeed/Dropbox/code/python/RaspiRobotServer/test.html",
+		"/C/Users/saeed/Dropbox/code/python/RaspiInternetControl/server.py",
+		"/C/Users/saeed/Dropbox/code/python/RaspiInternetControl/raspi.py",
+		"/C/Users/saeed/Dropbox/code/nodejs/20130130.WebControlledRgbPixels/node/index.html",
+		"/C/Users/saeed/Applications/arduino-1.0.3/libraries/aJson/aJSON.cpp",
+		"/C/Users/saeed/Dropbox/code/python/RaspiRobotServer/arduino/lib/aJson/aJSON.cpp",
+		"/C/Users/saeed/Dropbox/code/arduino/120116 WifiRobot/OscRobot_PhoneControlled_WiFlyHQ_oscpkt/OscRobot_PhoneControlled_WiFlyHQ_oscpkt.ino",
+		"/C/Users/saeed/Dropbox/code/arduino/120116 WifiRobot/WiFiRobot_UdpClient/WiFiRobot_UdpClient.ino",
+		"/C/Users/saeed/Dropbox/code/python/TornadoArduino/server.py",
+		"/C/Users/saeed/Dropbox/code/python/TornadoArduino/index.html",
+		"/C/Users/saeed/Dropbox/code/python/TornadoArduino/serialProcess.py",
+		"/C/Users/saeed/Dropbox/code/python/TornadoArduino/arduino/src/sketch.ino",
+		"/C/Users/saeed/Dropbox/code/arduino/120116 WifiRobot/WiFiRobot_ServerRNXV/WiFiRobot_ServerRNXV.ino",
+		"/C/Users/saeed/Dropbox/Apps/raspberrypi-saeed-02/python/tornadoArduino/server.py",
+		"/C/Users/saeed/Dropbox/Apps/raspberrypi-saeed-02/python/tornadoArduino/arduino.py",
+		"/C/Users/saeed/Dropbox/Apps/raspberrypi-saeed-02/python/tornadoArduino/test.py",
+		"/C/Users/saeed/Dropbox/Apps/raspberrypi-saeed-02/python/tornadoArduino/index.html",
+		"/C/Users/saeed/Dropbox/Apps/aws-saeed/python/tornadoSocketsAsync/server.py",
+		"/C/Users/saeed/Dropbox/code/python/HelloTornado/helloTornado.py",
+		"/C/Users/saeed/Dropbox/Apps/raspberrypi-saeed/python/tornadoArduino/test.py",
+		"/C/Users/saeed/Dropbox/Apps/raspberrypi-saeed/python/tornadoArduino/server.py",
+		"/C/Users/saeed/Dropbox/Apps/raspberrypi-saeed/python/tornadoArduino/arduino.py",
+		"/C/Users/saeed/Dropbox/Apps/raspberrypi-saeed-02/python/tornadoArduino/arduinoSerial.py",
+		"/C/Users/saeed/Dropbox/Apps/raspberrypi-saeed-02/python/tornadoArduino/robotServer.py",
+		"/C/Users/saeed/Dropbox/Apps/raspberrypi-saeed-02/python/tornadoArduino/tornadoServer.py",
+		"/C/Users/saeed/Dropbox/Apps/raspberrypi-saeed-02/python/tornadoArduino/serialCom.py",
+		"/C/Users/saeed/Dropbox/Apps/raspberrypi-saeed-02/python/tornadoArduinoSubproc/arduino.py",
+		"/C/Users/saeed/Dropbox/Apps/raspberrypi-saeed-02/python/tornadoArduinoSubproc/serialCom.py",
+		"/C/Users/saeed/Dropbox/Apps/raspberrypi-saeed-02/python/tornadoArduinoSubproc/robotServer.py",
+		"/C/Users/saeed/Dropbox/Apps/raspberrypi-saeed-02/python/tornadoArduinoSubproc/server.py",
+		"/C/Users/saeed/Dropbox/Apps/raspberrypi-saeed-02/python/tornadoArduinoSubproc/index.html",
+		"/C/Users/saeed/Dropbox/Apps/raspberrypi-saeed-02/python/tornadoArduinoSubproc/serialCommunicator.py",
+		"/C/Users/saeed/Dropbox/Apps/raspberrypi-saeed-02/python/tornadoArduinoSubproc/SerialCommunicator.py",
+		"/C/Users/saeed/Dropbox/Apps/raspberrypi-saeed/python/tornadoArduino/index.html",
+		"/C/Users/saeed/Dropbox/Apps/raspberrypi-saeed/python/tornadoArduino/SerialCommunicator",
+		"/C/work/IBM.HolidayCard2012/build/site/server.js",
+		"/C/work/IBM.HolidayCard2012/build/site/data_access/scores.js",
+		"/C/work/IBM.HolidayCard2012/build/site/package.json",
+		"/C/work/IBM.HolidayCard2012/build/site/start",
+		"/C/stuff/Dropbox/code/nodejs/20121121.awsNodeMongo/public/index.html",
+		"/C/stuff/Dropbox/code/nodejs/20121121.awsNodeMongo/data_access/scores.js",
+		"/C/stuff/Dropbox/code/nodejs/20121121.awsNodeMongo/data_access/wines.js",
+		"/C/stuff/Dropbox/code/nodejs/20121121.awsNodeMongo/server.js",
+		"/C/_stuff/Dropbox/code/nodejs/20121121.awsNodeMongo/server.js",
+		"/C/_stuff/Dropbox/code/nodejs/20121121.awsNodeMongo/data_access/wines.js",
+		"/C/_stuff/Dropbox/code/nodejs/20121121.awsNodeMongo/start",
+		"/C/_stuff/Dropbox/code/nodejs/20121121.awsNodeMongo/server.121121.js",
+		"/C/_stuff/Dropbox/code/nodejs/20121121.awsNodeMongo/stop",
+		"/C/_stuff/Dropbox/code/nodejs/20121111.socketio/app.js",
+		"/C/_stuff/Dropbox/code/nodejs/20121111.socketio/index.html",
+		"/C/_stuff/Dropbox/code/nodejs/20121111.socketio/client/index.html",
+		"/C/Dropbox/code/nodejs/20121112.socketioDraw/assets/js/script.js",
+		"/C/Dropbox/code/nodejs/20121112.socketioDraw/index.html",
+		"/C/Dropbox/code/nodejs/20121112.socketioDraw/app.js",
+		"/C/Dropbox/code/nodejs/20121111.socketIO/app.js"
+	],
+	"find":
+	{
+		"height": 34.0
+	},
+	"find_in_files":
+	{
+		"height": 0.0,
+		"where_history":
+		[
+		]
+	},
+	"find_state":
+	{
+		"case_sensitive": false,
+		"find_history":
+		[
+			"sendMessage",
+			"md",
+			"touchPad",
+			"malloc",
+			"stringStream",
+			"XXX:",
+			"print(",
+			"ard",
+			"wine",
+			"winedb",
+			"wines",
+			"webSocket",
+			"web"
+		],
+		"highlight": true,
+		"in_selection": false,
+		"preserve_case": false,
+		"regex": false,
+		"replace_history":
+		[
+			"touchBox",
+			"score",
+			"scoredb",
+			"scores",
+			"socket"
+		],
+		"reverse": false,
+		"show_context": true,
+		"use_buffer2": true,
+		"whole_word": false,
+		"wrap": true
+	},
+	"groups":
+	[
+		{
+			"selected": 3,
+			"sheets":
+			[
+				{
+					"buffer": 0,
+					"file": "app.js",
+					"settings":
+					{
+						"buffer_size": 1846,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								1213,
+								1213
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/JavaScript/JavaScript.tmLanguage",
+							"tab_size": 2,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 450.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 1,
+					"file": "views/layout.html",
+					"settings":
+					{
+						"buffer_size": 2048,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								982,
+								982
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/HTML/HTML.tmLanguage",
+							"tab_size": 2,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 135.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 2,
+					"file": "routes/index.js",
+					"settings":
+					{
+						"buffer_size": 145,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								145,
+								145
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/JavaScript/JavaScript.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 3,
+					"file": "routes/auth.js",
+					"settings":
+					{
+						"buffer_size": 694,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								426,
+								426
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/JavaScript/JavaScript.tmLanguage",
+							"tab_size": 2,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				}
+			]
+		}
+	],
+	"incremental_find":
+	{
+		"height": 0.0
+	},
+	"input":
+	{
+		"height": 0.0
+	},
+	"layout":
+	{
+		"cells":
+		[
+			[
+				0,
+				0,
+				1,
+				1
+			]
+		],
+		"cols":
+		[
+			0.0,
+			1.0
+		],
+		"rows":
+		[
+			0.0,
+			1.0
+		]
+	},
+	"menu_visible": true,
+	"output.exec":
+	{
+		"height": 204.0
+	},
+	"replace":
+	{
+		"height": 62.0
+	},
+	"save_all_on_build": true,
+	"select_file":
+	{
+		"height": 0.0,
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"select_project":
+	{
+		"height": 0.0,
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"show_minimap": true,
+	"show_open_files": false,
+	"show_tabs": true,
+	"side_bar_visible": true,
+	"side_bar_width": 150.0,
+	"status_bar_visible": true
+}

@@ -6,9 +6,10 @@
 var express = require('express')
   , cons = require('consolidate')
   , swig = require('swig')
-  , routes = require('./routes')
-  , user = require('./routes/user')
+  , routes = require('./routes') 
   , auth = require('./routes/auth')
+  , user = require('./routes/user')
+  , user = require('./routes/event')
   , http = require('http')
   , path = require('path')
   , request = require('request');
@@ -57,6 +58,8 @@ function requireLogin(req, res, next) {
 
 app.all("/users", requireLogin, function(req, res, next) {next();});
 app.all("/users/*", requireLogin, function(req, res, next) {next();});
+app.all("/events", requireLogin, function(req, res, next) {next();});
+app.all("/events/*", requireLogin, function(req, res, next) {next();});
 
 //
 // ROUTES
@@ -72,6 +75,12 @@ app.get('/users/:id', user.findById);
 app.post('/users', user.addItem);
 app.put('/users/:id', user.updateItem);
 app.delete('/users/:id', user.deleteItem);
+
+app.get('/events', user.findAll);
+app.get('/events/:id', user.findById);
+app.post('/events', user.addItem);
+app.put('/events/:id', user.updateItem);
+app.delete('/events/:id', user.deleteItem);
 
 http.createServer(app).listen(app.get('port'), function(){
   console.log("Server listening on port " + app.get('port'));
