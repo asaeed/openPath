@@ -31,6 +31,6 @@ exports.logout = function authLogout(req, res) {
 
 exports.guest = function authGuest(req, res) {
   req.session.email = "guest";
-  res.json('{name: "Guest1234"}');
+  res.json('{"name": "Guest1234", "status": "okay"}');
 
 };
