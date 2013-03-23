@@ -57,7 +57,7 @@ function requireLogin(req, res, next) {
     } else {
       res.redirect("/");
     }
-  });
+  }
 
 }
 
