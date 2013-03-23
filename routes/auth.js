@@ -1,7 +1,7 @@
 
 var request = require('request');
 
-exports.status = function authStatus(req, res) {
+exports.status = function authStatus(req, res, callback) {
   request.post({
     url: 'https://login.persona.org/verify',
     json: {
@@ -18,6 +18,8 @@ exports.status = function authStatus(req, res) {
     }
     res.json(body);
   });
+
+  typeof callback == "function" && callback();
 };
 
 exports.logout = function authLogout(req, res) {
@@ -26,6 +28,6 @@ exports.logout = function authLogout(req, res) {
   res.redirect('/');
 };
 
-exports.guest = function authLogout(req, res) {
+exports.guest = function authGuest(req, res) {
   res.json('{name: "Guest1234"}');
 };

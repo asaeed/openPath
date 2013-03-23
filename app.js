@@ -49,14 +49,16 @@ app.configure('development', function(){
 //
 
 function requireLogin(req, res, next) {
-  auth.status(req, res);
-  //if (req.session.email == "asaeed@gmail.com") {
-  console.log("checking auth - user email: " + res);
-  if (res.email && res.email != "") {
-    next();
-  } else {
-    res.redirect("/");
-  }
+  auth.status(req, res, function(){
+    //if (req.session.email == "asaeed@gmail.com") {
+    console.log("checking auth - user email: " + res);
+    if (res.email && res.email != "") {
+      next();
+    } else {
+      res.redirect("/");
+    }
+  });
+
 }
 
 app.all("/users", requireLogin, function(req, res, next) {next();});
