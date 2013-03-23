@@ -55,7 +55,7 @@ function requireLogin(req, res, next) {
     if (res.email && res.email != "") {
       next();
     } else {
-      res.redirect("/");
+      //res.redirect("/");
     }
   });
 
