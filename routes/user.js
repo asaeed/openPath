@@ -94,7 +94,7 @@ exports.deleteItem = function(req, res) {
 /*------------------------------------------------------------------*/
 // Custom functions
 
-exports.addGuestUser = function() {
+exports.addGuestUser = function(callback) {
     var item = {"email": "guest", "createDate": new Date()}
     console.log('Adding GuestUser');
     db.collection('users', function(err, collection) {
@@ -105,7 +105,7 @@ exports.addGuestUser = function() {
                 console.log('Success: ' + JSON.stringify(result[0]));
                 returnVal = result[0];
             }
-            return returnVal;
+            typeof callback == "function" && callback(returnVal);
         });
     });
 
