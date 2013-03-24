@@ -28,7 +28,6 @@
               document.querySelector("#logout").disabled = "";
             }
           }, false);
-
           xhr.send(JSON.stringify({
             assertion: assertion
           }));
@@ -63,10 +62,6 @@
         document.querySelector("#guest").addEventListener("click", function() {
           var xhr = new XMLHttpRequest();
           xhr.open("GET", "/auth/guest", true);
-          xhr.onload = function() {
-            console.log("responseText: " + this.responseText);
-            console.log("response: " + this.response);
-          };
           xhr.addEventListener("loadend", function(e) {
             var data = JSON.parse(this.responseText);
             if (data && data.status === "okay") {
@@ -92,8 +87,9 @@
               document.querySelector("#logout").disabled = "";
             }
           }, false);
-
-          xhr.send();
+          xhr.send(JSON.stringify({
+            //assertion: assertion
+          }));
 
       }, false);
 
