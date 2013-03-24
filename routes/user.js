@@ -111,8 +111,7 @@ exports.addUser = function(email, callback) {
 }
 
 exports.findByEmail = function(email, callback) {
-    var id = req.params.id;
-    console.log('Retrieving item: ' + id);
+    console.log('Retrieving by email: ' + email);
     db.collection('users', function(err, collection) {
         collection.findOne({'email': email}, function(err, item) {
             returnValue = item;
