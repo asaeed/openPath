@@ -100,12 +100,12 @@ exports.addGuestUser = function() {
     db.collection('users', function(err, collection) {
         collection.insert(item, {safe:true}, function(err, result) {
             if (err) {
-                res.send({'error':'An error has occurred'});
+                returnVal = {'error':'An error has occurred'};
             } else {
                 console.log('Success: ' + JSON.stringify(result[0]));
-                res.send(result[0]);
-                //res.send({'_id': result[0]._id, 'error': ""});
+                returnVal = result[0];
             }
+            return returnVal;
         });
     });
 
