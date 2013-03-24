@@ -100,12 +100,12 @@ exports.addUser = function(email, callback) {
     db.collection('users', function(err, collection) {
         collection.insert(item, {safe:true}, function(err, result) {
             if (err) {
-                returnVal = {'error':'An error has occurred'};
+                returnValue = {'error':'An error has occurred'};
             } else {
                 console.log('Success: ' + JSON.stringify(result[0]));
-                returnVal = result[0];
+                returnValue = result[0];
             }
-            typeof callback == "function" && callback(returnVal);
+            typeof callback == "function" && callback(returnValue);
         });
     });
 }
@@ -115,7 +115,7 @@ exports.findByEmail = function(email, callback) {
     db.collection('users', function(err, collection) {
         collection.findOne({'email': email}, function(err, item) {
             returnValue = item;
-            typeof callback == "function" && callback(returnVal);
+            typeof callback == "function" && callback(returnValue);
         });
     });
 };
