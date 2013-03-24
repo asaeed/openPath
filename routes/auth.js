@@ -12,6 +12,8 @@ exports.status = function authStatus(req, res) {
   }, function(e, r, body) {
     if(body && body.email) {
       req.session.email = body.email;
+      res.json(body);
+      console.log("auth status: persona");
       //res.json({ success: true });
     } else {
       //req.session.destroy();
@@ -19,10 +21,11 @@ exports.status = function authStatus(req, res) {
 
       // if not authenticated, is user a guest?
       if (req.session.email == "guest"){
-        body = {"name": "Guest1234", "status": "okay"};
+        console.log("auth status: guest");
+        res.json({"name": "Guest1234", "status": "okay"});
       }
     }
-    res.json(body);
+    
     //typeof callback == "function" && callback();
   });
 
