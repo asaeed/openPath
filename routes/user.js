@@ -94,8 +94,8 @@ exports.deleteItem = function(req, res) {
 /*------------------------------------------------------------------*/
 // Custom functions
 
-exports.addGuestUser = function(callback) {
-    var item = {"email": "guest", "createDate": new Date()}
+exports.addUser = function(email, callback) {
+    var item = {"email": email, "createDate": new Date()}
     console.log('Adding GuestUser');
     db.collection('users', function(err, collection) {
         collection.insert(item, {safe:true}, function(err, result) {
@@ -108,8 +108,18 @@ exports.addGuestUser = function(callback) {
             typeof callback == "function" && callback(returnVal);
         });
     });
-
 }
+
+exports.findByEmail = function(email, callback) {
+    var id = req.params.id;
+    console.log('Retrieving item: ' + id);
+    db.collection('users', function(err, collection) {
+        collection.findOne({'email': email}, function(err, item) {
+            returnValue = item;
+            typeof callback == "function" && callback(returnVal);
+        });
+    });
+};
 
 /*------------------------------------------------------------------*/
 // Populate database with sample data -- Only used once

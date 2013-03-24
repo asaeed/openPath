@@ -11,6 +11,17 @@ exports.status = function authStatus(req, res) {
     }
   }, function(e, r, body) {
     if(body && body.email) {
+      // if new user, then create them in database
+      user.findByEmail(body.email, function(foundUser){
+        console.log(foundUser);
+        // user.addGuestUser("guest", function(newGuest){
+        //   req.session.email = newGuest.email;
+        //   req.session.userId = newGuest._id;
+        //   newGuest.status = "okay";
+        //   res.json(newGuest);
+        // });
+      }
+        
       req.session.email = body.email;
       res.json(body);
       console.log("auth status: persona");
@@ -31,8 +42,8 @@ exports.logout = function authLogout(req, res) {
 
 exports.guest = function authGuest(req, res) {
   // create new guest user
-  user.addGuestUser(function(newGuest){
-    req.session.email = "guest";
+  user.addGuestUser("guest", function(newGuest){
+    req.session.email = newGuest.email;
     req.session.userId = newGuest._id;
     newGuest.status = "okay";
     res.json(newGuest);
