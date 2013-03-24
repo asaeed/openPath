@@ -29,13 +29,13 @@ exports.status = function authStatus(req, res) {
           res.json(foundUser);
         }
       });    
-      
+
     } else {
 
       // if not authenticated, is user a guest?
       if (req.session.email == "guest"){
         console.log("auth status: guest");
-        res.json({"email": "Guest1234", "status": "okay"});
+        res.json({"email": req.session.email, "status": "okay"});
       }
 
     }
