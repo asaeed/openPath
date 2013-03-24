@@ -53,6 +53,7 @@ function requireLogin(req, res, next) {
   //  console.log("checking auth - user email: " + JSON.stringify(res.body));
   //}
 
+  console.log("session email: " + req.session.email);
   //if (req.session.email == "asaeed@gmail.com") {
   if (req.session && req.session.email) {
     next();
