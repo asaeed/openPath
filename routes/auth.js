@@ -30,12 +30,11 @@ exports.logout = function authLogout(req, res) {
 };
 
 exports.guest = function authGuest(req, res) {
-  req.session.email = "guest";
-
   // create new guest user
   user.addGuestUser(function(newGuest){
+    req.session.email = "guest";
+    req.session.userId = newGuest._id;
     newGuest.status = "okay";
     res.json(newGuest);
   });
-
 };
