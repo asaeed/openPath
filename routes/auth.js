@@ -20,7 +20,7 @@ exports.status = function authStatus(req, res) {
         //   newGuest.status = "okay";
         //   res.json(newGuest);
         // });
-      }
+      };
         
       req.session.email = body.email;
       res.json(body);
