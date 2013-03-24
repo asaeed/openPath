@@ -18,7 +18,7 @@ exports.status = function authStatus(req, res) {
     } else {
       //req.session.destroy();
       //res.json({ success: false });
-
+      console.log("in auth.status, req.session.email: " + req.session.email);
       // if not authenticated, is user a guest?
       if (req.session.email == "guest"){
         console.log("auth status: guest");
