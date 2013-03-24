@@ -22,7 +22,7 @@ exports.status = function authStatus(req, res) {
       // if not authenticated, is user a guest?
       if (req.session.email == "guest"){
         console.log("auth status: guest");
-        res.json({"name": "Guest1234", "status": "okay"});
+        res.json({"email": "Guest1234", "status": "okay"});
       }
     }
     
