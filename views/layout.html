@@ -43,7 +43,7 @@
             document.querySelector("#login").disabled = "";
             document.querySelector("#guest").disabled = "";
             document.querySelector("#logout").disabled = "disabled";
-          });
+          }, false);
           xhr.send();
         }
 
@@ -70,12 +70,12 @@
           xhr.addEventListener("loadend", function(e) {
             var data = JSON.parse(this.responseText);
             if (data && data.status === "okay") {
-              document.querySelector("#user").textContent = "data.email";
+              document.querySelector("#user").textContent = data.email;
               document.querySelector("#login").disabled = "disabled";
               document.querySelector("#guest").disabled = "disabled";
               document.querySelector("#logout").disabled = "";
             }
-          });
+          }, false);
           xhr.send();
         }, false);
 
@@ -92,10 +92,7 @@
               document.querySelector("#logout").disabled = "";
             }
           }, false);
-
-          xhr.send(JSON.stringify({
-            //assertion: assertion
-          }));
+          xhr.send();
 
       }, false);
 
