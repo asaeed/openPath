@@ -51,8 +51,8 @@ exports.addItem = function(req, res) {
                 res.send({'_id': "", 'error':'An error has occurred'});
             } else {
                 console.log('Success: ' + JSON.stringify(result[0]));
-                //res.send(result[0]);
-                res.send({'_id': result[0]._id, 'error': ""});
+                res.send(result[0]);
+                //res.send({'_id': result[0]._id, 'error': ""});
             }
         });
     });

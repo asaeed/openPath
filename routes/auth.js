@@ -14,32 +14,28 @@ exports.status = function authStatus(req, res) {
       req.session.email = body.email;
       res.json(body);
       console.log("auth status: persona");
-      //res.json({ success: true });
     } else {
-      //req.session.destroy();
-      //res.json({ success: false });
-      console.log("in auth.status, req.session.email: " + req.session.email);
       // if not authenticated, is user a guest?
       if (req.session.email == "guest"){
         console.log("auth status: guest");
         res.json({"email": "Guest1234", "status": "okay"});
       }
     }
-    
-    //typeof callback == "function" && callback();
   });
-
-  
 };
 
 exports.logout = function authLogout(req, res) {
-  //req.session = null;  // this still allows reloading prior page loads
   req.session.destroy();
   res.redirect('/');
 };
 
 exports.guest = function authGuest(req, res) {
   req.session.email = "guest";
-  res.json({"email": "Guest1234", "status": "okay"});
+
+  // create new guest user
+
+  var newGuest = users.addItem({"email": "guest", "createDate": new Date(), "status": "okay"});
+  
+  res.json(newGuest);
 
 };

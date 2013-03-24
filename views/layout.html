@@ -14,7 +14,7 @@
 
 	  navigator.id.watch({
 
-        // this is the callback that occurs when the user logs in
+        // this is the callback that persona triggers when the user logs in
         onlogin: function(assertion) {
           var xhr = new XMLHttpRequest();
           xhr.open("POST", "/auth/status", true);
@@ -33,7 +33,7 @@
           }));
         },
 
-        // this is the callback that occurs when the user logs out
+        // this is the callback that persona triggers when the user logs out
         onlogout: function() {
           var xhr = new XMLHttpRequest();
           xhr.open("GET", "/auth/logout", true);
