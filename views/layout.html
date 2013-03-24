@@ -75,7 +75,7 @@
               document.querySelector("#guest").disabled = "disabled";
               document.querySelector("#logout").disabled = "";
             }
-          }, false);
+          });
           xhr.send();
         }, false);
 
@@ -92,7 +92,10 @@
               document.querySelector("#logout").disabled = "";
             }
           }, false);
-          xhr.send();
+
+          xhr.send(JSON.stringify({
+            //assertion: assertion
+          }));
 
       }, false);
 
