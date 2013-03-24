@@ -33,9 +33,8 @@ exports.guest = function authGuest(req, res) {
   req.session.email = "guest";
 
   // create new guest user
-
-  var newGuest = user.addItem({"email": "guest", "createDate": new Date(), "status": "okay"});
-
+  var newGuest = user.addGuestUser();
+  newGuest.status = "okay";
   res.json(newGuest);
 
 };

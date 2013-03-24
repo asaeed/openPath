@@ -46,13 +46,13 @@ exports.addItem = function(req, res) {
     var item = req.body;
     console.log('Adding item: ' + JSON.stringify(item));
     db.collection('users', function(err, collection) {
-        collection.insert(user, {safe:true}, function(err, result) {
+        collection.insert(item, {safe:true}, function(err, result) {
             if (err) {
                 res.send({'_id': "", 'error':'An error has occurred'});
             } else {
                 console.log('Success: ' + JSON.stringify(result[0]));
-                res.send(result[0]);
-                //res.send({'_id': result[0]._id, 'error': ""});
+                //res.send(result[0]);
+                res.send({'_id': result[0]._id, 'error': ""});
             }
         });
     });
@@ -91,7 +91,27 @@ exports.deleteItem = function(req, res) {
     });
 }
 
-/*--------------------------------------------------------------------------------------------------------------------*/
+/*------------------------------------------------------------------*/
+// Custom functions
+
+exports.addGuestUser = function() {
+    var item = {"email": "guest", "createDate": new Date()}
+    console.log('Adding GuestUser');
+    db.collection('users', function(err, collection) {
+        collection.insert(item, {safe:true}, function(err, result) {
+            if (err) {
+                res.send({'error':'An error has occurred'});
+            } else {
+                console.log('Success: ' + JSON.stringify(result[0]));
+                res.send(result[0]);
+                //res.send({'_id': result[0]._id, 'error': ""});
+            }
+        });
+    });
+
+}
+
+/*------------------------------------------------------------------*/
 // Populate database with sample data -- Only used once
 var populateDB = function() {
 
