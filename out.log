@@ -1,0 +1,105 @@
+Server listening on port 8080
+Connected to 'openpathdb' database
+Connected to 'openpathdb' database
+Connected to 'openpathdb' database
+[90mGET / [36m304 [90m24ms[0m
+[90mGET /stylesheets/style.css [36m304 [90m5ms[0m
+auth status: persona
+Retrieving by email: asaeed@gmail.com
+[90mPOST /auth/status [32m200 [90m139ms - 134[0m
+[90mGET / [32m200 [90m3ms - 3.87kb[0m
+[90mGET /stylesheets/style.css [32m200 [90m4ms - 110[0m
+Adding GuestUser
+Success: {"email":"guest","createDate":"2013-03-28T05:20:44.686Z","_id":"5153d32c99308ab457000001"}
+[90mGET /auth/guest [32m200 [90m7ms - 123[0m
+[90mGET /auth/logout [36m302 [90m3ms - 35[0m
+[90mGET / [36m304 [90m3ms[0m
+session email: undefined
+[90mGET /users [36m302 [90m3ms - 58[0m
+[90mGET / [36m304 [90m2ms[0m
+[90mGET /stylesheets/style.css [36m304 [90m1ms[0m
+session email: undefined
+[90mGET /users [36m302 [90m1ms - 58[0m
+[90mGET / [36m304 [90m4ms[0m
+[90mGET /stylesheets/style.css [36m304 [90m1ms[0m
+auth status: persona
+Retrieving by email: asaeed@gmail.com
+[90mPOST /auth/status [32m200 [90m250ms - 134[0m
+[90mGET / [36m304 [90m63ms[0m
+[90mGET /stylesheets/style.css [36m304 [90m2ms[0m
+auth status: persona
+Retrieving by email: asaeed@gmail.com
+[90mPOST /auth/status [32m200 [90m242ms - 134[0m
+session email: asaeed@gmail.com
+[90mGET /users [32m200 [90m5ms - 799[0m
+session email: asaeed@gmail.com
+[90mGET /users [32m200 [90m4ms - 799[0m
+session email: asaeed@gmail.com
+[90mGET /users [32m200 [90m4ms - 799[0m
+session email: asaeed@gmail.com
+[90mGET /users [32m200 [90m4ms - 799[0m
+[90mGET / [36m304 [90m2ms[0m
+[90mGET /stylesheets/style.css [36m304 [90m1ms[0m
+[90mGET / [36m304 [90m2ms[0m
+[90mGET /stylesheets/style.css [36m304 [90m2ms[0m
+session email: asaeed@gmail.com
+[90mGET /users [32m200 [90m3ms - 799[0m
+session email: asaeed@gmail.com
+[90mGET /users [32m200 [90m4ms - 799[0m
+[90mGET / [36m304 [90m1ms[0m
+[90mGET /stylesheets/style.css [36m304 [90m1ms[0m
+session email: asaeed@gmail.com
+[90mGET /users [32m200 [90m3ms - 799[0m
+[90mGET / [36m304 [90m1ms[0m
+[90mGET /stylesheets/style.css [36m304 [90m2ms[0m
+auth status: persona
+Retrieving by email: asaeed@gmail.com
+[90mPOST /auth/status [32m200 [90m236ms - 134[0m
+Server listening on port 8080
+Connected to 'openpathdb' database
+Connected to 'openpathdb' database
+Connected to 'openpathdb' database
+Server listening on port 8080
+Connected to 'openpathdb' database
+Connected to 'openpathdb' database
+Connected to 'openpathdb' database
+[90mGET / [36m304 [90m47ms[0m
+[90mGET /stylesheets/style.css [36m304 [90m5ms[0m
+auth status: persona
+Retrieving by email: asaeed@gmail.com
+[90mPOST /auth/status [32m200 [90m242ms - 134[0m
+[90mGET / [36m304 [90m2ms[0m
+[90mGET /stylesheets/style.css [36m304 [90m2ms[0m
+auth status: persona
+Retrieving by email: asaeed@gmail.com
+[90mPOST /auth/status [32m200 [90m151ms - 134[0m
+[90mGET /auth/logout [36m302 [90m3ms - 35[0m
+[90mGET / [36m304 [90m2ms[0m
+Adding GuestUser
+Success: {"email":"guest","createDate":"2013-03-28T05:50:49.622Z","_id":"5153da3957368a4e58000001"}
+[90mGET /auth/guest [32m200 [90m8ms - 123[0m
+[90mGET / [36m304 [90m1ms[0m
+[90mGET /stylesheets/style.css [36m304 [90m1ms[0m
+auth status: guest
+[90mPOST /auth/status [32m200 [90m185ms - 42[0m
+[90mGET /auth/logout [36m302 [90m2ms - 35[0m
+[90mGET / [36m304 [90m5ms[0m
+auth status: persona
+Retrieving by email: asaeed@gmail.com
+[90mPOST /auth/status [32m200 [90m168ms - 134[0m
+[90mGET /auth/logout [36m302 [90m1ms - 35[0m
+[90mGET / [36m304 [90m2ms[0m
+auth status: persona
+Retrieving by email: asaeed@gmail.com
+[90mPOST /auth/status [32m200 [90m167ms - 134[0m
+[90mGET /auth/logout [36m302 [90m3ms - 35[0m
+[90mGET / [36m304 [90m2ms[0m
+Adding GuestUser
+Success: {"email":"guest","createDate":"2013-03-28T05:51:59.411Z","_id":"5153da7f57368a4e58000002"}
+[90mGET /auth/guest [32m200 [90m4ms - 123[0m
+[90mGET / [36m304 [90m2ms[0m
+[90mGET /stylesheets/style.css [36m304 [90m1ms[0m
+auth status: guest
+[90mPOST /auth/status [32m200 [90m177ms - 42[0m
+[90mGET /auth/logout [36m302 [90m2ms - 35[0m
+[90mGET / [36m304 [90m2ms[0m
