@@ -7,7 +7,7 @@ exports.status = function authStatus(req, res) {
     url: 'https://login.persona.org/verify',
     json: {
       assertion: req.body.assertion,
-      audience: "http://ec2-23-20-219-99.compute-1.amazonaws.com:8080"
+      audience: "http://ec2-54-241-230-171.us-west-1.compute.amazonaws.com:8080"
     }
   }, function(e, r, body) {
     if(body && body.email) {
