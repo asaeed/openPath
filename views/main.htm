@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>OPEN PATH</title>
+    <link href="http://fonts.googleapis.com/css?family=PT+Sans:400,700" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="css/general_foundicons.css">
+	<link rel="stylesheet" href="css/style.css" />
+	<link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.5/leaflet.css" />
+	 <!--[if lte IE 8]>
+	     <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.5/leaflet.ie.css" />
+	 <![endif]-->
+    <script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
+    <script src='js/organictabs.jquery.js'></script>
+	<script src="http://cdn.leafletjs.com/leaflet-0.5/leaflet.js"></script>
+	<script src="js/webrtc.io.js"></script>
+    <script>
+    /*
+    	To Do:
+    		What's going on with the maps?
+    		How to decide who is the main video???
+    		Need to be able to set username's for chat
+    			Display username and time for chat messages
+    */
+      var firstname, lastname, latitude, longitude, watchID;
+      var username = "user" + Math.floor(Math.random() * 10000);
+
+      var room = 1;
+      var server = "ws://www.walking-productions.com:8001/";
+      
+      var videos = [];
+
+      var PeerConnection = window.PeerConnection || window.webkitPeerConnection00 || window.webkitRTCPeerConnection;
+      console.log(PeerConnection);
+    
+      window.addEventListener('load', init, false);
+	  function init() {
+    	console.log("in init()");
+        
+        getLocation();
+        
+        if(PeerConnection){
+          rtc.createStream({"video": true, "audio": true}, function(stream) {
+            document.getElementById('self_videoplayer').src = URL.createObjectURL(stream);
+            rtc.attachStream(stream, 'self_videoplayer');
+          });
+        }else {
+          alert('Sorry, your browser is not supported');
+        }
+        
+        console.log("server: " + server);
+        console.log("room: " + room);
+        rtc.connect(server, room);
+
+        rtc.on('add remote stream', function(stream, socketId) {
+          console.log("ADDING REMOTE STREAM...");
+          if (document.getElementById('main_videoplayer').src == "") {
+	          rtc.attachStream(stream, 'main_videoplayer');
+	       } else if (document.getElementById('other_videoplayer').src == "") { 
+	       	  rtc.attachStream(stream, 'other_videoplayer');
+	       }
+        });
+        
+        rtc.on('disconnect stream', function(data) {
+            console.log('remove ' + data);
+        });
+
+        initChat();
+        window.removeEventListener('load', init, false);
+      }      
+      
+      // CHAT
+      function addToChat(user, msg) {
+        var chatwindow = document.getElementById('chatwindow');
+        var chatmessages = document.getElementById('chatmessages');
+        msg = sanitize(msg);
+        //<li class="person1"><strong>Jared:</strong> Hey this is so clear that i cant tell the difference between the previous demo. <em>11:27am</em></li>
+        msg = '<li class="user1"><span>'+ user +'</span>: ' + msg + '</li>';
+        chatmessages.innerHTML += msg;
+        chatwindow.scrollTop = chatwindow.scrollHeight;
+      }
+
+      function sanitize(msg) {
+        return msg.replace(/</g, '&lt;');
+      }
+
+      function initChat() {
+        var input = document.getElementById("chatinput");
+
+        input.addEventListener('keydown', function(event) {
+            if(input.value != ''){
+                var key = event.which || event.keyCode;
+                //console.log(key);
+                if (key === 13) {
+		var message = username + ": " + input.value;	
+                    //console.log(rtc);
+                    rtc._socket.send(JSON.stringify({
+                        "eventName": "chat_msg",
+                        "data": {
+                        "messages": message,
+                        "room": room
+                    }
+                    }));
+                    addToChat(username, input.value);
+                    input.value = "";
+                }
+            }
+          
+        }, false);
+        rtc.on('receive_chat_msg', function(data) {
+          console.log(data.color);
+          addToChat(data.messages);
+        });
+        
+        rtc.on('main_video_socketid', function(data) {
+        	console.log(data.socketid);
+        	
+        });
+      }
+      
+      console.log("parsed webrtc stuff");
+      
+        function getLocation(){
+            console.log('getLocation');
+            if (navigator.geolocation){
+                watchID = navigator.geolocation.watchPosition(setPosition, onLocErrorHandler);
+            }else{
+                console.log("Geolocation is not supported by this browser.");
+                
+            }
+        }
+        function setPosition(position){
+            navigator.geolocation.clearWatch(watchID);    // clear watch to prevent recurring location requests
+            latitude = position.coords.latitude;
+            longitude = position.coords.longitude;
+            
+            console.log('latitude = '+latitude);
+            console.log('longitude = '+longitude);
+            
+            populateMaps();
+        }
+        function onLocErrorHandler(error){
+          var errorMsg = "";
+          switch(error.code){
+            case error.PERMISSION_DENIED:
+              errorMsg="User denied the request for Geolocation.";
+              break;
+            case error.POSITION_UNAVAILABLE:
+              errorMsg="Location information is unavailable.";
+              break;
+            case error.TIMEOUT:
+              errorMsg="The request to get user location timed out.";
+              break;
+            case error.UNKNOWN_ERROR:
+              errorMsg="An unknown error occurred.";
+              break;
+            }
+            console.log(errorMsg);
+          }
+          var populateMaps = function(){
+            // populate maps
+
+            var osmUrl = 'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
+	        var osm1 = L.tileLayer(osmUrl);
+            var osm2 = L.tileLayer(osmUrl);
+            var osm3 = L.tileLayer(osmUrl);
+            
+            //var usermap1 = L.map('usermap1', {center: [latitude, longitude], zoom: 13});
+			var usermap1 = L.map('usermap1').setView([42.6746, -73.2407], 13).addLayer(osm1);
+	    	var usermap2 = L.map('usermap2').setView([42.6746, -73.2407], 13).addLayer(osm2);
+			var bigmap = L.map('bigmap').setView([40.7039, -73.9952], 13).addLayer(osm3);
+            
+			$('#bigmap').addClass('hide'); // apply hide as soon as map is set.
+			
+          if(latitude != "" && longitude != ""){
+                //L.map('usermap1').setView([latitude, longitude], 13);
+				var usermap1 = new L.Map('usermap1');
+				usermap1.setView(new L.LatLng(latitude, longitude), 13);
+            }
+		}
+		// fullscreen video mode
+		 var goFullscreen = function(id) {
+		    var element = document.getElementById(id);
+		    if (element.mozRequestFullScreen) {
+		      element.mozRequestFullScreen();
+		    } else if (element.webkitRequestFullScreen) {
+		      element.webkitRequestFullScreen();
+		   }
+		  }
+    </script>	
+    <script>
+        $(document).ready(function() {
+	        $('#submitname').mouseup(function() {
+                firstname = $('#firstname').val();
+                lastname = $('#lastname').val();
+                username = firstname + " " + lastname;
+                if(username != ''){
+                    $('#overlay').remove();
+                    $('.usermeta').prepend(username + '<br>');
+                }
+            });
+	        
+			// activate fullscreen
+			$('#fullscreen').mouseup(function() {
+				if($('#logo a').hasClass('current')){
+					goFullscreen('main_videoplayer');
+				};
+        	});
+			// toggle fullscreen button based on state
+			$('#logo').mouseup(function(event) {
+				$('#fullscreenicon').removeClass('hidden').addClass('active');
+        	});
+			$('#settingsicon, #mapicon').mouseup(function(event) {
+				$('#fullscreenicon').removeClass('active').addClass('hidden');
+        	});
+			$('.user').mouseenter(function(event) {
+				$(this).find(".usermeta").fadeIn("slow");
+				$(this).find(".username").fadeIn("slow");
+        	});
+			$('.user').mouseleave(function(event) {
+				var isShowing = $(this).find(".usermeta").hasClass("usermetashowing");
+				if(!isShowing){
+					$(this).find(".usermeta").fadeOut("slow");
+					$(this).find(".username").fadeOut("slow");
+				}
+        	});
+			$('.username').click(function(event) {
+				console.log('username click');
+				$(this).parent().addClass('usermetashowing');
+				$(this).parent().find('.usermap').fadeIn("slow");
+				$(this).parent().find('.userlocation').fadeIn("slow");
+				
+				$(this).children('.foundicon-location').addClass('closebtn');	
+        	});
+			$('.foundicon-location').click(function(event) {
+				$(this).parent().parent().removeClass('usermetashowing');
+				$(this).parent().fadeOut("slow");
+				$(this).parent().parent().find('.usermap').fadeOut("slow");
+				$(this).parent().parent().find('.userlocation').fadeOut("slow");
+				event.stopPropagation();
+			});
+			$('.avatar').dblclick(function(event) {
+				console.log('dblclick');
+				var tmp = $(this).attr('src');
+				if($('#main_videoplayer').attr('src') == undefined){
+					$('#main_videoplayer').attr('src', tmp);
+				}else{
+					$('#main_videoplayer').attr('src', '');
+				}
+        	});
+
+			// tabs
+            $("#panelholder").organicTabs();
+     });
+    </script>
+</head>
+
+<body>
+	<div id="main">
+		<!-- BEGIN COL1 -->
+		<div id="col1">
+	        <div id="panelholder">
+				<nav class="nav">
+	        	<ul>
+					<li id="logo"><a href="#video" class="current"><img id="logo" src="img/openpath.png" alt="OpenPath"></a></li>
+					<li id="mapicon" class="icon"><a href="#map"><img src="img/map.png" alt="map"></a></li>
+					<li id="fullscreenicon" class="icon active"><img src="img/fullscreen.png" alt="fullscreen" id="fullscreen"></li>
+					<li id="settingsicon" class="icon"><a href="#settings"><img src="img/gear.png" alt="gear"></a></li>
+					<li id="plusicon" class="icon"><a href="#video"><img src="img/plus.png" alt="plus"></a></li>
+                    <li id="loginstatus">Welcome Shawn Van Every <button id="logout" class="graybtn">Logout</button></li>
+	            </ul>
+				</nav>
+	       		<div id="video"><video id="main_videoplayer" width="100%" height="auto" poster="img/poster.png" autoplay controls>
+		        	Your browser does not support the video tag.
+				</video>
+				</div>
+				<div id="settings" class="hide"><h1>settings</h1></div>
+				<div id="map"><div id="bigmap"></div></div>
+			</div>
+		</div>
+		<!-- END COL1 -->
+		<!-- BEGIN COL2 -->
+		<div id="col2">
+            <!-- BEGIN CHAT -->
+            <div id="users">
+	
+	
+	
+			<div class="user">
+            	<div class="usermeta">
+					<div class="username">Shawn Van Every <div class="foundicon-location"><span>X</span></div></div>
+					<div class="userlocation">University Place, NY</div>
+					<div id="usermap1" class="usermap"></div>
+                </div>
+                <video id="self_videoplayer" class="avatar" width="240" height="auto" poster="img/poster.png" autoplay></video>
+            </div>
+			<div class="user">
+            	<div class="usermeta">
+					<div class="username">Shawn Van Every <div class="foundicon-location"><span>X</span></div></div>
+					<div class="userlocation">University Place, NY</div>
+					<div id="usermap1" class="usermap"></div>
+                </div>
+                <video id="self_videoplayer" class="avatar" width="240" height="auto" poster="img/poster.png" autoplay></video>
+            </div>
+			<div class="user">
+            	<div class="usermeta">
+					<div class="username">Shawn Van Every <div class="foundicon-location"><span>X</span></div></div>
+					<div class="userlocation">University Place, NY</div>
+					<div id="usermap1" class="usermap"></div>
+                </div>
+                <video id="self_videoplayer" class="avatar" width="240" height="auto" poster="img/poster.png" autoplay></video>
+            </div>
+			<div class="user">
+            	<div class="usermeta">
+					<div class="username">Shawn Van Every <div class="foundicon-location"><span>X</span></div></div>
+					<div class="userlocation">University Place, NY</div>
+					<div id="usermap1" class="usermap"></div>
+                </div>
+                <video id="self_videoplayer" class="avatar" width="240" height="auto" poster="img/poster.png" autoplay></video>
+            </div>
+
+
+            </div>
+			<!-- BEGIN CHAT -->
+            <div id="chat">
+            	<div id="chatwindow">
+                	<ol id="chatmessages">
+
+                    </ol>
+       	  	  </div>
+			  <input type="text" id="chatinput" class="commentfield" />
+            </div>
+			<!-- END CHAT -->
+		</div>
+		<!-- END COL2 -->
+		<div class="clearer"></div>
+	</div>
+	
+	<!-- USER LOGIN -->
+    <!--
+	<div id="overlay">
+		<div id="overlaybgd"></div>	
+        <div id="loginbox">
+			<h1>Welcome to Open Path</h1>
+			<h2>Learn Face to Place</h2>
+			  <div class="twocol">
+              <div class="col1">
+			  <label for="firstname">First Name</label>
+			  <input type="text" name="firstname" id="firstname" class="tfield">
+			  </div>
+			  <div class="col2">
+			  <label for="lastname">Last Name</label>
+			  <input type="text" name="lastname" id="lastname" class="tfield">
+			  </div>
+			  <div class="clearer"></div>
+			  <input type="submit" name="button" id="submitname" value="Submit"> 
+            </div>
+			  <p>Invite others to join:</p>
+			  <ul class="icons">
+                <li><a href="#"><img src="img/facebook.png" alt="Facebook"></a></li>
+                <li><a href="#"><img src="img/twitter.png" alt="Twitter"></a></li>
+                <li><a href="#"><img src="img/email.png" alt="Email"></a></li>			      
+			  </ul>
+		</div>
+    </div>
+	-->
+</body>
+</html>
