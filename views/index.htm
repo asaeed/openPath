@@ -5,6 +5,7 @@
     <title>OpenPath</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<link href="http://fonts.googleapis.com/css?family=PT+Sans:400,700" rel="stylesheet" type="text/css">
+	<link href="css/persona-buttons.css" rel="stylesheet" type="text/css">
 	<!--[if lt IE 9]>
 	<script src="js/html5shiv.js"></script>
 	<![endif]-->
@@ -27,29 +28,81 @@
         .col1,.col2,.col3{font-size:18px; float:left; width:300px; text-align:center; margin-right:30px;}
         .col1 img, .col2 img, .col3 img{max-width:100%; height:auto;}
         .clearer{clear:both;}
-        .btn{
-            text-shadow: 2px 2px rgba(0,0,0,0.3);
-            color:#fff; display:inline-block; text-decoration:none; background:#0f0; padding:12px 35px; border-radius:2px;
-            background: #4baae0; /* Old browsers */
-            background: -moz-linear-gradient(top, #4baae0 0%, #3e9ed5 100%); /* FF3.6+ */
-            background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#4baae0), color-stop(100%,#3e9ed5)); /* Chrome,Safari4+ */
-            background: -webkit-linear-gradient(top, #4baae0 0%,#3e9ed5 100%); /* Chrome10+,Safari5.1+ */
-            background: -o-linear-gradient(top, #4baae0 0%,#3e9ed5 100%); /* Opera 11.10+ */
-            background: -ms-linear-gradient(top, #4baae0 0%,#3e9ed5 100%); /* IE10+ */
-            background: linear-gradient(to bottom, #4baae0 0%,#3e9ed5 100%); /* W3C */
-            filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#4baae0', endColorstr='#3e9ed5',GradientType=0 ); /* IE6-9 */
-            box-shadow: 5px 5px 5px rgba(0,0,0,0.3);
-        }
+        .graybtn{
+	        cursor:pointer;
+	        text-shadow: 2px 2px rgba(0,0,0,0.3);
+	        color:#fff; display:inline-block; text-decoration:none; background:#0f0; padding:6px 25px; border-radius:2px;
+	        background: #bfbfbf; /* Old browsers */
+	        background: -moz-linear-gradient(top,  #bfbfbf 0%, #888888 100%); /* FF3.6+ */
+	        background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#bfbfbf), color-stop(100%,#888888)); /* Chrome,Safari4+ */
+	        background: -webkit-linear-gradient(top,  #bfbfbf 0%,#888888 100%); /* Chrome10+,Safari5.1+ */
+	        background: -o-linear-gradient(top,  #bfbfbf 0%,#888888 100%); /* Opera 11.10+ */
+	        background: -ms-linear-gradient(top,  #bfbfbf 0%,#888888 100%); /* IE10+ */
+	        background: linear-gradient(to bottom,  #bfbfbf 0%,#888888 100%); /* W3C */
+	        filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#bfbfbf', endColorstr='#888888',GradientType=0 ); /* IE6-9 */
+	    }
+		.btn{
+	        cursor:pointer;
+	        text-shadow: 2px 2px rgba(0,0,0,0.3);
+	        color:#fff; display:inline-block; text-decoration:none; background:#0f0; padding:6px 25px; border-radius:2px;
+	        background: #4baae0; /* Old browsers */
+	        background: -moz-linear-gradient(top, #4baae0 0%, #3e9ed5 100%); /* FF3.6+ */
+	        background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#4baae0), color-stop(100%,#3e9ed5)); /* Chrome,Safari4+ */
+	        background: -webkit-linear-gradient(top, #4baae0 0%,#3e9ed5 100%); /* Chrome10+,Safari5.1+ */
+	        background: -o-linear-gradient(top, #4baae0 0%,#3e9ed5 100%); /* Opera 11.10+ */
+	        background: -ms-linear-gradient(top, #4baae0 0%,#3e9ed5 100%); /* IE10+ */
+	        background: linear-gradient(to bottom, #4baae0 0%,#3e9ed5 100%); /* W3C */
+	        filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#4baae0', endColorstr='#3e9ed5',GradientType=0 ); /* IE6-9 */
+	        box-shadow: 5px 5px 5px rgba(0,0,0,0.3);
+	    }
+		.loginoptions{width:90%; text-align:center;}
+		.option1 p{font-size:12px; margin:0; padding:0;}
+		.or{text-align:center; padding:10px 0;}
+		input.invite{
+			font-size:18px;
+			padding:8px;
+			margin-bottom:10px;
+			border-radius:5px;
+			width:270px;
+		}
+		#invitations .btn{float:right;}
 	</style>
+	<script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
+	<script>
+	$(document).ready(function() {
+	
+	});
+	</script>
 </head>
 <body>
 <header id="mainheader">
     <div class="inner">
-        <div id="intro">
+		<div id="intro">
             <img id="logo" src="img/home/openpath.png" alt="OpenPath">
-            <h1>What do you want to learn?</h1>
-            <p>OpenPath is your key to exhibits, tours, and special events tailored to your goals.</p>
-            <a class="btn" href="main.htm">Sign in with Persona</a> or <a class="btn" href="main.htm">Sign in as Guest</a>
+
+			<!-- LOGIN -->
+			
+			<div id="login">
+	            <h1>What do you want to learn?</h1>
+	            <p>OpenPath is your key to exhibits, tours, and special events tailored to your goals.</p>
+				<div class="loginoptions">
+				<div class="option1"><a href="main.htm" class="persona-button"><span>Sign in with Persona</span></a><p>(Hey! A more personalized experience)</p></div>
+				<div class="or">or</div>
+				<div class="option2"><a class="graybtn" href="main.htm">Sign in as Guest</a></div>
+				</div>
+			</div>
+			
+			<!-- INVITES -->
+			<!--
+			<div id="invitations">
+				<p>Invite up to 5 others to join your session!</p>
+				<ol>
+					<li><input type="text" id="invite1" class="invite" placeholder="email 1" /></li>
+					<li><input type="text" id="invite2" class="invite" placeholder="email 2" /></li>
+				</ol>
+				<a class="btn" href="main.htm">Invite</a>
+			</div>
+			-->
         </div>
         <div id="monitor"><img src="img/home/monitor.png" alt=""></div>
     </div>
