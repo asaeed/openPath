@@ -1,10 +1,10 @@
-<!DOCTYPE html>
-<html>
-<head>
-	<meta charset="UTF-8">
-	<title>OPEN PATH</title>
-    <link href="http://fonts.googleapis.com/css?family=PT+Sans:400,700" rel="stylesheet" type="text/css">
-    <link rel="stylesheet" href="css/general_foundicons.css">
+{% extends 'layout.html' %}
+
+{% block title %}openPath{% endblock %}
+
+{% block head %}
+    {% parent %}
+	<link rel="stylesheet" href="css/general_foundicons.css">
 	<link rel="stylesheet" href="css/style.css" />
 	<link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.5/leaflet.css" />
 	 <!--[if lte IE 8]>
@@ -253,87 +253,89 @@
             $("#panelholder").organicTabs();
      });
     </script>
-</head>
+{% endblock %}
 
-<body>
-	<div id="main">
-		<!-- BEGIN COL1 -->
-		<div id="col1">
-	        <div id="panelholder">
-				<nav class="nav">
-	        	<ul>
-					<li id="logo"><a href="#video" class="current"><img id="logo" src="img/openpath.png" alt="OpenPath"></a></li>
-					<li id="mapicon" class="icon"><a href="#map"><img src="img/map.png" alt="map"></a></li>
-					<li id="fullscreenicon" class="icon active"><img src="img/fullscreen.png" alt="fullscreen" id="fullscreen"></li>
-					<li id="settingsicon" class="icon"><a href="#settings"><img src="img/gear.png" alt="gear"></a></li>
-					<li id="plusicon" class="icon"><a href="#video"><img src="img/plus.png" alt="plus"></a></li>
-                    <li id="loginstatus">Welcome Shawn Van Every <button id="logout" class="graybtn">Logout</button></li>
-	            </ul>
-				</nav>
-	       		<div id="video"><video id="main_videoplayer" width="100%" height="auto" poster="img/poster.png" autoplay controls>
-		        	Your browser does not support the video tag.
-				</video>
-				</div>
-				<div id="settings" class="hide"><h1>settings</h1></div>
-				<div id="map"><div id="bigmap"></div></div>
+{% block content %}
+
+<div id="main">
+	<!-- BEGIN COL1 -->
+	<div id="col1">
+        <div id="panelholder">
+			<nav class="nav">
+        	<ul>
+				<li id="logo"><a href="#video" class="current"><img id="logo" src="img/openpath.png" alt="OpenPath"></a></li>
+				<li id="mapicon" class="icon"><a href="#map"><img src="img/map.png" alt="map"></a></li>
+				<li id="fullscreenicon" class="icon active"><img src="img/fullscreen.png" alt="fullscreen" id="fullscreen"></li>
+				<li id="settingsicon" class="icon"><a href="#settings"><img src="img/gear.png" alt="gear"></a></li>
+				<li id="plusicon" class="icon"><a href="#video"><img src="img/plus.png" alt="plus"></a></li>
+                <li id="loginstatus">Welcome Shawn Van Every <button id="logout" class="graybtn">Logout</button></li>
+            </ul>
+			</nav>
+       		<div id="video"><video id="main_videoplayer" width="100%" height="auto" poster="img/poster.png" autoplay controls>
+	        	Your browser does not support the video tag.
+			</video>
 			</div>
+			<div id="settings" class="hide"><h1>settings</h1></div>
+			<div id="map"><div id="bigmap"></div></div>
 		</div>
-		<!-- END COL1 -->
-		<!-- BEGIN COL2 -->
-		<div id="col2">
-            <!-- BEGIN CHAT -->
-            <div id="users">
-	
-	
-	
-			<div class="user">
-            	<div class="usermeta">
-					<div class="username">Shawn Van Every <div class="foundicon-location"><span>X</span></div></div>
-					<div class="userlocation">University Place, NY</div>
-					<div id="usermap1" class="usermap"></div>
-                </div>
-                <video id="self_videoplayer" class="avatar" width="240" height="auto" poster="img/poster.png" autoplay></video>
-            </div>
-			<div class="user">
-            	<div class="usermeta">
-					<div class="username">Shawn Van Every <div class="foundicon-location"><span>X</span></div></div>
-					<div class="userlocation">University Place, NY</div>
-					<div id="usermap1" class="usermap"></div>
-                </div>
-                <video id="self_videoplayer" class="avatar" width="240" height="auto" poster="img/poster.png" autoplay></video>
-            </div>
-			<div class="user">
-            	<div class="usermeta">
-					<div class="username">Shawn Van Every <div class="foundicon-location"><span>X</span></div></div>
-					<div class="userlocation">University Place, NY</div>
-					<div id="usermap1" class="usermap"></div>
-                </div>
-                <video id="self_videoplayer" class="avatar" width="240" height="auto" poster="img/poster.png" autoplay></video>
-            </div>
-			<div class="user">
-            	<div class="usermeta">
-					<div class="username">Shawn Van Every <div class="foundicon-location"><span>X</span></div></div>
-					<div class="userlocation">University Place, NY</div>
-					<div id="usermap1" class="usermap"></div>
-                </div>
-                <video id="self_videoplayer" class="avatar" width="240" height="auto" poster="img/poster.png" autoplay></video>
-            </div>
-
-
-            </div>
-			<!-- BEGIN CHAT -->
-            <div id="chat">
-            	<div id="chatwindow">
-                	<ol id="chatmessages">
-
-                    </ol>
-       	  	  </div>
-			  <input type="text" id="chatinput" class="commentfield" />
-            </div>
-			<!-- END CHAT -->
-		</div>
-		<!-- END COL2 -->
-		<div class="clearer"></div>
 	</div>
-</body>
-</html>
+	<!-- END COL1 -->
+	<!-- BEGIN COL2 -->
+	<div id="col2">
+        <!-- BEGIN CHAT -->
+        <div id="users">
+
+
+
+		<div class="user">
+        	<div class="usermeta">
+				<div class="username">Shawn Van Every <div class="foundicon-location"><span>X</span></div></div>
+				<div class="userlocation">University Place, NY</div>
+				<div id="usermap1" class="usermap"></div>
+            </div>
+            <video id="self_videoplayer" class="avatar" width="240" height="auto" poster="img/poster.png" autoplay></video>
+        </div>
+		<div class="user">
+        	<div class="usermeta">
+				<div class="username">Shawn Van Every <div class="foundicon-location"><span>X</span></div></div>
+				<div class="userlocation">University Place, NY</div>
+				<div id="usermap1" class="usermap"></div>
+            </div>
+            <video id="self_videoplayer" class="avatar" width="240" height="auto" poster="img/poster.png" autoplay></video>
+        </div>
+		<div class="user">
+        	<div class="usermeta">
+				<div class="username">Shawn Van Every <div class="foundicon-location"><span>X</span></div></div>
+				<div class="userlocation">University Place, NY</div>
+				<div id="usermap1" class="usermap"></div>
+            </div>
+            <video id="self_videoplayer" class="avatar" width="240" height="auto" poster="img/poster.png" autoplay></video>
+        </div>
+		<div class="user">
+        	<div class="usermeta">
+				<div class="username">Shawn Van Every <div class="foundicon-location"><span>X</span></div></div>
+				<div class="userlocation">University Place, NY</div>
+				<div id="usermap1" class="usermap"></div>
+            </div>
+            <video id="self_videoplayer" class="avatar" width="240" height="auto" poster="img/poster.png" autoplay></video>
+        </div>
+
+
+        </div>
+		<!-- BEGIN CHAT -->
+        <div id="chat">
+        	<div id="chatwindow">
+            	<ol id="chatmessages">
+
+                </ol>
+   	  	  </div>
+		  <input type="text" id="chatinput" class="commentfield" />
+        </div>
+		<!-- END CHAT -->
+	</div>
+	<!-- END COL2 -->
+	<div class="clearer"></div>
+</div>
+
+
+{% endblock %}

@@ -5,8 +5,13 @@
   <title>{% block title %}My Site{% endblock %}</title>
 
   {% block head %}
-  <link rel="stylesheet" href="stylesheets/style.css">
-
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link href="http://fonts.googleapis.com/css?family=PT+Sans:400,700" rel="stylesheet" type="text/css">
+	<link href="css/persona-buttons.css" rel="stylesheet" type="text/css">
+	<!--[if lt IE 9]>
+	<script src="js/html5shiv.js"></script>
+	<![endif]-->
+  <script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
   <script src="https://login.persona.org/include.js"></script>
   <script>
 
@@ -96,13 +101,12 @@
   {% endblock %}
 </head>
 <body>
-
+  {% block content %}
   <h1>Hello, openPath</h1>
   <p>Current user is: <span id="user">logged out</span></p>
   <button id="login">Login with Persona</button>
   <button id="guest">Enter as Guest</button>
   <button id="logout" disabled="disabled">Logout</button>
-
-  {% block content %}{% endblock %}
+  {% endblock %}
 </body>
 </html>

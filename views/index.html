@@ -1,19 +1,68 @@
-
-
 {% extends 'layout.html' %}
 
 {% block title %}openPath{% endblock %}
 
 {% block head %}
     {% parent %}
-    <link rel="stylesheet" href="stylesheets/style.css">
-
-
+	<link href="css/home.css" rel="stylesheet" type="text/css">
 {% endblock %}
 
 {% block content %}
 
-<p>This is the landing page...</p>
+<header id="mainheader">
+    <div class="inner">
+		<div id="intro">
+            <img id="logo" src="img/home/openpath.png" alt="OpenPath">
 
-
+			<!-- LOGIN -->
+			
+			<div id="login">
+	            <h1>What do you want to learn?</h1>
+	            <p>OpenPath is your key to exhibits, tours, and special events tailored to your goals.</p>
+				<div class="loginoptions">
+				<div class="option1"><a id="login" class="persona-button"><span>Sign in with Persona</span></a><p>(Hey! A more personalized experience)</p></div>
+				<div class="or">or</div>
+				<div class="option2"><a id="guest" class="graybtn">Sign in as Guest</a></div>
+				</div>
+			</div>
+			
+			<!-- INVITES -->
+			<!--
+			<div id="invitations">
+				<p>Invite up to 5 others to join your session!</p>
+				<ol>
+					<li><input type="text" id="invite1" class="invite" placeholder="email 1" /></li>
+					<li><input type="text" id="invite2" class="invite" placeholder="email 2" /></li>
+				</ol>
+				<a class="btn" href="main.htm">Invite</a>
+			</div>
+			-->
+        </div>
+        <div id="monitor"><img src="img/home/monitor.png" alt=""></div>
+    </div>
+</header>
+<div class="row">
+			<div class="col1">
+				<h2>Learn together</h2>
+				<hr>
+				<p>We learn better when we learn together. Find people with shared interests, goals, and expertise.</p>
+				<hr>
+				<img src="img/home/learn-together.png" alt="Learn Together">
+			</div>
+			<div class="col2">
+				<h2>Never miss a chance to learn</h2>
+				<hr>
+				<p>Get relevant notifications about learning opportunities in your community and online.</p>
+				<hr>
+				<img src="img/home/never-miss.png" alt="Never Miss">
+			</div>
+			<div class="col3">
+				<h2>No downloads, no hassles</h2>
+				<hr>
+				<p>Stream and share high-quality video in your web browser over next-generation networks.</p>
+				<hr>
+				<img src="img/home/no-downloads.png" alt="No Downloads">
+			</div>
+            <div class="clearer"></div>
+		</div>
 {% endblock %}
