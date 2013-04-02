@@ -76,6 +76,7 @@ app.all("/events/*", requireLogin, function(req, res, next) {next();});
 //
 
 app.get('/', routes.index);
+app.get('/main', routes.main);
 
 app.post('/auth/status', auth.status);
 app.get('/auth/logout', auth.logout);
