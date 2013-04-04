@@ -53,4 +53,5 @@ input.invite{
 	border-radius:5px;
 	width:270px;
 }
+#invitations{display:none;}
 #invitations .btn{float:right;}

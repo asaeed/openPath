@@ -25,10 +25,14 @@
           xhr.addEventListener("loadend", function(e) {
             var data = JSON.parse(this.responseText);
             if (data && data.status === "okay") {
+			  document.querySelector("#login").style.display = "none";
+			  document.querySelector("#invitations").style.display = "block";
+	/*
               document.querySelector("#user").textContent = data.email;
               document.querySelector("#login").disabled = "disabled";
               document.querySelector("#guest").disabled = "disabled";
               document.querySelector("#logout").disabled = "";
+*/
             }
           }, false);
           xhr.send(JSON.stringify({
@@ -41,14 +45,18 @@
           var xhr = new XMLHttpRequest();
           xhr.open("GET", "/auth/logout", true);
           xhr.addEventListener("loadend", function(e) {
+			alert('logout');
+			window.location = "http://www.openpath.me";
+	/*
             document.querySelector("#user").textContent = "logged out";
             document.querySelector("#login").disabled = "";
             document.querySelector("#guest").disabled = "";
             document.querySelector("#logout").disabled = "disabled";
+*/
           }, false);
           xhr.send();
         }
-
+		//
       });
       
       // actions that happen when one of the three buttons is clicked
