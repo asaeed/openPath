@@ -1,6 +1,6 @@
 {% extends 'layout.html' %}
 
-{% block title %}openPath{% endblock %}
+{% block title %}OpenPath{% endblock %}
 
 {% block head %}
     {% parent %}
@@ -190,16 +190,9 @@
     </script>	
     <script>
         $(document).ready(function() {
-	        $('#submitname').mouseup(function() {
-                firstname = $('#firstname').val();
-                lastname = $('#lastname').val();
-                username = firstname + " " + lastname;
-                if(username != ''){
-                    $('#overlay').remove();
-                    $('.usermeta').prepend(username + '<br>');
-                }
-            });
-	        
+			$('#logout').mouseup(function() {
+				navigator.id.logout();
+			});
 			// activate fullscreen
 			$('#fullscreen').mouseup(function() {
 				if($('#logo a').hasClass('current')){
@@ -239,6 +232,7 @@
 				$(this).parent().parent().find('.userlocation').fadeOut("slow");
 				event.stopPropagation();
 			});
+			// Toggle source of main video
 			$('.avatar').dblclick(function(event) {
 				console.log('dblclick');
 				var tmp = $(this).attr('src');
@@ -268,7 +262,7 @@
 				<li id="fullscreenicon" class="icon active"><img src="img/fullscreen.png" alt="fullscreen" id="fullscreen"></li>
 				<li id="settingsicon" class="icon"><a href="#settings"><img src="img/gear.png" alt="gear"></a></li>
 				<li id="plusicon" class="icon"><a href="#video"><img src="img/plus.png" alt="plus"></a></li>
-                <li id="loginstatus">Welcome Shawn Van Every <button id="logout" class="graybtn">Logout</button></li>
+                <li id="loginstatus">Welcome <span id="mainusername"></span> <button id="logout" class="graybtn">Logout</button></li>
             </ul>
 			</nav>
        		<div id="video"><video id="main_videoplayer" width="100%" height="auto" poster="img/poster.png" autoplay controls>
@@ -284,12 +278,9 @@
 	<div id="col2">
         <!-- BEGIN CHAT -->
         <div id="users">
-
-
-
 		<div class="user">
         	<div class="usermeta">
-				<div class="username">Shawn Van Every <div class="foundicon-location"><span>X</span></div></div>
+				<div class="username"><span id="username1"></span><div class="foundicon-location"><span>X</span></div></div>
 				<div class="userlocation">University Place, NY</div>
 				<div id="usermap1" class="usermap"></div>
             </div>
@@ -297,30 +288,12 @@
         </div>
 		<div class="user">
         	<div class="usermeta">
-				<div class="username">Shawn Van Every <div class="foundicon-location"><span>X</span></div></div>
+				<div class="username"><span id="username2"></span><div class="foundicon-location"><span>X</span></div></div>
 				<div class="userlocation">University Place, NY</div>
 				<div id="usermap1" class="usermap"></div>
             </div>
             <video id="self_videoplayer" class="avatar" width="240" height="auto" poster="img/poster.png" autoplay></video>
         </div>
-		<div class="user">
-        	<div class="usermeta">
-				<div class="username">Shawn Van Every <div class="foundicon-location"><span>X</span></div></div>
-				<div class="userlocation">University Place, NY</div>
-				<div id="usermap1" class="usermap"></div>
-            </div>
-            <video id="self_videoplayer" class="avatar" width="240" height="auto" poster="img/poster.png" autoplay></video>
-        </div>
-		<div class="user">
-        	<div class="usermeta">
-				<div class="username">Shawn Van Every <div class="foundicon-location"><span>X</span></div></div>
-				<div class="userlocation">University Place, NY</div>
-				<div id="usermap1" class="usermap"></div>
-            </div>
-            <video id="self_videoplayer" class="avatar" width="240" height="auto" poster="img/poster.png" autoplay></video>
-        </div>
-
-
         </div>
 		<!-- BEGIN CHAT -->
         <div id="chat">

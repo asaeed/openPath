@@ -2,7 +2,7 @@
 <html>
 <head>
   <meta charset="utf-8">
-  <title>{% block title %}My Site{% endblock %}</title>
+  <title>{% block title %}Open Path{% endblock %}</title>
 
   {% block head %}
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -14,9 +14,8 @@
   <script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
   <script src="https://login.persona.org/include.js"></script>
   <script>
-
+	  var username = "";
 	  navigator.id.watch({
-
         // this is the callback that persona triggers when the user logs in
         onlogin: function(assertion) {
           var xhr = new XMLHttpRequest();
@@ -25,14 +24,21 @@
           xhr.addEventListener("loadend", function(e) {
             var data = JSON.parse(this.responseText);
             if (data && data.status === "okay") {
-			  document.querySelector("#login").style.display = "none";
-			  document.querySelector("#invitations").style.display = "block";
-	/*
-              document.querySelector("#user").textContent = data.email;
-              document.querySelector("#login").disabled = "disabled";
-              document.querySelector("#guest").disabled = "disabled";
-              document.querySelector("#logout").disabled = "";
-*/
+	
+			  var path = window.location.pathname;
+			  if(path == '/'){
+				// ON LOGIN: do homepage handling
+				document.querySelector("#login").style.display = "none";
+				document.querySelector("#invitations").style.display = "block";
+			  }else if(path == '/main'){
+				// ON LOGIN: do main handling
+				// pull username from front of email address and display in interface
+				username = data.email.match(/^([^@]*)@/)[1];
+				document.querySelector("#mainusername").textContent = username;
+				//document.querySelector("#users").innerHTML += '<div class="user"><div class="usermeta"><div class="username"><span id="username1">'+username+'</span><div class="foundicon-location"><span>X</span></div></div><div class="userlocation">University Place, NY</div><div id="usermap1" class="usermap"></div></div><video id="self_videoplayer" class="avatar" width="240" height="auto" poster="img/poster.png" autoplay></video></div>';			
+				
+				document.querySelector("#username1").textContent = username;
+			  }
             }
           }, false);
           xhr.send(JSON.stringify({
@@ -45,76 +51,56 @@
           var xhr = new XMLHttpRequest();
           xhr.open("GET", "/auth/logout", true);
           xhr.addEventListener("loadend", function(e) {
-			alert('logout');
-			window.location = "http://www.openpath.me";
-	/*
-            document.querySelector("#user").textContent = "logged out";
-            document.querySelector("#login").disabled = "";
-            document.querySelector("#guest").disabled = "";
-            document.querySelector("#logout").disabled = "disabled";
-*/
+			console.log('onlogout');
+
+			var path = window.location.pathname;
+			  if(path == '/'){
+				// user is at invite stage
+				document.querySelector("#login").style.display = "block";
+				document.querySelector("#invitations").style.display = "none";
+			  }else if(path == '/main'){
+				// redirect to home 
+				window.location = "/";
+			  }
+			
+			
           }, false);
           xhr.send();
         }
 		//
       });
-      
-      // actions that happen when one of the three buttons is clicked
-      document.addEventListener("DOMContentLoaded", function() {
 
-        document.querySelector("#login").addEventListener("click", function() {
-          navigator.id.request();
-        }, false);
-
-        document.querySelector("#logout").addEventListener("click", function() {
-          navigator.id.logout();
-        }, false);
-
-        document.querySelector("#guest").addEventListener("click", function() {
-          var xhr = new XMLHttpRequest();
-          xhr.open("GET", "/auth/guest", true);
-          xhr.addEventListener("loadend", function(e) {
-            var data = JSON.parse(this.responseText);
-            if (data && data.status === "okay") {
-              document.querySelector("#user").textContent = data.email;
-              document.querySelector("#login").disabled = "disabled";
-              document.querySelector("#guest").disabled = "disabled";
-              document.querySelector("#logout").disabled = "";
-            }
-          }, false);
-          xhr.send();
-        }, false);
-
-        // call auth/status when page first loads to see if user is logged in already
-        var xhr = new XMLHttpRequest();
-          xhr.open("POST", "/auth/status", true);
-          xhr.setRequestHeader("Content-Type", "application/json");
-          xhr.addEventListener("loadend", function(e) {
-            var data = JSON.parse(this.responseText);
-            if (data && data.status === "okay") {
-              document.querySelector("#user").textContent = data.email;
-              document.querySelector("#login").disabled = "disabled";
-              document.querySelector("#guest").disabled = "disabled";
-              document.querySelector("#logout").disabled = "";
-            }
-          }, false);
-          xhr.send(JSON.stringify({
-            //assertion: assertion
-          }));
-
+  // actions that happen when page has loaded
+  document.addEventListener("DOMContentLoaded", function() {
+	
+    // call auth/status when page first loads to see if user is logged in already
+    var xhr = new XMLHttpRequest();
+      xhr.open("POST", "/auth/status", true);
+      xhr.setRequestHeader("Content-Type", "application/json");
+      xhr.addEventListener("loadend", function(e) {
+        var data = JSON.parse(this.responseText);
+		
+        if (data && data.status === "okay") {
+		  var path = window.location.pathname;
+		  if(path == '/'){
+			console.log('ON PAGE: do homepage stuff');
+		  }else if(path == '/main'){
+			console.log('ON PAGE: do main stuff');
+		  }
+        }
       }, false);
+      xhr.send(JSON.stringify({
+        //assertion: assertion
+      }));
 
+  }, false);
   </script>
 
   {% endblock %}
 </head>
 <body>
   {% block content %}
-  <h1>Hello, openPath</h1>
-  <p>Current user is: <span id="user">logged out</span></p>
-  <button id="login">Login with Persona</button>
-  <button id="guest">Enter as Guest</button>
-  <button id="logout" disabled="disabled">Logout</button>
+
   {% endblock %}
 </body>
 </html>
