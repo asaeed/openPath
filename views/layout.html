@@ -26,12 +26,15 @@
             if (data && data.status === "okay") {
 	
 			  var path = window.location.pathname;
+			  console.log('onlogin path: ' + path);
 			  if(path == '/'){
 				// ON LOGIN: do homepage handling
+				console.log('ON LOGIN: do homepage handling');
 				document.querySelector("#login").style.display = "none";
 				document.querySelector("#invitations").style.display = "block";
 			  }else if(path == '/main'){
 				// ON LOGIN: do main handling
+				console.log('ON LOGIN: do main handling');
 				// pull username from front of email address and display in interface
 				username = data.email.match(/^([^@]*)@/)[1];
 				document.querySelector("#mainusername").textContent = username;
@@ -54,6 +57,7 @@
 			console.log('onlogout');
 
 			var path = window.location.pathname;
+			 console.log('onlogout path: ' + path);
 			  if(path == '/'){
 				// user is at invite stage
 				document.querySelector("#login").style.display = "block";
@@ -67,7 +71,6 @@
           }, false);
           xhr.send();
         }
-		//
       });
 
   // actions that happen when page has loaded

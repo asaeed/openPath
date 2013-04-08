@@ -1,8 +1,6 @@
 	html, body{margin:0; padding:0;}
 	body,td,th {
 		font:14px/16px 'PT Sans', Helvetica, Arial, sans-serif;
-        background:url(../img/mainbgd.jpg) no-repeat;
-        background-size:100% 100%;
 	}
 	#main{max-width:1264px; min-width:480px; height:768px; margin:0 auto; background:#ccc;}
 	#col1{overflow:hidden; position:relative; width:81.012658%; height:auto; max-width:1024px; max-height:768px; /*width:784px; height:588px;*/ float:left; background:#000;}
