@@ -17,9 +17,6 @@
 	nav li#logo a{opacity:0.5;}
 	nav li#logo a:hover, nav li#logo a.current{opacity:1;}
 
-    nav li#loginstatus{float:right; padding:10px 0 0 0; margin-right:20px;}
-    nav li#loginstatus .graybtn{margin-left:10px;}
-
 	nav li.icon{width:3.4179688%; min-width:20px; float:left; margin:10px 0 0 3.90625%;/*40px*/}
 	nav li.icon a{opacity:0.5;}
 	nav li.icon a:hover{opacity:1;}

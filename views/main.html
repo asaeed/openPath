@@ -10,7 +10,6 @@
 	 <!--[if lte IE 8]>
 	     <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.5/leaflet.ie.css" />
 	 <![endif]-->
-    <script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
     <script src='js/organictabs.jquery.js'></script>
 	<script src="http://cdn.leafletjs.com/leaflet-0.5/leaflet.js"></script>
 	<script src="js/webrtc.io.js"></script>
@@ -74,7 +73,6 @@
         var chatwindow = document.getElementById('chatwindow');
         var chatmessages = document.getElementById('chatmessages');
         msg = sanitize(msg);
-        //<li class="person1"><strong>Jared:</strong> Hey this is so clear that i cant tell the difference between the previous demo. <em>11:27am</em></li>
         msg = '<li class="user1"><span>'+ user +'</span>: ' + msg + '</li>';
         chatmessages.innerHTML += msg;
         chatwindow.scrollTop = chatwindow.scrollHeight;
@@ -134,8 +132,8 @@
             latitude = position.coords.latitude;
             longitude = position.coords.longitude;
             
-            console.log('latitude = '+latitude);
-            console.log('longitude = '+longitude);
+            //console.log('latitude = '+latitude);
+            //console.log('longitude = '+longitude);
             
             populateMaps();
         }
@@ -166,9 +164,9 @@
             var osm3 = L.tileLayer(osmUrl);
             
             //var usermap1 = L.map('usermap1', {center: [latitude, longitude], zoom: 13});
-			var usermap1 = L.map('usermap1').setView([42.6746, -73.2407], 13).addLayer(osm1);
+			var usermap1 = L.map('usermap1').setView([latitude, longitude], 13).addLayer(osm1);
 	    	var usermap2 = L.map('usermap2').setView([42.6746, -73.2407], 13).addLayer(osm2);
-			var bigmap = L.map('bigmap').setView([40.7039, -73.9952], 13).addLayer(osm3);
+			var bigmap = L.map('bigmap').setView([latitude, longitude], 13).addLayer(osm3);
             
 			$('#bigmap').addClass('hide'); // apply hide as soon as map is set.
 			
@@ -262,14 +260,16 @@
 				<li id="fullscreenicon" class="icon active"><img src="img/fullscreen.png" alt="fullscreen" id="fullscreen"></li>
 				<li id="settingsicon" class="icon"><a href="#settings"><img src="img/gear.png" alt="gear"></a></li>
 				<li id="plusicon" class="icon"><a href="#video"><img src="img/plus.png" alt="plus"></a></li>
-                <li id="loginstatus">Welcome <span id="mainusername"></span> <button id="logout" class="graybtn">Logout</button></li>
             </ul>
 			</nav>
-       		<div id="video"><video id="main_videoplayer" width="100%" height="auto" poster="img/poster.png" autoplay controls>
+       		<div id="video"><video id="main_videoplayer" width="100%" height="auto" poster="img/poster.png" autoplay>
 	        	Your browser does not support the video tag.
 			</video>
 			</div>
-			<div id="settings" class="hide"><h1>settings</h1></div>
+			<div id="settings" class="hide">
+				<h1>settings</h1>
+				<button id="logout" class="graybtn">Logout</button>
+			</div>
 			<div id="map"><div id="bigmap"></div></div>
 		</div>
 	</div>

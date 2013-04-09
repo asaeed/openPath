@@ -47,12 +47,16 @@ hr{margin: 10px 0; border-bottom:1px solid #f5f4f5; border-top:1px solid #d5d0d5
 .option1 p{font-size:12px; margin:0; padding:0;}
 .or{text-align:center; padding:10px 0;}
 #skip{color:#fff;padding-top: 10px; display: inline-block;}
-input.invite{
+input.invite, input.email{
 	font-size:18px;
 	padding:8px;
 	margin-bottom:10px;
 	border-radius:5px;
 	width:270px;
 }
-#invitations{display:none;}
+
+#guestlogin{padding-top:100px;}
+#guestloginbtn{font: 18px/22px 'PT Sans', sans-serif;}
+
+#invitations, #guestlogin{display:none;}
 #invitations .btn{float:right; margin-left:10px;}
