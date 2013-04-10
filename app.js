@@ -1,4 +1,3 @@
-
 /**
  * Module dependencies.
  */
@@ -72,7 +71,7 @@ app.all("/events/*", requireLogin, function(req, res, next) {next();});
 
 
 //
-// ROUTES
+// ROUTES - make sure to keep up to date
 //
 
 app.get('/', routes.index);
