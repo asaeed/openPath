@@ -1,4 +1,3 @@
-
 var request = require('request')
   , user = require('./user');
 
@@ -38,7 +37,7 @@ exports.status = function authStatus(req, res) {
 
     } else {
 
-      // if not authenticated, is user a guest?
+      // if not authenticated, is user a guest? we should just tell them to login as guest and start from beginning
       if (req.session.email == "guest"){
         console.log("auth status: guest");
         res.json({"email": req.session.email, "status": "okay"});
