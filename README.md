@@ -1,4 +1,8 @@
-Both the User and Session service API's follow the standard "RESTful" setup and include the following methods (tho these will mostly be removed eventually)
+OpenPath's data model is divided into users, sessions, and events.
+So far, we have provided calls for users and sessions only.
+
+Both the User and Session service API's follow the standard "RESTful" setup and include the following methods 
+(these will mostly be removed eventually)
 
 GET   - http://baseurl.com/users 
   - returns the full list of users
