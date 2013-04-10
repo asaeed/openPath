@@ -18,6 +18,7 @@
 	  var showUsername = function(user){
 		 if(user != "guest"){
 			// pull username from front of email address and display in interface
+			// will allow user to change in future version; will store in user data along w prefs
 			username = user.match(/^([^@]*)@/)[1];
 
 			//document.querySelector("#users").innerHTML += '<div class="user"><div class="usermeta"><div class="username"><span id="username1">'+username+'</span><div class="foundicon-location"><span>X</span></div></div><div class="userlocation">University Place, NY</div><div id="usermap1" class="usermap"></div></div><video id="self_videoplayer" class="avatar" width="240" height="auto" poster="img/poster.png" autoplay></video></div>';
