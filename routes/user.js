@@ -120,15 +120,15 @@ exports.findByEmail = function(email, callback) {
     });
 };
 
-exports.updateUserName = function(req, res) {
-    console.log("in here!!");
+exports.updateItemData = function(req, res) {
+    var col = req.params.collection;
     var id = req.params.id;
-    var name = req.params.name;
-    console.log('Updating item: ' + id + ' with name: ' + name);
-    db.collection('users', function(err, collection) {
+    var key = req.params.key;
+    var val = req.params.value;
+    console.log('Updating collection: ' + col + ', id: ' + id + ', field: ' + key + ' with value: ' + val);
+    db.collection(col, function(err, collection) {
         collection.findOne({'_id':new BSON.ObjectID(id)}, function(err, item) {
-            res.send(item);
-            item['name'] = name;
+            item[key] = value;
             collection.update({'_id':new BSON.ObjectID(id)}, item, {safe:true}, function(err, result) {
                 if (err) {
                     console.log('Error updating item: ' + err);
