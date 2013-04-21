@@ -128,7 +128,7 @@ exports.updateItemData = function(req, res) {
     console.log('Updating collection: ' + col + ', id: ' + id + ', field: ' + key + ' with value: ' + val);
     db.collection(col, function(err, collection) {
         collection.findOne({'_id':new BSON.ObjectID(id)}, function(err, item) {
-            item[key] = value;
+            item[key] = val;
             collection.update({'_id':new BSON.ObjectID(id)}, item, {safe:true}, function(err, result) {
                 if (err) {
                     console.log('Error updating item: ' + err);
