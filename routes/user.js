@@ -56,7 +56,7 @@ exports.addItem = function(req, res) {
             }
         });
     });
-}
+};
 
 exports.updateItem = function(req, res) {
     var id = req.params.id;
@@ -74,7 +74,7 @@ exports.updateItem = function(req, res) {
             }
         });
     });
-}
+};
 
 exports.deleteItem = function(req, res) {
     var id = req.params.id;
@@ -89,7 +89,7 @@ exports.deleteItem = function(req, res) {
             }
         });
     });
-}
+};
 
 /*------------------------------------------------------------------*/
 // Custom functions
@@ -108,7 +108,7 @@ exports.addUser = function(email, callback) {
             typeof callback == "function" && callback(returnValue);
         });
     });
-}
+};
 
 exports.findByEmail = function(email, callback) {
     console.log('Retrieving by email: ' + email);
@@ -119,6 +119,28 @@ exports.findByEmail = function(email, callback) {
         });
     });
 };
+
+exports.updateUserName = function(req, res) {
+    console.log("in here!!");
+    var id = req.params.id;
+    var name = req.params.name;
+    console.log('Updating item: ' + id + ' with name: ' + name);
+    db.collection('users', function(err, collection) {
+        collection.findOne({'_id':new BSON.ObjectID(id)}, function(err, item) {
+            res.send(item);
+            item['name'] = name;
+            collection.update({'_id':new BSON.ObjectID(id)}, item, {safe:true}, function(err, result) {
+                if (err) {
+                    console.log('Error updating item: ' + err);
+                    res.send({'error':'An error has occurred'});
+                } else {
+                    console.log('' + result + ' document(s) updated');
+                    res.send(item);
+                }
+            });
+        });
+    });
+}
 
 /*------------------------------------------------------------------*/
 // Populate database with sample data -- Only used once

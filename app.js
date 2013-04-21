@@ -81,11 +81,15 @@ app.post('/auth/status', auth.status);
 app.get('/auth/logout', auth.logout);
 app.get('/auth/guest', auth.guest);
 
+app.put('/users/:id/name/:name', user.updateUserName);
+
 app.get('/users', user.findAll);
 app.get('/users/:id', user.findById);
 app.post('/users', user.addItem);
 app.put('/users/:id', user.updateItem);
 app.delete('/users/:id', user.deleteItem);
+
+
 
 app.get('/sessions', sessionRoute.findAll);
 app.get('/sessions/:id', sessionRoute.findById);
