@@ -1,8 +1,6 @@
 	html, body{margin:0; padding:0;}
 	body,td,th {
 		font:14px/16px 'PT Sans', Helvetica, Arial, sans-serif;
-        background:url(../img/mainbgd.jpg) no-repeat;
-        background-size:100% 100%;
 	}
 	#main{max-width:1264px; min-width:480px; height:768px; margin:0 auto; background:#ccc;}
 	#col1{overflow:hidden; position:relative; width:81.012658%; height:auto; max-width:1024px; max-height:768px; /*width:784px; height:588px;*/ float:left; background:#000;}
@@ -18,9 +16,6 @@
 	nav li#logo{float:left; width:21.679688%; min-width:110px;}
 	nav li#logo a{opacity:0.5;}
 	nav li#logo a:hover, nav li#logo a.current{opacity:1;}
-
-    nav li#loginstatus{float:right; padding:10px 0 0 0; margin-right:20px;}
-    nav li#loginstatus .graybtn{margin-left:10px;}
 
 	nav li.icon{width:3.4179688%; min-width:20px; float:left; margin:10px 0 0 3.90625%;/*40px*/}
 	nav li.icon a{opacity:0.5;}
@@ -100,6 +95,7 @@
     #loginbox h1, #loginbox h2{color:#000; margin:0 0 15px 0; font-weight:normal;}
     #loginbox h1{font-size:36px;}
     #loginbox h2{font-size:24px;}
+	#login{cursor:pointer;}
     
     .twocol{margin-top:40px; width:80%;}
     .twocol label{display:block; margin-bottom:10px;}
