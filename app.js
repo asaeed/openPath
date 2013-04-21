@@ -81,7 +81,7 @@ app.post('/auth/status', auth.status);
 app.get('/auth/logout', auth.logout);
 app.get('/auth/guest', auth.guest);
 
-app.put('/users/:id/name/:name', user.updateUserName);
+app.put('/user/:id/name/:name', user.updateUserName);
 
 app.get('/users', user.findAll);
 app.get('/users/:id', user.findById);
