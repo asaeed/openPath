@@ -10,6 +10,9 @@ var express = require('express')
   , user = require('./routes/user')
   , eventRoute = require('./routes/event')
   , sessionRoute = require('./routes/session')
+
+  , email = require('.routes/email')
+
   , http = require('http')
   , path = require('path')
   , request = require('request');
