@@ -4,15 +4,15 @@ var config = require('../../config');
 var email  = require("emailjs/email");
 
 var server = email.server.connect({
-   user:     config.user, 
-   password: config.password, 
-   host:     config.host, 
+   user:     config.email.user, 
+   password: config.email.password, 
+   host:     config.email.host, 
    ssl:      true
 });
 
-console.log(config.user);
-console.log(config.password);
-console.log(config.host);
+console.log(config.email.user);
+console.log(config.email.password);
+console.log(config.email.host);
 
 var message = {
    text:    "i hope this works", 
