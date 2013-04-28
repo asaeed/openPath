@@ -1,6 +1,6 @@
 
 
-var config = require('../config');
+var config = require('../../config');
 var email  = require("emailjs/email");
 
 var server = email.server.connect({
