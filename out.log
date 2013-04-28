@@ -103,3 +103,499 @@ auth status: guest
 [90mPOST /auth/status [32m200 [90m177ms - 42[0m
 [90mGET /auth/logout [36m302 [90m2ms - 35[0m
 [90mGET / [36m304 [90m2ms[0m
+Server listening on port 8080
+Connected to 'openpathdb' database
+Connected to 'openpathdb' database
+Connected to 'openpathdb' database
+[90mGET / [36m304 [90m24ms[0m
+[90mGET /css/persona-buttons.css [36m304 [90m7ms[0m
+[90mGET /css/home.css [36m304 [90m5ms[0m
+[90mGET /img/home/headerbgd.jpg [36m304 [90m1ms[0m
+[90mGET /img/home/learn-together.png [36m304 [90m3ms[0m
+[90mGET /img/home/never-miss.png [36m304 [90m3ms[0m
+[90mGET /img/home/monitor.png [36m304 [90m2ms[0m
+[90mGET /img/home/openpath.png [36m304 [90m3ms[0m
+[90mGET /img/home/no-downloads.png [36m304 [90m1ms[0m
+auth status: persona
+Retrieving by email: asaeed@gmail.com
+[90mPOST /auth/status [32m200 [90m54ms - 134[0m
+[90mGET http://114.80.155.202:8808/9262/ [33m404 [90m2ms[0m
+[90mGET /robots.txt [33m404 [90m2ms[0m
+[90mGET /manager/html [33m404 [90m1ms[0m
+[90mHEAD / [32m200 [90m3ms - 8.26kb[0m
+[90mGET / [32m200 [90m2ms - 8.26kb[0m
+[90mGET /css/persona-buttons.css [32m200 [90m4ms - 7.58kb[0m
+[90mGET /css/home.css [32m200 [90m4ms - 3.18kb[0m
+[90mGET /img/home/openpath.png [32m200 [90m2ms - 5.63kb[0m
+[90mGET /img/home/learn-together.png [32m200 [90m5ms - 3.34kb[0m
+[90mGET /img/home/never-miss.png [32m200 [90m3ms - 2.86kb[0m
+[90mGET /img/home/no-downloads.png [32m200 [90m30ms - 3.68kb[0m
+[90mGET /img/home/headerbgd.jpg [32m200 [90m591ms - 101.95kb[0m
+[90mGET /img/home/monitor.png [32m200 [90m502ms - 265.59kb[0m
+[90mGET /auth/logout [36m302 [90m4ms - 35[0m
+[90mGET / [36m304 [90m2ms[0m
+[90mGET /auth/logout [36m302 [90m3ms - 35[0m
+[90mGET / [36m304 [90m1ms[0m
+Server listening on port 8080
+Connected to 'openpathdb' database
+Connected to 'openpathdb' database
+Connected to 'openpathdb' database
+[90mGET / [32m200 [90m25ms - 8.35kb[0m
+[90mGET /css/home.css [36m304 [90m8ms[0m
+[90mGET /css/persona-buttons.css [36m304 [90m5ms[0m
+[90mGET /img/home/headerbgd.jpg [36m304 [90m1ms[0m
+[90mGET /img/home/monitor.png [36m304 [90m2ms[0m
+[90mGET /img/home/openpath.png [36m304 [90m2ms[0m
+[90mGET /img/home/learn-together.png [36m304 [90m2ms[0m
+[90mGET /img/home/never-miss.png [36m304 [90m1ms[0m
+[90mGET /img/home/no-downloads.png [36m304 [90m0ms[0m
+auth status: persona
+Retrieving by email: asaeed@gmail.com
+[90mPOST /auth/status [32m200 [90m155ms - 134[0m
+session email: asaeed@gmail.com
+Retrieving item: 5171a61a1a719e4a04000010
+[90mGET /users/5171a61a1a719e4a04000010 [32m200 [90m5ms - 84[0m
+session email: asaeed@gmail.com
+Updating item: 5171a61a1a719e4a04000010
+{}
+1 document(s) updated
+[90mPUT /users/5171a61a1a719e4a04000010 [32m200 [90m7ms - 2[0m
+session email: asaeed@gmail.com
+Retrieving item: 5171a61a1a719e4a04000010
+[90mGET /users/5171a61a1a719e4a04000010 [32m200 [90m5ms - 39[0m
+session email: asaeed@gmail.com
+Updating item: 5171a61a1a719e4a04000010
+{"_id":"5171a61a1a719e4a04000010","new field":"yeah","name":"blahblahaaaaa"}
+Error updating item: MongoError: cannot change _id of a document old:{ _id: ObjectId('5171a61a1a719e4a04000010') } new:{ _id: "5171a61a1a719e4a04000010", new field: "yeah", name: "blahblahaaaaa" }
+[90mPUT /users/5171a61a1a719e4a04000010 [32m200 [90m90ms - 38[0m
+session email: asaeed@gmail.com
+Updating item: 5171a61a1a719e4a04000010
+{"new field":"yeah","name":"blahblahaaaaa"}
+1 document(s) updated
+[90mPUT /users/5171a61a1a719e4a04000010 [32m200 [90m4ms - 52[0m
+session email: asaeed@gmail.com
+Updating item: 5171a61a1a719e4a04000010
+{}
+1 document(s) updated
+[90mPUT /users/5171a61a1a719e4a04000010 [32m200 [90m3ms - 2[0m
+session email: asaeed@gmail.com
+Retrieving item: 5171a61a1a719e4a04000010
+[90mGET /users/5171a61a1a719e4a04000010 [32m200 [90m2ms - 39[0m
+session email: asaeed@gmail.com
+Updating item: 5171a61a1a719e4a04000010
+{}
+1 document(s) updated
+[90mPUT /users/5171a61a1a719e4a04000010 [32m200 [90m3ms - 2[0m
+session email: asaeed@gmail.com
+Retrieving item: 5171a61a1a719e4a04000010
+[90mGET /users/5171a61a1a719e4a04000010 [32m200 [90m5ms - 39[0m
+session email: asaeed@gmail.com
+Retrieving item: 5171a61a1a719e4a04000010
+[90mGET /users/5171a61a1a719e4a04000010 [32m200 [90m2ms - 39[0m
+session email: asaeed@gmail.com
+Updating item: 5171a61a1a719e4a04000010
+{"new field":"yeah","name":"blahblahaaaaa"}
+1 document(s) updated
+[90mPUT /users/5171a61a1a719e4a04000010 [32m200 [90m5ms - 52[0m
+session email: asaeed@gmail.com
+Retrieving item: 5171a61a1a719e4a04000010
+[90mGET /users/5171a61a1a719e4a04000010 [32m200 [90m5ms - 89[0m
+session email: asaeed@gmail.com
+Updating item: 5171a61a1a719e4a04000010
+{"_id":"5171a61a1a719e4a04000010","new field":"yeah","name":"blahblahaaaaa"}
+Error updating item: MongoError: cannot change _id of a document old:{ _id: ObjectId('5171a61a1a719e4a04000010'), new field: "yeah", name: "blahblahaaaaa" } new:{ _id: "5171a61a1a719e4a04000010", new field: "yeah", name: "blahblahaaaaa" }
+[90mPUT /users/5171a61a1a719e4a04000010 [32m200 [90m6ms - 38[0m
+[90mGET http://gameframe.net/headers [33m404 [90m2ms[0m
+[90mGET http://gameframe.net/headers [33m404 [90m3ms[0m
+[90mGET /manager/html [33m404 [90m25ms[0m
+[90mGET http://114.80.155.202:8808/9262/ [33m404 [90m1ms[0m
+[90mHEAD / [32m200 [90m3ms - 8.35kb[0m
+[90mGET /user/soapCaller.bs [33m404 [90m2ms[0m
+[90mHEAD /manager/status [33m404 [90m1ms[0m
+[90mHEAD /manager/status [33m404 [90m2ms[0m
+[90mGET /pitchphotos/landingpage.png [33m404 [90m2ms[0m
+[90mGET / [32m200 [90m3ms - 8.35kb[0m
+[90mGET /css/home.css [36m304 [90m2ms[0m
+[90mGET /css/persona-buttons.css [36m304 [90m1ms[0m
+[90mGET /img/home/headerbgd.jpg [36m304 [90m1ms[0m
+[90mGET /img/home/monitor.png [36m304 [90m3ms[0m
+[90mGET /img/home/openpath.png [36m304 [90m4ms[0m
+[90mGET /img/home/never-miss.png [36m304 [90m3ms[0m
+[90mGET /img/home/learn-together.png [36m304 [90m3ms[0m
+[90mGET /img/home/no-downloads.png [36m304 [90m1ms[0m
+[90mGET / [36m304 [90m2ms[0m
+[90mGET /css/persona-buttons.css [36m304 [90m1ms[0m
+[90mGET /css/home.css [36m304 [90m2ms[0m
+[90mGET /img/home/headerbgd.jpg [36m304 [90m1ms[0m
+[90mGET /img/home/monitor.png [36m304 [90m5ms[0m
+[90mGET /img/home/openpath.png [36m304 [90m5ms[0m
+[90mGET /img/home/learn-together.png [36m304 [90m3ms[0m
+[90mGET /img/home/never-miss.png [36m304 [90m4ms[0m
+[90mGET /img/home/no-downloads.png [36m304 [90m1ms[0m
+auth status: persona
+Retrieving by email: asaeed@gmail.com
+[90mPOST /auth/status [32m200 [90m143ms - 134[0m
+[90mHEAD / [32m200 [90m1ms - 8.35kb[0m
+[90mGET / [32m200 [90m2ms - 8.35kb[0m
+[90mGET http://server5.cyberpods.net/azenv.php [33m404 [90m1ms[0m
+[90mGET http://114.80.155.202:8808/9262/ [33m404 [90m0ms[0m
+[90mGET http://server5.cyberpods.net/azenv.php [33m404 [90m1ms[0m
+[90mGET /robots.txt [33m404 [90m1ms[0m
+[90mGET / [32m200 [90m2ms - 8.35kb[0m
+[90mGET /css/home.css [32m200 [90m5ms - 3.18kb[0m
+[90mGET /auth/logout [36m302 [90m3ms - 35[0m
+[90mGET / [32m200 [90m2ms - 8.35kb[0m
+[90mGET / [32m200 [90m1ms - 8.35kb[0m
+[90mGET /robots.txt [33m404 [90m1ms[0m
+[90mGET /ctc/servlet/ConfigServlet?param=com.sap.ctc.util.FileSystemConfig;EXECUTE_CMD;CMDLINE=id [33m404 [90m1ms[0m
+[90mGET /servlet/ConfigServlet?param=com.sap.ctc.util.FileSystemConfig;EXECUTE_CMD;CMDLINE=id [33m404 [90m2ms[0m
+[90mGET /ctc/servlet/ConfigServlet?param=com.sap.ctc.util.FileSystemConfig;EXECUTE_CMD;CMDLINE=id [33m404 [90m2ms[0m
+[90mGET / [32m200 [90m25ms - 8.35kb[0m
+[90mGET /robots.txt [33m404 [90m1ms[0m
+[90mGET / [32m200 [90m2ms - 8.35kb[0m
+[90mGET / [32m200 [90m6ms - 8.35kb[0m
+session email: undefined
+[90mGET /users/5171a61a1a719e4a04000010 [36m302 [90m2ms - 35[0m
+[90mGET / [32m200 [90m2ms - 8.35kb[0m
+session email: undefined
+[90mGET /users/5171a61a1a719e4a04000010 [36m302 [90m2ms - 58[0m
+[90mGET / [36m304 [90m1ms[0m
+[90mGET /css/persona-buttons.css [32m200 [90m3ms - 7.58kb[0m
+[90mGET /img/home/openpath.png [32m200 [90m2ms - 5.63kb[0m
+[90mGET /manager/html [33m404 [90m1ms[0m
+[90mGET /manager/html [33m404 [90m1ms[0m
+[90mGET /twiki/bin/configure?action=image;image=%7Cid%7C;type=text [33m404 [90m2ms[0m
+[90mGET /wiki/bin/configure?action=image;image=%7Cid%7C;type=text [33m404 [90m2ms[0m
+[90mGET /twiki-old/bin/configure?action=image;image=%7Cid%7C;type=text [33m404 [90m1ms[0m
+[90mGET /site/twiki/bin/configure?action=image;image=%7Cid%7C;type=text [33m404 [90m1ms[0m
+[90mGET / [32m200 [90m2ms - 8.35kb[0m
+[90mHEAD / [32m200 [90m39ms - 8.35kb[0m
+[90mGET / [32m200 [90m2ms - 8.35kb[0m
+[90mGET /css/persona-buttons.css [32m200 [90m1ms - 7.58kb[0m
+[90mGET /css/home.css [32m200 [90m1ms - 3.18kb[0m
+[90mGET /img/home/openpath.png [32m200 [90m2ms - 5.63kb[0m
+[90mGET /img/home/learn-together.png [32m200 [90m2ms - 3.34kb[0m
+[90mGET /img/home/never-miss.png [32m200 [90m1ms - 2.86kb[0m
+[90mGET /img/home/no-downloads.png [32m200 [90m2ms - 3.68kb[0m
+[90mGET /img/home/monitor.png [32m200 [90m2039ms - 265.59kb[0m
+[90mGET /img/home/headerbgd.jpg [32m200 [90m2ms - 101.95kb[0m
+[90mGET /auth/logout [36m302 [90m0ms - 58[0m
+[90mGET / [36m304 [90m1ms[0m
+auth status: persona
+Retrieving by email: jaredlamenzo@gmail.com
+[90mPOST /auth/status [32m200 [90m159ms - 140[0m
+[90mGET /main [32m200 [90m5ms - 14.92kb[0m
+[90mGET /css/persona-buttons.css [36m304 [90m1ms[0m
+[90mGET /css/general_foundicons.css [32m200 [90m2ms - 3.09kb[0m
+[90mGET /css/style.css [32m200 [90m1ms - 6.91kb[0m
+[90mGET /js/organictabs.jquery.js [32m200 [90m2ms - 2.72kb[0m
+[90mGET /js/webrtc.io.js [32m200 [90m1ms - 7.4kb[0m
+[90mGET /img/openpath.png [32m200 [90m2ms - 2.85kb[0m
+[90mGET /img/map.png [32m200 [90m2ms - 1.35kb[0m
+[90mGET /img/fullscreen.png [32m200 [90m3ms - 1.59kb[0m
+[90mGET /img/gear.png [32m200 [90m2ms - 1.61kb[0m
+[90mGET /img/plus.png [32m200 [90m1ms - 1.07kb[0m
+[90mGET /img/poster.png [32m200 [90m1ms - 5.65kb[0m
+auth status: persona
+Retrieving by email: jaredlamenzo@gmail.com
+[90mPOST /auth/status [32m200 [90m161ms - 140[0m
+[90mGET / [32m200 [90m2ms - 8.35kb[0m
+[90mGET /css/persona-buttons.css [32m200 [90m2ms - 7.58kb[0m
+[90mGET /css/home.css [32m200 [90m1ms - 3.18kb[0m
+[90mGET /img/home/openpath.png [32m200 [90m1ms - 5.63kb[0m
+[90mGET /img/home/learn-together.png [32m200 [90m2ms - 3.34kb[0m
+[90mGET /img/home/never-miss.png [32m200 [90m1ms - 2.86kb[0m
+[90mGET /img/home/no-downloads.png [32m200 [90m2ms - 3.68kb[0m
+[90mGET /img/home/headerbgd.jpg [32m200 [90m2ms - 101.95kb[0m
+[90mGET /img/home/monitor.png [32m200 [90m2792ms - 265.59kb[0m
+[90mGET /auth/logout [36m302 [90m1ms - 58[0m
+[90mGET / [36m304 [90m5ms[0m
+[90mGET /manager/html [33m404 [90m2ms[0m
+[90mGET /manager/html [33m404 [90m0ms[0m
+auth status: persona
+Retrieving by email: asaeed@gmail.com
+[90mPOST /auth/status [32m200 [90m150ms - 134[0m
+[90mGET / [32m200 [90m4ms - 8.35kb[0m
+[90mGET /css/persona-buttons.css [32m200 [90m2ms - 7.58kb[0m
+[90mGET /css/home.css [32m200 [90m1ms - 3.18kb[0m
+[90mGET /img/home/openpath.png [32m200 [90m3ms - 5.63kb[0m
+[90mGET /img/home/learn-together.png [32m200 [90m4ms - 3.34kb[0m
+[90mGET /img/home/never-miss.png [32m200 [90m1ms - 2.86kb[0m
+[90mGET /img/home/no-downloads.png [32m200 [90m1ms - 3.68kb[0m
+[90mGET /img/home/monitor.png [32m200 [90m1463ms - 265.59kb[0m
+[90mGET /img/home/headerbgd.jpg [32m200 [90m2ms - 101.95kb[0m
+[90mGET /auth/logout [36m302 [90m1ms - 35[0m
+[90mGET / [36m304 [90m3ms[0m
+auth status: persona
+Retrieving by email: jaredlamenzo@gmail.com
+[90mPOST /auth/status [32m200 [90m173ms - 140[0m
+[90mGET /main [32m200 [90m2ms - 14.92kb[0m
+[90mGET /main [32m200 [90m1ms - 14.92kb[0m
+[90mGET /css/persona-buttons.css [36m304 [90m2ms[0m
+[90mGET /css/general_foundicons.css [32m200 [90m2ms - 3.09kb[0m
+[90mGET /css/style.css [32m200 [90m2ms - 6.91kb[0m
+[90mGET /js/organictabs.jquery.js [32m200 [90m2ms - 2.72kb[0m
+[90mGET /js/webrtc.io.js [32m200 [90m3ms - 7.4kb[0m
+[90mGET /img/openpath.png [32m200 [90m5ms - 2.85kb[0m
+[90mGET /img/map.png [32m200 [90m2ms - 1.35kb[0m
+[90mGET /img/fullscreen.png [32m200 [90m1ms - 1.59kb[0m
+[90mGET /img/gear.png [32m200 [90m2ms - 1.61kb[0m
+[90mGET /img/plus.png [32m200 [90m2ms - 1.07kb[0m
+[90mGET /img/poster.png [32m200 [90m2ms - 5.65kb[0m
+auth status: persona
+Retrieving by email: jaredlamenzo@gmail.com
+[90mPOST /auth/status [32m200 [90m181ms - 140[0m
+[90mGET /css/fonts/general_foundicons.woff [32m200 [90m2ms - 9.5kb[0m
+[90mGET / [36m304 [90m2ms[0m
+[90mGET /css/persona-buttons.css [36m304 [90m1ms[0m
+[90mGET /css/home.css [36m304 [90m2ms[0m
+[90mGET /img/home/headerbgd.jpg [36m304 [90m1ms[0m
+[90mGET /img/home/learn-together.png [36m304 [90m4ms[0m
+[90mGET /img/home/monitor.png [36m304 [90m4ms[0m
+[90mGET /img/home/openpath.png [36m304 [90m3ms[0m
+[90mGET /img/home/never-miss.png [36m304 [90m1ms[0m
+[90mGET /img/home/no-downloads.png [36m304 [90m1ms[0m
+auth status: persona
+Retrieving by email: asaeed@gmail.com
+[90mPOST /auth/status [32m200 [90m161ms - 134[0m
+[90mGET /auth/logout [36m302 [90m3ms - 35[0m
+[90mGET / [36m304 [90m1ms[0m
+[90mGET / [36m304 [90m2ms[0m
+[90mGET /css/persona-buttons.css [36m304 [90m2ms[0m
+[90mGET /css/home.css [36m304 [90m1ms[0m
+[90mGET /img/home/headerbgd.jpg [36m304 [90m1ms[0m
+[90mGET /img/home/monitor.png [36m304 [90m3ms[0m
+[90mGET /img/home/learn-together.png [36m304 [90m3ms[0m
+[90mGET /img/home/openpath.png [36m304 [90m2ms[0m
+[90mGET /img/home/never-miss.png [36m304 [90m3ms[0m
+[90mGET /img/home/no-downloads.png [36m304 [90m2ms[0m
+session email: undefined
+[90mGET /users/5171a61a1a719e4a04000010 [36m302 [90m1ms - 35[0m
+[90mGET / [36m304 [90m2ms[0m
+session email: undefined
+[90mGET /users/5171a61a1a719e4a04000010 [36m302 [90m2ms - 35[0m
+[90mGET / [36m304 [90m2ms[0m
+Adding GuestUser
+Success: {"email":"guest","createDate":"2013-04-23T21:30:50.317Z","_id":"5176fd8a5561973362000001"}
+[90mGET /auth/guest [32m200 [90m5ms - 123[0m
+[90mGET /main [32m200 [90m1ms - 14.92kb[0m
+[90mGET /css/persona-buttons.css [36m304 [90m1ms[0m
+[90mGET /css/general_foundicons.css [36m304 [90m2ms[0m
+[90mGET /js/organictabs.jquery.js [36m304 [90m2ms[0m
+[90mGET /css/style.css [36m304 [90m2ms[0m
+[90mGET /js/webrtc.io.js [36m304 [90m1ms[0m
+[90mGET /img/openpath.png [36m304 [90m1ms[0m
+[90mGET /img/gear.png [36m304 [90m4ms[0m
+[90mGET /img/plus.png [36m304 [90m3ms[0m
+[90mGET /img/map.png [36m304 [90m2ms[0m
+[90mGET /img/fullscreen.png [36m304 [90m3ms[0m
+[90mGET /img/poster.png [36m304 [90m1ms[0m
+auth status: guest
+[90mPOST /auth/status [32m200 [90m81ms - 42[0m
+session email: guest
+Retrieving item: 5171a61a1a719e4a04000010
+[90mGET /users/5171a61a1a719e4a04000010 [32m200 [90m3ms - 89[0m
+[90mGET /manager/html [33m404 [90m1ms[0m
+[90mGET /manager/html [33m404 [90m1ms[0m
+[90mGET / [32m200 [90m27ms - 8.35kb[0m
+[90mGET /css/persona-buttons.css [32m200 [90m3ms - 7.58kb[0m
+[90mGET /css/home.css [32m200 [90m2ms - 3.18kb[0m
+[90mGET /robots.txt [33m404 [90m1ms[0m
+[90mGET / [32m200 [90m1ms - 8.35kb[0m
+[90mGET /css/home.css [32m200 [90m4ms - 3.18kb[0m
+[90mGET /css/persona-buttons.css [32m200 [90m2ms - 7.58kb[0m
+auth status: guest
+[90mPOST /auth/status [32m200 [90m199ms - 42[0m
+[90mGET /pitchphotos/landingpage.png [33m404 [90m1ms[0m
+[90mGET /pitchphotos/landingpage.png [33m404 [90m1ms[0m
+[90mGET /manager/html [33m404 [90m1ms[0m
+[90mGET /robots.txt [33m404 [90m1ms[0m
+[90mGET / [32m200 [90m2ms - 8.35kb[0m
+[90mGET / [32m200 [90m2ms - 8.35kb[0m
+[90mGET / [36m304 [90m2ms[0m
+[90mGET /css/persona-buttons.css [36m304 [90m1ms[0m
+[90mGET /css/home.css [32m200 [90m11ms - 3.18kb[0m
+[90mGET /img/home/openpath.png [32m200 [90m4ms - 5.63kb[0m
+[90mGET /img/home/learn-together.png [32m200 [90m3ms - 3.34kb[0m
+[90mGET /img/home/never-miss.png [32m200 [90m4ms - 2.86kb[0m
+[90mGET /img/home/no-downloads.png [32m200 [90m1ms - 3.68kb[0m
+[90mGET /img/home/headerbgd.jpg [32m200 [90m1ms - 101.95kb[0m
+auth status: persona
+Retrieving by email: jaredlamenzo@gmail.com
+[90mPOST /auth/status [32m200 [90m67ms - 140[0m
+[90mGET /img/home/monitor.png [32m200 [90m2394ms - 265.59kb[0m
+[90mGET /main [32m200 [90m2ms - 14.92kb[0m
+[90mGET /css/persona-buttons.css [36m304 [90m1ms[0m
+[90mGET /css/general_foundicons.css [32m200 [90m2ms - 3.09kb[0m
+[90mGET /css/style.css [32m200 [90m2ms - 6.91kb[0m
+[90mGET /js/organictabs.jquery.js [32m200 [90m2ms - 2.72kb[0m
+[90mGET /js/webrtc.io.js [32m200 [90m1ms - 7.4kb[0m
+[90mGET /img/openpath.png [32m200 [90m2ms - 2.85kb[0m
+[90mGET /img/map.png [32m200 [90m1ms - 1.35kb[0m
+[90mGET /img/fullscreen.png [32m200 [90m2ms - 1.59kb[0m
+[90mGET /img/gear.png [32m200 [90m1ms - 1.61kb[0m
+[90mGET /img/plus.png [32m200 [90m1ms - 1.07kb[0m
+[90mGET /img/poster.png [32m200 [90m1ms - 5.65kb[0m
+auth status: persona
+Retrieving by email: jaredlamenzo@gmail.com
+[90mPOST /auth/status [32m200 [90m66ms - 140[0m
+[90mGET /css/fonts/general_foundicons.woff [32m200 [90m3ms - 9.5kb[0m
+[90mGET / [32m200 [90m3ms - 8.35kb[0m
+[90mGET /css/home.css [36m304 [90m2ms[0m
+[90mGET /css/persona-buttons.css [36m304 [90m2ms[0m
+[90mGET /img/home/headerbgd.jpg [36m304 [90m1ms[0m
+[90mGET /img/home/openpath.png [36m304 [90m2ms[0m
+[90mGET /img/home/monitor.png [36m304 [90m1ms[0m
+[90mGET /img/home/never-miss.png [36m304 [90m1ms[0m
+[90mGET /img/home/learn-together.png [36m304 [90m3ms[0m
+[90mGET /img/home/no-downloads.png [36m304 [90m1ms[0m
+auth status: persona
+Retrieving by email: asaeed@gmail.com
+[90mPOST /auth/status [32m200 [90m148ms - 134[0m
+[90mGET / [32m200 [90m2ms - 8.35kb[0m
+[90mGET / [36m304 [90m2ms[0m
+[90mGET /css/persona-buttons.css [36m304 [90m1ms[0m
+[90mGET /css/home.css [36m304 [90m4ms[0m
+[90mGET /img/home/never-miss.png [36m304 [90m4ms[0m
+[90mGET /img/home/openpath.png [36m304 [90m4ms[0m
+[90mGET /img/home/monitor.png [36m304 [90m3ms[0m
+[90mGET /img/home/learn-together.png [36m304 [90m3ms[0m
+[90mGET /img/home/no-downloads.png [36m304 [90m1ms[0m
+[90mGET /img/home/headerbgd.jpg [36m304 [90m1ms[0m
+auth status: persona
+Retrieving by email: jaredlamenzo@gmail.com
+[90mPOST /auth/status [32m200 [90m67ms - 140[0m
+[90mGET /auth/logout [36m302 [90m1ms - 35[0m
+[90mGET / [36m304 [90m2ms[0m
+auth status: persona
+Retrieving by email: jaredlamenzo@gmail.com
+[90mPOST /auth/status [32m200 [90m66ms - 140[0m
+[90mGET / [32m200 [90m2ms - 8.35kb[0m
+[90mGET /css/persona-buttons.css [32m200 [90m2ms - 7.58kb[0m
+[90mGET /css/home.css [32m200 [90m1ms - 3.18kb[0m
+[90mGET /img/home/headerbgd.jpg [32m200 [90m94ms - 101.95kb[0m
+[90mGET /img/home/never-miss.png [32m200 [90m7ms - 2.86kb[0m
+[90mGET /img/home/openpath.png [32m200 [90m6ms - 5.63kb[0m
+[90mGET /img/home/learn-together.png [32m200 [90m7ms - 3.34kb[0m
+[90mGET /img/home/no-downloads.png [32m200 [90m4ms - 3.68kb[0m
+[90mGET /img/home/monitor.png [32m200 [90m595ms - 265.59kb[0m
+[90mGET /auth/logout [36m302 [90m1ms - 35[0m
+[90mGET / [36m304 [90m1ms[0m
+[90mGET / [32m200 [90m2ms - 8.35kb[0m
+[90mGET /css/persona-buttons.css [32m200 [90m2ms - 7.58kb[0m
+[90mGET /css/home.css [32m200 [90m2ms - 3.18kb[0m
+[90mGET /img/home/headerbgd.jpg [32m200 [90m145ms - 101.95kb[0m
+[90mGET /img/home/openpath.png [32m200 [90m1ms - 5.63kb[0m
+[90mGET /img/home/learn-together.png [32m200 [90m1ms - 3.34kb[0m
+[90mGET /img/home/never-miss.png [32m200 [90m2ms - 2.86kb[0m
+[90mGET /img/home/no-downloads.png [32m200 [90m2ms - 3.68kb[0m
+[90mGET /img/home/monitor.png [32m200 [90m542ms - 265.59kb[0m
+[90mGET /auth/logout [36m302 [90m1ms - 35[0m
+[90mGET / [36m304 [90m2ms[0m
+[90mHEAD / [32m200 [90m2ms - 8.35kb[0m
+[90mHEAD /manager/status [33m404 [90m2ms[0m
+[90mGET /pitchphotos/landingpage.png [33m404 [90m2ms[0m
+[90mGET /manager/html [33m404 [90m2ms[0m
+[90mGET / [32m200 [90m2ms - 8.35kb[0m
+[90mGET /robots.txt [33m404 [90m2ms[0m
+[90mGET / [32m200 [90m2ms - 8.35kb[0m
+[90mGET /main [32m200 [90m10ms - 14.92kb[0m
+[90mGET /css/home.css [32m200 [90m41ms - 3.18kb[0m
+[90mGET /css/persona-buttons.css [32m200 [90m2ms - 7.58kb[0m
+[90mGET / [32m200 [90m3ms - 8.35kb[0m
+[90mHEAD / [32m200 [90m1ms - 8.35kb[0m
+[90mGET / [32m200 [90m2ms - 8.35kb[0m
+[90mGET /auth/status [33m404 [90m2ms[0m
+[90mGET /webmail//README [33m404 [90m2ms[0m
+[90mGET /mail//README [33m404 [90m1ms[0m
+[90mGET /mailadmin//README [33m404 [90m1ms[0m
+[90mGET /webmail//README [33m404 [90m2ms[0m
+[90mGET /mail//README [33m404 [90m1ms[0m
+[90mGET /mailadmin//README [33m404 [90m1ms[0m
+[90mHEAD /manager/status [33m404 [90m2ms[0m
+[90mHEAD /manager/status [33m404 [90m1ms[0m
+[90mGET / [36m304 [90m2ms[0m
+[90mGET /css/persona-buttons.css [36m304 [90m20ms[0m
+[90mGET /img/home/openpath.png [36m304 [90m3ms[0m
+[90mGET /css/home.css [36m304 [90m3ms[0m
+[90mGET /img/home/never-miss.png [36m304 [90m3ms[0m
+[90mGET /img/home/learn-together.png [36m304 [90m2ms[0m
+[90mGET /img/home/monitor.png [36m304 [90m2ms[0m
+[90mGET /img/home/no-downloads.png [36m304 [90m1ms[0m
+[90mGET /img/home/headerbgd.jpg [36m304 [90m1ms[0m
+auth status: persona
+Retrieving by email: jaredlamenzo@gmail.com
+[90mPOST /auth/status [32m200 [90m151ms - 140[0m
+[90mGET /? [32m200 [90m2ms - 8.35kb[0m
+[90mGET /manager/html [33m404 [90m2ms[0m
+[90mHEAD / [32m200 [90m2ms - 8.35kb[0m
+[90mGET /w00tw00t.at.ISC.SANS.DFind:) [33m404 [90m1ms[0m
+[90mGET /w00tw00t.at.ISC.SANS.DFind:) [33m404 [90m1ms[0m
+[90mGET /robots.txt [33m404 [90m1ms[0m
+[90mGET /OpenPath_1.jpg [33m404 [90m1ms[0m
+[90mGET /manager/html [33m404 [90m1ms[0m
+[90mGET /robots.txt [33m404 [90m1ms[0m
+[90mGET / [32m200 [90m1ms - 8.35kb[0m
+[90mGET /img/plus.png [32m200 [90m3ms - 1.07kb[0m
+[90mGET / [32m200 [90m2ms - 8.35kb[0m
+[90mGET /auth/logout [36m302 [90m1ms - 35[0m
+[90mGET /main [32m200 [90m1ms - 14.92kb[0m
+Adding GuestUser
+Success: {"email":"guest","createDate":"2013-04-28T01:26:41.075Z","_id":"517c7ad15561973362000002"}
+[90mGET /auth/guest [32m200 [90m4ms - 123[0m
+[90mGET /auth/status [33m404 [90m1ms[0m
+[90mGET /css/home.css [32m200 [90m2ms - 3.18kb[0m
+[90mGET /css/persona-buttons.css [32m200 [90m2ms - 7.58kb[0m
+[90mGET / [36m304 [90m2ms[0m
+[90mGET /css/persona-buttons.css [36m304 [90m1ms[0m
+[90mGET /css/home.css [36m304 [90m1ms[0m
+[90mGET /img/home/headerbgd.jpg [36m304 [90m2ms[0m
+[90mGET /img/home/openpath.png [36m304 [90m0ms[0m
+[90mGET /img/home/monitor.png [36m304 [90m1ms[0m
+[90mGET /img/home/learn-together.png [36m304 [90m1ms[0m
+[90mGET /img/home/never-miss.png [36m304 [90m1ms[0m
+[90mGET /img/home/no-downloads.png [36m304 [90m1ms[0m
+auth status: guest
+[90mPOST /auth/status [32m200 [90m198ms - 42[0m
+auth status: guest
+[90mPOST /auth/status [32m200 [90m200ms - 42[0m
+[90mGET /main [36m304 [90m2ms[0m
+[90mGET /css/general_foundicons.css [36m304 [90m3ms[0m
+[90mGET /css/style.css [36m304 [90m3ms[0m
+[90mGET /css/persona-buttons.css [36m304 [90m3ms[0m
+[90mGET /js/organictabs.jquery.js [36m304 [90m3ms[0m
+[90mGET /js/webrtc.io.js [36m304 [90m3ms[0m
+[90mGET /img/map.png [36m304 [90m5ms[0m
+[90mGET /img/openpath.png [36m304 [90m6ms[0m
+[90mGET /img/fullscreen.png [36m304 [90m5ms[0m
+[90mGET /img/gear.png [36m304 [90m3ms[0m
+[90mGET /img/plus.png [36m304 [90m2ms[0m
+[90mGET /img/poster.png [36m304 [90m1ms[0m
+auth status: guest
+[90mPOST /auth/status [32m200 [90m184ms - 42[0m
+[90mGET / [36m304 [90m2ms[0m
+[90mGET /css/home.css [36m304 [90m1ms[0m
+[90mGET /css/persona-buttons.css [36m304 [90m1ms[0m
+[90mGET /img/home/openpath.png [36m304 [90m7ms[0m
+[90mGET /img/home/never-miss.png [36m304 [90m7ms[0m
+[90mGET /img/home/monitor.png [36m304 [90m7ms[0m
+[90mGET /img/home/learn-together.png [36m304 [90m6ms[0m
+[90mGET /img/home/headerbgd.jpg [36m304 [90m3ms[0m
+[90mGET /img/home/no-downloads.png [36m304 [90m1ms[0m
+auth status: guest
+[90mPOST /auth/status [32m200 [90m176ms - 42[0m
+auth status: persona
+Retrieving by email: asaeed@gmail.com
+[90mPOST /auth/status [32m200 [90m151ms - 134[0m
+[90mGET / [36m304 [90m2ms[0m
+[90mGET /css/home.css [36m304 [90m3ms[0m
+[90mGET /css/persona-buttons.css [36m304 [90m2ms[0m
+[90mGET /img/home/headerbgd.jpg [36m304 [90m2ms[0m
+[90mGET /img/home/learn-together.png [36m304 [90m3ms[0m
+[90mGET /img/home/monitor.png [36m304 [90m4ms[0m
+[90mGET /img/home/never-miss.png [36m304 [90m3ms[0m
+[90mGET /img/home/openpath.png [36m304 [90m4ms[0m
+[90mGET /img/home/no-downloads.png [36m304 [90m1ms[0m
+auth status: persona
+Retrieving by email: asaeed@gmail.com
+[90mPOST /auth/status [32m200 [90m149ms - 134[0m
