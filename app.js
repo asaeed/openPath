@@ -61,13 +61,16 @@ function requireLogin(req, res, next) {
   }
 }
 
-
+app.all("/main", requireLogin, function(req, res, next) {next();});
 app.all("/users", requireLogin, function(req, res, next) {next();});
 app.all("/users/*", requireLogin, function(req, res, next) {next();});
 app.all("/sessions", requireLogin, function(req, res, next) {next();});
 app.all("/sessions/*", requireLogin, function(req, res, next) {next();});
 app.all("/events", requireLogin, function(req, res, next) {next();});
 app.all("/events/*", requireLogin, function(req, res, next) {next();});
+
+app.all("/update/*", requireLogin, function(req, res, next) {next();});
+
 
 
 //
