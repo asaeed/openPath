@@ -10,6 +10,10 @@ var server = email.server.connect({
    ssl:      true
 });
 
+console.log(config.user);
+console.log(config.password);
+console.log(config.host);
+
 var message = {
    text:    "i hope this works", 
    from:    "you <asaeed@gmail.com>", 
