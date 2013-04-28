@@ -11,7 +11,7 @@ var express = require('express')
   , eventRoute = require('./routes/event')
   , sessionRoute = require('./routes/session')
 
-  , email = require('.routes/email')
+  , email = require('./routes/email')
 
   , http = require('http')
   , path = require('path')
