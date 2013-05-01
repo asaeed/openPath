@@ -30,6 +30,6 @@ exports.sendEmail = function(emailTo, emailSubject, emailBody, callback) {
 
 	server.send(message, function(err, message) { 
 		console.log(err || message); 
-		typeof callback == "function" && callback(err, messasge);
+		typeof callback == "function" && callback(err, message);
 	});
 };
