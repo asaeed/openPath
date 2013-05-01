@@ -12,7 +12,7 @@ var server = email.server.connect({
 
 exports.sendEmailRequest = function(req, res) {
     var email = req.body;
-    exports.sendEmail(req.to, req.subject, req.text, function (err, message) {
+    exports.sendEmail(email.to, email.subject, email.text, function (err, message) {
     	res.send(err || message);
     });
 };
