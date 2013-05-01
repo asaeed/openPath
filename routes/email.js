@@ -10,16 +10,26 @@ var server = email.server.connect({
    ssl:      true
 });
 
-exports.sendEmail = function(toEmail, callback) {
+exports.sendEmailRequest = function(req, res) {
+    var email = req.body;
+    sendEmail(req.to, req.subject, req.text, function (err, message) {
+    	res.send(err || message);
+    });
+};
+
+exports.sendEmail = function(emailTo, emailSubject, emailBody, callback) {
     console.log('about to send an email...');
 
 	var message = {
-	   text:    "i hope this works", 
-	   from:    "you <asaeed@gmail.com>", 
-	   to:      "someone <asaeed@gmail.com>, another <asaeed@gmail.com>",
+	   text:    emailBody, 
+	   from:    "openPath <openpathme@gmail.com>", 
+	   to:      emailTo,
 	   cc:      "",
-	   subject: "testing emailjs"
+	   subject: emailSubject
 	};
 
-	server.send(message, function(err, message) { console.log(err || message); });
+	server.send(message, function(err, message) { 
+		console.log(err || message); 
+		typeof callback == "function" && callback(err, messasge);
+	});
 };

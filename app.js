@@ -10,9 +10,7 @@ var express = require('express')
   , user = require('./routes/user')
   , eventRoute = require('./routes/event')
   , sessionRoute = require('./routes/session')
-
   , email = require('./routes/email')
-
   , http = require('http')
   , path = require('path')
   , request = require('request');
@@ -88,6 +86,7 @@ app.get('/auth/logout', auth.logout);
 app.get('/auth/guest', auth.guest);
 
 app.put('/update/:collection/:id/:key/:value', user.updateItemData);
+app.post('/email', email.sendEmailRequest);
 
 app.get('/users', user.findAll);
 app.get('/users/:id', user.findById);
