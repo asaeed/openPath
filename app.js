@@ -71,7 +71,7 @@ app.all("/events", requireLogin, function(req, res, next) {next();});
 app.all("/events/*", requireLogin, function(req, res, next) {next();});
 
 app.all("/update/*", requireLogin, function(req, res, next) {next();});
-
+app.all("/email", requireLogin, function(req, res, next) {next();});
 
 
 //
