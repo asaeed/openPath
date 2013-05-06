@@ -34,6 +34,7 @@ PUT   - http://baseurl.com/users/<id>
   - with some json int the body, overwrites record of given id 
 DELETE - http://baseurl.com/users/<id> 
   - deletes record of the given id
+
 EMAIL - http://openpath.me/email
   - request type:   POST
   - headers: Content-Type: application/json
