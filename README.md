@@ -34,6 +34,14 @@ PUT   - http://baseurl.com/users/<id>
   - with some json int the body, overwrites record of given id 
 DELETE - http://baseurl.com/users/<id> 
   - deletes record of the given id
+EMAIL - http://openpath.me/email
+  - request type:   POST
+  - headers: Content-Type: application/json
+  - body: {"to":"asaeed@gmail.com","subject":"test subj","text":"test txt"}
+
+Note, the "to" field can also contain "Jared <jaredlamenzo@gmail.com>, Ahmad <asaeed@gmail.com>"
+so that would make the body:
+{"to":"Ahmad <asaeed@gmail.com>, Jared <jaredlamenzo@gmail.com>","subject":"test subj","text":"test txt"}
 
 We'll be making more specific service calls for our needs as we built out user profiles and event profiles.  
 
