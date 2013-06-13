@@ -4,40 +4,92 @@
 
 {% block head %}
     {% parent %}
-	<link rel="stylesheet" href="css/general_foundicons.css">
 	<link rel="stylesheet" href="css/style.css" />
-	<link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.5/leaflet.css" />
-	 <!--[if lte IE 8]>
-	     <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.5/leaflet.ie.css" />
-	 <![endif]-->
-    <script src='js/organictabs.jquery.js'></script>
-	<script src="http://cdn.leafletjs.com/leaflet-0.5/leaflet.js"></script>
+	<script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=true"></script>
 	<script src="js/webrtc.io.js"></script>
-    <script>
-    /*
-    	To Do:
-    		What's going on with the maps?
-    		How to decide who is the main video???
-    		Need to be able to set username's for chat
-    			Display username and time for chat messages
-    */
+	<script>
+		// Bootstrap interface calls through JQuery
+        $(document).ready(function() {
+	/*
+			// determines tab to display based on hash
+			var url = document.location.toString();
+			if (url.match('#')) {
+			    $('#mainnav a[href=#'+url.split('#')[1]+']').tab('show') ;
+			} 
+
+			// Change hash for page-reload
+			$('#mainnav a').on('shown', function (e) {
+			    window.location.hash = e.target.hash;
+			})
+	*/
+			// Main Navigation Tabs
+			$('#mainnav a').click(function (e) {
+			  e.preventDefault();
+			  $(this).tab('show');
+			})
+            $("#mainnav a").tooltip({placement:'bottom'});
+
+			$('#usernav a').click(function (e) {
+			  e.preventDefault();
+			  $(this).tab('show');
+			})
+			$('#logout').mouseup(function() {
+				navigator.id.logout('button pressed');
+			});
+			// User Icon - Right Column Main Screen
+			$('.user').mouseenter(function(event) {
+				$(this).find(".usermeta").fadeIn("slow");
+				$(this).find(".username").fadeIn("slow");
+        	});
+			$('.user').mouseleave(function(event) {
+				var isShowing = $(this).find(".usermeta").hasClass("usermetashowing");
+				if(!isShowing){
+					$(this).find(".usermeta").fadeOut("slow");
+					$(this).find(".username").fadeOut("slow");
+				}
+        	});
+			$('.icon-map-marker').click(function(event) {
+				$(this).parent().parent().addClass('usermetashowing');
+				$(this).parent().parent().find('.usermap').fadeIn("slow");
+				$(this).parent().parent().find('.userlocation').fadeIn("slow");
+
+				$(this).addClass('closebtn');	
+				event.stopPropagation();
+        	});
+			$('.icon-remove').click(function(event) {
+				console.log("icon-remove clicked");
+				$(this).parent().parent().parent().removeClass('usermetashowing');
+				$(this).parent().parent().fadeOut("slow");
+				$(this).parent().parent().parent().find('.usermap').fadeOut("slow");
+				$(this).parent().parent().parent().find('.userlocation').fadeOut("slow");
+				$(this).parent().removeClass('closebtn');
+				event.stopPropagation();
+			});
+			$('.avatar').dblclick(function(event) {
+				console.log('dblclick');
+				var tmp = $(this).attr('src');
+				if($('#main_videoplayer').attr('src') == undefined){
+					$('#main_videoplayer').attr('src', tmp);
+				}else{
+					$('#main_videoplayer').attr('src', '');
+				}
+        	});
+        });
+    </script>
+	<script>
       var firstname, lastname, latitude, longitude, watchID;
       var username = "user" + Math.floor(Math.random() * 10000);
-
+	  var eventsMap;
       var room = 1;
-      var server = "ws://www.walking-productions.com:8001/";
-      
+      var server = "ws://www.walking-productions.com:8001/";  
       var videos = [];
-
       var PeerConnection = window.PeerConnection || window.webkitPeerConnection00 || window.webkitRTCPeerConnection;
-      console.log(PeerConnection);
     
-      window.addEventListener('load', init, false);
-	  function init() {
-    	console.log("in init()");
-        
-        getLocation();
-        
+      window.addEventListener('load', initUser, false);
+	  /**
+	  * Starts video, chat, and geolocation
+	  */
+	  function initUser() {    
         if(PeerConnection){
           rtc.createStream({"video": true, "audio": true}, function(stream) {
             document.getElementById('self_videoplayer').src = URL.createObjectURL(stream);
@@ -64,11 +116,26 @@
             console.log('remove ' + data);
         });
 
+		initUserMap();
+		initEventsMap();
         initChat();
+
         window.removeEventListener('load', init, false);
-      }      
-      
-      // CHAT
+      }   
+   	  /**
+	  * Initializes Map displaying local events
+	  */
+      function initEventsMap(){
+		 var mapOptions = {
+		    zoom: 8,
+		    center: new google.maps.LatLng(40.7142, 74.0064),
+		    mapTypeId: google.maps.MapTypeId.ROADMAP
+		  };
+		  map = new google.maps.Map(document.getElementById('events-map'), mapOptions);
+	  }
+  	  /**
+	  * Adds user to chat window.
+	  */
       function addToChat(user, msg) {
         var chatwindow = document.getElementById('chatwindow');
         var chatmessages = document.getElementById('chatmessages');
@@ -77,11 +144,15 @@
         chatmessages.innerHTML += msg;
         chatwindow.scrollTop = chatwindow.scrollHeight;
       }
-
+  	  /**
+	  * Sanitizes user message in chat window.
+	  */
       function sanitize(msg) {
         return msg.replace(/</g, '&lt;');
       }
-
+  	  /**
+	  * Creates chat window.
+	  */
       function initChat() {
         var input = document.getElementById("chatinput");
 
@@ -115,200 +186,354 @@
         	
         });
       }
-      
-      console.log("parsed webrtc stuff");
-      
-        function getLocation(){
-            console.log('getLocation');
-            if (navigator.geolocation){
-                watchID = navigator.geolocation.watchPosition(setPosition, onLocErrorHandler);
-            }else{
-                console.log("Geolocation is not supported by this browser.");
-                
-            }
-        }
-        function setPosition(position){
-            navigator.geolocation.clearWatch(watchID);    // clear watch to prevent recurring location requests
-            latitude = position.coords.latitude;
-            longitude = position.coords.longitude;
-            
-            //console.log('latitude = '+latitude);
-            //console.log('longitude = '+longitude);
-            
-            populateMaps();
-        }
-        function onLocErrorHandler(error){
-          var errorMsg = "";
-          switch(error.code){
-            case error.PERMISSION_DENIED:
-              errorMsg="User denied the request for Geolocation.";
-              break;
-            case error.POSITION_UNAVAILABLE:
-              errorMsg="Location information is unavailable.";
-              break;
-            case error.TIMEOUT:
-              errorMsg="The request to get user location timed out.";
-              break;
-            case error.UNKNOWN_ERROR:
-              errorMsg="An unknown error occurred.";
-              break;
-            }
-            console.log(errorMsg);
-          }
-          var populateMaps = function(){
-            // populate maps
+      /**
+	  * Retreives geolocation for display within map.
+	  */
+	  function initUserMap() {
+		  var mapOptions = {
+		    zoom: 6,
+		    mapTypeId: google.maps.MapTypeId.ROADMAP,
+			mapTypeControl: true,
+			    mapTypeControlOptions: {
+			        style: google.maps.MapTypeControlStyle.HORIZONTAL_BAR,
+			        position: google.maps.ControlPosition.RIGHT_BOTTOM
+			    },
+		  };
+		  map = new google.maps.Map(document.getElementById('usermap1'), mapOptions);
 
-            var osmUrl = 'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
-	        var osm1 = L.tileLayer(osmUrl);
-            var osm2 = L.tileLayer(osmUrl);
-            var osm3 = L.tileLayer(osmUrl);
-            
-            //var usermap1 = L.map('usermap1', {center: [latitude, longitude], zoom: 13});
-			var usermap1 = L.map('usermap1').setView([latitude, longitude], 13).addLayer(osm1);
-	    	var usermap2 = L.map('usermap2').setView([42.6746, -73.2407], 13).addLayer(osm2);
-			var bigmap = L.map('bigmap').setView([latitude, longitude], 13).addLayer(osm3);
-            
-			$('#bigmap').addClass('hide'); // apply hide as soon as map is set.
-			
-          if(latitude != "" && longitude != ""){
-                //L.map('usermap1').setView([latitude, longitude], 13);
-				var usermap1 = new L.Map('usermap1');
-				usermap1.setView(new L.LatLng(latitude, longitude), 13);
-            }
-		}
-		// fullscreen video mode
-		 var goFullscreen = function(id) {
-		    var element = document.getElementById(id);
-		    if (element.mozRequestFullScreen) {
-		      element.mozRequestFullScreen();
-		    } else if (element.webkitRequestFullScreen) {
-		      element.webkitRequestFullScreen();
-		   }
+		  // Try HTML5 geolocation
+		  if(navigator.geolocation) {
+		    navigator.geolocation.getCurrentPosition(function(position) {
+		      var pos = new google.maps.LatLng(position.coords.latitude,  position.coords.longitude);
+
+		      var infowindow = new google.maps.InfoWindow({map: map, position: pos, content: 'Location found using HTML5.'});
+
+		      map.setCenter(pos);
+
+		    }, function() {
+		      handleNoGeolocation(true);
+		    });
+		  } else {
+		    // Browser doesn't support Geolocation
+		    handleNoGeolocation(false);
 		  }
-    </script>	
-    <script>
-        $(document).ready(function() {
-			$('#logout').mouseup(function() {
-				navigator.id.logout();
-			});
-			// activate fullscreen
-			$('#fullscreen').mouseup(function() {
-				if($('#logo a').hasClass('current')){
-					goFullscreen('main_videoplayer');
-				};
-        	});
-			// toggle fullscreen button based on state
-			$('#logo').mouseup(function(event) {
-				$('#fullscreenicon').removeClass('hidden').addClass('active');
-        	});
-			$('#settingsicon, #mapicon').mouseup(function(event) {
-				$('#fullscreenicon').removeClass('active').addClass('hidden');
-        	});
-			$('.user').mouseenter(function(event) {
-				$(this).find(".usermeta").fadeIn("slow");
-				$(this).find(".username").fadeIn("slow");
-        	});
-			$('.user').mouseleave(function(event) {
-				var isShowing = $(this).find(".usermeta").hasClass("usermetashowing");
-				if(!isShowing){
-					$(this).find(".usermeta").fadeOut("slow");
-					$(this).find(".username").fadeOut("slow");
-				}
-        	});
-			$('.username').click(function(event) {
-				console.log('username click');
-				$(this).parent().addClass('usermetashowing');
-				$(this).parent().find('.usermap').fadeIn("slow");
-				$(this).parent().find('.userlocation').fadeIn("slow");
-				
-				$(this).children('.foundicon-location').addClass('closebtn');	
-        	});
-			$('.foundicon-location').click(function(event) {
-				$(this).parent().parent().removeClass('usermetashowing');
-				$(this).parent().fadeOut("slow");
-				$(this).parent().parent().find('.usermap').fadeOut("slow");
-				$(this).parent().parent().find('.userlocation').fadeOut("slow");
-				event.stopPropagation();
-			});
-			// Toggle source of main video
-			$('.avatar').dblclick(function(event) {
-				console.log('dblclick');
-				var tmp = $(this).attr('src');
-				if($('#main_videoplayer').attr('src') == undefined){
-					$('#main_videoplayer').attr('src', tmp);
-				}else{
-					$('#main_videoplayer').attr('src', '');
-				}
-        	});
+		};  
+		/**
+		* Handles geolocation error.
+		*/
+		function handleNoGeolocation(errorFlag) {
+		  if (errorFlag) {
+		    var content = 'Error: The Geolocation service failed.';
+		  } else {
+		    var content = 'Error: Your browser doesn\'t support geolocation.';
+		  }
 
-			// tabs
-            $("#panelholder").organicTabs();
-     });
+		  var options = {
+		    map: map,
+		    position: new google.maps.LatLng(60, 105),
+		    content: content
+		  };
+
+		  var infowindow = new google.maps.InfoWindow(options);
+		  map.setCenter(options.position);
+		}
+		
     </script>
 {% endblock %}
 
 {% block content %}
+<header id="mainheader">
+    <div id="openpath">
+		<a href="#main" data-toggle="tab"><img id="logo" src="img/openpath.png" alt="OpenPath"></a>
+		<a id="logout" href="#">Logout</a>
+	</div>
+    <nav id="mainnav">
+        <ul>
+			<li><a id="adduser-icon" href="#adduser" data-toggle="tab tooltip" title="Add Participants"></a></li>
+			<li><a id="map-icon" href="#events" data-toggle="tab tooltip" title="Events"></a></li>
+			<li><a id="profile-icon" href="#user" data-toggle="tab tooltip" title="Profile"><span class="badge badge-important">6</span></a></li>
+        </ul>
+    </nav>
+    <div class="clearer"></div>
+</header>
+<div id="content">
 
-<div id="main">
-	<!-- BEGIN COL1 -->
-	<div id="col1">
-        <div id="panelholder">
-			<nav class="nav">
-        	<ul>
-				<li id="logo"><a href="#video" class="current"><img id="logo" src="img/openpath.png" alt="OpenPath"></a></li>
-				<li id="mapicon" class="icon"><a href="#map"><img src="img/map.png" alt="map"></a></li>
-				<li id="fullscreenicon" class="icon active"><img src="img/fullscreen.png" alt="fullscreen" id="fullscreen"></li>
-				<li id="settingsicon" class="icon"><a href="#settings"><img src="img/gear.png" alt="gear"></a></li>
-				<li id="plusicon" class="icon"><a href="#video"><img src="img/plus.png" alt="plus"></a></li>
-            </ul>
-			</nav>
-       		<div id="video"><video id="main_videoplayer" width="100%" height="auto" poster="img/poster.png" autoplay>
+
+	<div class="tab-content">
+		
+  	  <!-- ***** MAIN ***** -->
+	  <div class="tab-pane active" id="main">
+	  	<div class="col1">
+	  		<!-- VIDEO -->
+			<div id="video"><video id="main_videoplayer" width="100%" height="auto" poster="img/poster.png" autoplay controls>
 	        	Your browser does not support the video tag.
 			</video>
 			</div>
-			<div id="settings" class="hide">
-				<h1>settings</h1>
-				<button id="logout" class="graybtn">Logout</button>
-			</div>
-			<div id="map"><div id="bigmap"></div></div>
+	  	</div>
+	  	<div class="col2">
+			<!-- BEGIN USERS -->
+            	<div id="users">
+				<div class="user">
+	            	<div class="usermeta">
+						<div class="username"><span id="username1"></span><div class="icon-map-marker"><span class="icon-remove"></span></div></div>
+						<div class="userlocation">University Place, NY</div>
+						<div id="usermap1" class="usermap"></div>
+	                </div>
+	                <video id="self_videoplayer" class="avatar" width="240" height="auto" poster="img/poster.png" autoplay></video>
+	            </div>
+				<div class="user">
+	            	<div class="usermeta">
+						<div class="username"><span id="username2"></span><div class="icon-map-marker"><span class="icon-remove"></span></div></div>
+						<div class="userlocation">University Place, NY</div>
+						<div id="usermap2" class="usermap"></div>
+	                </div>
+	                <video id="self_videoplayer" class="avatar" width="240" height="auto" poster="img/poster.png" autoplay></video>
+	            </div>
+				<div class="user">
+	            	<div class="usermeta">
+						<div class="username"><span id="username3"></span><div class="icon-map-marker"><span class="icon-remove"></span></div></div>
+						<div class="userlocation">University Place, NY</div>
+						<div id="usermap3" class="usermap"></div>
+	                </div>
+	                <video id="self_videoplayer" class="avatar" width="240" height="auto" poster="img/poster.png" autoplay></video>
+	            </div>
+				<div class="user">
+	            	<div class="usermeta">
+						<div class="username"><span id="username4"></span><div class="icon-map-marker"><span class="icon-remove"></span></div></div>
+						<div class="userlocation">University Place, NY</div>
+						<div id="usermap4" class="usermap"></div>
+	                </div>
+	                <video id="self_videoplayer" class="avatar" width="240" height="auto" poster="img/poster.png" autoplay></video>
+	            </div>
+	            </div>
+
+				<!-- BEGIN CHAT -->
+	            <div id="chat">
+	            	<div id="chatwindow">
+	                	<ol id="chatmessages"></ol>
+	       	  	  </div>
+				  <input type="text" id="chatinput" class="commentfield" />
+	            </div>
+				<!-- END CHAT -->  		
+	
+	  	</div>
+	  	<div class="clearer"></div>
+	  </div>
+	
+	  <!-- ***** ADD USER ***** -->
+	  <div class="tab-pane" id="adduser">
+			<form>
+			  <fieldset>
+			    <h1>Add Participants</h1>
+			    <label>Email Address</label>
+			    <input type="text" name="email" placeholder="">
+				<textarea rows="10" name="message" id="message">
+Hi,
+
+Ashley would like to invite you to a video session on Open Path. Click here to join her:
+
+Let's learn together!
+
+Regards,
+Open Path Team
+				</textarea>
+
+			    <button type="submit" class="btn btn-primary">Send</button>
+			  </fieldset>
+			</form>
+	  </div>
+	
+	  <!-- ***** EVENTS ***** -->
+	  <div class="tab-pane" id="events">
+		<div class="col1">
+			<!-- BEGIN EVENTS MENU -->
+            <div id="eventsmenu">
+                <div class="col50 left">
+                    <nav class="subnav">
+                        <ul>
+                            <li><a href="#">Nearby</a></li>
+                            <li><a href="#">Upcoming</a></li>
+                        </ul>
+                    </nav>
+                </div>
+                <div class="col50 right">
+					<form class="form-search">
+					    <div class="input-prepend">
+					      <span class="add-on"><i class="icon-search"></i></span>
+					      <input class="span2" id="inputIcon" type="text" placeholder="Search">
+						</div>
+					</form>
+                </div>
+                <div class="clearer"></div>
+            </div>
+			
+			<!-- MAP -->
+			<div id="events-map"></div>
 		</div>
-	</div>
-	<!-- END COL1 -->
-	<!-- BEGIN COL2 -->
-	<div id="col2">
-        <!-- BEGIN CHAT -->
-        <div id="users">
-		<div class="user">
-        	<div class="usermeta">
-				<div class="username"><span id="username1"></span><div class="foundicon-location"><span>X</span></div></div>
-				<div class="userlocation">University Place, NY</div>
-				<div id="usermap1" class="usermap"></div>
+		<div class="col2">
+			<!-- BEGIN EVENTS LIST -->
+            <div id="eventslist" class="inner">
+            <h2>List of Events</h2> <a href="#" class="btn btn-primary"><span class="icon-plus"></span> Add</a>
+				<div id="eventsholder">
+	            	<article>
+		                <h3>Field trip to Science Museum</h3>
+		                May 25th, 2013 3-4pm<br>
+		                Fort Greene Park Science Museum<br>
+		                This is the description of the event. You are going to learn so much. Led by Joe Smith, science docent at the museum.
+		            </article>
+		            <article>
+		                <h3>Bird Watching Tour</h3>
+		                May 26th, 2013 1-2pm<br>
+		                Prospect Park<br>
+		                Summer is back and so are the birds in Prospect Park.We will bring you to understand what’s a typical day for the birds in our neighbourhood.    
+		            </article>
+		            <article>
+		                <h3>Field trip to Science Museum</h3>
+		                May 25th, 2013 3-4pm<br>
+		                Fort Greene Park Science Museum<br>
+		                This is the description of the event. You are going to learn so much. Led by Joe Smith, science docent at the museum.
+		            </article>
+		            <article>
+		                <h3>Bird Watching Tour</h3>
+		                May 26th, 2013 1-2pm<br>
+		                Prospect Park<br>
+		                Summer is back and so are the birds in Prospect Park.We will bring you to understand what’s a typical day for the birds in our neighbourhood.    
+		            </article>
+				</div>
             </div>
-            <video id="self_videoplayer" class="avatar" width="240" height="auto" poster="img/poster.png" autoplay></video>
-        </div>
-		<div class="user">
-        	<div class="usermeta">
-				<div class="username"><span id="username2"></span><div class="foundicon-location"><span>X</span></div></div>
-				<div class="userlocation">University Place, NY</div>
-				<div id="usermap1" class="usermap"></div>
+			<!-- END EVENTS LIST -->
+		</div>
+		<div class="clearer"></div>
+	  	
+	  </div>
+	
+	  <!-- ***** USER ***** -->
+	  <div class="tab-pane" id="user">
+	  		<!-- BEGIN USER MENU -->
+            <div id="usermenu">
+                <div class="col50 left">
+                    <img src="img/user-icon.png" alt="User"><h1>Ashley Copper</h1>
+                </div>
+                <div class="col50 right">
+                    <nav id="usernav" class="subnav">
+                        <ul>
+							<li class="active"><a data-toggle="tab" href="#profile">Profile</a></li>
+                            <li><a data-toggle="tab" href="#mypath">My Path</a></li>
+                            <li><a data-toggle="tab" href="#notifications">Notifications</a></li>
+                            <li><a data-toggle="tab" href="#settings">Settings</a></li>
+                        </ul>
+                    </nav>
+                </div>
+                <div class="clearer"></div>
             </div>
-            <video id="self_videoplayer" class="avatar" width="240" height="auto" poster="img/poster.png" autoplay></video>
-        </div>
-        </div>
-		<!-- BEGIN CHAT -->
-        <div id="chat">
-        	<div id="chatwindow">
-            	<ol id="chatmessages">
-
-                </ol>
-   	  	  </div>
-		  <input type="text" id="chatinput" class="commentfield" />
-        </div>
-		<!-- END CHAT -->
+			<!-- END USER MENU -->
+			<!-- BEGIN USER TAB-CONTENT -->
+			<div class="tab-content">
+				<div class="tab-pane active" id="profile">
+					<div class="usertab-single-col">
+					<p><strong>Welcome to Open Path!<br>To get recommendations based on your interests, simply fill in something about yourself:</strong></p>
+					<form>
+					  <fieldset>
+					    <label>Grade Level:</label>
+							<label class="radio inline"><input type="radio" name="gradelevel" value="Pre-K to Grade 2">Pre-K to Grade 2</label>
+							<label class="radio inline"><input type="radio" name="gradelevel" value="Grade 3-5">Grade 3-5</label>
+							<label class="radio inline"><input type="radio" name="gradelevel" value="Grade 9-12">Grade 9-12</label>
+							<label class="radio inline"><input type="radio" name="gradelevel" value="Post Secondary">Post Secondary</label>
+							<label class="radio inline"><input type="radio" name="gradelevel" value="Adults">Adults</label>
+							<label class="radio inline"><input type="radio" name="gradelevel" value="Families">Families</label>
+						<label>Interests:</label>
+					    <input type="text" id="interests" name="interests">
+					
+						<label>List of Co-Learners:</label>
+					    <input type="text" id="colearners" name="colearners">
+						<p><small><em>*Required</em></small></p>
+					    <button type="submit" class="btn btn-primary">Done</button>
+					  </fieldset>
+					</form>
+					</div>
+				</div>
+				
+				<div class="tab-pane" id="mypath">
+					<div class="col1">
+						<div id="mypath-map-canvas"></div>
+					</div>
+					<div class="col2">
+						<!-- BEGIN EVENTS LIST -->
+			            <div id="eventslist" class="inner">
+			            <h2>List of Events</h2> <a href="#" class="btn btn-primary"><span class="icon-plus"></span> Add</a>
+							<div id="eventsholder">
+				            	<article>
+					                <h3>Field trip to Science Museum</h3>
+					                May 25th, 2013 3-4pm<br>
+					                Fort Greene Park Science Museum<br>
+					                This is the description of the event. You are going to learn so much. Led by Joe Smith, science docent at the museum.
+					            </article>
+					            <article>
+					                <h3>Bird Watching Tour</h3>
+					                May 26th, 2013 1-2pm<br>
+					                Prospect Park<br>
+					                Summer is back and so are the birds in Prospect Park.We will bring you to understand what’s a typical day for the birds in our neighbourhood.    
+					            </article>
+					            <article>
+					                <h3>Field trip to Science Museum</h3>
+					                May 25th, 2013 3-4pm<br>
+					                Fort Greene Park Science Museum<br>
+					                This is the description of the event. You are going to learn so much. Led by Joe Smith, science docent at the museum.
+					            </article>
+					            <article>
+					                <h3>Bird Watching Tour</h3>
+					                May 26th, 2013 1-2pm<br>
+					                Prospect Park<br>
+					                Summer is back and so are the birds in Prospect Park.We will bring you to understand what’s a typical day for the birds in our neighbourhood.    
+					            </article>
+							</div>
+			            </div>
+						<!-- END EVENTS LIST -->
+					</div>
+					<div class="clearer"></div>
+					
+				</div>
+				
+				<div class="tab-pane" id="notifications">
+					<div class="usertab-single-col">
+					<form>
+					  <fieldset>
+						<ul>
+							<li><b>New event on NY Central Park about bird watching <span class="text-right">2 mins ago</span></b></li>
+							<li><b>Your event - "New York Museum Tour" is starting in 1 hour <span class="text-right">15 mins ago</span></b></li>
+							<li>There are 2 events near you next week <span class="text-right">2 days ago</span></li>
+							<li>Jared has joined "Bird Watching Tour" in Central Park <span class="text-right">5 days ago</span></li>
+						</ul>
+					</fieldset>
+					</form>
+					</div>
+				</div>
+				
+				<div class="tab-pane" id="settings">
+					<div class="usertab-single-col">
+						<form>
+						  <fieldset>
+						    <label class="muted">Receive alerts when...</label>
+						    <label class="checkbox"><input type="checkbox">Co-learner joins event</label>
+							<label class="checkbox"><input type="checkbox">Near an event you might be interested in</label>
+							<label class="checkbox"><input type="checkbox">All events you might be interested in</label>
+					
+							<label class="muted">Set profile as...</label>
+							<label class="radio"><input type="radio" name="profileaccess" value="public">Public</label>
+							<label class="radio"><input type="radio" name="profileaccess" value="private">Private</label>
+					
+						    <button type="submit" class="btn btn-primary">Save</button>
+						  </fieldset>
+						</form>
+				
+					</div>
+				</div>
+				
+			</div>
+			<!-- END USER TAB-CONTENT -->
+	  </div>
 	</div>
-	<!-- END COL2 -->
-	<div class="clearer"></div>
+    </div>
 </div>
-
-
+<!--<script src="js/map.js"></script>-->
 {% endblock %}

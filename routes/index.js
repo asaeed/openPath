@@ -1,12 +1,19 @@
-
 /*
  * GET home page.
  */
-
 exports.index = function(req, res){
-  res.render('index', { title: 'openPath', email: req.session.email || null });
+  res.render('index', { title: 'openPath'});
 };
 
 exports.main = function(req, res){
-  res.render('main', { title: 'openPath', email: req.session.email || null });
+  res.render('main', { title: 'openPath'});
+};
+exports.about = function(req, res){
+  res.render('about', { title: 'About | openPath'});
+};
+exports.privacyPolicy = function(req, res){
+  res.render('privacy-policy', { title: 'Privacy Policy | openPath'});
+};
+exports.termsOfService = function(req, res){
+  res.render('terms-of-service', { title: 'Terms of Service | openPath'});
 };

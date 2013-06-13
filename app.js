@@ -80,6 +80,9 @@ app.all("/email", requireLogin, function(req, res, next) {next();});
 
 app.get('/', routes.index);
 app.get('/main', routes.main);
+app.get('/about', routes.about);
+app.get('/privacy-policy', routes.privacyPolicy);
+app.get('/terms-of-service', routes.termsOfService);
 
 app.post('/auth/status', auth.status);
 app.get('/auth/logout', auth.logout);
