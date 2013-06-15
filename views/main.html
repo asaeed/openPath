@@ -47,7 +47,7 @@
 					$(this).find(".usermeta").fadeOut("slow");
 					$(this).find(".username").fadeOut("slow");
 				}
-        	});
+        	});		
 			$('.icon-map-marker').click(function(event) {
 				$(this).parent().parent().addClass('usermetashowing');
 				$(this).parent().parent().find('.usermap').fadeIn("slow");
@@ -79,7 +79,17 @@
 	<script>
       var firstname, lastname, latitude, longitude, watchID;
       var username = "user" + Math.floor(Math.random() * 10000);
+	  var map1;
 	  var eventsMap;
+	  var mapOptions = {
+		   zoom: 6,
+		   mapTypeId: google.maps.MapTypeId.ROADMAP,
+			mapTypeControl: true,
+		    mapTypeControlOptions: {
+		        style: google.maps.MapTypeControlStyle.HORIZONTAL_BAR,
+		        position: google.maps.ControlPosition.RIGHT_BOTTOM
+		    },
+	  };
       var room = 1;
       var server = "ws://www.walking-productions.com:8001/";  
       var videos = [];
@@ -126,12 +136,8 @@
 	  * Initializes Map displaying local events
 	  */
       function initEventsMap(){
-		 var mapOptions = {
-		    zoom: 8,
-		    center: new google.maps.LatLng(40.7142, 74.0064),
-		    mapTypeId: google.maps.MapTypeId.ROADMAP
-		  };
-		  map = new google.maps.Map(document.getElementById('events-map'), mapOptions);
+		  eventsMap = new google.maps.Map(document.getElementById('eventsmap'), mapOptions);
+		  eventsMap.setCenter(options.position);
 	  }
   	  /**
 	  * Adds user to chat window.
@@ -190,25 +196,21 @@
 	  * Retreives geolocation for display within map.
 	  */
 	  function initUserMap() {
-		  var mapOptions = {
-		    zoom: 6,
-		    mapTypeId: google.maps.MapTypeId.ROADMAP,
-			mapTypeControl: true,
-			    mapTypeControlOptions: {
-			        style: google.maps.MapTypeControlStyle.HORIZONTAL_BAR,
-			        position: google.maps.ControlPosition.RIGHT_BOTTOM
-			    },
-		  };
-		  map = new google.maps.Map(document.getElementById('usermap1'), mapOptions);
+		  map1 = new google.maps.Map(document.getElementById('usermap1'), mapOptions);
 
 		  // Try HTML5 geolocation
 		  if(navigator.geolocation) {
 		    navigator.geolocation.getCurrentPosition(function(position) {
 		      var pos = new google.maps.LatLng(position.coords.latitude,  position.coords.longitude);
 
-		      var infowindow = new google.maps.InfoWindow({map: map, position: pos, content: 'Location found using HTML5.'});
+			  var marker = new google.maps.Marker({
+			      position: pos,
+			      map: map1,
+			      title: ''
+			  });
+		      //var infowindow = new google.maps.InfoWindow({map: map1, position: pos, content: 'Location found using HTML5.'});
 
-		      map.setCenter(pos);
+		      map1.setCenter(pos);
 
 		    }, function() {
 		      handleNoGeolocation(true);
@@ -229,13 +231,13 @@
 		  }
 
 		  var options = {
-		    map: map,
+		    map: map1,
 		    position: new google.maps.LatLng(60, 105),
 		    content: content
 		  };
 
 		  var infowindow = new google.maps.InfoWindow(options);
-		  map.setCenter(options.position);
+		  map1.setCenter(options.position);
 		}
 		
     </script>
@@ -245,7 +247,6 @@
 <header id="mainheader">
     <div id="openpath">
 		<a href="#main" data-toggle="tab"><img id="logo" src="img/openpath.png" alt="OpenPath"></a>
-		<a id="logout" href="#">Logout</a>
 	</div>
     <nav id="mainnav">
         <ul>
@@ -275,7 +276,7 @@
             	<div id="users">
 				<div class="user">
 	            	<div class="usermeta">
-						<div class="username"><span id="username1"></span><div class="icon-map-marker"><span class="icon-remove"></span></div></div>
+						<div class="username"><a href="#" id="username1"></a><div class="icon-map-marker"><span class="icon-remove"></span></div></div>
 						<div class="userlocation">University Place, NY</div>
 						<div id="usermap1" class="usermap"></div>
 	                </div>
@@ -283,7 +284,7 @@
 	            </div>
 				<div class="user">
 	            	<div class="usermeta">
-						<div class="username"><span id="username2"></span><div class="icon-map-marker"><span class="icon-remove"></span></div></div>
+						<div class="username"><a href="#" id="username2"></a><div class="icon-map-marker"><span class="icon-remove"></span></div></div>
 						<div class="userlocation">University Place, NY</div>
 						<div id="usermap2" class="usermap"></div>
 	                </div>
@@ -291,7 +292,7 @@
 	            </div>
 				<div class="user">
 	            	<div class="usermeta">
-						<div class="username"><span id="username3"></span><div class="icon-map-marker"><span class="icon-remove"></span></div></div>
+						<div class="username"><a href="#" id="username3"></a><div class="icon-map-marker"><span class="icon-remove"></span></div></div>
 						<div class="userlocation">University Place, NY</div>
 						<div id="usermap3" class="usermap"></div>
 	                </div>
@@ -299,7 +300,7 @@
 	            </div>
 				<div class="user">
 	            	<div class="usermeta">
-						<div class="username"><span id="username4"></span><div class="icon-map-marker"><span class="icon-remove"></span></div></div>
+						<div class="username"><a href="#" id="username4"></a><div class="icon-map-marker"><span class="icon-remove"></span></div></div>
 						<div class="userlocation">University Place, NY</div>
 						<div id="usermap4" class="usermap"></div>
 	                </div>
@@ -368,7 +369,7 @@ Open Path Team
             </div>
 			
 			<!-- MAP -->
-			<div id="events-map"></div>
+			<div id="eventsmap"></div>
 		</div>
 		<div class="col2">
 			<!-- BEGIN EVENTS LIST -->
@@ -450,6 +451,7 @@ Open Path Team
 					    <button type="submit" class="btn btn-primary">Done</button>
 					  </fieldset>
 					</form>
+					<a id="logout" class="btn" href="#">Logout</a>
 					</div>
 				</div>
 				
