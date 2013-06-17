@@ -6,22 +6,6 @@
     {% parent %}
 	<link href="css/home.css" rel="stylesheet" type="text/css">
 	<script>
-	$.fn.serializeObject = function(){
-		console.log('serializeObject');
-      var o = {};
-      var a = this.serializeArray();
-      $.each(a, function() {
-          if (o[this.name] !== undefined) {
-              if (!o[this.name].push) {
-                  o[this.name] = [o[this.name]];
-              }
-              o[this.name].push(this.value || '');
-          } else {
-              o[this.name] = this.value || '';
-          }
-      });
-      return o;
-  };
 		var validateEmail = function(email) { 
 	    var re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 	    return re.test(email);
@@ -72,12 +56,9 @@
 			<div id="login">
 	            <h1>What do you want to learn?</h1>
 				
-	            <p>OpenPath is your key to exhibits, tours, and special events tailored to your goals.</p>
+	            <p>Chart your learning path through exhibits, tours, and special events</p>
 				<div class="loginoptions">
-				<div class="option1"><a id="loginbtn" class="persona-button btn btn-primary" data-loading-text="Loading..."><span>Sign in with Persona</span></a><p>(Hey! A more personalized experience)</p></div>
-				<div class="or">or</div>
-				<div class="option2"><a id="guestbtn" class="btn">Sign in as Guest</a></div>
-				</div>
+				<a id="loginbtn" class="persona-button btn btn-primary" data-loading-text="Loading..."><span>Sign in with Persona</span></a> or <a id="guestbtn" class="btn">Sign in as Guest</a></div>
 			</div>
 			<div id="loadinggraphic"><i class="icon-spinner icon-spin icon-large">Loading User</i> </div>
 			<!-- GUEST -->
@@ -95,25 +76,28 @@
 </header>
 <div class="row">
 			<div class="col1">
-				<h2>Learn together</h2>
-				<hr>
-				<p>We learn better when we learn together. Find people with shared interests, goals, and expertise.</p>
-				<hr>
-				<img src="img/home/learn-together.png" alt="Learn Together">
+				<h2>Connect learning everywhere</h2>
+				<ul>
+			    	<li>Go on expert-guided virtual field trips</li>
+			    	<li>Facilitate place-based learning remotely</li>
+			    </ul>
+				<img src="img/home/map.jpg" alt="Map">
 			</div>
 			<div class="col2">
-				<h2>Never miss a chance to learn</h2>
-				<hr>
-				<p>Get relevant notifications about learning opportunities in your community and online.</p>
-				<hr>
-				<img src="img/home/never-miss.png" alt="Never Miss">
+				<h2>No downloads, no hassles</h2>
+				<ul>
+				  <li>Location-based video right in your browser</li>
+				  <li>Stream and share high-quality video, enabled by high-speed networks</li>
+				</ul>
+				<img src="img/home/no-downloads.png" alt="Never Miss">
 			</div>
 			<div class="col3">
-				<h2>No downloads, no hassles</h2>
-				<hr>
-				<p>Stream and share high-quality video in your web browser over next-generation networks.</p>
-				<hr>
-				<img src="img/home/no-downloads.png" alt="No Downloads">
+				<h2>Collaborate &amp; build community</h2>
+				<ul>
+				  <li>Curate experiences, sharing your favorite places</li>
+				  <li>Advocate for local causes, collaborate with people around the world</li>
+				</ul>
+				<img src="img/home/learn-together.png" alt="Learn Together">
 			</div>
             <div class="clearer"></div>
 			<footer id="homefooter">
@@ -121,6 +105,7 @@
 					<li><a href="/terms-of-service">Terms of Service</a></li>
 					<li><a href="/privacy-policy">Privacy Policy</a></li>
 					<li><a href="/about">About</a></li>
+					<li><a href="/press-kit">Press Kit</a></li>
 				</ul>
 			</footer>
 		</div>

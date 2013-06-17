@@ -17,3 +17,6 @@ exports.privacyPolicy = function(req, res){
 exports.termsOfService = function(req, res){
   res.render('terms-of-service', { title: 'Terms of Service | openPath'});
 };
+exports.pressKit = function(req, res){
+  res.render('press-kit', { title: 'Press Kit | openPath'});
+};

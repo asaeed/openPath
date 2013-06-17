@@ -13,8 +13,8 @@ hr{margin: 10px 0; border-bottom:1px solid #f5f4f5; border-top:1px solid #d5d0d5
 #monitor{float:right; bottom:0; width:600px; height:327px; margin-top:103px;}
 
 .row{margin:0 auto; width:990px; padding:30px 0 30px 30px;}
-.col1,.col2,.col3{font-size:18px; float:left; width:300px; text-align:center; margin-right:30px;}
-.col1 img, .col2 img, .col3 img{max-width:100%; height:auto;}
+.col1,.col2,.col3{font-size:18px; float:left; width:300px; margin-right:30px;}
+.col1 img, .col2 img, .col3 img{max-width:100%; height:auto; margin:0 auto;}
 .clearer{clear:both;}
 
 .loginoptions{width:90%; text-align:center;}
