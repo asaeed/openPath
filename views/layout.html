@@ -36,6 +36,14 @@
 		document.querySelector("#username1").textContent = username;
 	  };
 	  /**
+	  * Validates Email
+	  * @arg	email
+	  */
+	  var validateEmail = function(email) { 
+	    var re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+	    return re.test(email);
+	}
+	  /**
 	  * Persona handling
 	  */
 	/*
@@ -119,5 +127,15 @@
 <body>
   {% block content %}
   {% endblock %}
+	<!-- Invalid Email Modal -->
+	<div id="emailerror" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+	  <div class="modal-header">
+	    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+	    <h3 id="myModalLabel">Error</h3>
+	  </div>
+	  <div class="modal-body">
+	  	Sorry, your email is invalid. Please try again.
+	  </div>
+	</div>
 </body>
 </html>

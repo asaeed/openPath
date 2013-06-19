@@ -6,10 +6,6 @@
     {% parent %}
 	<link href="css/home.css" rel="stylesheet" type="text/css">
 	<script>
-		var validateEmail = function(email) { 
-	    var re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-	    return re.test(email);
-	}
 	  // Persona login button
 	  $(document).ready(function() {
 		$('#loginbtn').mouseup(function() {
@@ -20,12 +16,18 @@
 			$("#login").fadeOut();
 			$("#guestlogin").fadeIn();
 		});
+		
+		// Modals
+		$('#privacyPolicyLink').mouseup(function() { $('#privacyPolicyModal').modal();});
+		$('#tosLink').mouseup(function() { $('#tosModal').modal();});
+		$('#aboutPolicyLink').mouseup(function() { $('#aboutModal').modal();});
+		
 		// validate email and show main
 		$('#guestloginbtn').mouseup(function() {
 			var email = $('#email').val();
 			var isValid = validateEmail(email);
 			if(!isValid){
-				alert("Sorry, your email is invalid. Please try again");
+				$('#emailerror').modal();
 			}else{
 				// send email to API to authenticate
 				var xhr = new XMLHttpRequest();
@@ -102,11 +104,43 @@
             <div class="clearer"></div>
 			<footer id="homefooter">
 				<ul>
-					<li><a href="/terms-of-service">Terms of Service</a></li>
-					<li><a href="/privacy-policy">Privacy Policy</a></li>
-					<li><a href="/about">About</a></li>
-					<li><a href="/press-kit">Press Kit</a></li>
+					<li><a id="tosLink" data-toggle="modal" href="#tos">Terms of Service</a></li>
+					<li><a id="privacyPolicyLink" data-toggle="modal" href="#privacyPolicy">Privacy Policy</a></li>
+					<li><a id="aboutLink" data-toggle="modal" href="#about">About</a></li>
 				</ul>
 			</footer>
+		</div>
+		
+		<!-- Terms of Service Modal -->
+		<div id="tos" data-remote="/terms-of-service" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+		  <div class="modal-header">
+		    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+		    <h3 id="myModalLabel">Terms of Service</h3>
+		  </div>
+		  <div class="modal-body">
+		  	<!-- content will be loaded here -->
+		  </div>
+		</div>
+		
+		<!-- Privacy Policy Modal -->
+		<div id="privacyPolicy" data-remote="/privacy-policy"  class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+		  <div class="modal-header">
+		    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+		    <h3 id="myModalLabel">Privacy Policy</h3>
+		  </div>
+		  <div class="modal-body">
+		  	<!-- content will be loaded here -->
+		  </div>
+		</div>
+		
+		<!-- About Modal -->
+		<div id="about" data-remote="/about" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+		  <div class="modal-header">
+		    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+		    <h3 id="myModalLabel">About</h3>
+		  </div>
+		  <div class="modal-body">
+			<!-- content will be loaded here -->
+		  </div>
 		</div>
 {% endblock %}

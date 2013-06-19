@@ -1,6 +1,9 @@
 body, html {
-  height: 100%;
-  width: 100%;
+	/* Set to properly render Google Map instances */
+	height: 100%;
+	width: 100%;
+	margin:0;
+	padding:0;
 }
 body{background:#434545; font:18px/20px 'PT Sans', sans-serif;}
 h2{font-size:20px;}
@@ -64,6 +67,7 @@ li.active a#profile-icon, a#profile-icon:hover{background:url(/img/user-icon-ove
 	position:relative;
 	transition:opacity 1s ease-out;
 }
+video.avatar{width:100%; height:auto;}
 .usermeta{z-index:200; color:#fff; position:absolute; width:100%;}
 .usermetashowing{background:rgba(0,0,0,0.3);}
 .username{background:rgba(0,0,0,0.8); padding:7px;}
@@ -80,7 +84,7 @@ li.active a#profile-icon, a#profile-icon:hover{background:url(/img/user-icon-ove
 .usermetashowing .icon-map-marker:before{content:'' !important;}
 
 /* CHAT WINDOW */
-#chatwindow{/*height:42.96875%;*/ max-width:240px; height:170px; overflow:auto; padding:8px 10px; background:#ebeae7;}
+#chatwindow{/*height:42.96875%; max-width:240px;*/ height:170px; overflow:auto; padding:8px 10px; background:#ebeae7;}
 #chatwindow strong{font-weight:normal;}
 #chatwindow ol{margin:0; padding:0;}
 #chatwindow li{display:block; list-style:none; padding:7px 0; border-bottom:1px solid #ccc;}
@@ -141,4 +145,23 @@ li.active a#profile-icon, a#profile-icon:hover{background:url(/img/user-icon-ove
 	.col2{width:34%;}
 	.col50{width:40%;}
 	.subnav{font-size:14px;}
+}
+@media all and (max-width: 600px){
+	body, html {
+		min-width:519px;
+		margin:0;
+		padding:0;
+		overflow:hidden;
+	}
+	body{font:14px/16px 'PT Sans', sans-serif;}
+	.col1, .col2 {
+	    min-height: auto;
+	}
+	.user{min-height: 120px;}
+	.usermap{height:65px;}
+	#mainheader{width:90%; padding:0 5%;}
+	#users{height:180px;}
+	#chatwindow{height:50px;}
+	#mainnav{width:200px;}
+	.tab-content{overflow:hidden;}
 }
