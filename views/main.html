@@ -99,13 +99,17 @@
 				};
 				return false;
         	});
-        });
-    </script>
-	<script>
+       
+	  /*********************************************/
+	  // Video and Map code
+	  /*********************************************/
+
       var firstname, lastname, latitude, longitude, watchID;
-      var username = "user" + Math.floor(Math.random() * 10000);
+      var username;
 	  var map1;
 	  var eventsMap;
+	  var geocoder;
+	/*
 	  var mapOptions = {
 		   zoom: 6,
 		   mapTypeId: google.maps.MapTypeId.ROADMAP,
@@ -115,6 +119,7 @@
 		        position: google.maps.ControlPosition.RIGHT_BOTTOM
 		    },
 	  };
+	*/
       var room = 1;
       var server = "ws://www.walking-productions.com:8001/";  
       var videos = [];
@@ -125,6 +130,7 @@
 	  * Starts video, chat, and geolocation
 	  */
 	  function initUser() {    
+		console.log('initUser');
         if(PeerConnection){
           rtc.createStream({"video": true, "audio": true}, function(stream) {
             document.getElementById('self_videoplayer').src = URL.createObjectURL(stream);
@@ -153,17 +159,142 @@
 
 		initUserMap();
 		initEventsMap();
+		initEventsList('/events');
         initChat();
 
-        window.removeEventListener('load', init, false);
-      }   
+        window.removeEventListener('load', initUser, false);
+      } 
+	  /**
+	  * Retreives geolocation for display within map.
+	  */
+	  function initUserMap() {
+		  // Try HTML5 geolocation
+		  if(navigator.geolocation) {
+		    navigator.geolocation.getCurrentPosition(function(position) {
+		     	var pos = new google.maps.LatLng(position.coords.latitude,  position.coords.longitude);
+
+				var mapOptions = {
+					zoom: 6,
+					center: pos,
+					mapTypeId: google.maps.MapTypeId.ROADMAP,
+					mapTypeControl: true,
+					mapTypeControlOptions: {
+						style: google.maps.MapTypeControlStyle.HORIZONTAL_BAR,
+						position: google.maps.ControlPosition.RIGHT_BOTTOM
+					},
+				};
+				map1 = new google.maps.Map(document.getElementById('usermap1'), mapOptions);
+
+			  var marker = new google.maps.Marker({
+			      position: pos,
+			      map: map1,
+			      title: ''
+			  });
+			
+			  // get and display street address 
+			  codeLatLng(pos, "#userlocation1");
+			
+		    }, function() {
+		      handleNoGeolocation(true);
+		    });
+		  } else {
+		    // Browser doesn't support Geolocation
+		    handleNoGeolocation(false);
+		  }
+		
+		
+		
+		
+		/*
+		  var mapOptions = {
+			   zoom: 6,
+			   center
+			   mapTypeId: google.maps.MapTypeId.ROADMAP,
+				mapTypeControl: true,
+			    mapTypeControlOptions: {
+			        style: google.maps.MapTypeControlStyle.HORIZONTAL_BAR,
+			        position: google.maps.ControlPosition.RIGHT_BOTTOM
+			    },
+		  };
+		  map1 = new google.maps.Map(document.getElementById('usermap1'), mapOptions);
+
+		  // Try HTML5 geolocation
+		  if(navigator.geolocation) {
+		    navigator.geolocation.getCurrentPosition(function(position) {
+		      var pos = new google.maps.LatLng(position.coords.latitude,  position.coords.longitude);
+
+			  var marker = new google.maps.Marker({
+			      position: pos,
+			      map: map1,
+			      title: ''
+			  });
+		      map1.setCenter(pos);
+			  codeLatLng(pos, "#userlocation1");
+		    }, function() {
+		      handleNoGeolocation(true);
+		    });
+		  } else {
+		    // Browser doesn't support Geolocation
+		    handleNoGeolocation(false);
+		  }
+		*/
+		};  
+		/**
+		* Handles geolocation error.
+		*/
+		function handleNoGeolocation(errorFlag) {
+		  if (errorFlag) {
+		    var content = 'Error: The Geolocation service failed.';
+		  } else {
+		    var content = 'Error: Your browser doesn\'t support geolocation.';
+		  }
+
+		  var options = {
+		    map: map1,
+			center: new google.maps.LatLng(40.7142, 74.0064),
+		    position: new google.maps.LatLng(40.7142, 74.0064),
+		    content: content
+		  };
+		  //map1.setCenter(options.position);
+		}
    	  /**
 	  * Initializes Map displaying local events
 	  */
       function initEventsMap(){
-		  eventsMap = new google.maps.Map(document.getElementById('eventsmap'), mapOptions);
+		var options = {
+		    map: eventsMap,
+			zoom: 6,
+			mapTypeId: google.maps.MapTypeId.ROADMAP,
+			mapTypeControl: true,
+			mapTypeControlOptions: {
+			        style: google.maps.MapTypeControlStyle.HORIZONTAL_BAR,
+			        position: google.maps.ControlPosition.RIGHT_BOTTOM
+			},
+		    center: new google.maps.LatLng(60, 105),
+		    position: new google.maps.LatLng(60, 105)
+		  };
+		  eventsMap = new google.maps.Map(document.getElementById('eventsmap'), options);	
 		  eventsMap.setCenter(options.position);
 	  }
+	  /**
+	  * Returns reverse-geocoded location
+	  * @param pos		Lat/Long object
+	  * @param target	target HTML element to write to
+	  */
+	  function codeLatLng(pos, target) {
+		  geocoder = new google.maps.Geocoder();
+		  geocoder.geocode({'latLng': pos}, function(results, status) {
+		    if (status == google.maps.GeocoderStatus.OK) {
+		      if (results[1]) {
+				$(target).html(results[1].formatted_address);
+		      } else {
+		        console.log('No results found');
+		      }
+		    } else {
+		      console.log('Geocoder failed due to: ' + status);
+		    }
+		  });
+		}
   	  /**
 	  * Adds user to chat window.
 	  */
@@ -217,54 +348,42 @@
         	
         });
       }
-      /**
-	  * Retreives geolocation for display within map.
-	  */
-	  function initUserMap() {
-		  map1 = new google.maps.Map(document.getElementById('usermap1'), mapOptions);
-
-		  // Try HTML5 geolocation
-		  if(navigator.geolocation) {
-		    navigator.geolocation.getCurrentPosition(function(position) {
-		      var pos = new google.maps.LatLng(position.coords.latitude,  position.coords.longitude);
-
-			  var marker = new google.maps.Marker({
-			      position: pos,
-			      map: map1,
-			      title: ''
-			  });
-		      //var infowindow = new google.maps.InfoWindow({map: map1, position: pos, content: 'Location found using HTML5.'});
-
-		      map1.setCenter(pos);
-
-		    }, function() {
-		      handleNoGeolocation(true);
-		    });
-		  } else {
-		    // Browser doesn't support Geolocation
-		    handleNoGeolocation(false);
-		  }
-		};  
 		/**
-		* Handles geolocation error.
+		* Parses and displays events
+		* @param array of json objects
 		*/
-		function handleNoGeolocation(errorFlag) {
-		  if (errorFlag) {
-		    var content = 'Error: The Geolocation service failed.';
-		  } else {
-		    var content = 'Error: Your browser doesn\'t support geolocation.';
-		  }
-
-		  var options = {
-		    map: map1,
-		    position: new google.maps.LatLng(60, 105),
-		    content: content
-		  };
-
-		  var infowindow = new google.maps.InfoWindow(options);
-		  map1.setCenter(options.position);
-		}
-		
+		function initEventsList(list){
+			var output = "";
+			var evt;
+			for(var i in list){
+				evt = list[i];
+				output += '<article>';
+				output += '<a href="'+ evt.link +'" target="_blank"><h3>' + evt.name + '</h3></a>';
+				output += evt.startTime + ' to ' + evt.endTime + '<br>';
+				output += evt.locationDescription + '<br>';
+				output += '<p>' + evt.description + '</p>';
+				output += '</article>';
+			}
+			console.log(output);
+			//$('#eventsholder').html(output);
+		}	
+	  /**
+	  * Display username in interface
+	 
+	  function showUsername(user){
+		console.log('show user: ' + user);
+		 if(user != "guest"){
+			// pull username from front of email address and display in interface
+			// will allow user to change in future version; will store in user data along w prefs
+			username = user.match(/^([^@]*)@/)[1];		
+		}else{
+			username = user;
+		};
+		$("#username1").html(username);
+		$("#profileUsername").html(username);	
+	  };
+	 */
+		});
     </script>
 {% endblock %}
 
@@ -302,7 +421,7 @@
 				<div class="user">
 	            	<div class="usermeta">
 						<div class="username"><a href="#" id="username1"></a><div class="icon-map-marker"><span class="icon-remove"></span></div></div>
-						<div class="userlocation">University Place, NY</div>
+						<div id="userlocation1" class="userlocation"></div>
 						<div id="usermap1" class="usermap"></div>
 	                </div>
 	                <video id="self_videoplayer" class="avatar" width="240" height="auto" poster="img/poster.png" autoplay></video>
@@ -310,7 +429,7 @@
 				<div class="user">
 	            	<div class="usermeta">
 						<div class="username"><a href="#" id="username2"></a><div class="icon-map-marker"><span class="icon-remove"></span></div></div>
-						<div class="userlocation">University Place, NY</div>
+						<div id="userlocation2" class="userlocation"></div>
 						<div id="usermap2" class="usermap"></div>
 	                </div>
 	                <video id="self_videoplayer" class="avatar" poster="img/poster.png" autoplay></video>
@@ -318,7 +437,7 @@
 				<div class="user">
 	            	<div class="usermeta">
 						<div class="username"><a href="#" id="username3"></a><div class="icon-map-marker"><span class="icon-remove"></span></div></div>
-						<div class="userlocation">University Place, NY</div>
+						<div id="userlocation3" class="userlocation"></div>
 						<div id="usermap3" class="usermap"></div>
 	                </div>
 	                <video id="self_videoplayer" class="avatar" poster="img/poster.png" autoplay></video>
@@ -326,7 +445,7 @@
 				<div class="user">
 	            	<div class="usermeta">
 						<div class="username"><a href="#" id="username4"></a><div class="icon-map-marker"><span class="icon-remove"></span></div></div>
-						<div class="userlocation">University Place, NY</div>
+						<div id="userlocation4" class="userlocation"></div>
 						<div id="usermap4" class="usermap"></div>
 	                </div>
 	                <video id="self_videoplayer" class="avatar" poster="img/poster.png" autoplay></video>
@@ -358,7 +477,7 @@
 				<textarea rows="10" name="text" id="text">
 Hi,
 
-Username would like to invite you to a video session on Open Path. Click here to join:
+<span class="username"></span> would like to invite you to a video session on Open Path. Click here to join:
 
 Let's learn together!
 
@@ -400,9 +519,10 @@ Open Path Team
 		</div>
 		<div class="col2">
 			<!-- BEGIN EVENTS LIST -->
-            <div id="eventslist" class="inner">
+            <div class="eventslist" class="inner">
             <h2>List of Events</h2> <a href="#" class="btn btn-primary"><span class="icon-plus"></span> Add</a>
-				<div id="eventsholder">
+				<div class="eventsholder">
+					
 	            	<article>
 		                <h3>Field trip to Science Museum</h3>
 		                May 25th, 2013 3-4pm<br>
@@ -427,6 +547,7 @@ Open Path Team
 		                Prospect Park<br>
 		                Summer is back and so are the birds in Prospect Park.We will bring you to understand what’s a typical day for the birds in our neighbourhood.    
 		            </article>
+	
 				</div>
             </div>
 			<!-- END EVENTS LIST -->
@@ -440,7 +561,7 @@ Open Path Team
 	  		<!-- BEGIN USER MENU -->
             <div id="usermenu">
                 <div class="col50 left">
-                    <img src="img/user-icon.png" alt="User"><h1>Ashley Copper</h1>
+                    <img src="img/user-icon.png" alt="User"><h1 id="profileUsername"></h1>
                 </div>
                 <div class="col50 right">
                     <nav id="usernav" class="subnav">
@@ -488,9 +609,10 @@ Open Path Team
 					</div>
 					<div class="col2">
 						<!-- BEGIN EVENTS LIST -->
-			            <div id="eventslist" class="inner">
+			            <div class="eventslist" class="inner">
 			            <h2>List of Events</h2> <a href="#" class="btn btn-primary"><span class="icon-plus"></span> Add</a>
-							<div id="eventsholder">
+							<div class="eventsholder">
+								
 				            	<article>
 					                <h3>Field trip to Science Museum</h3>
 					                May 25th, 2013 3-4pm<br>
@@ -515,6 +637,7 @@ Open Path Team
 					                Prospect Park<br>
 					                Summer is back and so are the birds in Prospect Park.We will bring you to understand what’s a typical day for the birds in our neighbourhood.    
 					            </article>
+					
 							</div>
 			            </div>
 						<!-- END EVENTS LIST -->
