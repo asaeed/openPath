@@ -17,6 +17,8 @@ label{font-size:20px; padding-bottom:10px;}
 .left{float:left; text-align:left;}
 .right{float:right; text-align:right;}
 
+.modal-header h3{color:#fff;}
+
 /* HEADER */
 #openpath{width:205px; float:left;}
 

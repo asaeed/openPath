@@ -17,7 +17,7 @@ hr{margin: 10px 0; border-bottom:1px solid #f5f4f5; border-top:1px solid #d5d0d5
 .col1 img, .col2 img, .col3 img{max-width:100%; height:auto; margin:0 auto;}
 .clearer{clear:both;}
 
-.loginoptions{width:90%; text-align:center;}
+.loginoptions{}
 .option1 p{font-size:12px; margin:0; padding:0;}
 .or{text-align:center; padding:10px 0;}
 #skip{color:#fff;padding-top: 10px; display: inline-block;}
@@ -42,3 +42,7 @@ input.invite, input.email{
 #homefooter ul, li{margin:0; padding:0;}
 #homefooter li{list-style:none; display:inline; border-right:1px solid #ccc;}
 #homefooter li:last-child{border-right:none;}
+
+.modal-header{background-color:#000;}
+.modal-header h3{color:#fff;}
+.close{color:#fff; opacity:1;}

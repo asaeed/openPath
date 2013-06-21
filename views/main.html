@@ -74,7 +74,7 @@
 					$('#main_videoplayer').attr('src', '');
 				}
         	});
-			// Submits email inviting participant
+			// Validates and submits email inviting participant
 			$('#adduserform').submit(function() {
 				var email = $('#to').val();
 				var isValid = validateEmail(email);
@@ -354,7 +354,7 @@
 			    <label>Email Address</label>
 			    <input type="text" name="to" id="to" placeholder="">
 			    <label>Subject</label>
-			    <input type="text" name="subject" id="subject" placeholder="">
+			    <input type="text" name="subject" id="subject" value="Open Path Invitation" placeholder="">
 				<textarea rows="10" name="text" id="text">
 Hi,
 

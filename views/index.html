@@ -17,11 +17,6 @@
 			$("#guestlogin").fadeIn();
 		});
 		
-		// Modals
-		$('#privacyPolicyLink').mouseup(function() { $('#privacyPolicyModal').modal();});
-		$('#tosLink').mouseup(function() { $('#tosModal').modal();});
-		$('#aboutPolicyLink').mouseup(function() { $('#aboutModal').modal();});
-		
 		// validate email and show main
 		$('#guestloginbtn').mouseup(function() {
 			var email = $('#email').val();
@@ -60,7 +55,7 @@
 				
 	            <p>Chart your learning path through exhibits, tours, and special events</p>
 				<div class="loginoptions">
-				<a id="loginbtn" class="persona-button btn btn-primary" data-loading-text="Loading..."><span>Sign in with Persona</span></a> or <a id="guestbtn" class="btn">Sign in as Guest</a></div>
+				<a id="loginbtn" class="persona-button" data-loading-text="Loading..."><span>Sign in with Persona</span></a> or <a id="guestbtn" class="btn">Sign in as Guest</a></div>
 			</div>
 			<div id="loadinggraphic"><i class="icon-spinner icon-spin icon-large">Loading User</i> </div>
 			<!-- GUEST -->
@@ -104,43 +99,20 @@
             <div class="clearer"></div>
 			<footer id="homefooter">
 				<ul>
-					<li><a id="tosLink" data-toggle="modal" href="#tos">Terms of Service</a></li>
-					<li><a id="privacyPolicyLink" data-toggle="modal" href="#privacyPolicy">Privacy Policy</a></li>
-					<li><a id="aboutLink" data-toggle="modal" href="#about">About</a></li>
+					<li><a id="tosLink" data-toggle="modal" data-target="#metamodal" href="/terms-of-service">Terms of Service</a></li>
+					<li><a id="privacyPolicyLink" data-target="#metamodal" data-toggle="modal" href="/privacy-policy">Privacy Policy</a></li>
+					<li><a id="aboutLink" data-toggle="modal" data-target="#metamodal" href="/about">About</a></li>
 				</ul>
 			</footer>
 		</div>
-		
-		<!-- Terms of Service Modal -->
-		<div id="tos" data-remote="/terms-of-service" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+		<!-- MODAL -->
+		<div id="metamodal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 		  <div class="modal-header">
 		    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-		    <h3 id="myModalLabel">Terms of Service</h3>
+		    <img id="logo" src="img/openpath.png" alt="OpenPath">
 		  </div>
 		  <div class="modal-body">
 		  	<!-- content will be loaded here -->
-		  </div>
-		</div>
-		
-		<!-- Privacy Policy Modal -->
-		<div id="privacyPolicy" data-remote="/privacy-policy"  class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-		  <div class="modal-header">
-		    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-		    <h3 id="myModalLabel">Privacy Policy</h3>
-		  </div>
-		  <div class="modal-body">
-		  	<!-- content will be loaded here -->
-		  </div>
-		</div>
-		
-		<!-- About Modal -->
-		<div id="about" data-remote="/about" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-		  <div class="modal-header">
-		    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-		    <h3 id="myModalLabel">About</h3>
-		  </div>
-		  <div class="modal-body">
-			<!-- content will be loaded here -->
 		  </div>
 		</div>
 {% endblock %}

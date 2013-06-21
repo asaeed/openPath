@@ -46,22 +46,17 @@
 	  /**
 	  * Persona handling
 	  */
-	/*
 	  navigator.id.watch({
 
         // this is the callback that persona triggers when the user logs in
-        onlogin: function(assertion) {
-		   console.log('onlogin');
-		
+        onlogin: function(assertion) {		
           var xhr = new XMLHttpRequest();
           xhr.open("POST", "/auth/status", true);
           xhr.setRequestHeader("Content-Type", "application/json");
           xhr.addEventListener("loadend", function(e) {
           	var data = JSON.parse(this.responseText);
-			console.log('onlogin data.status: ' + data.status);
-            
+
 			if (data && data.status === "okay") {
-	
 			  var path = window.location.pathname;
 			  console.log('onlogin path: ' + path);
 			  if(path == '/'){
@@ -96,7 +91,7 @@
         }
 
       });
-*/ 
+
   // actions that happen when page has loaded
   document.addEventListener("DOMContentLoaded", function() {
 	console.log('DOMContentLoaded');
@@ -120,7 +115,6 @@
         //assertion: assertion
       }));
   }, false);
-
   </script>
   {% endblock %}
 </head>
