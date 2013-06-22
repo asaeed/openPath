@@ -109,54 +109,73 @@
 	  var map1;
 	  var eventsMap;
 	  var geocoder;
-	/*
-	  var mapOptions = {
-		   zoom: 6,
-		   mapTypeId: google.maps.MapTypeId.ROADMAP,
-			mapTypeControl: true,
-		    mapTypeControlOptions: {
-		        style: google.maps.MapTypeControlStyle.HORIZONTAL_BAR,
-		        position: google.maps.ControlPosition.RIGHT_BOTTOM
-		    },
-	  };
-	*/
+
       var room = 1;
+	  var max_num_videos = 2;
       var server = "ws://www.walking-productions.com:8001/";  
-      var videos = [];
-      var PeerConnection = window.PeerConnection || window.webkitPeerConnection00 || window.webkitRTCPeerConnection;
-    
-      window.addEventListener('load', initUser, false);
+      var main_video = null;
+	  var other_video = null;
+	  var videos = [];
+      var PeerConnection = window.PeerConnection || window.webkitPeerConnection00 || window.webkitRTCPeerConnection || window.mozRTCPeerConnection;
+	  console.log(PeerConnection);    
+      
+	  window.addEventListener('load', initUser, false);
 	  /**
 	  * Starts video, chat, and geolocation
 	  */
 	  function initUser() {    
 		console.log('initUser');
-        if(PeerConnection){
-          rtc.createStream({"video": true, "audio": true}, function(stream) {
-            document.getElementById('self_videoplayer').src = URL.createObjectURL(stream);
-            rtc.attachStream(stream, 'self_videoplayer');
-          });
-        }else {
-          alert('Sorry, your browser is not supported');
-        }
-        
-        console.log("server: " + server);
-        console.log("room: " + room);
-        rtc.connect(server, room);
 
-        rtc.on('add remote stream', function(stream, socketId) {
-          console.log("ADDING REMOTE STREAM...");
-          if (document.getElementById('main_videoplayer').src == "") {
-	          rtc.attachStream(stream, 'main_videoplayer');
-	       } else if (document.getElementById('other_videoplayer').src == "") { 
-	       	  rtc.attachStream(stream, 'other_videoplayer');
-	       }
-        });
-        
-        rtc.on('disconnect stream', function(data) {
-            console.log('remove ' + data);
-        });
+		if (PeerConnection) {
+			rtc.createStream({"video": true, "audio": true}, function(stream) {
+				document.getElementById('self_videoplayer').src = URL.createObjectURL(stream);
+				rtc.attachStream(stream, 'self_videoplayer');
+			});
+		} else {
+			alert('Sorry, your browser is not supported');
+		}
 
+		console.log("server: " + server);
+		console.log("room: " + room);
+
+		rtc.connect(server, room);
+
+		rtc.on('add remote stream', function(stream, socketId) {
+			console.log("Remote stream: " + stream + " " + socketId);
+
+			if (videos.length < max_num_videos) {
+				var newVideo = new initVideo(stream, socketId);
+			}
+		});
+
+		rtc.on('disconnect stream', function(socketId) {
+			console.log('disconnect stream ' + socketId);
+
+			var domId = null;
+			for (var i = 0; i < videos.length; i++) {
+				if (videos[i].socketId == socketId) {
+					if (videos[i] == main_video) { 
+						main_video = null; 
+						document.getElementById('main_videoplayer').src = "";
+						console.log("main_video");
+					}else if (videos[i] == other_video) { 
+						other_video = null; 
+						document.getElementById('other_videoplayer').src = "";
+						console.log("other_video");
+					}
+					videos.splice(videos[i]);
+
+					console.log("removed video");
+					break;
+				}	
+			}
+		});
+
+		rtc.on('main_video_socketid', function(data) {
+			console.log(data.socketid);
+		});
+
+		// initialize remainder of interface
 		initUserMap();
 		initEventsMap();
 		initEventsList('/events');
@@ -164,6 +183,30 @@
 
         window.removeEventListener('load', initUser, false);
       } 
+	  /**
+	  *
+	  */
+	  function initVideo(stream, socketId) {
+		this.stream = stream;
+		this.socketId = socketId;
+		this.domId = null;
+
+		if (main_video == null) {
+       	  	rtc.attachStream(stream, 'main_videoplayer');
+			main_video = this;
+			this.domId = 'main_videoplayer';
+			videos.push(this);
+			console.log("Adding video as main_videoplayer");
+		} else if (other_video == null) {
+			rtc.attachStream(stream, 'other_videoplayer');
+			other_video = this;	
+			this.domId = 'other_videoplayer';
+			videos.push(this);
+			console.log("Adding video as other_videoplayer");
+		} else {
+			console.log("No room for more videos");
+		}
+	  }
 	  /**
 	  * Retreives geolocation for display within map.
 	  */
@@ -432,7 +475,7 @@
 						<div id="userlocation2" class="userlocation"></div>
 						<div id="usermap2" class="usermap"></div>
 	                </div>
-	                <video id="self_videoplayer" class="avatar" poster="img/poster.png" autoplay></video>
+	                <video id="other_videoplayer" class="avatar" poster="img/poster.png" autoplay></video>
 	            </div>
 				<div class="user">
 	            	<div class="usermeta">
@@ -440,7 +483,7 @@
 						<div id="userlocation3" class="userlocation"></div>
 						<div id="usermap3" class="usermap"></div>
 	                </div>
-	                <video id="self_videoplayer" class="avatar" poster="img/poster.png" autoplay></video>
+	                <video id="other_videoplayer2" class="avatar" poster="img/poster.png" autoplay></video>
 	            </div>
 				<div class="user">
 	            	<div class="usermeta">
@@ -448,7 +491,7 @@
 						<div id="userlocation4" class="userlocation"></div>
 						<div id="usermap4" class="usermap"></div>
 	                </div>
-	                <video id="self_videoplayer" class="avatar" poster="img/poster.png" autoplay></video>
+	                <video id="other_videoplayer3" class="avatar" poster="img/poster.png" autoplay></video>
 	            </div>
 	            </div>
 
