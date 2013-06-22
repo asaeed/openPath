@@ -6,72 +6,37 @@
     {% parent %}
 	<link href="css/home.css" rel="stylesheet" type="text/css">
 	<script>
-	$.fn.serializeObject = function(){
-		console.log('serializeObject');
-      var o = {};
-      var a = this.serializeArray();
-      $.each(a, function() {
-          if (o[this.name] !== undefined) {
-              if (!o[this.name].push) {
-                  o[this.name] = [o[this.name]];
-              }
-              o[this.name].push(this.value || '');
-          } else {
-              o[this.name] = this.value || '';
-          }
-      });
-      return o;
-  };
-		var validateEmail = function(email) { 
-	    var re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-	    return re.test(email);
-	}
-	var validateInvites = function(){
-		$( "#invitations ol input").each(function() {
-		  var isValid = validateEmail($(this).val());
-		  console.log(isValid);
-		  // redirect to main 
-		  window.location = "/main";
-		});
-	  };
-		var sendGuestEmail = function(){
-		var xhr = new XMLHttpRequest();
-		  xhr.open("GET", "/auth/guest", true);
-		  xhr.addEventListener("loadend", function(e) {
-		    var data = JSON.parse(this.responseText);
-		    if (data && data.status === "okay") {
-				window.location = "/main";
-		    }
-		  }, false);
-		  xhr.send();
-		};
-		
+	  // Persona login button
 	  $(document).ready(function() {
 		$('#loginbtn').mouseup(function() {
 			navigator.id.request();
-		});
-		$('#logoutbtn').mouseup(function() {
-			navigator.id.logout();
-		});
-		$('#invitebtn').mouseup(function() {
-			validateInvites();
 		});
 		// display guest login form
 		$('#guestbtn').mouseup(function() {
 			$("#login").fadeOut();
 			$("#guestlogin").fadeIn();
 		});
+		
 		// validate email and show main
 		$('#guestloginbtn').mouseup(function() {
 			var email = $('#email').val();
 			var isValid = validateEmail(email);
 			if(!isValid){
-				alert("Sorry, your email is invalid. Please try again");
+				$('#emailerror').modal();
 			}else{
-				sendGuestEmail();
+				// send email to API to authenticate
+				var xhr = new XMLHttpRequest();
+				xhr.open("GET", "/auth/guest", true);
+				xhr.addEventListener("loadend", function(e) {
+					var data = JSON.parse(this.responseText);
+					if (data && data.status === "okay") {
+						console.log('going to main');
+						window.location = "/main";
+					}
+				}, false);
+				xhr.send();
 			};
 		});
-		
 	  });
 	</script>
 {% endblock %}
@@ -87,34 +52,19 @@
 			
 			<div id="login">
 	            <h1>What do you want to learn?</h1>
-	            <p>OpenPath is your key to exhibits, tours, and special events tailored to your goals.</p>
+				
+	            <p>Chart your learning path through exhibits, tours, and special events</p>
 				<div class="loginoptions">
-				<div class="option1"><a id="loginbtn" class="persona-button"><span>Sign in with Persona</span></a><p>(Hey! A more personalized experience)</p></div>
-				<div class="or">or</div>
-				<div class="option2"><a id="guestbtn" class="graybtn">Sign in as Guest</a></div>
-				</div>
+				<a id="loginbtn" class="persona-button" data-loading-text="Loading..."><span>Sign in with Persona</span></a> or <a id="guestbtn" class="btn">Sign in as Guest</a></div>
 			</div>
-			
+			<div id="loadinggraphic"><i class="icon-spinner icon-spin icon-large">Loading User</i> </div>
 			<!-- GUEST -->
 			
 			<div id="guestlogin">
-				<form id="guestloginForm" action="" method="">
+				<form id="guestloginForm">
 		            <input type="text" name="email" id="email" class="email" placeholder="Your email" /> <br>
 		            <a id="guestloginbtn" class="btn">Login as Guest</a>
 		        </form>
-			</div>
-			
-			<!-- INVITES -->
-
-			<div id="invitations">
-				<p>Invite others to join your session!</p>
-				<ol>
-					<li><input type="text" id="invite1" class="invite" placeholder="email 1" /></li>
-					<li><input type="text" id="invite2" class="invite" placeholder="email 2" /></li>
-				</ol>
-				<a id="logoutbtn" class="btn" href="#">Logout</a>
-				<a id="skip" href="/main">Skip</a>
-				<a id="invitebtn" class="btn" href="#">Invite</a>
 			</div>
 
         </div>
@@ -123,26 +73,46 @@
 </header>
 <div class="row">
 			<div class="col1">
-				<h2>Learn together</h2>
-				<hr>
-				<p>We learn better when we learn together. Find people with shared interests, goals, and expertise.</p>
-				<hr>
-				<img src="img/home/learn-together.png" alt="Learn Together">
+				<h2>Connect learning everywhere</h2>
+				<ul>
+			    	<li>Go on expert-guided virtual field trips</li>
+			    	<li>Facilitate place-based learning remotely</li>
+			    </ul>
+				<img src="img/home/map.jpg" alt="Map">
 			</div>
 			<div class="col2">
-				<h2>Never miss a chance to learn</h2>
-				<hr>
-				<p>Get relevant notifications about learning opportunities in your community and online.</p>
-				<hr>
-				<img src="img/home/never-miss.png" alt="Never Miss">
+				<h2>No downloads, no hassles</h2>
+				<ul>
+				  <li>Location-based video right in your browser</li>
+				  <li>Stream and share high-quality video, enabled by high-speed networks</li>
+				</ul>
+				<img src="img/home/no-downloads.png" alt="Never Miss">
 			</div>
 			<div class="col3">
-				<h2>No downloads, no hassles</h2>
-				<hr>
-				<p>Stream and share high-quality video in your web browser over next-generation networks.</p>
-				<hr>
-				<img src="img/home/no-downloads.png" alt="No Downloads">
+				<h2>Collaborate &amp; build community</h2>
+				<ul>
+				  <li>Curate experiences, sharing your favorite places</li>
+				  <li>Advocate for local causes, collaborate with people around the world</li>
+				</ul>
+				<img src="img/home/learn-together.png" alt="Learn Together">
 			</div>
             <div class="clearer"></div>
+			<footer id="homefooter">
+				<ul>
+					<li><a id="tosLink" data-toggle="modal" data-target="#metamodal" href="/terms-of-service">Terms of Service</a></li>
+					<li><a id="privacyPolicyLink" data-target="#metamodal" data-toggle="modal" href="/privacy-policy">Privacy Policy</a></li>
+					<li><a id="aboutLink" data-toggle="modal" data-target="#metamodal" href="/about">About</a></li>
+				</ul>
+			</footer>
+		</div>
+		<!-- MODAL -->
+		<div id="metamodal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+		  <div class="modal-header">
+		    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+		    <img id="logo" src="img/openpath.png" alt="OpenPath">
+		  </div>
+		  <div class="modal-body">
+		  	<!-- content will be loaded here -->
+		  </div>
 		</div>
 {% endblock %}

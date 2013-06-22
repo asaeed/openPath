@@ -2,6 +2,8 @@ var app = require('express').createServer();
 app.listen(8001);
 var webRTC = require('webrtc.io').listen(app);
 
+console.log("Server running on port 8001");
+
 /*
 app.get('/', function(req, res) {
   res.sendfile(__dirname + '/index.htm');
