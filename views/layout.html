@@ -34,7 +34,13 @@
 			username = user;
 		};
 		document.querySelector("#username1").textContent = username;
-		//document.querySelector("#profileUsername").textContent = username;	
+		document.querySelector("#profileUsername").textContent = username;	
+		
+		// change invitation message
+		var msg = document.querySelector("#text").value;
+		msg = msg.replace("USERNAME", username);
+		msg = msg.replace("LINK", "http://www.openpath.me");
+	    document.querySelector("#text").value = msg;
 	  };
 	  /**
 	  * Validates Email

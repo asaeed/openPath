@@ -145,7 +145,7 @@ video.avatar{width:100%; height:auto;}
 @media all and (max-width: 768px){
 	.col1{width:66%;}
 	.col2{width:34%;}
-	.col50{width:40%;}
+	.col50{width:45%;}
 	.subnav{font-size:14px;}
 }
 @media all and (max-width: 600px){

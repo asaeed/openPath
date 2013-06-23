@@ -70,8 +70,10 @@
 				var tmp = $(this).attr('src');
 				if($('#main_videoplayer').attr('src') == undefined){
 					$('#main_videoplayer').attr('src', tmp);
+					$('#main_videoplayer').attr('muted', 'muted');
 				}else{
 					$('#main_videoplayer').attr('src', '');
+					$('#main_videoplayer').attr('muted', '');
 				}
         	});
 			// Validates and submits email inviting participant
@@ -233,6 +235,7 @@
 			      map: map1,
 			      title: ''
 			  });
+			  map1.setCenter(pos);
 			
 			  // get and display street address 
 			  codeLatLng(pos, "#userlocation1");
@@ -520,7 +523,9 @@
 				<textarea rows="10" name="text" id="text">
 Hi,
 
-<span class="username"></span> would like to invite you to a video session on Open Path. Click here to join:
+USERNAME would like to invite you to a video session on Open Path. Click here to join:
+
+LINK
 
 Let's learn together!
 
@@ -562,7 +567,7 @@ Open Path Team
 		</div>
 		<div class="col2">
 			<!-- BEGIN EVENTS LIST -->
-            <div class="eventslist" class="inner">
+            <div class="eventslist inner">
             <h2>List of Events</h2> <a href="#" class="btn btn-primary"><span class="icon-plus"></span> Add</a>
 				<div class="eventsholder">
 					
@@ -652,7 +657,7 @@ Open Path Team
 					</div>
 					<div class="col2">
 						<!-- BEGIN EVENTS LIST -->
-			            <div class="eventslist" class="inner">
+			            <div class="eventslist inner">
 			            <h2>List of Events</h2> <a href="#" class="btn btn-primary"><span class="icon-plus"></span> Add</a>
 							<div class="eventsholder">
 								
