@@ -98,12 +98,9 @@
 			event.stopPropagation();
 		});
 		$('#other_videoplayer').dblclick(function(event) {
-			console.log("double click");
-			
-			var tempsrc = $('#main_videoplayer').attr('src');
-			console.log("tempsrc = " + tempsrc);
-			$('#main_videoplayer').attr('src', $('#other_videoplayer').src);
-			$('#other_videoplayer').attr('src', tempsrc);
+			var tempsrc = document.getElementById('main_videoplayer').src;
+			document.getElementById('main_videoplayer').src = document.getElementById('other_videoplayer').src;
+			document.getElementById('other_videoplayer').src = tempsrc;
 
 			var tempvideo = main_video;
 			main_video = other_video;
@@ -142,27 +139,27 @@
 	  function initUser() {
 
 		if (PeerConnection) {
-			rtc.createStream({"video": true, "audio": true}, function(stream) {
+       			rtc.createStream({"video": true, "audio": true}, function(stream) {
 				document.getElementById('self_videoplayer').src = URL.createObjectURL(stream);
-				rtc.attachStream(stream, 'self_videoplayer');
-			});
-		} else {
-			alert('Sorry, your browser is not supported');
-		}
-
-		console.log("server: " + server);
-		console.log("room: " + room);
-
+         				rtc.attachStream(stream, 'self_videoplayer');
+       			});
+     		} else {
+       			alert('Sorry, your browser is not supported');
+     		}
+     
+     		console.log("server: " + server);
+     		console.log("room: " + room);
+     
 		rtc.connect(server, room);
 
-		rtc.on('add remote stream', function(stream, socketId) {
-			console.log("Remote stream: " + stream + " " + socketId);
+     		rtc.on('add remote stream', function(stream, socketId) {
+       			console.log("Remote stream: " + stream + " " + socketId);
 
 			if (videos.length < max_num_videos) {
 				var newVideo = new initVideo(stream, socketId);
 			}
-		});
-
+     		});
+     
 		rtc.on('disconnect stream', function(socketId) {
 			console.log('disconnect stream ' + socketId);
 
@@ -173,9 +170,10 @@
 						main_video = null; 
 						document.getElementById('main_videoplayer').src = "";
 						console.log("main_video");
-					}else if (videos[i] == other_video) { 
+					}
+					else if (videos[i] == other_video) { 
 						other_video = null; 
-						document.getElementById('other_videoplayer').src = "";
+                                                     document.getElementById('other_videoplayer').src = "";
 						console.log("other_video");
 					}
 					videos.splice(videos[i]);
@@ -184,7 +182,7 @@
 					break;
 				}	
 			}
-		});
+     		});
 
 		rtc.on('main_video_socketid', function(data) {
 			console.log(data.socketid);
@@ -231,13 +229,13 @@
 	  /**
 	  *
 	  */
-	  function initVideo(stream, socketId) {
+  	function initVideo(stream, socketId) {
 		this.stream = stream;
 		this.socketId = socketId;
 		this.domId = null;
 
 		if (main_video == null) {
-       	  	rtc.attachStream(stream, 'main_videoplayer');
+       	  		rtc.attachStream(stream, 'main_videoplayer');
 			main_video = this;
 			this.domId = 'main_videoplayer';
 			videos.push(this);
@@ -251,7 +249,7 @@
 		} else {
 			console.log("No room for more videos");
 		}
-	  }
+	}
 	  /**
 	  * Retreives geolocation for display within map.
 	  */
