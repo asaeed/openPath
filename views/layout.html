@@ -21,38 +21,30 @@
     <script src="https://login.persona.org/include.js"></script>
 	
     <script>
-	  var username = "";
-	  /**
-	  * Display username in interface
-	  */
-	  var showUsername = function(user){
-		 if(user != "guest"){
-			// pull username from front of email address and display in interface
-			// will allow user to change in future version; will store in user data along w prefs
-			username = user.match(/^([^@]*)@/)[1];		
-		}else{
-			username = user;
-		};
-		document.querySelector("#username1").textContent = username;
-		document.querySelector("#profileUsername").textContent = username;	
-		
-		// change invitation message
-		var msg = document.querySelector("#text").value;
-		msg = msg.replace("USERNAME", username);
-		msg = msg.replace("LINK", "http://www.openpath.me");
-	    document.querySelector("#text").value = msg;
-	  };
-	  /**
-	  * Validates Email
-	  * @arg	email
-	  */
-	  var validateEmail = function(email) { 
-	    var re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-	    return re.test(email);
-	}
-	  /**
-	  * Persona handling
-	  */
+	  var username;
+	  var email;
+	  var sessionID;
+	
+	  /*************************************/
+      // PAGE LOAD
+	  /*************************************/
+	  $(document).ready(function() {
+		// call auth/status when page first loads to see if user is logged in already
+	    var xhr = new XMLHttpRequest();
+	      xhr.open("POST", "/auth/status", true);
+	      xhr.setRequestHeader("Content-Type", "application/json");
+	      xhr.addEventListener("loadend", function(e) {
+	        var data = JSON.parse(this.responseText);
+	        if (data && data.status === "okay") {
+			  handleLogin(data.email);
+	        }
+	      }, false);
+	      xhr.send(JSON.stringify({
+	        //assertion: assertion
+	      }));
+	  /*************************************/
+      // PERSONA HANDLING
+	  /*************************************/
 	  navigator.id.watch({
 
         // this is the callback that persona triggers when the user logs in
@@ -64,17 +56,7 @@
           	var data = JSON.parse(this.responseText);
 
 			if (data && data.status === "okay") {
-			  var path = window.location.pathname;
-			  console.log('onlogin path: ' + path);
-			  if(path == '/'){
-				// ON LOGIN: do homepage handling
-				console.log('ON LOGIN: do homepage handling');
-				window.location = "/main";
-			  }else if(path == '/main'){
-				// ON LOGIN: do main handling
-				console.log('ON LOGIN: do main handling');		
-				showUsername(data.email);
-			  }
+				handleLogin(data.email);
             }
           }, false);
           xhr.send(JSON.stringify({
@@ -96,32 +78,152 @@
           }, false);
           xhr.send();
         }
-
       });
+});
+/*************************************/
+  // FUNCTION DEFINITIONS
+  /*************************************/
+/**
+  * Display username in interface
+  */
+  var showUsername = function(user, idHash){
+	 email = user;
+	 //alert("showUsername email = " + email);
+	 if(user != "guest"){
+		// pull username from front of email address and display in interface
+		// will allow user to change in future version; will store in user data along w prefs
+		username = user.match(/^([^@]*)@/)[1];		
+	}else{
+		username = user;
+	};
+	document.querySelector("#username1").textContent = username;
+	document.querySelector("#profileUsername").textContent = username;	
 
-  // actions that happen when page has loaded
-  document.addEventListener("DOMContentLoaded", function() {
-	console.log('DOMContentLoaded');
-    // call auth/status when page first loads to see if user is logged in already
-    var xhr = new XMLHttpRequest();
-      xhr.open("POST", "/auth/status", true);
-      xhr.setRequestHeader("Content-Type", "application/json");
-      xhr.addEventListener("loadend", function(e) {
-        var data = JSON.parse(this.responseText);
-        if (data && data.status === "okay") {
-		  showUsername(data.email);
-		  var path = window.location.pathname;
-		  if(path == '/'){
-			console.log('ON PAGE: do homepage stuff');
-		  }else if(path == '/main'){
-			console.log('ON PAGE: do main stuff');
-		  }
-        }
-      }, false);
-      xhr.send(JSON.stringify({
-        //assertion: assertion
-      }));
-  }, false);
+	// change invitation message
+	var msg = document.querySelector("#text").value;
+	msg = msg.replace("USERNAME", username);
+	msg = msg.replace("LINK", "http://www.openpath.me#" + idHash);
+    document.querySelector("#text").value = msg;
+  };
+/**
+* Determines actions after login based on URL path.
+*/
+function handleLogin(email){
+	var path = window.location.pathname;
+	if(path == '/'){
+		// ON LOGIN: do homepage handling
+		console.log('ON LOGIN: do homepage handling');
+		window.location = "/main" +'#'+getHash();
+	}else if(path == '/main'){
+		// ON LOGIN: do main handling
+		console.log('ON LOGIN: do main handling');
+		getSessionIdHash(email);
+	}
+}
+/**
+* Checks URL for hash containing session id.
+* @param email - email of user to pass to username.
+*/
+function getSessionIdHash(email){
+	var id = getHash();
+	if (id != '') {	
+		// call API and check for id in database
+		$.ajax({
+			url: '/sessions/' + id,
+			dataType:'json',
+			type:'GET',
+			async:false,
+			success: function() {
+				// session id found, proceed to display username
+				console.log('session id found');
+				showUsername(email, id);
+			},
+			error: function(){
+				// no id found, create new session
+				createNewSession(email);
+			}
+		});
+	}else{
+		// no hash present, create new session
+		createNewSession(email);
+	}
+}
+/**
+* Creates new session in database.
+*/
+function createNewSession(email){
+	console.log("createNewSession");
+	var sessionObj = { 
+	  /*
+	  'id': #, // id is auto-generated 
+	  */
+      'creator': email,
+      'EventId': null,
+      'startTime': getDateTimeStamp(), 
+      'privacy': "public",
+      'type': "default",
+      'invitedUsers': [],
+      'users': [
+        { 'userId': email, 'startTime': getDateTimeStamp(), 'endTime': "5/18/2014 18:00:00" }
+      ]
+    };
+	// call API and insert session
+	showUsername(email, '');
+	/*
+	$.ajax({
+		url: '/sessions',
+		dataType:'json',
+		data: sessionObj,
+		type:'POST',
+		async:false,
+		success: function(data) {
+			console.log('new session created and session id = ' + data._id);
+			showUsername(email, data._id);
+		},
+		error: function(data){
+			console.log('there was an error creating a new session' + data);
+		}
+	});
+	*/
+}
+/*************************************/
+  // GLOBAL UTILITY FUNCTIONS
+  /*************************************/
+	/**
+	* Validates Email
+	* @param	email
+	*/
+	var validateEmail = function(email) { 
+	var re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+	return re.test(email);
+	}
+	/**
+	* Retrieves and returns formatted date time
+	*/
+	function getDateTimeStamp(){
+		var dateobj=new Date();
+	    var year = dateobj.getFullYear();
+	    var month= ("0" + (dateobj.getMonth()+1)).slice(-2);
+	    var day = ("0" + dateobj.getDate()).slice(-2);
+	    var hours = ("0" + dateobj.getHours()).slice(-2);
+	    var minutes = ("0" + dateobj.getMinutes()).slice(-2);
+	    var seconds = ("0" + dateobj.getSeconds()).slice(-2);
+	    converted_date = parseInt(month) + "/" + parseInt(day) + "/" + year;
+		converted_time = hours + ":" + minutes + ":" + seconds;
+	    return converted_date + " " + converted_time;
+	  }
+	/**
+	* Gets and returns hash value, otherwise, returns empty string.
+	*/
+	function getHash(){
+		var hash = "";
+		var url = document.location.toString();
+		if (url.match('#')) {
+			// hash found, retrieve id
+		    hash = url.split('#')[1];
+		};
+		return hash;
+	}
   </script>
   {% endblock %}
 </head>

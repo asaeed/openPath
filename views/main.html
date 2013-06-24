@@ -9,7 +9,6 @@
 	<script src="js/webrtc.io.js"></script>
 	<script>
 	  var firstname, lastname, latitude, longitude, watchID;
-      var username;
 	  var map1, map1marker;
 	  var eventsMap, eventsmapmarker;
 	  var myPathMap, myPathMapMarker;
@@ -27,8 +26,11 @@
 	
 		// Bootstrap interface calls through JQuery
         $(document).ready(function() {
-			
+
+			initControls();
 			initUser();
+			initEventsMap();
+			initEventsList();
 			
 	/*
 			// determines tab to display based on hash
@@ -42,101 +44,99 @@
 			    window.location.hash = e.target.hash;
 			})
 	*/
-			// Main Navigation Tabs
-			$('#mainnav a').click(function (e) {
-			  e.preventDefault();
-			  $(this).tab('show');
-			
-			  resetMaps();
-		
-			})
-            $("#mainnav a").tooltip({placement:'bottom'});
 
-			$('#usernav a').click(function (e) {
-			  e.preventDefault();
-			  $(this).tab('show');
-			
-			  resetMaps();
-			})
-			$('#logout').mouseup(function() {
-				navigator.id.logout('button pressed');
-			});
-			// User Icon - Right Column Main Screen
-			$('.user').mouseenter(function(event) {
-				$(this).find(".usermeta").fadeIn("slow");
-				$(this).find(".username").fadeIn("slow");
-        	});
-			$('.user').mouseleave(function(event) {
-				var isShowing = $(this).find(".usermeta").hasClass("usermetashowing");
-				if(!isShowing){
-					$(this).find(".usermeta").fadeOut("slow");
-					$(this).find(".username").fadeOut("slow");
-				}
-        	});		
-			$('.icon-map-marker').click(function(event) {
-				$(this).parent().parent().addClass('usermetashowing');
-				$(this).parent().parent().find('.usermap').fadeIn("slow");
-				$(this).parent().parent().find('.userlocation').fadeIn("slow");
+	/**
+	* Assigns behaviors to interface controls.
+	*/
+	function initControls(){
+		// Main Navigation Tabs
+		$('#mainnav a').click(function (e) {
+			e.preventDefault();
+			$(this).tab('show');
 
-				$(this).addClass('closebtn');	
-				event.stopPropagation();
-				
-				resetMaps();
-        	});
-			$('.icon-remove').click(function(event) {
-				console.log("icon-remove clicked");
-				$(this).parent().parent().parent().removeClass('usermetashowing');
-				$(this).parent().parent().fadeOut("slow");
-				$(this).parent().parent().parent().find('.usermap').fadeOut("slow");
-				$(this).parent().parent().parent().find('.userlocation').fadeOut("slow");
-				$(this).parent().removeClass('closebtn');
-				event.stopPropagation();
-			});
-			$('.avatar').dblclick(function(event) {
-				console.log('dblclick');
-				var tmp = $(this).attr('src');
-				if($('#main_videoplayer').attr('src') == undefined){
-					$('#main_videoplayer').attr('src', tmp);
-					$('#main_videoplayer').attr('muted', 'muted');
-				}else{
-					$('#main_videoplayer').attr('src', '');
-					$('#main_videoplayer').attr('muted', '');
-				}
-        	});
-			// Validates and submits email inviting participant
-			$('#adduserform').submit(function() {
-				var email = $('#to').val();
-				var isValid = validateEmail(email);
-				
-				if(!isValid){
-					$('#emailerror').modal();
-				}else{
-					var data = $('#adduserform').serialize(); // serialize all the data in the form 
-					$.ajax({
-						url: '/email',
-					    data: data,
-					    dataType:'json',
-					    type:'POST',
-					    async:false,
-						success: function(data) {        
-					      for (key in data.email) {
-					        alert(data.email[key]);
-					      }
-					    },
-					    error: function(data){}
-					});
-				};
-				return false;
-        	});
-       
-	  /*********************************************/
-	  // Video and Map code
-	  /*********************************************/
+			resetMaps();
+		})
+		$("#mainnav a").tooltip({placement:'bottom'});
+
+		$('#usernav a').click(function (e) {
+			e.preventDefault();
+			$(this).tab('show');
+
+			resetMaps();
+		})
+		$('#logout').mouseup(function() {
+			navigator.id.logout('button pressed');
+		});
+		// User Icon - Right Column Main Screen
+		$('.user').mouseenter(function(event) {
+			$(this).find(".usermeta").fadeIn("slow");
+			$(this).find(".username").fadeIn("slow");
+		});
+		$('.user').mouseleave(function(event) {
+			var isShowing = $(this).find(".usermeta").hasClass("usermetashowing");
+			if(!isShowing){
+				$(this).find(".usermeta").fadeOut("slow");
+				$(this).find(".username").fadeOut("slow");
+			}
+		});		
+		$('.icon-map-marker').click(function(event) {
+			$(this).parent().parent().addClass('usermetashowing');
+			$(this).parent().parent().find('.usermap').fadeIn("slow");
+			$(this).parent().parent().find('.userlocation').fadeIn("slow");
+
+			$(this).addClass('closebtn');	
+			event.stopPropagation();
+
+			resetMaps();
+		});
+		$('.icon-remove').click(function(event) {
+			$(this).parent().parent().parent().removeClass('usermetashowing');
+			$(this).parent().parent().fadeOut("slow");
+			$(this).parent().parent().parent().find('.usermap').fadeOut("slow");
+			$(this).parent().parent().parent().find('.userlocation').fadeOut("slow");
+			$(this).parent().removeClass('closebtn');
+			event.stopPropagation();
+		});
+		$('.avatar').dblclick(function(event) {
+			var tmp = $(this).attr('src');
+			if($('#main_videoplayer').attr('src') == undefined){
+				$('#main_videoplayer').attr('src', tmp);
+				$('#main_videoplayer').attr('muted', 'muted');
+			}else{
+				$('#main_videoplayer').attr('src', '');
+				$('#main_videoplayer').attr('muted', '');
+			}
+		});
+		// Validates and submits email inviting participant
+		$('#adduserform').submit(function() {
+			var email = $('#to').val();
+			var isValid = validateEmail(email);
+
+			if(!isValid){
+				$('#emailerror').modal();
+			}else{
+				var data = $('#adduserform').serialize(); // serialize all the data in the form 
+				$.ajax({
+					url: '/email',
+					data: data,
+					dataType:'json',
+					type:'POST',
+					async:false,
+					success: function(data) {        
+						for (key in data.email) {
+							alert(data.email[key]);
+						}
+					},
+					error: function(data){}
+				});
+			};
+			return false;
+		});
+	}
 	  /**
 	  * Starts video, chat, and geolocation
 	  */
-	  function initUser() {    
-		console.log('initUser');
+	  function initUser() {
 
 		if (PeerConnection) {
 			rtc.createStream({"video": true, "audio": true}, function(stream) {
@@ -190,41 +190,40 @@
 		// initialize remainder of interface
 		initUserMap();
 		initMyPathMap();
-		initEventsMap();
-		//initEventsList('/events');
         initChat();
-
+      }
+	/**
+	* Parses and displays events
+	* @param array of json objects
+	*/
+	function initEventsList(){
+		// get events list from API
 		$.ajax({
 			url: '/events',
 		    dataType:'json',
 		    type:'GET',
 		    async:false,
-			success: function(data) {        
-		      initEventsList(data);
+			success: function(list) {  
+				// parse and display list      
+		      	var output = "";
+				var evt;
+				for(var i in list){
+					evt = list[i];
+					output += '<article>';
+					output += '<a href="'+ evt.link +'" target="_blank"><h3>' + evt.name + '</h3></a>';
+					output += evt.startTime + ' to ' + evt.endTime + '<br>';
+					output += evt.locationDescription + '<br>';
+					output += '<p>' + evt.description + '</p>';
+					output += '</article>';
+				}
+				// write to both event lists
+				$('.eventsholder').html(output);
 		    },
-		    error: function(data){
+		    error: function(list){
 				console.log("events not found");
+				$('.eventsholder').html('No Events Found');
 			}
 		});
-      } 
-	/**
-	* Parses and displays events
-	* @param array of json objects
-	*/
-	function initEventsList(list){
-		var output = "";
-		var evt;
-		for(var i in list){
-			evt = list[i];
-			output += '<article>';
-			output += '<a href="'+ evt.link +'" target="_blank"><h3>' + evt.name + '</h3></a>';
-			output += evt.startTime + ' to ' + evt.endTime + '<br>';
-			output += evt.locationDescription + '<br>';
-			output += '<p>' + evt.description + '</p>';
-			output += '</article>';
-		}
-		// write to both event lists
-		$('.eventsholder').html(output);
 	}
 	  /**
 	  *
@@ -592,32 +591,7 @@ Open Path Team
             <div class="eventslist inner">
             <h2>List of Events</h2> <a href="#" class="btn btn-primary"><span class="icon-plus"></span> Add</a>
 				<div class="eventsholder">
-					<!--
-	            	<article>
-		                <h3>Field trip to Science Museum</h3>
-		                May 25th, 2013 3-4pm<br>
-		                Fort Greene Park Science Museum<br>
-		                This is the description of the event. You are going to learn so much. Led by Joe Smith, science docent at the museum.
-		            </article>
-		            <article>
-		                <h3>Bird Watching Tour</h3>
-		                May 26th, 2013 1-2pm<br>
-		                Prospect Park<br>
-		                Summer is back and so are the birds in Prospect Park.We will bring you to understand what’s a typical day for the birds in our neighbourhood.    
-		            </article>
-		            <article>
-		                <h3>Field trip to Science Museum</h3>
-		                May 25th, 2013 3-4pm<br>
-		                Fort Greene Park Science Museum<br>
-		                This is the description of the event. You are going to learn so much. Led by Joe Smith, science docent at the museum.
-		            </article>
-		            <article>
-		                <h3>Bird Watching Tour</h3>
-		                May 26th, 2013 1-2pm<br>
-		                Prospect Park<br>
-		                Summer is back and so are the birds in Prospect Park.We will bring you to understand what’s a typical day for the birds in our neighbourhood.    
-		            </article>
-	-->
+					<!-- Dynamically-Generated Events Go Here -->
 				</div>
             </div>
 			<!-- END EVENTS LIST -->
@@ -682,32 +656,7 @@ Open Path Team
 			            <div class="eventslist inner">
 			            <h2>List of Events</h2> <a href="#" class="btn btn-primary"><span class="icon-plus"></span> Add</a>
 							<div class="eventsholder">
-								<!--
-				            	<article>
-					                <h3>Field trip to Science Museum</h3>
-					                May 25th, 2013 3-4pm<br>
-					                Fort Greene Park Science Museum<br>
-					                This is the description of the event. You are going to learn so much. Led by Joe Smith, science docent at the museum.
-					            </article>
-					            <article>
-					                <h3>Bird Watching Tour</h3>
-					                May 26th, 2013 1-2pm<br>
-					                Prospect Park<br>
-					                Summer is back and so are the birds in Prospect Park.We will bring you to understand what’s a typical day for the birds in our neighbourhood.    
-					            </article>
-					            <article>
-					                <h3>Field trip to Science Museum</h3>
-					                May 25th, 2013 3-4pm<br>
-					                Fort Greene Park Science Museum<br>
-					                This is the description of the event. You are going to learn so much. Led by Joe Smith, science docent at the museum.
-					            </article>
-					            <article>
-					                <h3>Bird Watching Tour</h3>
-					                May 26th, 2013 1-2pm<br>
-					                Prospect Park<br>
-					                Summer is back and so are the birds in Prospect Park.We will bring you to understand what’s a typical day for the birds in our neighbourhood.    
-					            </article>
-					-->
+								<!-- Dynamically-Generated Events Go Here -->
 							</div>
 			            </div>
 						<!-- END EVENTS LIST -->

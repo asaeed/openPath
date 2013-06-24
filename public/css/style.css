@@ -61,7 +61,7 @@ li.active a#profile-icon, a#profile-icon:hover{background:url(/img/user-icon-ove
 /* MAIN */
 /********************************/
 /* MAIN USERS */
-#users{height:360px; overflow-x:hidden; overflow-y:auto;}
+#users{height:400px; overflow-x:hidden; overflow-y:auto;}
 .user{
 	min-height:180px;
 	overflow:hidden;
@@ -86,7 +86,7 @@ video.avatar{width:100%; height:auto;}
 .usermetashowing .icon-map-marker:before{content:'' !important;}
 
 /* CHAT WINDOW */
-#chatwindow{/*height:42.96875%; max-width:240px;*/ height:170px; overflow:auto; padding:8px 10px; background:#ebeae7;}
+#chatwindow{/*height:42.96875%; max-width:240px;*/ height:130px; overflow:auto; padding:8px 10px; background:#ebeae7;}
 #chatwindow strong{font-weight:normal;}
 #chatwindow ol{margin:0; padding:0;}
 #chatwindow li{display:block; list-style:none; padding:7px 0; border-bottom:1px solid #ccc;}
