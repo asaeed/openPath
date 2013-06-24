@@ -142,6 +142,8 @@ video.avatar{width:100%; height:auto;}
 #profile label{font-weight:bold;}
 #profile small{font-size:12px;}
 
+#mypathmap{width:100%; height:100%; min-height:640px;}
+
 @media all and (max-width: 768px){
 	.col1{width:66%;}
 	.col2{width:34%;}

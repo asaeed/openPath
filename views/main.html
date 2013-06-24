@@ -12,6 +12,7 @@
       var username;
 	  var map1, map1marker;
 	  var eventsMap, eventsmapmarker;
+	  var myPathMap, myPathMapMarker;
 	  var geocoder;
 
       var room = 1;
@@ -26,7 +27,7 @@
 	
 		// Bootstrap interface calls through JQuery
         $(document).ready(function() {
-	
+			
 			initUser();
 			
 	/*
@@ -46,9 +47,7 @@
 			  e.preventDefault();
 			  $(this).tab('show');
 			
-			  // Hack to allow Google Maps to work with Bootstrap
-			  google.maps.event.trigger(eventsMap, 'resize');
-			  eventsMap.setCenter(eventsmapmarker.position);
+			  resetMaps();
 		
 			})
             $("#mainnav a").tooltip({placement:'bottom'});
@@ -56,6 +55,8 @@
 			$('#usernav a').click(function (e) {
 			  e.preventDefault();
 			  $(this).tab('show');
+			
+			  resetMaps();
 			})
 			$('#logout').mouseup(function() {
 				navigator.id.logout('button pressed');
@@ -80,8 +81,7 @@
 				$(this).addClass('closebtn');	
 				event.stopPropagation();
 				
-				google.maps.event.trigger(map1, 'resize');
-			    map1.setCenter(map1marker.position);
+				resetMaps();
         	});
 			$('.icon-remove').click(function(event) {
 				console.log("icon-remove clicked");
@@ -189,12 +189,43 @@
 
 		// initialize remainder of interface
 		initUserMap();
+		initMyPathMap();
 		initEventsMap();
-		initEventsList('/events');
+		//initEventsList('/events');
         initChat();
 
-        window.removeEventListener('load', initUser, false);
+		$.ajax({
+			url: '/events',
+		    dataType:'json',
+		    type:'GET',
+		    async:false,
+			success: function(data) {        
+		      initEventsList(data);
+		    },
+		    error: function(data){
+				console.log("events not found");
+			}
+		});
       } 
+	/**
+	* Parses and displays events
+	* @param array of json objects
+	*/
+	function initEventsList(list){
+		var output = "";
+		var evt;
+		for(var i in list){
+			evt = list[i];
+			output += '<article>';
+			output += '<a href="'+ evt.link +'" target="_blank"><h3>' + evt.name + '</h3></a>';
+			output += evt.startTime + ' to ' + evt.endTime + '<br>';
+			output += evt.locationDescription + '<br>';
+			output += '<p>' + evt.description + '</p>';
+			output += '</article>';
+		}
+		// write to both event lists
+		$('.eventsholder').html(output);
+	}
 	  /**
 	  *
 	  */
@@ -281,7 +312,7 @@
 	  */
       function initEventsMap(){
 
-		var eventsMapPos = new google.maps.LatLng(40.7142, -74.0064);
+		var pos = new google.maps.LatLng(40.7142, -74.0064);
 		var options = {
 		    map: eventsMap,
 			zoom: 6,
@@ -291,7 +322,7 @@
 			        style: google.maps.MapTypeControlStyle.HORIZONTAL_BAR,
 			        position: google.maps.ControlPosition.BOTTOM_RIGHT
 			},
-		    center: eventsMapPos,
+		    center: pos,
 			panControl: true,
 		    panControlOptions: {
 		        position: google.maps.ControlPosition.RIGHT_BOTTOM
@@ -301,6 +332,35 @@
 		  eventsmapmarker = new google.maps.Marker({
 		      position: options.center,
 		      map: eventsMap,
+		      icon: 'img/marker.png',
+			  center: options.center
+		  });	
+	  }
+	  /**
+	  * Initializes Map displaying local events
+	  */
+      function initMyPathMap(){
+
+		var pos = new google.maps.LatLng(41.8500, -87.6500);
+		var options = {
+		    map: myPathMap,
+			zoom: 6,
+			mapTypeId: google.maps.MapTypeId.ROADMAP,
+			mapTypeControl: true,
+			mapTypeControlOptions: {
+			        style: google.maps.MapTypeControlStyle.HORIZONTAL_BAR,
+			        position: google.maps.ControlPosition.BOTTOM_RIGHT
+			},
+		    center: pos,
+			panControl: true,
+		    panControlOptions: {
+		        position: google.maps.ControlPosition.RIGHT_BOTTOM
+		    },
+		  };
+		  myPathMap = new google.maps.Map(document.getElementById('mypathmap'), options);
+		  myPathMapMarker = new google.maps.Marker({
+		      position: options.center,
+		      map: myPathMap,
 		      icon: 'img/marker.png',
 			  center: options.center
 		  });	
@@ -377,26 +437,20 @@
         	
         });
       }
-		/**
-		* Parses and displays events
-		* @param array of json objects
-		*/
-		function initEventsList(list){
-			var output = "";
-			var evt;
-			for(var i in list){
-				evt = list[i];
-				output += '<article>';
-				output += '<a href="'+ evt.link +'" target="_blank"><h3>' + evt.name + '</h3></a>';
-				output += evt.startTime + ' to ' + evt.endTime + '<br>';
-				output += evt.locationDescription + '<br>';
-				output += '<p>' + evt.description + '</p>';
-				output += '</article>';
-			}
-			console.log(output);
-			//$('#eventsholder').html(output);
-		}	
+	  /**
+	  * Hack to allow Google Maps to work with Bootstrap
+	  */
+	  function resetMaps(){
 		
+		google.maps.event.trigger(eventsMap, 'resize');
+		eventsMap.setCenter(eventsmapmarker.position);
+				
+		google.maps.event.trigger(map1, 'resize');
+	    map1.setCenter(map1marker.position);
+	
+		google.maps.event.trigger(myPathMap, 'resize');
+		myPathMap.setCenter(myPathMapMarker.position);
+	  }
 		});
     </script>
 {% endblock %}
@@ -538,7 +592,7 @@ Open Path Team
             <div class="eventslist inner">
             <h2>List of Events</h2> <a href="#" class="btn btn-primary"><span class="icon-plus"></span> Add</a>
 				<div class="eventsholder">
-					
+					<!--
 	            	<article>
 		                <h3>Field trip to Science Museum</h3>
 		                May 25th, 2013 3-4pm<br>
@@ -563,7 +617,7 @@ Open Path Team
 		                Prospect Park<br>
 		                Summer is back and so are the birds in Prospect Park.We will bring you to understand what’s a typical day for the birds in our neighbourhood.    
 		            </article>
-	
+	-->
 				</div>
             </div>
 			<!-- END EVENTS LIST -->
@@ -621,14 +675,14 @@ Open Path Team
 				
 				<div class="tab-pane" id="mypath">
 					<div class="col1">
-						<div id="mypath-map-canvas"></div>
+						<div id="mypathmap"></div>
 					</div>
 					<div class="col2">
 						<!-- BEGIN EVENTS LIST -->
 			            <div class="eventslist inner">
 			            <h2>List of Events</h2> <a href="#" class="btn btn-primary"><span class="icon-plus"></span> Add</a>
 							<div class="eventsholder">
-								
+								<!--
 				            	<article>
 					                <h3>Field trip to Science Museum</h3>
 					                May 25th, 2013 3-4pm<br>
@@ -653,7 +707,7 @@ Open Path Team
 					                Prospect Park<br>
 					                Summer is back and so are the birds in Prospect Park.We will bring you to understand what’s a typical day for the birds in our neighbourhood.    
 					            </article>
-					
+					-->
 							</div>
 			            </div>
 						<!-- END EVENTS LIST -->
