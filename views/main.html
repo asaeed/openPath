@@ -97,8 +97,28 @@
 			$(this).parent().removeClass('closebtn');
 			event.stopPropagation();
 		});
-		$('.avatar').dblclick(function(event) {
-			var tmp = $(this).attr('src');
+		$('#other_videoplayer').dblclick(function(event) {
+			console.log("double click");
+			
+			var tempsrc = $('#main_videoplayer').attr('src');
+			$('#main_videoplayer').src = $('#other_videoplayer').src;
+			$('#other_videoplayer').src = tempsrc;
+
+			var tempvideo = main_video;
+			main_video = other_video;
+			other_video = tempvideo;
+			
+			/*
+			var tempsrc = document.getElementById('main_videoplayer').src;
+			document.getElementById('main_videoplayer').src = document.getElementById('other_videoplayer').src;
+			document.getElementById('other_videoplayer').src = tempsrc;
+
+			var tempvideo = main_video;
+			main_video = other_video;
+			other_video = tempvideo;
+			*/					
+					
+			/*
 			if($('#main_videoplayer').attr('src') == undefined){
 				$('#main_videoplayer').attr('src', tmp);
 				$('#main_videoplayer').attr('muted', 'muted');
@@ -106,6 +126,7 @@
 				$('#main_videoplayer').attr('src', '');
 				$('#main_videoplayer').attr('muted', '');
 			}
+			*/
 		});
 		// Validates and submits email inviting participant
 		$('#adduserform').submit(function() {
@@ -500,22 +521,6 @@
 						<div id="usermap2" class="usermap"></div>
 	                </div>
 	                <video id="other_videoplayer" class="avatar" poster="img/poster.png" autoplay></video>
-	            </div>
-				<div class="user">
-	            	<div class="usermeta">
-						<div class="username"><a href="#" id="username3"></a><div class="icon-map-marker"><span class="icon-remove"></span></div></div>
-						<div id="userlocation3" class="userlocation"></div>
-						<div id="usermap3" class="usermap"></div>
-	                </div>
-	                <video id="other_videoplayer2" class="avatar" poster="img/poster.png" autoplay></video>
-	            </div>
-				<div class="user">
-	            	<div class="usermeta">
-						<div class="username"><a href="#" id="username4"></a><div class="icon-map-marker"><span class="icon-remove"></span></div></div>
-						<div id="userlocation4" class="userlocation"></div>
-						<div id="usermap4" class="usermap"></div>
-	                </div>
-	                <video id="other_videoplayer3" class="avatar" poster="img/poster.png" autoplay></video>
 	            </div>
 	            </div>
 
