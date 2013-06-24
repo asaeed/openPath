@@ -101,32 +101,14 @@
 			console.log("double click");
 			
 			var tempsrc = $('#main_videoplayer').attr('src');
-			$('#main_videoplayer').src = $('#other_videoplayer').src;
-			$('#other_videoplayer').src = tempsrc;
+			console.log("tempsrc = " + tempsrc);
+			$('#main_videoplayer').attr('src', $('#other_videoplayer').src);
+			$('#other_videoplayer').attr('src', tempsrc);
 
 			var tempvideo = main_video;
 			main_video = other_video;
 			other_video = tempvideo;
 			
-			/*
-			var tempsrc = document.getElementById('main_videoplayer').src;
-			document.getElementById('main_videoplayer').src = document.getElementById('other_videoplayer').src;
-			document.getElementById('other_videoplayer').src = tempsrc;
-
-			var tempvideo = main_video;
-			main_video = other_video;
-			other_video = tempvideo;
-			*/					
-					
-			/*
-			if($('#main_videoplayer').attr('src') == undefined){
-				$('#main_videoplayer').attr('src', tmp);
-				$('#main_videoplayer').attr('muted', 'muted');
-			}else{
-				$('#main_videoplayer').attr('src', '');
-				$('#main_videoplayer').attr('muted', '');
-			}
-			*/
 		});
 		// Validates and submits email inviting participant
 		$('#adduserform').submit(function() {
@@ -448,7 +430,6 @@
           
         }, false);
         rtc.on('receive_chat_msg', function(data) {
-          console.log(data.color);
           addToChat(" ", data.messages);
         });
         
