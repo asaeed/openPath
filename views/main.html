@@ -8,8 +8,27 @@
 	<script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=true"></script>
 	<script src="js/webrtc.io.js"></script>
 	<script>
+	  var firstname, lastname, latitude, longitude, watchID;
+      var username;
+	  var map1, map1marker;
+	  var eventsMap, eventsmapmarker;
+	  var geocoder;
+
+      var room = 1;
+	  var max_num_videos = 2;
+      var server = "ws://www.walking-productions.com:8001/";  
+      var main_video = null;
+	  var other_video = null;
+	  var videos = [];
+      var PeerConnection = window.PeerConnection || window.webkitPeerConnection00 || window.webkitRTCPeerConnection || window.mozRTCPeerConnection;
+	  console.log(PeerConnection);    
+      
+	
 		// Bootstrap interface calls through JQuery
         $(document).ready(function() {
+	
+			initUser();
+			
 	/*
 			// determines tab to display based on hash
 			var url = document.location.toString();
@@ -26,6 +45,11 @@
 			$('#mainnav a').click(function (e) {
 			  e.preventDefault();
 			  $(this).tab('show');
+			
+			  // Hack to allow Google Maps to work with Bootstrap
+			  google.maps.event.trigger(eventsMap, 'resize');
+			  eventsMap.setCenter(eventsmapmarker.position);
+		
 			})
             $("#mainnav a").tooltip({placement:'bottom'});
 
@@ -55,6 +79,9 @@
 
 				$(this).addClass('closebtn');	
 				event.stopPropagation();
+				
+				google.maps.event.trigger(map1, 'resize');
+			    map1.setCenter(map1marker.position);
         	});
 			$('.icon-remove').click(function(event) {
 				console.log("icon-remove clicked");
@@ -105,23 +132,6 @@
 	  /*********************************************/
 	  // Video and Map code
 	  /*********************************************/
-
-      var firstname, lastname, latitude, longitude, watchID;
-      var username;
-	  var map1;
-	  var eventsMap;
-	  var geocoder;
-
-      var room = 1;
-	  var max_num_videos = 2;
-      var server = "ws://www.walking-productions.com:8001/";  
-      var main_video = null;
-	  var other_video = null;
-	  var videos = [];
-      var PeerConnection = window.PeerConnection || window.webkitPeerConnection00 || window.webkitRTCPeerConnection || window.mozRTCPeerConnection;
-	  console.log(PeerConnection);    
-      
-	  window.addEventListener('load', initUser, false);
 	  /**
 	  * Starts video, chat, and geolocation
 	  */
@@ -230,7 +240,7 @@
 				};
 				map1 = new google.maps.Map(document.getElementById('usermap1'), mapOptions);
 
-			  var marker = new google.maps.Marker({
+			  map1marker = new google.maps.Marker({
 			      position: pos,
 			      map: map1,
 			      title: ''
@@ -247,43 +257,6 @@
 		    // Browser doesn't support Geolocation
 		    handleNoGeolocation(false);
 		  }
-		
-		
-		
-		
-		/*
-		  var mapOptions = {
-			   zoom: 6,
-			   center
-			   mapTypeId: google.maps.MapTypeId.ROADMAP,
-				mapTypeControl: true,
-			    mapTypeControlOptions: {
-			        style: google.maps.MapTypeControlStyle.HORIZONTAL_BAR,
-			        position: google.maps.ControlPosition.RIGHT_BOTTOM
-			    },
-		  };
-		  map1 = new google.maps.Map(document.getElementById('usermap1'), mapOptions);
-
-		  // Try HTML5 geolocation
-		  if(navigator.geolocation) {
-		    navigator.geolocation.getCurrentPosition(function(position) {
-		      var pos = new google.maps.LatLng(position.coords.latitude,  position.coords.longitude);
-
-			  var marker = new google.maps.Marker({
-			      position: pos,
-			      map: map1,
-			      title: ''
-			  });
-		      map1.setCenter(pos);
-			  codeLatLng(pos, "#userlocation1");
-		    }, function() {
-		      handleNoGeolocation(true);
-		    });
-		  } else {
-		    // Browser doesn't support Geolocation
-		    handleNoGeolocation(false);
-		  }
-		*/
 		};  
 		/**
 		* Handles geolocation error.
@@ -294,11 +267,11 @@
 		  } else {
 		    var content = 'Error: Your browser doesn\'t support geolocation.';
 		  }
-
+		  var nycPos = new google.maps.LatLng(40.7142, -74.0064);
 		  var options = {
 		    map: map1,
-			center: new google.maps.LatLng(40.7142, 74.0064),
-		    position: new google.maps.LatLng(40.7142, 74.0064),
+			center: nycPos,
+		    position: nycPos,
 		    content: content
 		  };
 		  //map1.setCenter(options.position);
@@ -307,6 +280,8 @@
 	  * Initializes Map displaying local events
 	  */
       function initEventsMap(){
+
+		var eventsMapPos = new google.maps.LatLng(40.7142, -74.0064);
 		var options = {
 		    map: eventsMap,
 			zoom: 6,
@@ -314,13 +289,21 @@
 			mapTypeControl: true,
 			mapTypeControlOptions: {
 			        style: google.maps.MapTypeControlStyle.HORIZONTAL_BAR,
-			        position: google.maps.ControlPosition.RIGHT_BOTTOM
+			        position: google.maps.ControlPosition.BOTTOM_RIGHT
 			},
-		    center: new google.maps.LatLng(60, 105),
-		    position: new google.maps.LatLng(60, 105)
+		    center: eventsMapPos,
+			panControl: true,
+		    panControlOptions: {
+		        position: google.maps.ControlPosition.RIGHT_BOTTOM
+		    },
 		  };
-		  eventsMap = new google.maps.Map(document.getElementById('eventsmap'), options);	
-		  eventsMap.setCenter(options.position);
+		  eventsMap = new google.maps.Map(document.getElementById('eventsmap'), options);
+		  eventsmapmarker = new google.maps.Marker({
+		      position: options.center,
+		      map: eventsMap,
+		      icon: 'img/marker.png',
+			  center: options.center
+		  });	
 	  }
 	  /**
 	  * Returns reverse-geocoded location
@@ -413,22 +396,7 @@
 			console.log(output);
 			//$('#eventsholder').html(output);
 		}	
-	  /**
-	  * Display username in interface
-	 
-	  function showUsername(user){
-		console.log('show user: ' + user);
-		 if(user != "guest"){
-			// pull username from front of email address and display in interface
-			// will allow user to change in future version; will store in user data along w prefs
-			username = user.match(/^([^@]*)@/)[1];		
-		}else{
-			username = user;
-		};
-		$("#username1").html(username);
-		$("#profileUsername").html(username);	
-	  };
-	 */
+		
 		});
     </script>
 {% endblock %}
