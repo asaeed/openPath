@@ -138,7 +138,7 @@ video.avatar{width:100%; height:auto;}
 #usermenu .subnav li:last-child{border-right:none;}
 #usermenu .subnav a{color:#3e9ed5 !important;}
 
-#mypath .eventslist{margin-top:80px; min-height:560px;}
+#mypath .eventslist{margin-top:100px; min-height:560px;}
 #profile label{font-weight:bold;}
 #profile small{font-size:12px;}
 

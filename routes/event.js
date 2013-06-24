@@ -100,7 +100,7 @@ var populateDB = function() {
 	  //_id:  [this is created when saved into mongodb]
 	  "creator": "jaredlamenzo@gmail.com",
 	  "name": "Invention and the Patent Model",
-	  "description": "Between the years 1790 and 1880 the U.S. Patent Office required both documentation and a three-dimensional working model to demonstrate each new invention submitted for a patent. The models helped to explain proposed innovations and compare them against similar inventions. Today patent models provide a glimpse into the 19th century. They reflect the interests and the needs of the period, along with the division of labor between men and women. Many inventions were not successful while others were said to have changed the course of contemporary civilization. From 1908 to 1926 some 10,000 patent models were transferred from the U.S. Patent Office to the U.S. National Museum at the Smithsonian Institution. The models are now here at the National Museum of American History. ",
+	  "description": "Between the years 1790 and 1880 the U.S. Patent Office required both documentation and a three-dimensional working model to demonstrate each new invention submitted for a patent. The models helped to explain proposed innovations and compare them against similar inventions. They reflect the interests and the needs of the period, along with the division of labor between men and women.",
 	  "location": [38.891313, -77.029999],    // to match with users in the area
 	  "locationDescription": "National Museum of American History",    // to display with event info, might want to add address though google maps may have built into API?
 	  "link": "http://americanhistory.si.edu/exhibitions/invention-and-patent-model", //allow them to enter link

@@ -428,7 +428,7 @@
         }, false);
         rtc.on('receive_chat_msg', function(data) {
           console.log(data.color);
-          addToChat(data.messages);
+          addToChat(" ", data.messages);
         });
         
         rtc.on('main_video_socketid', function(data) {
