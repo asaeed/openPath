@@ -24,11 +24,20 @@
 	  var username;
 	  var email;
 	  var sessionID;
+	  var room = "";
 	
 	  /*************************************/
       // PAGE LOAD
 	  /*************************************/
 	  $(document).ready(function() {
+		
+		// retreives room number based on query string
+		if (getParameterByName('room') != null && getParameterByName('room') != "") {
+			room = getParameterByName('room');
+			console.log("Room Number: " + room);
+		}
+		
+		
 		// call auth/status when page first loads to see if user is logged in already
 	    var xhr = new XMLHttpRequest();
 	      xhr.open("POST", "/auth/status", true);
@@ -110,10 +119,22 @@
 */
 function handleLogin(email){
 	var path = window.location.pathname;
+	console.log('path = ' + path);
 	if(path == '/'){
 		// ON LOGIN: do homepage handling
 		console.log('ON LOGIN: do homepage handling');
-		window.location = "/main" +'#'+getHash();
+		
+		//window.location = "/main" +'#'+getHash();
+		if(room != ""){
+			room = "?room=" + room;
+		}
+		var hash = getHash();
+		if(hash != ""){
+			hash = "#" + hash;
+		}
+		
+		window.location = "/main" + hash + room;
+		
 	}else if(path == '/main'){
 		// ON LOGIN: do main handling
 		console.log('ON LOGIN: do main handling');
@@ -184,11 +205,19 @@ function createNewSession(email){
 			console.log('there was an error creating a new session' + data);
 		}
 	});
-	
 }
 /*************************************/
   // GLOBAL UTILITY FUNCTIONS
   /*************************************/
+	/**
+	* Retrives query string
+	*/
+	function getParameterByName(name) {
+		name = name.replace(/[\[]/, "\\\[").replace(/[\]]/, "\\\]");
+		var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),
+   		results = regex.exec(location.search);
+		return results == null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
+	}
 	/**
 	* Validates Email
 	* @param	email

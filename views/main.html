@@ -14,7 +14,7 @@
 	  var myPathMap, myPathMapMarker;
 	  var geocoder;
 
-      var room = 1;
+      //var room = 1;
 	  var max_num_videos = 2;
       //var server = "ws://www.walking-productions.com:8001/"; 
       var server = "ws://www.openpath.me:8001/";
@@ -27,6 +27,13 @@
 	
 		// Bootstrap interface calls through JQuery
         $(document).ready(function() {
+	
+			if (getParameterByName('room') != null && getParameterByName('room') != "") {
+				room = getParameterByName('room');
+				console.log("Room Number: " + room);
+			}else{
+				room = 1;
+			}
 
 			initControls();
 			initUser();
@@ -147,8 +154,6 @@
      		} else {
        			alert('Sorry, your browser is not supported');
      		}
-     
-     		console.log("server: " + server);
      		console.log("room: " + room);
      
 		rtc.connect(server, room);
@@ -386,17 +391,6 @@
 		  });
 		}
   	  /**
-	  * Adds user to chat window.
-	  */
-      function addToChat(user, msg) {
-        var chatwindow = document.getElementById('chatwindow');
-        var chatmessages = document.getElementById('chatmessages');
-        msg = sanitize(msg);
-        msg = '<li class="user1"><span>'+ user +'</span>: ' + msg + '</li>';
-        chatmessages.innerHTML += msg;
-        chatwindow.scrollTop = chatwindow.scrollHeight;
-      }
-  	  /**
 	  * Sanitizes user message in chat window.
 	  */
       function sanitize(msg) {
@@ -411,10 +405,8 @@
         input.addEventListener('keydown', function(event) {
             if(input.value != ''){
                 var key = event.which || event.keyCode;
-                //console.log(key);
                 if (key === 13) {
-		var message = username + ": " + input.value;	
-                    //console.log(rtc);
+					var message = username + ": " + input.value;	
                     rtc._socket.send(JSON.stringify({
                         "eventName": "chat_msg",
                         "data": {
@@ -429,13 +421,26 @@
           
         }, false);
         rtc.on('receive_chat_msg', function(data) {
-          addToChat(" ", data.messages);
+		  console.log("initChat: username = " + username);
+          addToChat(username, data.messages);
         });
         
         rtc.on('main_video_socketid', function(data) {
         	console.log(data.socketid);
         	
         });
+      }
+  	  /**
+	  * Adds user's message to chat window.
+	  */
+      function addToChat(user, msg) {
+		console.log("addToChat("+user+")")
+        var chatwindow = document.getElementById('chatwindow');
+        var chatmessages = document.getElementById('chatmessages');
+        msg = sanitize(msg);
+        msg = '<li class="user1"><span>'+ user +'</span>: ' + msg + '</li>';
+        chatmessages.innerHTML += msg;
+        chatwindow.scrollTop = chatwindow.scrollHeight;
       }
 	  /**
 	  * Hack to allow Google Maps to work with Bootstrap
