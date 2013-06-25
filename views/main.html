@@ -8,8 +8,7 @@
 	<script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=true"></script>
 	<script src="js/webrtc.io.js"></script>
 	<script>
-	  var firstname, lastname, latitude, longitude, watchID;
-	  var map1, map1marker;
+	  var map1, map1marker, map2, map2marker;
 	  var eventsMap, eventsmapmarker;
 	  var myPathMap, myPathMapMarker;
 	  var geocoder;
@@ -86,7 +85,18 @@
 				$(this).find(".usermeta").fadeOut("slow");
 				$(this).find(".username").fadeOut("slow");
 			}
-		});		
+		});	
+		
+		// Events
+		$('#starttime').datetimepicker({
+		      language: 'en',
+		      pick12HourFormat: true
+		    });
+		$('#endtime').datetimepicker({
+		      language: 'en',
+		      pick12HourFormat: true
+		    });
+		
 		$('.icon-map-marker').click(function(event) {
 			$(this).parent().parent().addClass('usermetashowing');
 			$(this).parent().parent().find('.usermap').fadeIn("slow");
@@ -145,7 +155,7 @@
 	  * Starts video, chat, and geolocation
 	  */
 	  function initUser() {
-
+		var target = "self_video"; // target video. String used to determine which thumb map to target
 		if (PeerConnection) {
        			rtc.createStream({"video": true, "audio": true}, function(stream) {
 				document.getElementById('self_videoplayer').src = URL.createObjectURL(stream);
@@ -168,7 +178,6 @@
      
 		rtc.on('disconnect stream', function(socketId) {
 			console.log('disconnect stream ' + socketId);
-
 			var domId = null;
 			for (var i = 0; i < videos.length; i++) {
 				if (videos[i].socketId == socketId) {
@@ -179,7 +188,7 @@
 					}
 					else if (videos[i] == other_video) { 
 						other_video = null; 
-                                                     document.getElementById('other_videoplayer').src = "";
+                        document.getElementById('other_videoplayer').src = "";
 						console.log("other_video");
 					}
 					videos.splice(videos[i]);
@@ -195,10 +204,83 @@
 		});
 
 		// initialize remainder of interface
-		initUserMap();
+		initUserMap(target);
 		initMyPathMap();
         initChat();
+
+		//deleteData('events');
+		//deleteData('users');
+		//deleteData('sessions');	
+		
+		console.log('initUser.target = ' + target);
       }
+	/**
+	* Deletes data from mongodb
+	* @param path can be events, users, sessions
+	*/
+	function deleteData(path){
+		// get events list from API
+		$.ajax({
+			url: '/'+path,
+		    dataType:'json',
+		    type:'GET',
+		    async:false,
+			success: function(list) {
+				var evt;
+				for(var i in list){
+					evt = list[i];
+
+					// start deletion
+					$.ajax({
+						url: '/'+path+'/' + evt._id,
+					    dataType:'json',
+					    type:'DELETE',
+					    async:false,
+						success: function(list) {
+							console.log(path + " " + evt._id + "deleted");
+					    },
+					    error: function(list){
+							console.log(path + " not found");
+						}
+					});
+					// end deletion
+				}
+		    },
+		    error: function(list){
+				console.log("users not found");
+			}
+		});
+	}
+	/**
+	* Parses and displays events
+	* @param array of json objects
+	*/
+	function updateUser(lat, long){
+		// get events list from API
+		$.ajax({
+			url: '/users/51c99e80b9cb021705000001',
+			data:{
+				  'name': "Rich Hauck",
+				  'grade': "6-8",
+				  'Interests': ["robotics", "coding", "archaeology"],
+				  'HomeLocation': [lat, long],
+				  'Locations': [],
+				  'EventsInvitedTo': [],
+				  'SessionsInvitedTo': [],
+				  'EventsCreated': [],
+				  'SessionsCreated': []	
+			},
+		    dataType:'json',
+		    type:'PUT',
+		    async:false,
+			success: function(data) { 
+				console.log('user updated');
+		    },
+		    error: function(data){
+				console.log('user not updated');
+			}
+		});
+	}
 	/**
 	* Parses and displays events
 	* @param array of json objects
@@ -241,7 +323,7 @@
 		this.domId = null;
 
 		if (main_video == null) {
-       	  		rtc.attachStream(stream, 'main_videoplayer');
+       	  	rtc.attachStream(stream, 'main_videoplayer');
 			main_video = this;
 			this.domId = 'main_videoplayer';
 			videos.push(this);
@@ -259,12 +341,14 @@
 	  /**
 	  * Retreives geolocation for display within map.
 	  */
-	  function initUserMap() {
+	  function initUserMap(target) {
+		  console.log('initUserMap.target = ' + target);
 		  // Try HTML5 geolocation
 		  if(navigator.geolocation) {
 		    navigator.geolocation.getCurrentPosition(function(position) {
+				var targetMap;
 		     	var pos = new google.maps.LatLng(position.coords.latitude,  position.coords.longitude);
-
+				updateUser(position.coords.latitude,  position.coords.longitude);
 				var mapOptions = {
 					zoom: 6,
 					center: pos,
@@ -275,30 +359,45 @@
 						position: google.maps.ControlPosition.RIGHT_BOTTOM
 					},
 				};
-				map1 = new google.maps.Map(document.getElementById('usermap1'), mapOptions);
+				if(target == "other_video"){
+					map2 = new google.maps.Map(document.getElementById('usermap2'), mapOptions);
 
-			  map1marker = new google.maps.Marker({
-			      position: pos,
-			      map: map1,
-			      title: ''
-			  });
-			  map1.setCenter(pos);
-			
-			  // get and display street address 
-			  codeLatLng(pos, "#userlocation1");
-			
+					map2marker = new google.maps.Marker({
+						position: pos,
+						map: map2,
+						title: ''
+					});
+					map2.setCenter(pos);
+
+					// get and display street address 
+					codeLatLng(pos, "#userlocation2");
+					targetMap = map2;
+				}else{
+					map1 = new google.maps.Map(document.getElementById('usermap1'), mapOptions);
+
+					map1marker = new google.maps.Marker({
+						position: pos,
+						map: map1,
+						title: ''
+					});
+					map1.setCenter(pos);
+
+					// get and display street address 
+					codeLatLng(pos, "#userlocation1");
+					targetMap = map1;
+				}			
 		    }, function() {
-		      handleNoGeolocation(true);
+		      handleNoGeolocation(true, targetMap);
 		    });
 		  } else {
 		    // Browser doesn't support Geolocation
-		    handleNoGeolocation(false);
+		    handleNoGeolocation(false, targetMap);
 		  }
 		};  
 		/**
 		* Handles geolocation error.
 		*/
-		function handleNoGeolocation(errorFlag) {
+		function handleNoGeolocation(errorFlag, map) {
 		  if (errorFlag) {
 		    var content = 'Error: The Geolocation service failed.';
 		  } else {
@@ -306,12 +405,11 @@
 		  }
 		  var nycPos = new google.maps.LatLng(40.7142, -74.0064);
 		  var options = {
-		    map: map1,
+		    map: map,
 			center: nycPos,
 		    position: nycPos,
 		    content: content
 		  };
-		  //map1.setCenter(options.position);
 		}
    	  /**
 	  * Initializes Map displaying local events
@@ -453,6 +551,9 @@
 		google.maps.event.trigger(map1, 'resize');
 	    map1.setCenter(map1marker.position);
 	
+		google.maps.event.trigger(map2, 'resize');
+	    map2.setCenter(map2marker.position);
+	
 		google.maps.event.trigger(myPathMap, 'resize');
 		myPathMap.setCenter(myPathMapMarker.position);
 	  }
@@ -579,7 +680,7 @@ Open Path Team
 		<div class="col2">
 			<!-- BEGIN EVENTS LIST -->
             <div class="eventslist inner">
-            <h2>List of Events</h2> <a href="#" class="btn btn-primary"><span class="icon-plus"></span> Add</a>
+            <h2>List of Events</h2> <a href="#addEventsModal"  data-toggle="modal" class="btn btn-primary"><span class="icon-plus"></span> Add</a>
 				<div class="eventsholder">
 					<!-- Dynamically-Generated Events Go Here -->
 				</div>
@@ -644,7 +745,7 @@ Open Path Team
 					<div class="col2">
 						<!-- BEGIN EVENTS LIST -->
 			            <div class="eventslist inner">
-			            <h2>List of Events</h2> <a href="#" class="btn btn-primary"><span class="icon-plus"></span> Add</a>
+			            <h2>List of Events</h2> <a href="#addEventsModal" data-toggle="modal" class="btn btn-primary"><span class="icon-plus"></span> Add</a>
 							<div class="eventsholder">
 								<!-- Dynamically-Generated Events Go Here -->
 							</div>
@@ -696,4 +797,86 @@ Open Path Team
 	</div>
     </div>
 </div>
+<!-- BEGIN ADD EVENTS MODAL -->
+<div id="addEventsModal" class="modal hide fade" tabindex="-1" aria-hidden="true">
+  <div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+    <h2>Add Event</h2>
+  </div>
+  <div class="modal-body">
+
+	<form class="form-horizontal">
+  	<div class="control-group">
+	    <label class="control-label" for="name">Event Name</label>
+	    <div class="controls">
+	      <input type="text" id="name" placeholder="">
+	    </div>
+	  </div>
+	  <div class="control-group">
+	    <label class="control-label" for="creator">Creator</label>
+	    <div class="controls">
+	      <input type="text" id="creator" placeholder="">
+	    </div>
+	  </div>
+	  <div class="control-group">
+	    <label class="control-label" for="description">Description</label>
+	    <div class="controls">
+			<textarea rows="10" name="description" id="description"></textarea>
+	    </div>
+	  </div>
+	<div class="control-group">
+	    <label class="control-label" for="location">Location</label>
+	    <div class="controls">
+			<input type="text" name="location" id="location">
+	    </div>
+	  </div>
+	<div class="control-group">
+	    <label class="control-label" for="gradelevel">Grade Level</label>
+	    <div class="controls">
+			<label class="radio inline"><input type="radio" name="gradelevel" value="Pre-K to Grade 2">Pre-K to Grade 2</label>
+			<label class="radio inline"><input type="radio" name="gradelevel" value="Grade 3-5">Grade 3-5</label>
+			<label class="radio inline"><input type="radio" name="gradelevel" value="Grade 9-12">Grade 9-12</label>
+			<label class="radio inline"><input type="radio" name="gradelevel" value="Post Secondary">Post Secondary</label>
+			<label class="radio inline"><input type="radio" name="gradelevel" value="Adults">Adults</label>
+			<label class="radio inline"><input type="radio" name="gradelevel" value="Families">Families</label>
+	    </div>
+	  </div>
+	  <!-- lat long fields go here -->
+
+	<div class="control-group">
+	    <label class="control-label" for="starttime">Start Time</label>
+	    <div class="controls">
+			<div class="well">
+			  <div id="starttime" class="input-append">
+			    <input data-format="MM/dd/yyyy HH:mm:ss PP" type="text"></input>
+			    <span class="add-on">
+			      <i data-time-icon="icon-time" data-date-icon="icon-calendar"></i>
+			    </span>
+			  </div>
+			</div>
+	    </div>
+	  </div>
+
+	<div class="control-group">
+	    <label class="control-label" for="endtime">End Time</label>
+	    <div class="controls">
+			<div class="well">
+			  <div id="endtime" class="input-append">
+			    <input data-format="MM/dd/yyyy HH:mm:ss PP" type="text"></input>
+			    <span class="add-on">
+			      <i data-time-icon="icon-time" data-date-icon="icon-calendar"></i>
+			    </span>
+			  </div>
+			</div>
+	    </div>
+	  </div>
+	</form>
+
+  </div>
+  <div class="modal-footer">
+    <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
+    <button class="btn btn-primary">Save changes</button>
+  </div>
+</div>
+<!-- END ADD EVENTS MODAL -->
 {% endblock %}

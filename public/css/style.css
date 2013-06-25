@@ -123,6 +123,8 @@ video.avatar{width:100%; height:auto;}
 .eventslist .icon-plus{color:#fff;}
 .eventsholder{margin-top:10px; height:630px; overflow-x:hidden; overflow-y:auto;}
 
+.bootstrap-datetimepicker-widget{z-index:9999;}
+
 /********************************/
 /* USER */
 /********************************/
