@@ -214,7 +214,43 @@
 		
 		console.log('initUser.target = ' + target);
       }
+	/**
+	* Deletes data from mongodb
+	* @param path can be events, users, sessions
+	*/
+	function deleteData(path){
+		// get events list from API
+		$.ajax({
+			url: '/'+path,
+		    dataType:'json',
+		    type:'GET',
+		    async:false,
+			success: function(list) {
+				var evt;
+				for(var i in list){
+					evt = list[i];
 
+					// start deletion
+					$.ajax({
+						url: '/'+path+'/' + evt._id,
+					    dataType:'json',
+					    type:'DELETE',
+					    async:false,
+						success: function(list) {
+							console.log(path + " " + evt._id + "deleted");
+					    },
+					    error: function(list){
+							console.log(path + " not found");
+						}
+					});
+					// end deletion
+				}
+		    },
+		    error: function(list){
+				console.log("users not found");
+			}
+		});
+	}
 	/**
 	* Parses and displays events
 	* @param array of json objects
