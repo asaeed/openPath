@@ -78,6 +78,14 @@ app.all("/email", requireLogin, function(req, res, next) {next();});
 // ROUTES - make sure to keep up to date
 //
 
+app.all('/*', function(req, res, next) {
+  if (req.headers.host.match(/^www/) !== null ) {
+    res.redirect('http://' + req.headers.host.replace(/^www\./, '') + req.url);
+  } else {
+    next();     
+  }
+})
+
 app.get('/', routes.index);
 app.get('/main', routes.main);
 app.get('/about', routes.about);
@@ -97,8 +105,6 @@ app.get('/users/:id', user.findById);
 app.post('/users', user.addItem);
 app.put('/users/:id', user.updateItem);
 app.delete('/users/:id', user.deleteItem);
-
-
 
 app.get('/sessions', sessionRoute.findAll);
 app.get('/sessions/:id', sessionRoute.findById);
