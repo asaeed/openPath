@@ -1,0 +1,109 @@
+{% extends 'main.html' %}
+
+{% block user %}
+
+<div class="tab-pane" id="user">
+		<!-- BEGIN USER MENU -->
+      <div id="usermenu">
+          <div class="col50 left">
+              <img src="img/user-icon.png" alt="User"><h1 id="profileUsername"></h1>
+          </div>
+          <div class="col50 right">
+              <nav id="usernav" class="subnav">
+                  <ul>
+						<li class="active"><a data-toggle="tab" href="#profile">Profile</a></li>
+                      <li><a data-toggle="tab" href="#mypath">My Path</a></li>
+                      <li><a data-toggle="tab" href="#notifications">Notifications</a></li>
+                      <li><a data-toggle="tab" href="#settings">Settings</a></li>
+                  </ul>
+              </nav>
+          </div>
+          <div class="clearer"></div>
+      </div>
+		<!-- END USER MENU -->
+		<!-- BEGIN USER TAB-CONTENT -->
+		<div class="tab-content">
+			<div class="tab-pane active" id="profile">
+				<div class="usertab-single-col">
+				<p><strong>Welcome to Open Path!<br>To get recommendations based on your interests, simply fill in something about yourself:</strong></p>
+				<form action="" method="post">
+				  <fieldset>
+				    <label>Grade Level:</label>
+						<label class="radio inline"><input type="radio" name="gradelevel" value="Pre-K to Grade 2">Pre-K to Grade 2</label>
+						<label class="radio inline"><input type="radio" name="gradelevel" value="Grade 3-5">Grade 3-5</label>
+						<label class="radio inline"><input type="radio" name="gradelevel" value="Grade 9-12">Grade 9-12</label>
+						<label class="radio inline"><input type="radio" name="gradelevel" value="Post Secondary">Post Secondary</label>
+						<label class="radio inline"><input type="radio" name="gradelevel" value="Adults">Adults</label>
+						<label class="radio inline"><input type="radio" name="gradelevel" value="Families">Families</label>
+					<label>Interests:</label>
+				    <input type="text" id="interests" name="interests">
+				
+					<label>List of Co-Learners:</label>
+				    <input type="text" id="colearners" name="colearners">
+					<p><small><em>*Required</em></small></p>
+				    <button type="submit" class="btn btn-primary">Done</button>
+				  </fieldset>
+				</form>
+				<a id="logout" class="btn" href="#">Logout</a>
+				</div>
+			</div>
+			
+			<div class="tab-pane" id="mypath">
+				<div class="col1">
+					<div id="mypathmap"></div>
+				</div>
+				<div class="col2">
+					<!-- BEGIN EVENTS LIST -->
+		            <div class="eventslist inner">
+		            <h2>List of Events</h2> <a href="#addEventsModal" data-toggle="modal" class="btn btn-primary"><span class="icon-plus"></span> Add</a>
+						<div class="eventsholder">
+							<!-- Dynamically-Generated Events Go Here -->
+						</div>
+		            </div>
+					<!-- END EVENTS LIST -->
+				</div>
+				<div class="clearer"></div>
+				
+			</div>
+			
+			<div class="tab-pane" id="notifications">
+				<div class="usertab-single-col">
+				<form>
+				  <fieldset>
+					<ul>
+						<li><b>New event on NY Central Park about bird watching <span class="text-right">2 mins ago</span></b></li>
+						<li><b>Your event - "New York Museum Tour" is starting in 1 hour <span class="text-right">15 mins ago</span></b></li>
+						<li>There are 2 events near you next week <span class="text-right">2 days ago</span></li>
+						<li>Jared has joined "Bird Watching Tour" in Central Park <span class="text-right">5 days ago</span></li>
+					</ul>
+				</fieldset>
+				</form>
+				</div>
+			</div>
+			
+			<div class="tab-pane" id="settings">
+				<div class="usertab-single-col">
+					<form>
+					  <fieldset>
+					    <label class="muted">Receive alerts when...</label>
+					    <label class="checkbox"><input type="checkbox">Co-learner joins event</label>
+						<label class="checkbox"><input type="checkbox">Near an event you might be interested in</label>
+						<label class="checkbox"><input type="checkbox">All events you might be interested in</label>
+				
+						<label class="muted">Set profile as...</label>
+						<label class="radio"><input type="radio" name="profileaccess" value="public">Public</label>
+						<label class="radio"><input type="radio" name="profileaccess" value="private">Private</label>
+				
+					    <button type="submit" class="btn btn-primary">Save</button>
+					  </fieldset>
+					</form>
+			
+				</div>
+			</div>
+			
+		</div>
+		<!-- END USER TAB-CONTENT -->
+</div>
+{% endblock %}
+
+
