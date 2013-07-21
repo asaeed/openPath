@@ -119,6 +119,21 @@ exports.findByEmail = function(email, callback) {
         });
     });
 };
+/**
+TODO:FIX  - go through the session
+**/
+exports.findUserByEmail = function(req, res) {
+	var email = req.params.email;
+    console.log('find by user email: ' , req.params.email, req.body);
+	//TODO: this should be done through the session. 
+    db.collection('users', function(err, collection) {
+        collection.findOne({'email':email}, function(err, item) {
+			res.send(item);
+        });
+    });
+
+};
+
 
 exports.updateItemData = function(req, res) {
     var col = req.params.collection;

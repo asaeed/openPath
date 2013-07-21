@@ -7,562 +7,8 @@
 	<link rel="stylesheet" href="css/style.css" />
 	<script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=true"></script>
 	<script src="js/webrtc.io.js"></script>
+	<script src="js/openpath.js"></script>
 	<script src="js/openpath.user.js"></script>
-	<script>
-	  var map1, map1marker, map2, map2marker;
-	  var eventsMap, eventsmapmarker;
-	  var myPathMap, myPathMapMarker;
-	  var geocoder;
-
-      //var room = 1;
-	  var max_num_videos = 2;
-      //var server = "ws://www.walking-productions.com:8001/"; 
-      var server = "ws://www.openpath.me:8001/";
-      var main_video = null;
-	  var other_video = null;
-	  var videos = [];
-      var PeerConnection = window.PeerConnection || window.webkitPeerConnection00 || window.webkitRTCPeerConnection || window.mozRTCPeerConnection;
-	  console.log(PeerConnection);    
-      
-	
-		// Bootstrap interface calls through JQuery
-        $(document).ready(function() {
-		
-		console.log(OpenPath,'op')
-			if (getParameterByName('room') != null && getParameterByName('room') != "") {
-				room = getParameterByName('room');
-				console.log("Room Number: " + room);
-			}else{
-				room = 1;
-			}
-
-			initControls();
-			initUser();
-			initEventsMap();
-			initEventsList();
-			
-	/*
-			// determines tab to display based on hash
-			var url = document.location.toString();
-			if (url.match('#')) {
-			    $('#mainnav a[href=#'+url.split('#')[1]+']').tab('show') ;
-			} 
-
-			// Change hash for page-reload
-			$('#mainnav a').on('shown', function (e) {
-			    window.location.hash = e.target.hash;
-			})
-	*/
-
-	/**
-	* Assigns behaviors to interface controls.
-	*/
-	function initControls(){
-		// Main Navigation Tabs
-		$('#mainnav a').click(function (e) {
-			e.preventDefault();
-			$(this).tab('show');
-
-			resetMaps();
-		})
-		$("#mainnav a").tooltip({placement:'bottom'});
-
-		$('#usernav a').click(function (e) {
-			e.preventDefault();
-			$(this).tab('show');
-
-			resetMaps();
-		})
-		$('#logout').mouseup(function() {
-			navigator.id.logout('button pressed');
-		});
-		// User Icon - Right Column Main Screen
-		$('.user').mouseenter(function(event) {
-			$(this).find(".usermeta").fadeIn("slow");
-			$(this).find(".username").fadeIn("slow");
-		});
-		$('.user').mouseleave(function(event) {
-			var isShowing = $(this).find(".usermeta").hasClass("usermetashowing");
-			if(!isShowing){
-				$(this).find(".usermeta").fadeOut("slow");
-				$(this).find(".username").fadeOut("slow");
-			}
-		});	
-		
-		// Events
-		$('#starttime').datetimepicker({
-		      language: 'en',
-		      pick12HourFormat: true
-		    });
-		$('#endtime').datetimepicker({
-		      language: 'en',
-		      pick12HourFormat: true
-		    });
-		
-		$('.icon-map-marker').click(function(event) {
-			$(this).parent().parent().addClass('usermetashowing');
-			$(this).parent().parent().find('.usermap').fadeIn("slow");
-			$(this).parent().parent().find('.userlocation').fadeIn("slow");
-
-			$(this).addClass('closebtn');	
-			event.stopPropagation();
-
-			resetMaps();
-		});
-		$('.icon-remove').click(function(event) {
-			$(this).parent().parent().parent().removeClass('usermetashowing');
-			$(this).parent().parent().fadeOut("slow");
-			$(this).parent().parent().parent().find('.usermap').fadeOut("slow");
-			$(this).parent().parent().parent().find('.userlocation').fadeOut("slow");
-			$(this).parent().removeClass('closebtn');
-			event.stopPropagation();
-		});
-		$('#other_videoplayer').dblclick(function(event) {
-			var tempsrc = document.getElementById('main_videoplayer').src;
-			document.getElementById('main_videoplayer').src = document.getElementById('other_videoplayer').src;
-			document.getElementById('other_videoplayer').src = tempsrc;
-
-			var tempvideo = main_video;
-			main_video = other_video;
-			other_video = tempvideo;
-			
-		});
-		// Validates and submits email inviting participant
-		$('#adduserform').submit(function() {
-			var email = $('#to').val();
-			var isValid = validateEmail(email);
-
-			if(!isValid){
-				$('#emailerror').modal();
-			}else{
-				var data = $('#adduserform').serialize(); // serialize all the data in the form 
-				$.ajax({
-					url: '/email',
-					data: data,
-					dataType:'json',
-					type:'POST',
-					async:false,
-					success: function(data) {        
-						for (key in data.email) {
-							alert(data.email[key]);
-						}
-					},
-					error: function(data){}
-				});
-			};
-			return false;
-		});
-	}
-	  /**
-	  * Starts video, chat, and geolocation
-	  */
-	  function initUser() {
-		var target = "self_video"; // target video. String used to determine which thumb map to target
-		if (PeerConnection) {
-       			rtc.createStream({"video": true, "audio": true}, function(stream) {
-				document.getElementById('self_videoplayer').src = URL.createObjectURL(stream);
-         				rtc.attachStream(stream, 'self_videoplayer');
-       			});
-     		} else {
-       			alert('Sorry, your browser is not supported');
-     		}
-     		console.log("room: " + room);
-     
-		rtc.connect(server, room);
-
-     		rtc.on('add remote stream', function(stream, socketId) {
-       			console.log("Remote stream: " + stream + " " + socketId);
-
-			if (videos.length < max_num_videos) {
-				var newVideo = new initVideo(stream, socketId);
-			}
-     		});
-     
-		rtc.on('disconnect stream', function(socketId) {
-			console.log('disconnect stream ' + socketId);
-			var domId = null;
-			for (var i = 0; i < videos.length; i++) {
-				if (videos[i].socketId == socketId) {
-					if (videos[i] == main_video) { 
-						main_video = null; 
-						document.getElementById('main_videoplayer').src = "";
-						console.log("main_video");
-					}
-					else if (videos[i] == other_video) { 
-						other_video = null; 
-                        document.getElementById('other_videoplayer').src = "";
-						console.log("other_video");
-					}
-					videos.splice(videos[i]);
-
-					console.log("removed video");
-					break;
-				}	
-			}
-     		});
-
-		rtc.on('main_video_socketid', function(data) {
-			console.log(data.socketid);
-		});
-
-		// initialize remainder of interface
-		initUserMap(target);
-		initMyPathMap();
-        initChat();
-
-		//deleteData('events');
-		//deleteData('users');
-		//deleteData('sessions');	
-		
-		console.log('initUser.target = ' + target);
-      }
-	/**
-	* Deletes data from mongodb
-	* @param path can be events, users, sessions
-	*/
-	function deleteData(path){
-		// get events list from API
-		$.ajax({
-			url: '/'+path,
-		    dataType:'json',
-		    type:'GET',
-		    async:false,
-			success: function(list) {
-				var evt;
-				for(var i in list){
-					evt = list[i];
-
-					// start deletion
-					$.ajax({
-						url: '/'+path+'/' + evt._id,
-					    dataType:'json',
-					    type:'DELETE',
-					    async:false,
-						success: function(list) {
-							console.log(path + " " + evt._id + "deleted");
-					    },
-					    error: function(list){
-							console.log(path + " not found");
-						}
-					});
-					// end deletion
-				}
-		    },
-		    error: function(list){
-				console.log("users not found");
-			}
-		});
-	}
-	/**
-	* Parses and displays events
-	* @param array of json objects
-	*/
-	function updateUser(lat, long){
-		//TODO: -jg
-		// get events list from API
-OpenPath.user.update(lat,long);
-		$.ajax({
-			url: '/users/51c99e80b9cb021705000001',
-			data:{
-				  'name': "Rich Hauck",
-				  'grade': "6-8",
-				  'Interests': ["robotics", "coding", "archaeology"],
-				  'HomeLocation': [lat, long],
-				  'Locations': [],
-				  'EventsInvitedTo': [],
-				  'SessionsInvitedTo': [],
-				  'EventsCreated': [],
-				  'SessionsCreated': []	
-			},
-		    dataType:'json',
-		    type:'PUT',
-		    async:false,
-			success: function(data) { 
-				console.log('user updated');
-		    },
-		    error: function(data){
-				console.log('user not updated');
-			}
-		});
-	}
-	/**
-	* Parses and displays events
-	* @param array of json objects
-	*/
-	function initEventsList(){
-		// get events list from API
-		$.ajax({
-			url: '/events',
-		    dataType:'json',
-		    type:'GET',
-		    async:false,
-			success: function(list) {  
-				// parse and display list      
-		      	var output = "";
-				var evt;
-				for(var i in list){
-					evt = list[i];
-					output += '<article>';
-					output += '<a href="'+ evt.link +'" target="_blank"><h3>' + evt.name + '</h3></a>';
-					output += evt.startTime + ' to ' + evt.endTime + '<br>';
-					output += evt.locationDescription + '<br>';
-					output += '<p>' + evt.description + '</p>';
-					output += '</article>';
-				}
-				// write to both event lists
-				$('.eventsholder').html(output);
-		    },
-		    error: function(list){
-				console.log("events not found");
-				$('.eventsholder').html('No Events Found');
-			}
-		});
-	}
-	  /**
-	  *
-	  */
-  	function initVideo(stream, socketId) {
-		this.stream = stream;
-		this.socketId = socketId;
-		this.domId = null;
-
-		if (main_video == null) {
-       	  	rtc.attachStream(stream, 'main_videoplayer');
-			main_video = this;
-			this.domId = 'main_videoplayer';
-			videos.push(this);
-			console.log("Adding video as main_videoplayer");
-		} else if (other_video == null) {
-			rtc.attachStream(stream, 'other_videoplayer');
-			other_video = this;	
-			this.domId = 'other_videoplayer';
-			videos.push(this);
-			console.log("Adding video as other_videoplayer");
-		} else {
-			console.log("No room for more videos");
-		}
-	}
-	  /**
-	  * Retreives geolocation for display within map.
-	  */
-	  function initUserMap(target) {
-		  console.log('initUserMap.target = ' + target);
-		  // Try HTML5 geolocation
-		  if(navigator.geolocation) {
-		    navigator.geolocation.getCurrentPosition(function(position) {
-				var targetMap;
-		     	var pos = new google.maps.LatLng(position.coords.latitude,  position.coords.longitude);
-				updateUser(position.coords.latitude,  position.coords.longitude);
-				var mapOptions = {
-					zoom: 6,
-					center: pos,
-					mapTypeId: google.maps.MapTypeId.ROADMAP,
-					mapTypeControl: true,
-					mapTypeControlOptions: {
-						style: google.maps.MapTypeControlStyle.HORIZONTAL_BAR,
-						position: google.maps.ControlPosition.RIGHT_BOTTOM
-					},
-				};
-				if(target == "other_video"){
-					map2 = new google.maps.Map(document.getElementById('usermap2'), mapOptions);
-
-					map2marker = new google.maps.Marker({
-						position: pos,
-						map: map2,
-						title: ''
-					});
-					map2.setCenter(pos);
-
-					// get and display street address 
-					codeLatLng(pos, "#userlocation2");
-					targetMap = map2;
-				}else{
-					map1 = new google.maps.Map(document.getElementById('usermap1'), mapOptions);
-
-					map1marker = new google.maps.Marker({
-						position: pos,
-						map: map1,
-						title: ''
-					});
-					map1.setCenter(pos);
-
-					// get and display street address 
-					codeLatLng(pos, "#userlocation1");
-					targetMap = map1;
-				}			
-		    }, function() {
-		      handleNoGeolocation(true, targetMap);
-		    });
-		  } else {
-		    // Browser doesn't support Geolocation
-		    handleNoGeolocation(false, targetMap);
-		  }
-		};  
-		/**
-		* Handles geolocation error.
-		*/
-		function handleNoGeolocation(errorFlag, map) {
-		  if (errorFlag) {
-		    var content = 'Error: The Geolocation service failed.';
-		  } else {
-		    var content = 'Error: Your browser doesn\'t support geolocation.';
-		  }
-		  var nycPos = new google.maps.LatLng(40.7142, -74.0064);
-		  var options = {
-		    map: map,
-			center: nycPos,
-		    position: nycPos,
-		    content: content
-		  };
-		}
-   	  /**
-	  * Initializes Map displaying local events
-	  */
-      function initEventsMap(){
-
-		var pos = new google.maps.LatLng(40.7142, -74.0064);
-		var options = {
-		    map: eventsMap,
-			zoom: 6,
-			mapTypeId: google.maps.MapTypeId.ROADMAP,
-			mapTypeControl: true,
-			mapTypeControlOptions: {
-			        style: google.maps.MapTypeControlStyle.HORIZONTAL_BAR,
-			        position: google.maps.ControlPosition.BOTTOM_RIGHT
-			},
-		    center: pos,
-			panControl: true,
-		    panControlOptions: {
-		        position: google.maps.ControlPosition.RIGHT_BOTTOM
-		    },
-		  };
-		  eventsMap = new google.maps.Map(document.getElementById('eventsmap'), options);
-		  eventsmapmarker = new google.maps.Marker({
-		      position: options.center,
-		      map: eventsMap,
-		      icon: 'img/marker.png',
-			  center: options.center
-		  });	
-	  }
-	  /**
-	  * Initializes Map displaying local events
-	  */
-      function initMyPathMap(){
-
-		var pos = new google.maps.LatLng(41.8500, -87.6500);
-		var options = {
-		    map: myPathMap,
-			zoom: 6,
-			mapTypeId: google.maps.MapTypeId.ROADMAP,
-			mapTypeControl: true,
-			mapTypeControlOptions: {
-			        style: google.maps.MapTypeControlStyle.HORIZONTAL_BAR,
-			        position: google.maps.ControlPosition.BOTTOM_RIGHT
-			},
-		    center: pos,
-			panControl: true,
-		    panControlOptions: {
-		        position: google.maps.ControlPosition.RIGHT_BOTTOM
-		    },
-		  };
-		  myPathMap = new google.maps.Map(document.getElementById('mypathmap'), options);
-		  myPathMapMarker = new google.maps.Marker({
-		      position: options.center,
-		      map: myPathMap,
-		      icon: 'img/marker.png',
-			  center: options.center
-		  });	
-	  }
-	  /**
-	  * Returns reverse-geocoded location
-	  * @param pos		Lat/Long object
-	  * @param target	target HTML element to write to
-	  */
-	  function codeLatLng(pos, target) {
-		  geocoder = new google.maps.Geocoder();
-		  geocoder.geocode({'latLng': pos}, function(results, status) {
-		    if (status == google.maps.GeocoderStatus.OK) {
-		      if (results[1]) {
-				$(target).html(results[1].formatted_address);
-		      } else {
-		        console.log('No results found');
-		      }
-		    } else {
-		      console.log('Geocoder failed due to: ' + status);
-		    }
-		  });
-		}
-  	  /**
-	  * Sanitizes user message in chat window.
-	  */
-      function sanitize(msg) {
-        return msg.replace(/</g, '&lt;');
-      }
-  	  /**
-	  * Creates chat window.
-	  */
-      function initChat() {
-        var input = document.getElementById("chatinput");
-
-        input.addEventListener('keydown', function(event) {
-            if(input.value != ''){
-                var key = event.which || event.keyCode;
-                if (key === 13) {
-					var message = username + ": " + input.value;	
-                    rtc._socket.send(JSON.stringify({
-                        "eventName": "chat_msg",
-                        "data": {
-                        "messages": message,
-                        "room": room
-                    }
-                    }));
-                    addToChat(username, input.value);
-                    input.value = "";
-                }
-            }
-          
-        }, false);
-        rtc.on('receive_chat_msg', function(data) {
-		  console.log("initChat: username = " + username);
-          addToChat(username, data.messages);
-        });
-        
-        rtc.on('main_video_socketid', function(data) {
-        	console.log(data.socketid);
-        	
-        });
-      }
-  	  /**
-	  * Adds user's message to chat window.
-	  */
-      function addToChat(user, msg) {
-		console.log("addToChat("+user+")")
-        var chatwindow = document.getElementById('chatwindow');
-        var chatmessages = document.getElementById('chatmessages');
-        msg = sanitize(msg);
-        msg = '<li class="user1"><span>'+ user +'</span>: ' + msg + '</li>';
-        chatmessages.innerHTML += msg;
-        chatwindow.scrollTop = chatwindow.scrollHeight;
-      }
-	  /**
-	  * Hack to allow Google Maps to work with Bootstrap
-	  */
-	  function resetMaps(){
-		
-		google.maps.event.trigger(eventsMap, 'resize');
-		eventsMap.setCenter(eventsmapmarker.position);
-				
-		google.maps.event.trigger(map1, 'resize');
-	    map1.setCenter(map1marker.position);
-	
-		google.maps.event.trigger(map2, 'resize');
-	    map2.setCenter(map2marker.position);
-	
-		google.maps.event.trigger(myPathMap, 'resize');
-		myPathMap.setCenter(myPathMapMarker.position);
-	  }
-		});
-    </script>
 {% endblock %}
 
 {% block content %}
@@ -696,8 +142,112 @@ Open Path Team
 	  </div>
 	
 	  <!-- ***** USER ***** -->
-	{% block user %}
-	{% endblock %}
+
+	  <div class="tab-pane" id="user">
+	  		<!-- BEGIN USER MENU -->
+            <div id="usermenu">
+                <div class="col50 left">
+                    <img src="img/user-icon.png" alt="User"><h1 id="profileUsername"></h1>
+                </div>
+                <div class="col50 right">
+                    <nav id="usernav" class="subnav">
+                        <ul>
+							<li class="active"><a data-toggle="tab" href="#profile">Profile</a></li>
+                            <li><a data-toggle="tab" href="#mypath">My Path</a></li>
+                            <li><a data-toggle="tab" href="#notifications">Notifications</a></li>
+                            <li><a data-toggle="tab" href="#settings">Settings</a></li>
+                        </ul>
+                    </nav>
+                </div>
+                <div class="clearer"></div>
+            </div>
+			<!-- END USER MENU -->
+			<!-- BEGIN USER TAB-CONTENT -->
+			<div class="tab-content">
+				<div class="tab-pane active" id="profile">
+					<div class="usertab-single-col">
+					<p><strong>Welcome to Open Path!<br>To get recommendations based on your interests, simply fill in something about yourself:</strong></p>
+					<form>
+					  <fieldset>
+					    <label>Grade Level:</label>
+							<label class="radio inline"><input type="radio" name="gradelevel" value="Pre-K to Grade 2">Pre-K to Grade 2</label>
+							<label class="radio inline"><input type="radio" name="gradelevel" value="Grade 3-5">Grade 3-5</label>
+							<label class="radio inline"><input type="radio" name="gradelevel" value="Grade 9-12">Grade 9-12</label>
+							<label class="radio inline"><input type="radio" name="gradelevel" value="Post Secondary">Post Secondary</label>
+							<label class="radio inline"><input type="radio" name="gradelevel" value="Adults">Adults</label>
+							<label class="radio inline"><input type="radio" name="gradelevel" value="Families">Families</label>
+						<label>Interests:</label>
+					    <input type="text" id="interests" name="interests">
+					
+						<label>List of Co-Learners:</label>
+					    <input type="text" id="colearners" name="colearners">
+						<p><small><em>*Required</em></small></p>
+					    <button type="submit" class="btn btn-primary">Done</button>
+					  </fieldset>
+					</form>
+					<a id="logout" class="btn" href="#">Logout</a>
+					</div>
+				</div>
+				
+				<div class="tab-pane" id="mypath">
+					<div class="col1">
+						<div id="mypathmap"></div>
+					</div>
+					<div class="col2">
+						<!-- BEGIN EVENTS LIST -->
+			            <div class="eventslist inner">
+			            <h2>List of Events</h2> <a href="#addEventsModal" data-toggle="modal" class="btn btn-primary"><span class="icon-plus"></span> Add</a>
+							<div class="eventsholder">
+								<!-- Dynamically-Generated Events Go Here -->
+							</div>
+			            </div>
+						<!-- END EVENTS LIST -->
+					</div>
+					<div class="clearer"></div>
+					
+				</div>
+				
+				<div class="tab-pane" id="notifications">
+					<div class="usertab-single-col">
+					<form>
+					  <fieldset>
+						<ul>
+							<li><b>New event on NY Central Park about bird watching <span class="text-right">2 mins ago</span></b></li>
+							<li><b>Your event - "New York Museum Tour" is starting in 1 hour <span class="text-right">15 mins ago</span></b></li>
+							<li>There are 2 events near you next week <span class="text-right">2 days ago</span></li>
+							<li>Jared has joined "Bird Watching Tour" in Central Park <span class="text-right">5 days ago</span></li>
+						</ul>
+					</fieldset>
+					</form>
+					</div>
+				</div>
+				
+				<div class="tab-pane" id="settings">
+					<div class="usertab-single-col">
+						<form>
+						  <fieldset>
+						    <label class="muted">Receive alerts when...</label>
+						    <label class="checkbox"><input type="checkbox">Co-learner joins event</label>
+							<label class="checkbox"><input type="checkbox">Near an event you might be interested in</label>
+							<label class="checkbox"><input type="checkbox">All events you might be interested in</label>
+					
+							<label class="muted">Set profile as...</label>
+							<label class="radio"><input type="radio" name="profileaccess" value="public">Public</label>
+							<label class="radio"><input type="radio" name="profileaccess" value="private">Private</label>
+					
+						    <button type="submit" class="btn btn-primary">Save</button>
+						  </fieldset>
+						</form>
+				
+					</div>
+				</div>
+				
+			</div>
+			<!-- END USER TAB-CONTENT -->
+	  </div>
+
+
+
 
 	</div>
     </div>
