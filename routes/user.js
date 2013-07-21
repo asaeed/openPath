@@ -62,7 +62,7 @@ exports.updateItem = function(req, res) {
     var id = req.params.id;
     var newItem = req.body;
     console.log('Updating item: ' + id);
-    console.log(JSON.stringify(newItem));
+    console.log('HIHI:',JSON.stringify(newItem));
     db.collection('users', function(err, collection) {
         collection.update({'_id':new BSON.ObjectID(id)}, newItem, {safe:true}, function(err, result) {
             if (err) {
