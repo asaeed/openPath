@@ -3,10 +3,12 @@ var OpenPath = window.OpenPath || {};
 
 OpenPath = {
 	init : function(){
+
 		//TODO: clean below and add to name space
-		console.log(this)
+		console.log(this) 
 		
-		this.user.profile();
+		//this = OpenPath		
+		this.user.init();
 	}
 };
 
@@ -73,7 +75,9 @@ function initControls(){
 	$('#usernav a').click(function (e) {
 		e.preventDefault();
 		$(this).tab('show');
-
+		
+		OpenPathuser.onMenuChange();
+		
 		resetMaps();
 	})
 	$('#logout').mouseup(function() {
