@@ -120,7 +120,7 @@ exports.findByEmail = function(email, callback) {
     });
 };
 /**
-TODO:FIX  - go through the session
+TODO:FIX  - go through the session -jg
 **/
 exports.findUserByEmail = function(req, res) {
 	var email = req.params.email;
@@ -134,7 +134,7 @@ exports.findUserByEmail = function(req, res) {
 
 };
 
-
+//not sure if this is sub or not? -jg
 exports.updateItemData = function(req, res) {
     var col = req.params.collection;
     var id = req.params.id;

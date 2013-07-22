@@ -7,8 +7,9 @@
 	<link rel="stylesheet" href="css/style.css" />
 	<script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=true"></script>
 	<script src="js/webrtc.io.js"></script>
-	<script src="js/openpath.js"></script>
+	<script src="js/openpath.main.js"></script>
 	<script src="js/openpath.user.js"></script>
+	<script src="js/openpath.user.profile.js"></script>
 {% endblock %}
 
 {% block content %}
@@ -147,7 +148,8 @@ Open Path Team
 	  		<!-- BEGIN USER MENU -->
             <div id="usermenu">
                 <div class="col50 left">
-                    <img src="img/user-icon.png" alt="User"><h1 id="profileUsername"></h1>
+                    <img src="img/user-icon.png" alt="User">
+                    <h1 id="profileUsername"></h1>
                 </div>
                 <div class="col50 right">
                     <nav id="usernav" class="subnav">
@@ -166,44 +168,71 @@ Open Path Team
 			<div class="tab-content">
 				<div class="tab-pane active" id="profile">
 					<div class="usertab-single-col">
-					<p><strong>Welcome to Open Path!<br>To get recommendations based on your interests, simply fill in something about yourself:</strong></p>
-					<form>
-					  <fieldset>
-					    <label for="gradelevel">Grade Level:</label>
-						<select name="gradelevel" id="gradelevel">
-							<option value="Pre-K to Grade 2">Pre-K to Grade 2</option>
-							<option value="Grade 3-5">Grade 3-5</option>
-							<option value="Grade 9-12">Grade 9-12</option>
-							<option value="Post Secondary">Post Secondary</option>
-							<option value="Adults">Adults</option>
-							<option value="Families">Families</option>
-						</select>
-<!--
-<label class="radio inline"><input type="radio" name="gradelevel" value="Pre-K to Grade 2">Pre-K to Grade 2</label>
-<label class="radio inline"><input type="radio" name="gradelevel" value="Grade 3-5">Grade 3-5</label>
-<label class="radio inline"><input type="radio" name="gradelevel" value="Grade 9-12">Grade 9-12</label>
-<label class="radio inline"><input type="radio" name="gradelevel" value="Post Secondary">Post Secondary</label>
-<label class="radio inline"><input type="radio" name="gradelevel" value="Adults">Adults</label>
-<label class="radio inline"><input type="radio" name="gradelevel" value="Families">Families</label>
--->
-
-					</fieldset>
-					<fieldset>
-						<label>Interests:</label>
-					    <input type="text" id="interests" name="interests">
-					
-					</fieldset>
-					<fieldset>
-						<label>List of Co-Learners:</label>
-					    <input type="text" id="colearners" name="colearners">
-					</fieldset>
 						
-					<fieldset>	
-						<p><small><em>*Required</em></small></p>
-					    <button type="submit" class="btn btn-primary">Done</button>
-					  </fieldset>
-					</form>
-					<a id="logout" class="btn" href="#">Logout</a>
+						
+						<section class="display">
+								
+							<article class="gradelevel">
+									<h2>Grade Level:</h2>
+									<div class="results"></div>
+							</article>
+							<article class="interests">
+								<h2>Interests:</h2>
+								<div class="results"></div>
+							</article>
+							<div class="colearners">
+								<h2>List of Co-Learners:</h2>
+								<div class="results"></div>
+							</article>
+
+							<a id="logout" class="btn" href="#">Logout</a>
+						
+						</section>
+						
+						
+						<section class="edit">
+							<p><strong>Welcome to Open Path!</strong></p>
+							<p><strong>To get recommendations based on your interests, simply fill in something about yourself:</strong></p>
+							<form>
+								<fieldset class="userIcon">
+									<input type="file" name="userIcon"/>
+								</fieldset>
+								<fieldset class="name">
+									<input type="text" name="firstName"/>
+									<input type="text" name="lastName"/>
+								</fieldset>
+								<fieldset>
+									<label for="gradelevel">Grade Level:</label>
+									<select name="gradelevel" id="gradelevel">
+										<option value="Pre-K to Grade 2">Pre-K to Grade 2</option>
+										<option value="Grade 3-5">Grade 3-5</option>
+										<option value="Grade 9-12">Grade 9-12</option>
+										<option value="Post Secondary">Post Secondary</option>
+										<option value="Adults">Adults</option>
+										<option value="Families">Families</option>
+									</select>
+							</fieldset>
+							<fieldset>
+								<label>Interests:</label>
+									<input type="text" id="interests" name="interests">
+					
+							</fieldset>
+							<fieldset>
+								<label>List of Co-Learners:</label>
+									<input type="text" id="colearners" name="colearners">
+							</fieldset>
+						
+							<fieldset>	
+								<p><small><em>*Required</em></small></p>
+									<button type="submit" class="btn btn-primary">Done</button>
+								</fieldset>
+							</form>
+							<a id="logout" class="btn" href="#">Logout</a>
+						
+						</section>
+					
+					
+						
 					</div>
 				</div>
 				
