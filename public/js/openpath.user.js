@@ -8,7 +8,6 @@ OpenPath.user = {
 		console.log('on menu change');
 		if( $('#profile').hasClass('active') ){
 			this.profile.init();
-			
 		}
 	},
 	update : function(lat,long){

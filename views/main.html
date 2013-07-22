@@ -194,16 +194,18 @@ Open Path Team
 							<p><strong>Welcome to Open Path!</strong></p>
 							<p><strong>To get recommendations based on your interests, simply fill in something about yourself:</strong></p>
 							<form>
+								<!--
 								<fieldset class="userIcon">
 									<input type="file" name="userIcon"/>
 								</fieldset>
+								-->
 								<fieldset class="name">
-									<input type="text" name="firstName"/>
-									<input type="text" name="lastName"/>
+									<input type="text" name="firstName" class="firstName" placeholder="first name" />
+									<input type="text" name="lastName" class="lastName" placeholder="last name"/>
 								</fieldset>
 								<fieldset>
-									<label for="gradelevel">Grade Level:</label>
-									<select name="gradelevel" id="gradelevel">
+									<label>Grade Level:</label>
+									<select name="gradelevel" class="gradelevel">
 										<option value="Pre-K to Grade 2">Pre-K to Grade 2</option>
 										<option value="Grade 3-5">Grade 3-5</option>
 										<option value="Grade 9-12">Grade 9-12</option>
@@ -211,19 +213,19 @@ Open Path Team
 										<option value="Adults">Adults</option>
 										<option value="Families">Families</option>
 									</select>
-							</fieldset>
-							<fieldset>
-								<label>Interests:</label>
-									<input type="text" id="interests" name="interests">
+								</fieldset>
+								<fieldset>
+									<label>Interests:</label>
+									<input type="text" class="interests" name="interests" />
 					
-							</fieldset>
-							<fieldset>
-								<label>List of Co-Learners:</label>
-									<input type="text" id="colearners" name="colearners">
-							</fieldset>
-						
-							<fieldset>	
-								<p><small><em>*Required</em></small></p>
+								</fieldset>
+								<fieldset>
+									<label>List of Co-Learners:</label>
+									<input type="text" class="colearners" name="colearners" />
+								</fieldset>
+								
+								<p class="required"><small><em>*Required</em></small></p>
+								<fieldset class="done">
 									<button type="submit" class="btn btn-primary">Done</button>
 								</fieldset>
 							</form>
