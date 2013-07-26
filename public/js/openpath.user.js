@@ -14,15 +14,15 @@ OpenPath.user = {
 		$.ajax({
 			url: '/users/51eab1c525780e336f00000b',
 			data:{
-				  'name': "JaRasta",
-				  'grade': "6-8",
-				  'Interests': ["robotics", "coding", "archaeology"],
-				  'HomeLocation': [lat, long],
-				  'Locations': [],
-				  'EventsInvitedTo': [],
-				  'SessionsInvitedTo': [],
-				  'EventsCreated': [],
-				  'SessionsCreated': []	
+				'name': "JaRasta",
+				'grade': "6-8",
+				'Interests': ["robotics", "coding", "archaeology"],
+				'HomeLocation': [lat, long],
+				'Locations': [],
+				'EventsInvitedTo': [],
+				'SessionsInvitedTo': [],
+				'EventsCreated': [],
+				'SessionsCreated': []	
 			},
 		    dataType:'json',
 		    type:'PUT',

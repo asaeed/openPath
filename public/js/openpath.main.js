@@ -5,7 +5,7 @@ OpenPath.main = {
 	init : function(){
 
 		//TODO: clean below and add to name space
-		console.log('openPath.main.init',this) 
+		//console.log('openPath.main.init',this) 
 		
 		//this = OpenPath.main		
 		//OpenPath.user.init();

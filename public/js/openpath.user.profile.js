@@ -59,15 +59,33 @@ OpenPath.user.profile = {
 		
 		if(data.name){
 			console.log('name = ' + data.name);
-			this.profileWrapper.find('.display').fadeIn();
+			$('#profileUsername').html(data.name);
+			
+			this.profileWrapper.find('form .firstName').val(data.name.split(' ')[0]);
+			this.profileWrapper.find('form .lastName').val(data.name.split(' ')[1]);
 		}else{
 			console.log('no name');
-			this.profileWrapper.find('display').show();
+			
+		}
+		
+		if(data.grade){
+			this.profileWrapper.find('.display article.gradelevel .results').html(data.grade);
+			//TODO: pop select form with correct option
+		}else{
+			
+		}
+		
+		if(data.Interests){
+			console.log(data.Interests)
+			this.profileWrapper.find('.display article.interests .results').html(data.Interests);
+			//TODO: pop select form with correct option
+		}else{
+			
 		}
 	},
 	update : function(firstName,lastName,gradelevel,interests,colearners){
 		var self = this;
-		
+		/*
 		$.ajax({
 			url : '/users/'+this._id,
 			dataType:'json',
@@ -79,21 +97,22 @@ OpenPath.user.profile = {
 				console.log('err ',data)
 			}
 		});
+		*/
 		
 		
-		/*
 		$.ajax({
 			url: '/users/'+this._id,//TODO: this just creates more entries :( FIX
 			data:{
-				  'name': firstName + " "+ lastName,
-				  'grade': gradelevel
-				  //'Interests': ["robotics", "coding", "archaeology"],
-				  //'HomeLocation': [lat, long],
-				  //'Locations': [],
-				  //'EventsInvitedTo': [],
-				  //'SessionsInvitedTo': [],
-				  //'EventsCreated': [],
-				  //'SessionsCreated': []	
+				'email':email,
+				'name': firstName + " "+ lastName,
+				'grade': gradelevel
+				'Interests': ["robotics", "coding", "archaeology"],
+				//'HomeLocation': [lat, long],
+				//'Locations': [],
+				//'EventsInvitedTo': [],
+				//'SessionsInvitedTo': [],
+				//'EventsCreated': [],
+				//'SessionsCreated': []	
 			},
 		    dataType:'json',
 		    type:'PUT',
@@ -106,6 +125,6 @@ OpenPath.user.profile = {
 				console.log('user not updated');
 			}
 		});
-		*/
+		
 	}
 };
