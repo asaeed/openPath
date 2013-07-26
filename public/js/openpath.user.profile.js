@@ -5,15 +5,19 @@ var OpenPath = window.OpenPath || {};
  */
 OpenPath.user.profile = {
 	init : function(){
-				//TODO: get and pre-pop form
+		//TODO: get and pre-pop form
 		//validate
 		//post || put?
 		//get if p tab is active
+		
 		console.log('OpenPath.user.profile init');
 		var self = this;
-		
+		//dom eles
 		this.profileWrapper = $('#profile');
 		this.form = this.profileWrapper.find('form');
+		
+		//profile ele
+		
 		
 		//actions
 		this.get();
@@ -33,7 +37,7 @@ OpenPath.user.profile = {
 	},
 	get : function(){
 		var self = this;
-		console.log('getting'+email);
+		console.log('getting : '+email);
 		//TODO: FIX go through session
 		
 		$.ajax({
@@ -63,6 +67,21 @@ OpenPath.user.profile = {
 	},
 	update : function(firstName,lastName,gradelevel,interests,colearners){
 		var self = this;
+		
+		$.ajax({
+			url : '/users/'+this._id,
+			dataType:'json',
+			type:'GET',
+			sucess: function(data){
+				console.log('succ', data)
+			},
+			error:function(data){
+				console.log('err ',data)
+			}
+		});
+		
+		
+		/*
 		$.ajax({
 			url: '/users/'+this._id,//TODO: this just creates more entries :( FIX
 			data:{
@@ -87,6 +106,6 @@ OpenPath.user.profile = {
 				console.log('user not updated');
 			}
 		});
-		
+		*/
 	}
 };

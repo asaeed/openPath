@@ -120,7 +120,7 @@ exports.findByEmail = function(email, callback) {
     });
 };
 /**
-TODO:FIX  - go through the session -jg
+TODO:FIX  - go through the session -jg //or check auth
 **/
 exports.findUserByEmail = function(req, res) {
 	var email = req.params.email;
