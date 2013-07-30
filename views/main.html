@@ -148,7 +148,9 @@ Open Path Team
 	  		<!-- BEGIN USER MENU -->
             <div id="usermenu">
                 <div class="col50 left">
-                    <img src="img/user-icon.png" alt="User">
+                    <div class="userIcon">
+						<img src="img/user-icon.png" alt="User">
+					</div>
                     <h1 id="profileUsername"></h1>
                 </div>
                 <div class="col50 right">
@@ -170,8 +172,9 @@ Open Path Team
 					<div class="usertab-single-col">
 						
 						
-						<section class="display">
-								
+						<section class="displayView">
+							<a class="editProfileBtn" href="#">Edit</a>
+							
 							<article class="gradelevel">
 								<h2>Grade Level:</h2>
 								<div class="results"></div>
@@ -180,7 +183,7 @@ Open Path Team
 								<h2>Interests:</h2>
 								<div class="results"></div>
 							</article>
-							<div class="colearners">
+							<article class="colearners">
 								<h2>List of Co-Learners:</h2>
 								<div class="results"></div>
 							</article>
@@ -190,15 +193,18 @@ Open Path Team
 						</section>
 						
 						
-						<section class="edit">
-							<p><strong>Welcome to Open Path!</strong></p>
-							<p><strong>To get recommendations based on your interests, simply fill in something about yourself:</strong></p>
+						<section class="editView">
+							
+							<div class="profileIntro">
+								<p><strong>Welcome to Open Path!</strong></p>
+								<p><strong>To get recommendations based on your interests, simply fill in something about yourself:</strong></p>
+							</div>
 							<form>
-								<!--
-								<fieldset class="userIcon">
-									<input type="file" name="userIcon"/>
-								</fieldset>
-								-->
+								<div class="userIcon">
+									<fieldset>
+										<input type="file" name="userIcon"/>
+									</fieldset>
+								</div>
 								<fieldset class="name">
 									<input type="text" name="firstName" class="firstName" placeholder="first name" />
 									<input type="text" name="lastName" class="lastName" placeholder="last name"/>

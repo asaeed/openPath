@@ -14,13 +14,22 @@ OpenPath.user.profile = {
 		var self = this;
 		//dom eles
 		this.profileWrapper = $('#profile');
+		this.profileUsername = $('h1#profileUsername');
 		this.form = this.profileWrapper.find('form');
-		
-		//profile ele
-		
+		this.displayView = this.profileWrapper.find('.displayView');
+		this.editView = this.profileWrapper.find('.editView');
+		this.editProfileBtn = this.profileWrapper.find('a.editProfileBtn');
 		
 		//actions
 		this.get();
+		
+		
+		this.editProfileBtn.click(function(){
+			self.profileUsername.hide();
+			self.displayView.hide();
+			self.editView.show();
+		});
+		
 		
 		this.form.submit(function(e){
 			//console.log('update profile',username,email,sessionID);
@@ -31,6 +40,11 @@ OpenPath.user.profile = {
 				colearners = $(this).find('.colearners').val();
 			
 			self.update(firstName,lastName,gradelevel,interests,colearners);
+			
+			//TODO: check if success
+			self.editView.hide();
+			self.profileUsername.show();
+			self.displayView.show();
 			return false;
 		});
 		
@@ -69,35 +83,29 @@ OpenPath.user.profile = {
 		}
 		
 		if(data.grade){
-			this.profileWrapper.find('.display article.gradelevel .results').html(data.grade);
-			//TODO: pop select form with correct option
+			this.profileWrapper.find('.displayView article.gradelevel .results').html(data.grade);
+			//populate select ele with correct option selected
+			this.profileWrapper.find("form select.gradelevel > option").each(function() {
+				if(this.value === data.grade){
+					$(this).attr('selected','selected');
+				}
+			});
 		}else{
 			
 		}
 		
 		if(data.Interests){
 			console.log(data.Interests)
-			this.profileWrapper.find('.display article.interests .results').html(data.Interests);
+			this.profileWrapper.find('.displayView article.interests .results').html(data.Interests);
 			//TODO: pop select form with correct option
-		}else{
+			this.profileWrapper.find('form .interests').val(data.Interests);
 			
+		}else{
+			console.log('no interests')
 		}
 	},
 	update : function(firstName,lastName,gradelevel,interests,colearners){
 		var self = this;
-		/*
-		$.ajax({
-			url : '/users/'+this._id,
-			dataType:'json',
-			type:'GET',
-			sucess: function(data){
-				console.log('succ', data)
-			},
-			error:function(data){
-				console.log('err ',data)
-			}
-		});
-		*/
 		
 		
 		$.ajax({
@@ -105,8 +113,8 @@ OpenPath.user.profile = {
 			data:{
 				'email':email,
 				'name': firstName + " "+ lastName,
-				'grade': gradelevel
-				'Interests': ["robotics", "coding", "archaeology"],
+				'grade': gradelevel,
+				'Interests': interests.split(',').join(', ')//,
 				//'HomeLocation': [lat, long],
 				//'Locations': [],
 				//'EventsInvitedTo': [],
