@@ -71,7 +71,7 @@ OpenPath.user.profile = {
 		console.log('populate',data._id);
 		this._id = data._id;
 		
-		if(data.name){
+		if(data.name && data.name !== ' '){
 			console.log('name = ' + data.name);
 			$('#profileUsername').html(data.name);
 			

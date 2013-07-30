@@ -121,8 +121,9 @@ exports.findByEmail = function(email, callback) {
     });
 };
 /**
+ * calls for user profile
 TODO:FIX  - go through the session -jg //or check auth
-**/
+ */
 exports.findUserByEmail = function(req, res) {
 	var email = req.params.email;
     console.log('find by user email: ' , req.params.email, req.body);
@@ -134,6 +135,10 @@ exports.findUserByEmail = function(req, res) {
     });
 
 };
+
+
+
+
 
 //not sure if this is sub or not? -jg
 exports.updateItemData = function(req, res) {
