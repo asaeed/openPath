@@ -9,6 +9,9 @@ OpenPath.user = {
 		if( $('#profile').hasClass('active') ){
 			this.profile.init();
 		}
+		if( $('#settings').hasClass('active') ){
+			this.settings.init();
+		}
 	},
 	update : function(lat,long){
 		$.ajax({
