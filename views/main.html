@@ -10,6 +10,8 @@
 	<script src="js/openpath.main.js"></script>
 	<script src="js/openpath.user.js"></script>
 	<script src="js/openpath.user.profile.js"></script>
+	<script src="js/openpath.user.settings.js"></script>
+	
 {% endblock %}
 
 {% block content %}
@@ -278,20 +280,36 @@ Open Path Team
 				<div class="tab-pane" id="settings">
 					<div class="usertab-single-col">
 						<form>
-						  <fieldset>
-						    <label class="muted">Receive alerts when...</label>
-						    <label class="checkbox"><input type="checkbox">Co-learner joins event</label>
-							<label class="checkbox"><input type="checkbox">Near an event you might be interested in</label>
-							<label class="checkbox"><input type="checkbox">All events you might be interested in</label>
-					
-							<label class="muted">Set profile as...</label>
-							<label class="radio"><input type="radio" name="profileaccess" value="public">Public</label>
-							<label class="radio"><input type="radio" name="profileaccess" value="private">Private</label>
-					
-						    <button type="submit" class="btn btn-primary">Save</button>
-						  </fieldset>
+							<article>
+								<h2 class="muted">Receive alerts when...</h2>
+								<fieldset>
+									<label for="alertColearnerJoin">Co-learner joins event</label>
+									<input type="checkbox" />
+								</fieldset>
+								<fieldset>
+									<label class="checkbox">Near an event you might be interested in</label>
+									<input type="checkbox" />
+								</fieldset>
+								<fieldset>
+									<label class="checkbox">All events you might be interested in</label>
+									<input type="checkbox" />
+								</fieldset>
+							</article>
+							<article>
+								<h2 class="muted">Set profile as...</h2>
+								<fieldset>
+									<label class="checkbox">Public</label>
+									<input type="radio" name="profileaccess" value="public" />
+								</fieldset>
+								<fieldset>
+									<label class="checkbox">Private</label>
+									<input type="radio" name="profileaccess" value="private" />
+								</fieldset>
+							</article>
+							<fieldset>
+								<button type="submit" class="btn btn-primary">Save</button>
+							</fieldset>
 						</form>
-				
 					</div>
 				</div>
 				
