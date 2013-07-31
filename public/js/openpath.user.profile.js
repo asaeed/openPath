@@ -71,12 +71,13 @@ OpenPath.user.profile = {
 		console.log('populate',data._id);
 		this._id = data._id;
 		
+		console.log(data.name.first)
 		if(data.name && data.name !== ' '){
 			console.log('name = ' + data.name);
-			$('#profileUsername').html(data.name);
+			$('#profileUsername').html(data.name.first +' '+data.name.last);
 			
-			this.profileWrapper.find('form .firstName').val(data.name.split(' ')[0]);
-			this.profileWrapper.find('form .lastName').val(data.name.split(' ')[1]);
+			this.profileWrapper.find('form .firstName').val(data.name.first);
+			this.profileWrapper.find('form .lastName').val(data.name.last);
 		}else{
 			console.log('no name');
 			
@@ -112,7 +113,7 @@ OpenPath.user.profile = {
 			url: '/users/'+this._id,//TODO: this just creates more entries :( FIX
 			data:{
 				'email':email,
-				'name': firstName + " "+ lastName,
+				'name': {'first' : firstName, 'last' : lastName },
 				'grade': gradelevel,
 				'Interests': interests.split(',').join(', ')//,
 				//'HomeLocation': [lat, long],

@@ -46,7 +46,7 @@ Sessions: [    // two examples given here
 
 Users: {
   Email: "ahmad@email.com",    // will actually be a GUID for ID which is referenced everywhere, email is a property
-  Name: "ColdHeartedNinja",
+  Name: "ColdHeartedNinja",// update {first:"",last:""} -jg
   Grade: "6-8",
   Interests: ["robotics", "coding", "archaeology"],
   HomeLocation: [lat, long],    // maybe this will be replaced by address fields...  again to match users with events
