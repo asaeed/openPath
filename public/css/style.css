@@ -206,7 +206,21 @@ video.avatar{width:100%; height:auto;}
 #mypathmap{width:100%; height:100%; min-height:640px;}
 
 
-
+/**
+ *#settings
+ */
+#settings form article fieldset {
+	overflow:hidden;
+}
+#settings form article fieldset label {
+	float:left;
+}
+#settings form article fieldset input {
+	float:left;
+}
+#settings form article fieldset input[type="radio"] {
+	margin:0 0 0 3px;
+}
 
 
 

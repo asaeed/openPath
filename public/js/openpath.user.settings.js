@@ -20,13 +20,13 @@ OpenPath.user.settings = {
 		
 		this.form.submit(function(e){
 			//console.log('update profile',username,email,sessionID);
-			var firstName = $(this).find('.firstName').val(),
-				lastName = $(this).find('.lastName').val(),
-				gradelevel = $(this).find('.gradelevel').val(),
-				interests = $(this).find('.interests').val(),
-				colearners = $(this).find('.colearners').val();
+			var alertsColearnerJoin = $(this).find('#alertsColearnerJoin').val(),
+				alertsNearEvent = $(this).find('#alertsNearEvent').val(),
+				alertsAllEvents = $(this).find('#alertsAllEvents').val(),
+				profileAccess = $(this).find('input:radio[name=profileaccess]:checked').val();
 			
-			self.update(firstName,lastName,gradelevel,interests,colearners);
+			console.log('settings',alertsColearnerJoin,alertsNearEvent,alertsAllEvents,profileAccess)
+			//self.update(firstName,lastName,gradelevel,interests,colearners);
 			
 			return false;
 		});
