@@ -16,44 +16,38 @@ OpenPath.user.settings = {
 		this.form = this.settingsWrapper.find('form');
 		
 		//actions
-		this.get();
+		OpenPath.user.getByEmail(function(d){
+			self.populate(d);
+		});
 		
 		this.form.submit(function(e){
 			//console.log('update profile',username,email,sessionID);
 			var alertsColearnerJoin = $(this).find('#alertsColearnerJoin').val(),
 				alertsNearEvent = $(this).find('#alertsNearEvent').val(),
 				alertsAllEvents = $(this).find('#alertsAllEvents').val(),
-				profileAccess = $(this).find('input:radio[name=profileaccess]:checked').val();
+				profileAccess = $(this).find('input:radio[name=profileaccess]:checked').val(),
+				data = {
+					'settings' : {
+						'alertsColearnerJoin':alertsColearnerJoin,
+						'alertsNearEvent':alertsNearEvent,
+						'alertsAllEvents':alertsAllEvents,
+						'profileAccess':profileAccess
+					}
+				};
 			
-			console.log('settings',alertsColearnerJoin,alertsNearEvent,alertsAllEvents,profileAccess)
-			//self.update(firstName,lastName,gradelevel,interests,colearners);
+			OpenPath.user.update(data, function(d){
+				self.populate(d);
+			});
+			
 			
 			return false;
 		});
 		
 	},
-	get : function(){
-		var self = this;
-		console.log('getting : '+email);
-		//TODO: FIX go through session
-		
-		$.ajax({
-			url: '/users-email/'+email,
-			type:'GET',
-			success: function(data) { 
-				console.log('user got');
-				self.populate(data);
-			},
-			error: function(data){
-				console.log('user not got');
-			}
-		});
-		
-	},
 	populate : function( data ){
 		console.log('populate',data._id);
-		this._id = data._id;
-		
+		//alertsColearnerJoin,alertsNearEvent,alertsAllEvents,profileAccess
+		/*
 		console.log(data.name.first)
 		if(data.name && data.name !== ' '){
 			console.log('name = ' + data.name);
@@ -87,36 +81,6 @@ OpenPath.user.settings = {
 		}else{
 			console.log('no interests')
 		}
-	},
-	update : function(firstName,lastName,gradelevel,interests,colearners){
-		var self = this;
-		
-		
-		$.ajax({
-			url: '/users/'+this._id,//TODO: this just creates more entries :( FIX
-			data:{
-				'email':email,
-				'name': {'first' : firstName, 'last' : lastName },
-				'grade': gradelevel,
-				'Interests': interests.split(',').join(', ')//,
-				//'HomeLocation': [lat, long],
-				//'Locations': [],
-				//'EventsInvitedTo': [],
-				//'SessionsInvitedTo': [],
-				//'EventsCreated': [],
-				//'SessionsCreated': []	
-			},
-		    dataType:'json',
-		    type:'PUT',
-		    async:false,
-			success: function(data) { 
-				console.log('user updated',data);
-				self.populate( data );
-		    },
-		    error: function(data){
-				console.log('user not updated');
-			}
-		});
-		
+		*/
 	}
 };
