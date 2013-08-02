@@ -22,9 +22,7 @@ OpenPath.user.profile = {
 		
 		
 		this.editProfileBtn.click(function(){
-			self.profileUsername.hide();
-			self.displayView.hide();
-			self.editView.show();
+			self.showEditView();
 		});
 		
 		
@@ -37,7 +35,7 @@ OpenPath.user.profile = {
 				colearners = $(this).find('.colearners').val(),
 				data = {
 					//'Email':email,
-					'Name': {'First' : firstName, 'Last' : lastName , 'Boobs': {'Left':'C','Right':'D'}},
+					'Name': {'First' : firstName, 'Last' : lastName},
 					'Grade': gradelevel,
 					'Interests': interests.split(',').join(', ')//,TODO : too many spaces, fix split join
 					//'HomeLocation': [lat, long],
@@ -52,9 +50,7 @@ OpenPath.user.profile = {
 			OpenPath.user.update(data, function(d){
 				self.populate(d);
 				//dom hide/show change on success
-				self.editView.hide();
-				self.profileUsername.show();
-				self.displayView.show();
+				self.showDisplayView();
 			});
 			
 			
@@ -62,14 +58,28 @@ OpenPath.user.profile = {
 		});
 		
 	},
+	showDisplayView : function(){
+		this.editView.hide();
+		this.profileUsername.show();
+		this.displayView.show();
+	},
+	showEditView : function(){
+		this.profileUsername.hide();
+		this.displayView.hide();
+		this.editView.show();
+	},
 	populate : function( data ){
 		console.log('populate',data.email,data._id);
-
+		
+		var noData = true;
+		
 		if(data.Name && data.Name !== ' '){
 			$('#profileUsername').html(data.Name.First +' '+data.Name.Last);
 			
 			this.profileWrapper.find('form .firstName').val(data.Name.First);
 			this.profileWrapper.find('form .lastName').val(data.Name.Last);
+			
+			noData = false;
 		}else{
 			console.log('no name');
 		}
@@ -82,6 +92,8 @@ OpenPath.user.profile = {
 					$(this).attr('selected','selected');
 				}
 			});
+			
+			noData = false;
 		}else{
 			console.log('no grade')
 		}
@@ -91,8 +103,13 @@ OpenPath.user.profile = {
 			//TODO: pop select form with correct option
 			this.profileWrapper.find('form .interests').val(data.Interests);
 			
+			noData = false;
 		}else{
 			console.log('no interests')
+		}
+		
+		if(noData === true){
+			this.showEditView();
 		}
 	}
 };

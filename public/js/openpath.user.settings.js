@@ -45,42 +45,8 @@ OpenPath.user.settings = {
 		
 	},
 	populate : function( data ){
-		console.log('populate',data._id);
+		console.log('populate',data.email,data._id);
 		//alertsColearnerJoin,alertsNearEvent,alertsAllEvents,profileAccess
-		/*
-		console.log(data.name.first)
-		if(data.name && data.name !== ' '){
-			console.log('name = ' + data.name);
-			$('#profileUsername').html(data.name.first +' '+data.name.last);
-			
-			this.profileWrapper.find('form .firstName').val(data.name.first);
-			this.profileWrapper.find('form .lastName').val(data.name.last);
-		}else{
-			console.log('no name');
-			
-		}
-		
-		if(data.grade){
-			this.profileWrapper.find('.displayView article.gradelevel .results').html(data.grade);
-			//populate select ele with correct option selected
-			this.profileWrapper.find("form select.gradelevel > option").each(function() {
-				if(this.value === data.grade){
-					$(this).attr('selected','selected');
-				}
-			});
-		}else{
-			
-		}
-		
-		if(data.Interests){
-			console.log(data.Interests)
-			this.profileWrapper.find('.displayView article.interests .results').html(data.Interests);
-			//TODO: pop select form with correct option
-			this.profileWrapper.find('form .interests').val(data.Interests);
-			
-		}else{
-			console.log('no interests')
-		}
-		*/
+
 	}
 };
