@@ -6,8 +6,7 @@ OpenPath = {
 		
 		//this = OpenPath		
 		
-		
-		if(	$('#mainheader').length > -1 ){
+		if(this.main){
 			this.main.init();
 		}
 	}
@@ -25,6 +24,8 @@ OpenPath = {
   // PAGE LOAD
   /*************************************/
   $(document).ready(function() {
+	
+	OpenPath.init();
 	
 	// retreives room number based on query string
 	if (getParameterByName('room') != null && getParameterByName('room') != "") {
