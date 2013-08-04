@@ -50,8 +50,8 @@ OpenPath.user.settings = {
 		
 	},
 	populate : function( data ){
-		console.log('populate',data.email,data._id);
-		console.log(data.settings);
+		//console.log('populate',data.email,data._id);//TODO: hide _id
+		//console.log(data.settings);
 		//alertsColearnerJoin,alertsNearEvent,alertsAllEvents,profileAccess
 		if(data.settings.alertsColearnerJoin === 'true'){
 			this.alertsColearnerJoin.attr('checked','checked');

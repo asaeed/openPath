@@ -69,7 +69,7 @@ OpenPath.user.profile = {
 		this.editView.show();
 	},
 	populate : function( data ){
-		console.log('populate',data.email,data._id);
+		//console.log('populate',data.email,data._id);
 		
 		var noData = true;
 		
@@ -81,7 +81,7 @@ OpenPath.user.profile = {
 			
 			noData = false;
 		}else{
-			console.log('no name');
+			//console.log('no name');
 		}
 		
 		if(data.Grade){
@@ -95,7 +95,7 @@ OpenPath.user.profile = {
 			
 			noData = false;
 		}else{
-			console.log('no grade')
+			//console.log('no grade')
 		}
 		
 		if(data.Interests){
@@ -105,7 +105,7 @@ OpenPath.user.profile = {
 			
 			noData = false;
 		}else{
-			console.log('no interests')
+			//console.log('no interests')
 		}
 		
 		if(noData === true){
