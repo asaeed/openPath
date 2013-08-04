@@ -102,14 +102,32 @@
             <div class="clearer"></div>
 			<footer id="homefooter">
 				<ul>
-					<li><a id="tosLink" data-toggle="modal" data-target="#metamodal" href="/terms-of-service">Terms of Service</a></li>
-					<li><a id="privacyPolicyLink" data-target="#metamodal" data-toggle="modal" href="/privacy-policy">Privacy Policy</a></li>
-					<li><a id="aboutLink" data-toggle="modal" data-target="#metamodal" href="/about">About</a></li>
+					<li><a id="tosLink" data-toggle="modal" data-target="#metamodal-tos" href="/terms-of-service">Terms of Service</a></li>
+					<li><a id="privacyPolicyLink" data-target="#metamodal-pp" data-toggle="modal" href="/privacy-policy">Privacy Policy</a></li>
+					<li><a id="aboutLink" data-toggle="modal" data-target="#metamodal-about" href="/about">About</a></li>
 				</ul>
 			</footer>
 		</div>
 		<!-- MODAL -->
-		<div id="metamodal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+		<div id="metamodal-tos" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+		  <div class="modal-header">
+		    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+		    <img id="logo" src="img/openpath.png" alt="OpenPath">
+		  </div>
+		  <div class="modal-body">
+		  	<!-- content will be loaded here -->
+		  </div>
+		</div>
+		<div id="metamodal-pp" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+		  <div class="modal-header">
+		    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+		    <img id="logo" src="img/openpath.png" alt="OpenPath">
+		  </div>
+		  <div class="modal-body">
+		  	<!-- content will be loaded here -->
+		  </div>
+		</div>
+		<div id="metamodal-about" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 		  <div class="modal-header">
 		    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
 		    <img id="logo" src="img/openpath.png" alt="OpenPath">
