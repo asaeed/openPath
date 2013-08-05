@@ -5,7 +5,9 @@ OpenPath = {
 		console.log('openPath init') 
 		
 		//this = OpenPath		
-		
+		if(this.home){
+			this.home.init();
+		}
 		if(this.main){
 			this.main.init();
 		}

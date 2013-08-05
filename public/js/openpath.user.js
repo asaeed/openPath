@@ -1,4 +1,4 @@
-var OpenPath = window.OpenPath || {};
+OpenPath = window.OpenPath || {};
 
 OpenPath.user = {
 	init : function(){
