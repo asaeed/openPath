@@ -104,8 +104,8 @@ var populateDB = function() {
 	  "location": [38.891313, -77.029999],    // to match with users in the area
 	  "locationDescription": "National Museum of American History",    // to display with event info, might want to add address though google maps may have built into API?
 	  "link": "http://americanhistory.si.edu/exhibitions/invention-and-patent-model", //allow them to enter link
-	  "startTime": "7/1/2013 10:00:00",
-	  "endTime": "7/1/2013 10:30:00",
+	  "startTime": "9/1/2013 10:00:00",
+	  "endTime": "9/1/2013 10:30:00",
 	  "grades": ["9-12"],
 	  "interests": ["technology", "history of technology", "early American history", "innovation", "high school"]
 	  //HasPresenter: false,  if they have a presenter, they can start multiple sessions in view-only mode
@@ -121,8 +121,8 @@ var populateDB = function() {
 	  "location": [40.778740, -73.869844],    // to match with users in the area
 	  "locationDescription": "Maker Space at New York Hall of Science",    // to display with event info, might want to add address though google maps may have built into API?
 	  "link": "http://learninglabspopup.eventbrite.com/", //allow them to enter link
-	  "startTime": "7/6/2013 15:00:00",
-	  "endTime": "7/6/2013 16:00:00",
+	  "startTime": "9/6/2013 15:00:00",
+	  "endTime": "9/6/2013 16:00:00",
 	  "grades": ["9-12"],
 	  "interests": ["technology", "maker", "presentations", "Web", "high school"],
 	  //HasPresenter: false,  if they have a presenter, they can start multiple sessions in view-only mode
@@ -138,8 +138,8 @@ var populateDB = function() {
 	  "location": [40.779012, -73.962383],    // to match with users in the area
 	  "locationDescription": "Metropolitan Museum of Art",    // to display with event info, might want to add address though google maps may have built into API?
 	  "link": "http://www.metmuseum.org/events/programs/workshops-and-courses/short-courses/northern-european-paintings?eid=A003_%7b2F2A4223-CB79-437D-AE97-CA3EC2BBA493%7d_20130322155027", //allow them to enter link
-	  "startTime": "7/20/2013 14:00:00",
-	  "endTime": "7/20/2013 15:00:00",
+	  "startTime": "9/20/2013 14:00:00",
+	  "endTime": "9/20/2013 15:00:00",
 	  "grades": ["9-12", "postsecondary", "lifelong"],
 	  "interests": ["history of art", "Netherlandish", "Fifteenth century", "Sixteenth Century", "European masters", "nature", "landscape painting", "art history"],
 	  //HasPresenter: false,  if they have a presenter, they can start multiple sessions in view-only mode
@@ -155,8 +155,8 @@ var populateDB = function() {
 	  "location": [37.791679, -122.400792],    // to match with users in the area
 	  "locationDescription": "Stick Exchange Tower",    // to display with event info, might want to add address though google maps may have built into API?
 	  "link": "http://www.sfcityguides.org/Reservations/descx.php?tour=96", //allow them to enter link
-	  "startTime": "7/14/2013 12:00:00",
-	  "endTime": "7/20/2013 13:00:00",
+	  "startTime": "9/14/2013 12:00:00",
+	  "endTime": "9/20/2013 13:00:00",
 	  "grades": ["6-8", "9-12", "postsecondary", "lifelong"],
 	  "interests": ["history of art", "architecture", "California history", "mural painting", "Mexican artists"],
 	  //HasPresenter: false,  if they have a presenter, they can start multiple sessions in view-only mode
