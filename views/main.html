@@ -34,375 +34,62 @@
 	<div class="tab-content">
 		
   	  <!-- ***** MAIN ***** -->
-	  <div class="tab-pane active" id="main">
-	  	<div class="col1">
-	  		<!-- VIDEO -->
-			<div id="video"><video id="main_videoplayer" width="100%" height="auto" poster="img/poster.png" autoplay controls>
-	        	Your browser does not support the video tag.
-			</video>
-			</div>
-	  	</div>
-	  	<div class="col2">
-			<!-- BEGIN USERS -->
-            	<div id="users">
-				<div class="user">
-	            	<div class="usermeta">
-						<div class="username"><a href="#" id="username1"></a><div class="icon-map-marker"><span class="icon-remove"></span></div></div>
-						<div id="userlocation1" class="userlocation"></div>
-						<div id="usermap1" class="usermap"></div>
-	                </div>
-	                <video id="self_videoplayer" class="avatar" width="240" height="auto" poster="img/poster.png" muted autoplay></video>
-	            </div>
-				<div class="user">
-	            	<div class="usermeta">
-						<div class="username"><a href="#" id="username2"></a><div class="icon-map-marker"><span class="icon-remove"></span></div></div>
-						<div id="userlocation2" class="userlocation"></div>
-						<div id="usermap2" class="usermap"></div>
-	                </div>
-	                <video id="other_videoplayer" class="avatar" poster="img/poster.png" autoplay></video>
-	            </div>
-	            </div>
+		 <div class="tab-pane active" id="main">
+		  	<div class="col1">
+		  		<!-- VIDEO -->
+				<div id="video"><video id="main_videoplayer" width="100%" height="auto" poster="img/poster.png" autoplay controls>
+		        	Your browser does not support the video tag.
+				</video>
+				</div>
+		  	</div>
+		  	<div class="col2">
+				<!-- BEGIN USERS -->
+	            	<div id="users">
+					<div class="user">
+		            	<div class="usermeta">
+							<div class="username"><a href="#" id="username1"></a><div class="icon-map-marker"><span class="icon-remove"></span></div></div>
+							<div id="userlocation1" class="userlocation"></div>
+							<div id="usermap1" class="usermap"></div>
+		                </div>
+		                <video id="self_videoplayer" class="avatar" width="240" height="auto" poster="img/poster.png" muted autoplay></video>
+		            </div>
+					<div class="user">
+		            	<div class="usermeta">
+							<div class="username"><a href="#" id="username2"></a><div class="icon-map-marker"><span class="icon-remove"></span></div></div>
+							<div id="userlocation2" class="userlocation"></div>
+							<div id="usermap2" class="usermap"></div>
+		                </div>
+		                <video id="other_videoplayer" class="avatar" poster="img/poster.png" autoplay></video>
+		            </div>
+		            </div>
 
-				<!-- BEGIN CHAT -->
-	            <div id="chat">
-	            	<div id="chatwindow">
-	                	<ol id="chatmessages"></ol>
-	       	  	  </div>
-				  <input type="text" id="chatinput" class="commentfield" />
-	            </div>
-				<!-- END CHAT -->  		
-	
-	  	</div>
-	  	<div class="clearer"></div>
-	  </div>
-	
-	  <!-- ***** ADD USER ***** -->
-	  <div class="tab-pane" id="adduser">
-			<form id="adduserform">
-			  <fieldset>
-			    <h1>Add Participants</h1>
-			    <label>Email Address</label>
-			    <input type="text" name="to" id="to" placeholder="">
-			    <label>Subject</label>
-			    <input type="text" name="subject" id="subject" value="Open Path Invitation" placeholder="">
-				<textarea rows="10" name="text" id="text">
-Hi,
+					<!-- BEGIN CHAT -->
+		            <div id="chat">
+		            	<div id="chatwindow">
+		                	<ol id="chatmessages"></ol>
+		       	  	  </div>
+					  <input type="text" id="chatinput" class="commentfield" />
+		            </div>
+					<!-- END CHAT -->  		
+		
+		  	</div>
+		  	<div class="clearer"></div>
+		  </div>
+		
+		  <!-- ***** ADD USER ***** -->
+		  {% include "main.adduser.html" %}
+		
+		  <!-- ***** EVENTS ***** -->
+		  {% include "main.events.html" %}
+		
+		  <!-- ***** USER ***** -->
+		  {% include "main.user.html" %}
 
-USERNAME would like to invite you to a video session on Open Path. Click here to join:
 
-LINK
-
-Let's learn together!
-
-Regards,
-Open Path Team
-				</textarea>
-
-			    <button id="adduser-submit" type="submit" class="btn btn-primary">Send</button>
-			  </fieldset>
-			</form>
-	  </div>
-	
-	  <!-- ***** EVENTS ***** -->
-	  <div class="tab-pane" id="events">
-		<div class="col1">
-			<!-- BEGIN EVENTS MENU -->
-            <div id="eventsmenu">
-                <div class="col50 left">
-                    <nav class="subnav">
-                        <ul>
-                            <li><a href="#">Nearby</a></li>
-                            <li><a href="#">Upcoming</a></li>
-                        </ul>
-                    </nav>
-                </div>
-                <div class="col50 right">
-					<form class="form-search">
-					    <div class="input-prepend">
-					      <span class="add-on"><i class="icon-search"></i></span>
-					      <input class="span2" id="inputIcon" type="text" placeholder="Search">
-						</div>
-					</form>
-                </div>
-                <div class="clearer"></div>
-            </div>
-			
-			<!-- MAP -->
-			<div id="eventsmap"></div>
 		</div>
-		<div class="col2">
-			<!-- BEGIN EVENTS LIST -->
-            <div class="eventslist inner">
-            <h2>List of Events</h2> <a href="#addEventsModal"  data-toggle="modal" class="btn btn-primary"><span class="icon-plus"></span> Add</a>
-				<div class="eventsholder">
-					<!-- Dynamically-Generated Events Go Here -->
-				</div>
-            </div>
-			<!-- END EVENTS LIST -->
-		</div>
-		<div class="clearer"></div>
-	  	
-	  </div>
-	
-	  <!-- ***** USER ***** -->
-
-	  <div class="tab-pane" id="user">
-	  		<!-- BEGIN USER MENU -->
-            <div id="usermenu">
-                <div class="col50 left">
-                    <div class="userIcon">
-						<img src="img/user-icon.png" alt="User">
-					</div>
-                    <h1 id="profileUsername"></h1>
-                </div>
-                <div class="col50 right">
-                    <nav id="usernav" class="subnav">
-                        <ul>
-							<li class="active"><a data-toggle="tab" href="#profile">Profile</a></li>
-                            <li><a data-toggle="tab" href="#mypath">My Path</a></li>
-                            <li><a data-toggle="tab" href="#notifications">Notifications</a></li>
-                            <li><a data-toggle="tab" href="#settings">Settings</a></li>
-                        </ul>
-                    </nav>
-                </div>
-                <div class="clearer"></div>
-            </div>
-			<!-- END USER MENU -->
-			<!-- BEGIN USER TAB-CONTENT -->
-			<div class="tab-content">
-				<div class="tab-pane active" id="profile">
-					<div class="usertab-single-col">
-						
-						
-						<section class="displayView">
-							<a class="editProfileBtn" href="#">Edit</a>
-							
-							<article class="gradelevel">
-								<h2>Grade Level:</h2>
-								<div class="results"></div>
-							</article>
-							<article class="interests">
-								<h2>Interests:</h2>
-								<div class="results"></div>
-							</article>
-							<article class="colearners">
-								<h2>List of Co-Learners:</h2>
-								<div class="results"></div>
-							</article>
-
-						</section>
-						
-						
-						<section class="editView">
-							
-							<div class="profileIntro">
-								<p><strong>Welcome to Open Path!</strong></p>
-								<p><strong>To get recommendations based on your interests, simply fill in something about yourself:</strong></p>
-							</div>
-							<form>
-								<div class="userIcon">
-									<fieldset>
-										<input type="file" name="userIcon"/>
-									</fieldset>
-								</div>
-								<fieldset class="name">
-									<input type="text" name="firstName" class="firstName" placeholder="first name" />
-									<input type="text" name="lastName" class="lastName" placeholder="last name"/>
-								</fieldset>
-								<fieldset>
-									<label>Grade Level:</label>
-									<select name="gradelevel" class="gradelevel">
-										<option value="Pre-K to Grade 2">Pre-K to Grade 2</option>
-										<option value="Grade 3-5">Grade 3-5</option>
-										<option value="Grade 9-12">Grade 9-12</option>
-										<option value="Post Secondary">Post Secondary</option>
-										<option value="Adults">Adults</option>
-										<option value="Families">Families</option>
-									</select>
-								</fieldset>
-								<fieldset>
-									<label>Interests:</label>
-									<input type="text" class="interests" name="interests" />
-					
-								</fieldset>
-								<fieldset>
-									<label>List of Co-Learners:</label>
-									<input type="text" class="colearners" name="colearners" />
-								</fieldset>
-								
-								<p class="required"><small><em>*Required</em></small></p>
-								<fieldset class="done">
-									<button type="submit" class="btn btn-primary">Done</button>
-								</fieldset>
-							</form>
-							
-						
-						</section>
-						<a id="logout" class="btn" href="#">Logout</a>
-					
-						
-					</div>
-				</div>
-				
-				<div class="tab-pane" id="mypath">
-					<div class="col1">
-						<div id="mypathmap"></div>
-					</div>
-					<div class="col2">
-						<!-- BEGIN EVENTS LIST -->
-			            <div class="eventslist inner">
-			            <h2>List of Events</h2> <a href="#addEventsModal" data-toggle="modal" class="btn btn-primary"><span class="icon-plus"></span> Add</a>
-							<div class="eventsholder">
-								<!-- Dynamically-Generated Events Go Here -->
-							</div>
-			            </div>
-						<!-- END EVENTS LIST -->
-					</div>
-					<div class="clearer"></div>
-					
-				</div>
-				
-				<div class="tab-pane" id="notifications">
-					<div class="usertab-single-col">
-					<form>
-					  <fieldset>
-						<ul>
-							<li><b>New event on NY Central Park about bird watching <span class="text-right">2 mins ago</span></b></li>
-							<li><b>Your event - "New York Museum Tour" is starting in 1 hour <span class="text-right">15 mins ago</span></b></li>
-							<li>There are 2 events near you next week <span class="text-right">2 days ago</span></li>
-							<li>Jared has joined "Bird Watching Tour" in Central Park <span class="text-right">5 days ago</span></li>
-						</ul>
-					</fieldset>
-					</form>
-					</div>
-				</div>
-				
-				<div class="tab-pane" id="settings">
-					<div class="usertab-single-col">
-						<form>
-							<article>
-								<h2 class="muted">Receive alerts when...</h2>
-								<fieldset>
-									<input type="checkbox" id="alertsColearnerJoin" name="alertsColearnerJoin" />
-									<label class="checkbox" for="alertsColearnerJoin">Co-learner joins event</label>
-								</fieldset>
-								<fieldset>
-									<input type="checkbox" id="alertsNearEvent" name="alertsNearEvent" />
-									<label class="checkbox" for="alertsNearEvent">Near an event you might be interested in</label>
-								</fieldset>
-								<fieldset>
-									<input type="checkbox" id="alertsAllEvents" name="alertsAllEvents" />
-									<label class="checkbox" for="alertsAllEvents">All events you might be interested in</label>
-								</fieldset>
-							</article>
-							<article>
-								<h2 class="muted">Set profile as...</h2>
-								<fieldset>
-									<input type="radio" id="profileAccessPublic" name="profileaccess" value="public" />
-									<label class="checkbox" for="profileAccessPublic">Public</label>
-								</fieldset>
-								<fieldset>
-									<input type="radio" id="profileAccessPrivate" name="profileaccess" value="private" />
-									<label class="checkbox" for="profileAccessPrivate">Private</label>
-								</fieldset>
-							</article>
-							<fieldset>
-								<button type="submit" class="btn btn-primary">Save</button>
-							</fieldset>
-						</form>
-					</div>
-				</div>
-				
-			</div>
-			<!-- END USER TAB-CONTENT -->
-	  </div>
-
-
-
-
-	</div>
     </div>
 </div>
 <!-- BEGIN ADD EVENTS MODAL -->
-<div id="addEventsModal" class="modal hide fade" tabindex="-1" aria-hidden="true">
-  <div class="modal-header">
-    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-    <h2>Add Event</h2>
-  </div>
-  <div class="modal-body">
-
-	<form class="form-horizontal">
-  	<div class="control-group">
-	    <label class="control-label" for="name">Event Name</label>
-	    <div class="controls">
-	      <input type="text" id="name" placeholder="">
-	    </div>
-	  </div>
-	  <div class="control-group">
-	    <label class="control-label" for="creator">Creator</label>
-	    <div class="controls">
-	      <input type="text" id="creator" placeholder="">
-	    </div>
-	  </div>
-	  <div class="control-group">
-	    <label class="control-label" for="description">Description</label>
-	    <div class="controls">
-			<textarea rows="10" name="description" id="description"></textarea>
-	    </div>
-	  </div>
-	<div class="control-group">
-	    <label class="control-label" for="location">Location</label>
-	    <div class="controls">
-			<input type="text" name="location" id="location">
-	    </div>
-	  </div>
-	<div class="control-group">
-	    <label class="control-label" for="gradelevel">Grade Level</label>
-	    <div class="controls">
-			<label class="radio inline"><input type="radio" name="gradelevel" value="Pre-K to Grade 2">Pre-K to Grade 2</label>
-			<label class="radio inline"><input type="radio" name="gradelevel" value="Grade 3-5">Grade 3-5</label>
-			<label class="radio inline"><input type="radio" name="gradelevel" value="Grade 9-12">Grade 9-12</label>
-			<label class="radio inline"><input type="radio" name="gradelevel" value="Post Secondary">Post Secondary</label>
-			<label class="radio inline"><input type="radio" name="gradelevel" value="Adults">Adults</label>
-			<label class="radio inline"><input type="radio" name="gradelevel" value="Families">Families</label>
-	    </div>
-	  </div>
-	  <!-- lat long fields go here -->
-
-	<div class="control-group">
-	    <label class="control-label" for="starttime">Start Time</label>
-	    <div class="controls">
-			<div class="well">
-			  <div id="starttime" class="input-append">
-			    <input data-format="MM/dd/yyyy HH:mm:ss PP" type="text"></input>
-			    <span class="add-on">
-			      <i data-time-icon="icon-time" data-date-icon="icon-calendar"></i>
-			    </span>
-			  </div>
-			</div>
-	    </div>
-	  </div>
-
-	<div class="control-group">
-	    <label class="control-label" for="endtime">End Time</label>
-	    <div class="controls">
-			<div class="well">
-			  <div id="endtime" class="input-append">
-			    <input data-format="MM/dd/yyyy HH:mm:ss PP" type="text"></input>
-			    <span class="add-on">
-			      <i data-time-icon="icon-time" data-date-icon="icon-calendar"></i>
-			    </span>
-			  </div>
-			</div>
-	    </div>
-	  </div>
-	</form>
-
-  </div>
-  <div class="modal-footer">
-    <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
-    <button class="btn btn-primary">Save changes</button>
-  </div>
-</div>
+{% include "main.addevents.html" %}
 <!-- END ADD EVENTS MODAL -->
 {% endblock %}
