@@ -1,0 +1,73 @@
+<div class="tab-pane active" id="profile">
+	<div class="usertab-single-col">
+		
+		
+		<section class="displayView">
+			<a class="editProfileBtn" href="#">Edit</a>
+			
+			<article class="gradelevel">
+				<h2>Grade Level:</h2>
+				<div class="results"></div>
+			</article>
+			<article class="interests">
+				<h2>Interests:</h2>
+				<div class="results"></div>
+			</article>
+			<article class="colearners">
+				<h2>List of Co-Learners:</h2>
+				<div class="results"></div>
+			</article>
+
+		</section>
+		
+		
+		<section class="editView">
+			
+			<div class="profileIntro">
+				<p><strong>Welcome to Open Path!</strong></p>
+				<p><strong>To get recommendations based on your interests, simply fill in something about yourself:</strong></p>
+			</div>
+			<form>
+				<div class="userIcon">
+					<fieldset>
+						<input type="file" name="userIcon"/>
+					</fieldset>
+				</div>
+				<fieldset class="name">
+					<input type="text" name="firstName" class="firstName" placeholder="first name" />
+					<input type="text" name="lastName" class="lastName" placeholder="last name"/>
+				</fieldset>
+				<fieldset>
+					<label>Grade Level:</label>
+					<select name="gradelevel" class="gradelevel">
+						<option value="Pre-K to Grade 2">Pre-K to Grade 2</option>
+						<option value="Grade 3-5">Grade 3-5</option>
+						<option value="Grade 9-12">Grade 9-12</option>
+						<option value="Post Secondary">Post Secondary</option>
+						<option value="Adults">Adults</option>
+						<option value="Families">Families</option>
+					</select>
+				</fieldset>
+				<fieldset>
+					<label>Interests:</label>
+					<input type="text" class="interests" name="interests" />
+	
+				</fieldset>
+				<fieldset>
+					<label>List of Co-Learners:</label>
+					<input type="text" class="colearners" name="colearners" />
+				</fieldset>
+				
+				<p class="required"><small><em>*Required</em></small></p>
+				<fieldset class="done">
+					<button type="submit" class="btn btn-primary">Done</button>
+				</fieldset>
+			</form>
+			
+		
+		</section>
+		<a id="logout" class="btn" href="#">Logout</a>
+	
+		
+	</div>
+</div>

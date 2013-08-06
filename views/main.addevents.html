@@ -1,0 +1,80 @@
+<div id="addEventsModal" class="modal hide fade" tabindex="-1" aria-hidden="true">
+  <div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+    <h2>Add Event</h2>
+  </div>
+  <div class="modal-body">
+
+	<form class="form-horizontal">
+  	<div class="control-group">
+	    <label class="control-label" for="name">Event Name</label>
+	    <div class="controls">
+	      <input type="text" id="name" placeholder="">
+	    </div>
+	  </div>
+	  <div class="control-group">
+	    <label class="control-label" for="creator">Creator</label>
+	    <div class="controls">
+	      <input type="text" id="creator" placeholder="">
+	    </div>
+	  </div>
+	  <div class="control-group">
+	    <label class="control-label" for="description">Description</label>
+	    <div class="controls">
+			<textarea rows="10" name="description" id="description"></textarea>
+	    </div>
+	  </div>
+	<div class="control-group">
+	    <label class="control-label" for="location">Location</label>
+	    <div class="controls">
+			<input type="text" name="location" id="location">
+	    </div>
+	  </div>
+	<div class="control-group">
+	    <label class="control-label" for="gradelevel">Grade Level</label>
+	    <div class="controls">
+			<label class="radio inline"><input type="radio" name="gradelevel" value="Pre-K to Grade 2">Pre-K to Grade 2</label>
+			<label class="radio inline"><input type="radio" name="gradelevel" value="Grade 3-5">Grade 3-5</label>
+			<label class="radio inline"><input type="radio" name="gradelevel" value="Grade 9-12">Grade 9-12</label>
+			<label class="radio inline"><input type="radio" name="gradelevel" value="Post Secondary">Post Secondary</label>
+			<label class="radio inline"><input type="radio" name="gradelevel" value="Adults">Adults</label>
+			<label class="radio inline"><input type="radio" name="gradelevel" value="Families">Families</label>
+	    </div>
+	  </div>
+	  <!-- lat long fields go here -->
+
+	<div class="control-group">
+	    <label class="control-label" for="starttime">Start Time</label>
+	    <div class="controls">
+			<div class="well">
+			  <div id="starttime" class="input-append">
+			    <input data-format="MM/dd/yyyy HH:mm:ss PP" type="text"></input>
+			    <span class="add-on">
+			      <i data-time-icon="icon-time" data-date-icon="icon-calendar"></i>
+			    </span>
+			  </div>
+			</div>
+	    </div>
+	  </div>
+
+	<div class="control-group">
+	    <label class="control-label" for="endtime">End Time</label>
+	    <div class="controls">
+			<div class="well">
+			  <div id="endtime" class="input-append">
+			    <input data-format="MM/dd/yyyy HH:mm:ss PP" type="text"></input>
+			    <span class="add-on">
+			      <i data-time-icon="icon-time" data-date-icon="icon-calendar"></i>
+			    </span>
+			  </div>
+			</div>
+	    </div>
+	  </div>
+	</form>
+
+  </div>
+  <div class="modal-footer">
+    <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
+    <button class="btn btn-primary">Save changes</button>
+  </div>
+</div>
