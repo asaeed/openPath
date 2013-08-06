@@ -25,73 +25,11 @@
 		
 		{% include "main.user.profile.html" %}
 		
-		<div class="tab-pane" id="mypath">
-			<div class="col1">
-				<div id="mypathmap"></div>
-			</div>
-			<div class="col2">
-				<!-- BEGIN EVENTS LIST -->
-	            <div class="eventslist inner">
-	            <h2>List of Events</h2> <a href="#addEventsModal" data-toggle="modal" class="btn btn-primary"><span class="icon-plus"></span> Add</a>
-					<div class="eventsholder">
-						<!-- Dynamically-Generated Events Go Here -->
-					</div>
-	            </div>
-				<!-- END EVENTS LIST -->
-			</div>
-			<div class="clearer"></div>
-		</div>
+		{% include "main.user.mypath.html" %}
 		
-		<div class="tab-pane" id="notifications">
-			<div class="usertab-single-col">
-			<form>
-			  <fieldset>
-				<ul>
-					<li><b>New event on NY Central Park about bird watching <span class="text-right">2 mins ago</span></b></li>
-					<li><b>Your event - "New York Museum Tour" is starting in 1 hour <span class="text-right">15 mins ago</span></b></li>
-					<li>There are 2 events near you next week <span class="text-right">2 days ago</span></li>
-					<li>Jared has joined "Bird Watching Tour" in Central Park <span class="text-right">5 days ago</span></li>
-				</ul>
-			</fieldset>
-			</form>
-			</div>
-		</div>
+		{% include "main.user.notifications.html" %}
 		
-		<div class="tab-pane" id="settings">
-			<div class="usertab-single-col">
-				<form>
-					<article>
-						<h2 class="muted">Receive alerts when...</h2>
-						<fieldset>
-							<input type="checkbox" id="alertsColearnerJoin" name="alertsColearnerJoin" />
-							<label class="checkbox" for="alertsColearnerJoin">Co-learner joins event</label>
-						</fieldset>
-						<fieldset>
-							<input type="checkbox" id="alertsNearEvent" name="alertsNearEvent" />
-							<label class="checkbox" for="alertsNearEvent">Near an event you might be interested in</label>
-						</fieldset>
-						<fieldset>
-							<input type="checkbox" id="alertsAllEvents" name="alertsAllEvents" />
-							<label class="checkbox" for="alertsAllEvents">All events you might be interested in</label>
-						</fieldset>
-					</article>
-					<article>
-						<h2 class="muted">Set profile as...</h2>
-						<fieldset>
-							<input type="radio" id="profileAccessPublic" name="profileaccess" value="public" />
-							<label class="checkbox" for="profileAccessPublic">Public</label>
-						</fieldset>
-						<fieldset>
-							<input type="radio" id="profileAccessPrivate" name="profileaccess" value="private" />
-							<label class="checkbox" for="profileAccessPrivate">Private</label>
-						</fieldset>
-					</article>
-					<fieldset>
-						<button type="submit" class="btn btn-primary">Save</button>
-					</fieldset>
-				</form>
-			</div>
-		</div>
+		{% include "main.user.settings.html" %}
 		
 	</div>
 	<!-- END USER TAB-CONTENT -->
