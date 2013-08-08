@@ -136,7 +136,7 @@ video.avatar{width:100%; height:auto;}
 /* USER MENU */
 #usermenu{
 	background:#f6f6f6; 
-	width:96%;
+	width:92%;
 	height:65px;
 	padding:2% 4% 0 4%; 
 	position: absolute;
@@ -223,6 +223,7 @@ video.avatar{width:100%; height:auto;}
 }
 #settings form article.saved {
 	margin:10px 0 0 0;
+	color:#999999;
 }
 
 

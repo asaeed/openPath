@@ -1,5 +1,25 @@
 OpenPath = window.OpenPath || {};
 
+//old globals 
+//TODO: namespace 
+
+  var map1, map1marker, map2, map2marker;
+  var eventsMap, eventsmapmarker;
+  var myPathMap, myPathMapMarker;
+  var geocoder;
+
+  //var room = 1;
+  var max_num_videos = 2;
+  //var server = "ws://www.walking-productions.com:8001/"; 
+  var server = "ws://www.openpath.me:8001/";
+  var main_video = null;
+  var other_video = null;
+  var videos = [];
+  var PeerConnection = window.PeerConnection || window.webkitPeerConnection00 || window.webkitRTCPeerConnection || window.mozRTCPeerConnection;
+  console.log(PeerConnection);    
+  
+
+
 
 OpenPath.main = {
 	init : function(){
@@ -7,15 +27,25 @@ OpenPath.main = {
 		//TODO: clean below and add to name space
 		console.log('openPath.main.init',this) 
 		
-		//this = OpenPath.main		
-		//OpenPath.user.init();
+		//room
+		if (getParameterByName('room') != null && getParameterByName('room') != "") {
+			room = getParameterByName('room');
+			console.log("Room Number: " + room);
+		}else{
+			room = 1;
+		}
+		//this = OpenPath.main
 		this.initControls();
+		this.initUser();
+		initEventsMap();
+		initEventsList();
 	},
 	/**
 	 * Assigns behaviors to interface controls.
 	 */
 	initControls : function(){
-		
+		var self = this;
+
 		// Main Navigation Tabs
 		$('#mainnav a').click(function (e) {
 			e.preventDefault();
@@ -23,7 +53,7 @@ OpenPath.main = {
 			
 			OpenPath.user.onMenuChange();
 			
-			resetMaps();
+			self.resetMaps();
 		})
 		$("#mainnav a").tooltip({placement:'bottom'});
 
@@ -33,7 +63,7 @@ OpenPath.main = {
 			
 			OpenPath.user.onMenuChange();
 			
-			resetMaps();
+			self.resetMaps();
 		})
 		$('#logout').mouseup(function() {
 			navigator.id.logout('button pressed');
@@ -53,13 +83,13 @@ OpenPath.main = {
 		
 		// Events
 		$('#starttime').datetimepicker({
-		      language: 'en',
-		      pick12HourFormat: true
-		    });
+		    language: 'en',
+		    pick12HourFormat: true
+		});
 		$('#endtime').datetimepicker({
-		      language: 'en',
-		      pick12HourFormat: true
-		    });
+		    language: 'en',
+		    pick12HourFormat: true
+		});
 		
 		$('.icon-map-marker').click(function(event) {
 			$(this).parent().parent().addClass('usermetashowing');
@@ -69,7 +99,7 @@ OpenPath.main = {
 			$(this).addClass('closebtn');	
 			event.stopPropagation();
 
-			resetMaps();
+			self.resetMaps();
 		});
 		$('.icon-remove').click(function(event) {
 			$(this).parent().parent().parent().removeClass('usermetashowing');
@@ -115,42 +145,98 @@ OpenPath.main = {
 			return false;
 		});
 
+	},
+	/**
+  * Starts video, chat, and geolocation
+  */
+  	initUser : function(){
+		var target = "self_video"; // target video. String used to determine which thumb map to target
+		if (PeerConnection) {
+	   			rtc.createStream({"video": true, "audio": true}, function(stream) {
+				document.getElementById('self_videoplayer').src = URL.createObjectURL(stream);
+	     				rtc.attachStream(stream, 'self_videoplayer');
+	   			});
+	 		} else {
+	   			alert('Sorry, your browser is not supported');
+	 		}
+	 		console.log("room: " + room);
+	 
+		rtc.connect(server, room);
+
+	 		rtc.on('add remote stream', function(stream, socketId) {
+	   			console.log("Remote stream: " + stream + " " + socketId);
+
+			if (videos.length < max_num_videos) {
+				var newVideo = new initVideo(stream, socketId);
+			}
+	 		});
+	 
+		rtc.on('disconnect stream', function(socketId) {
+			console.log('disconnect stream ' + socketId);
+			var domId = null;
+			for (var i = 0; i < videos.length; i++) {
+				if (videos[i].socketId == socketId) {
+					if (videos[i] == main_video) { 
+						main_video = null; 
+						document.getElementById('main_videoplayer').src = "";
+						console.log("main_video");
+					}
+					else if (videos[i] == other_video) { 
+						other_video = null; 
+	                    document.getElementById('other_videoplayer').src = "";
+						console.log("other_video");
+					}
+					videos.splice(videos[i]);
+
+					console.log("removed video");
+					break;
+				}	
+			}
+	 		});
+
+		rtc.on('main_video_socketid', function(data) {
+			console.log(data.socketid);
+		});
+
+		// initialize remainder of interface
+		initUserMap(target);
+		initMyPathMap();
+	    initChat();
+
+		//deleteData('events');
+		//deleteData('users');
+		//deleteData('sessions');	
+		
+		console.log('initUser.target = ' + target);
+	},
+	/**
+  	 * Hack to allow Google Maps to work with Bootstrap
+  	 */
+  	resetMaps : function (){
+		
+		google.maps.event.trigger(eventsMap, 'resize');
+		eventsMap.setCenter(eventsmapmarker.position);
+				
+		google.maps.event.trigger(map1, 'resize');
+	    map1.setCenter(map1marker.position);
+
+		google.maps.event.trigger(map2, 'resize');
+	    map2.setCenter(map2marker.position);
+
+		google.maps.event.trigger(myPathMap, 'resize');
+		myPathMap.setCenter(myPathMapMarker.position);
+
 	}
 };
 
-//OLD
-  var map1, map1marker, map2, map2marker;
-  var eventsMap, eventsmapmarker;
-  var myPathMap, myPathMapMarker;
-  var geocoder;
-
-  //var room = 1;
-  var max_num_videos = 2;
-  //var server = "ws://www.walking-productions.com:8001/"; 
-  var server = "ws://www.openpath.me:8001/";
-  var main_video = null;
-  var other_video = null;
-  var videos = [];
-  var PeerConnection = window.PeerConnection || window.webkitPeerConnection00 || window.webkitRTCPeerConnection || window.mozRTCPeerConnection;
-  console.log(PeerConnection);    
-  
+  //OLD
 
 	// Bootstrap interface calls through JQuery
     $(document).ready(function() {
 		//init namespace obj
 		OpenPath.init();
 	
-		if (getParameterByName('room') != null && getParameterByName('room') != "") {
-			room = getParameterByName('room');
-			console.log("Room Number: " + room);
-		}else{
-			room = 1;
-		}
-
-		//initControls();
-		initUser();
-		initEventsMap();
-		initEventsList();
+	});
 		
 /*
 		// determines tab to display based on hash
@@ -166,69 +252,7 @@ OpenPath.main = {
 */
 
 
-  /**
-  * Starts video, chat, and geolocation
-  */
-  function initUser() {
-	var target = "self_video"; // target video. String used to determine which thumb map to target
-	if (PeerConnection) {
-   			rtc.createStream({"video": true, "audio": true}, function(stream) {
-			document.getElementById('self_videoplayer').src = URL.createObjectURL(stream);
-     				rtc.attachStream(stream, 'self_videoplayer');
-   			});
- 		} else {
-   			alert('Sorry, your browser is not supported');
- 		}
- 		console.log("room: " + room);
- 
-	rtc.connect(server, room);
-
- 		rtc.on('add remote stream', function(stream, socketId) {
-   			console.log("Remote stream: " + stream + " " + socketId);
-
-		if (videos.length < max_num_videos) {
-			var newVideo = new initVideo(stream, socketId);
-		}
- 		});
- 
-	rtc.on('disconnect stream', function(socketId) {
-		console.log('disconnect stream ' + socketId);
-		var domId = null;
-		for (var i = 0; i < videos.length; i++) {
-			if (videos[i].socketId == socketId) {
-				if (videos[i] == main_video) { 
-					main_video = null; 
-					document.getElementById('main_videoplayer').src = "";
-					console.log("main_video");
-				}
-				else if (videos[i] == other_video) { 
-					other_video = null; 
-                    document.getElementById('other_videoplayer').src = "";
-					console.log("other_video");
-				}
-				videos.splice(videos[i]);
-
-				console.log("removed video");
-				break;
-			}	
-		}
- 		});
-
-	rtc.on('main_video_socketid', function(data) {
-		console.log(data.socketid);
-	});
-
-	// initialize remainder of interface
-	initUserMap(target);
-	initMyPathMap();
-    initChat();
-
-	//deleteData('events');
-	//deleteData('users');
-	//deleteData('sessions');	
-	
-	console.log('initUser.target = ' + target);
-  }
+  
 /**
 * Deletes data from mongodb
 * @param path can be events, users, sessions
@@ -554,21 +578,5 @@ function initVideo(stream, socketId) {
     chatmessages.innerHTML += msg;
     chatwindow.scrollTop = chatwindow.scrollHeight;
   }
-  /**
-  * Hack to allow Google Maps to work with Bootstrap
-  */
-  function resetMaps(){
-	
-	google.maps.event.trigger(eventsMap, 'resize');
-	eventsMap.setCenter(eventsmapmarker.position);
-			
-	google.maps.event.trigger(map1, 'resize');
-    map1.setCenter(map1marker.position);
 
-	google.maps.event.trigger(map2, 'resize');
-    map2.setCenter(map2marker.position);
 
-	google.maps.event.trigger(myPathMap, 'resize');
-	myPathMap.setCenter(myPathMapMarker.position);
-  }
-	});
