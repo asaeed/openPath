@@ -7,14 +7,13 @@ OpenPath.home = {
 		//TODO: clean below and add to name space
 		console.log('openPath.home.init',this) 
 				
-
-	}
-
-};
-
-
-	  // Persona login button
-	  $(document).ready(function() {
+		this.loginBtns();
+	},
+	loginBtns : function(){
+		/**
+		 * TODO: determine if we are adding guest back in
+		 */
+		// Persona login button
 		$('#loginbtn').mouseup(function() {
 			navigator.id.request();
 		});
@@ -44,4 +43,6 @@ OpenPath.home = {
 				xhr.send();
 			};
 		});
-	  });
+	}
+
+};

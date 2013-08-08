@@ -5,10 +5,116 @@ OpenPath.main = {
 	init : function(){
 
 		//TODO: clean below and add to name space
-		//console.log('openPath.main.init',this) 
+		console.log('openPath.main.init',this) 
 		
 		//this = OpenPath.main		
 		//OpenPath.user.init();
+		this.initControls();
+	},
+	/**
+	 * Assigns behaviors to interface controls.
+	 */
+	initControls : function(){
+		
+		// Main Navigation Tabs
+		$('#mainnav a').click(function (e) {
+			e.preventDefault();
+			$(this).tab('show');
+			
+			OpenPath.user.onMenuChange();
+			
+			resetMaps();
+		})
+		$("#mainnav a").tooltip({placement:'bottom'});
+
+		$('#usernav a').click(function (e) {
+			e.preventDefault();
+			$(this).tab('show');
+			
+			OpenPath.user.onMenuChange();
+			
+			resetMaps();
+		})
+		$('#logout').mouseup(function() {
+			navigator.id.logout('button pressed');
+		});
+		// User Icon - Right Column Main Screen
+		$('.user').mouseenter(function(event) {
+			$(this).find(".usermeta").fadeIn("slow");
+			$(this).find(".username").fadeIn("slow");
+		});
+		$('.user').mouseleave(function(event) {
+			var isShowing = $(this).find(".usermeta").hasClass("usermetashowing");
+			if(!isShowing){
+				$(this).find(".usermeta").fadeOut("slow");
+				$(this).find(".username").fadeOut("slow");
+			}
+		});	
+		
+		// Events
+		$('#starttime').datetimepicker({
+		      language: 'en',
+		      pick12HourFormat: true
+		    });
+		$('#endtime').datetimepicker({
+		      language: 'en',
+		      pick12HourFormat: true
+		    });
+		
+		$('.icon-map-marker').click(function(event) {
+			$(this).parent().parent().addClass('usermetashowing');
+			$(this).parent().parent().find('.usermap').fadeIn("slow");
+			$(this).parent().parent().find('.userlocation').fadeIn("slow");
+
+			$(this).addClass('closebtn');	
+			event.stopPropagation();
+
+			resetMaps();
+		});
+		$('.icon-remove').click(function(event) {
+			$(this).parent().parent().parent().removeClass('usermetashowing');
+			$(this).parent().parent().fadeOut("slow");
+			$(this).parent().parent().parent().find('.usermap').fadeOut("slow");
+			$(this).parent().parent().parent().find('.userlocation').fadeOut("slow");
+			$(this).parent().removeClass('closebtn');
+			event.stopPropagation();
+		});
+		$('#other_videoplayer').dblclick(function(event) {
+			var tempsrc = document.getElementById('main_videoplayer').src;
+			document.getElementById('main_videoplayer').src = document.getElementById('other_videoplayer').src;
+			document.getElementById('other_videoplayer').src = tempsrc;
+
+			var tempvideo = main_video;
+			main_video = other_video;
+			other_video = tempvideo;
+			
+		});
+		// Validates and submits email inviting participant
+		$('#adduserform').submit(function() {
+			var email = $('#to').val();
+			var isValid = validateEmail(email);
+
+			if(!isValid){
+				$('#emailerror').modal();
+			}else{
+				var data = $('#adduserform').serialize(); // serialize all the data in the form 
+				$.ajax({
+					url: '/email',
+					data: data,
+					dataType:'json',
+					type:'POST',
+					async:false,
+					success: function(data) {        
+						for (key in data.email) {
+							alert(data.email[key]);
+						}
+					},
+					error: function(data){}
+				});
+			};
+			return false;
+		});
+
 	}
 };
 
@@ -41,7 +147,7 @@ OpenPath.main = {
 			room = 1;
 		}
 
-		initControls();
+		//initControls();
 		initUser();
 		initEventsMap();
 		initEventsList();
@@ -59,109 +165,7 @@ OpenPath.main = {
 		})
 */
 
-/**
-* Assigns behaviors to interface controls.
-*/
-function initControls(){
-	// Main Navigation Tabs
-	$('#mainnav a').click(function (e) {
-		e.preventDefault();
-		$(this).tab('show');
-		
-		OpenPath.user.onMenuChange();
-		
-		resetMaps();
-	})
-	$("#mainnav a").tooltip({placement:'bottom'});
 
-	$('#usernav a').click(function (e) {
-		e.preventDefault();
-		$(this).tab('show');
-		
-		OpenPath.user.onMenuChange();
-		
-		resetMaps();
-	})
-	$('#logout').mouseup(function() {
-		navigator.id.logout('button pressed');
-	});
-	// User Icon - Right Column Main Screen
-	$('.user').mouseenter(function(event) {
-		$(this).find(".usermeta").fadeIn("slow");
-		$(this).find(".username").fadeIn("slow");
-	});
-	$('.user').mouseleave(function(event) {
-		var isShowing = $(this).find(".usermeta").hasClass("usermetashowing");
-		if(!isShowing){
-			$(this).find(".usermeta").fadeOut("slow");
-			$(this).find(".username").fadeOut("slow");
-		}
-	});	
-	
-	// Events
-	$('#starttime').datetimepicker({
-	      language: 'en',
-	      pick12HourFormat: true
-	    });
-	$('#endtime').datetimepicker({
-	      language: 'en',
-	      pick12HourFormat: true
-	    });
-	
-	$('.icon-map-marker').click(function(event) {
-		$(this).parent().parent().addClass('usermetashowing');
-		$(this).parent().parent().find('.usermap').fadeIn("slow");
-		$(this).parent().parent().find('.userlocation').fadeIn("slow");
-
-		$(this).addClass('closebtn');	
-		event.stopPropagation();
-
-		resetMaps();
-	});
-	$('.icon-remove').click(function(event) {
-		$(this).parent().parent().parent().removeClass('usermetashowing');
-		$(this).parent().parent().fadeOut("slow");
-		$(this).parent().parent().parent().find('.usermap').fadeOut("slow");
-		$(this).parent().parent().parent().find('.userlocation').fadeOut("slow");
-		$(this).parent().removeClass('closebtn');
-		event.stopPropagation();
-	});
-	$('#other_videoplayer').dblclick(function(event) {
-		var tempsrc = document.getElementById('main_videoplayer').src;
-		document.getElementById('main_videoplayer').src = document.getElementById('other_videoplayer').src;
-		document.getElementById('other_videoplayer').src = tempsrc;
-
-		var tempvideo = main_video;
-		main_video = other_video;
-		other_video = tempvideo;
-		
-	});
-	// Validates and submits email inviting participant
-	$('#adduserform').submit(function() {
-		var email = $('#to').val();
-		var isValid = validateEmail(email);
-
-		if(!isValid){
-			$('#emailerror').modal();
-		}else{
-			var data = $('#adduserform').serialize(); // serialize all the data in the form 
-			$.ajax({
-				url: '/email',
-				data: data,
-				dataType:'json',
-				type:'POST',
-				async:false,
-				success: function(data) {        
-					for (key in data.email) {
-						alert(data.email[key]);
-					}
-				},
-				error: function(data){}
-			});
-		};
-		return false;
-	});
-}
   /**
   * Starts video, chat, and geolocation
   */

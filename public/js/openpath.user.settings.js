@@ -19,7 +19,11 @@ OpenPath.user.settings = {
 		this.alertsAllEvents = this.form.find('#alertsAllEvents');
 		this.profileAccessPublic = this.form.find('#profileAccessPublic');
 		this.profileAccessPrivate = this.form.find('#profileAccessPrivate');
-		
+		this.saved = this.form.find('.saved');
+
+		//hide saved msg on init
+		this.saved.hide();
+
 		//actions
 		OpenPath.user.getByEmail(function(d){
 			self.populate(d);
@@ -42,6 +46,7 @@ OpenPath.user.settings = {
 			
 			OpenPath.user.update(data, function(d){
 				self.populate(d);
+				self.saved.fadeIn();
 			});
 			
 			

@@ -221,6 +221,9 @@ video.avatar{width:100%; height:auto;}
 #settings form article fieldset input[type="radio"] {
 	margin:0 0 0 3px;
 }
+#settings form article.saved {
+	margin:10px 0 0 0;
+}
 
 
 
