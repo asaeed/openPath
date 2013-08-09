@@ -2,7 +2,7 @@ OpenPath = window.OpenPath || {};
 
 OpenPath.user = {
 	init : function(){
-		//console.log('openPath.user.init');
+		console.log('openPath.user.init');
 		this._id = null;
 	},
 	onMenuChange : function(){
@@ -36,20 +36,20 @@ OpenPath.user = {
 	update : function( d, callback){
 		var self = this;
 		$.ajax({
-				url: '/users/'+self._id,//TODO: security?
-				//url : '/update/users/'+self._id+'/'+key+'/'+value,
-				data: {$set:d}, /*{$set writes to individual keys rather than overriding whole entry*/
-				dataType:'json',
-				type:'PUT',
-				async:false,
-				success: function(new_data) { 
-					//console.log('user updated',new_data.$set);
-					callback(new_data.$set );
-				},
-				error: function(msg){
-					console.log('user not updated',msg);
-				}
-			});
+			url: '/users/'+self._id,//TODO: security?
+			//url : '/update/users/'+self._id+'/'+key+'/'+value,
+			data: {$set:d}, /*{$set writes to individual keys rather than overriding whole entry*/
+			dataType:'json',
+			type:'PUT',
+			async:false,
+			success: function(new_data) { 
+				//console.log('user updated',new_data.$set);
+				callback(new_data.$set );
+			},
+			error: function(msg){
+				console.log('user not updated',msg);
+			}
+		});
 	}
 };
 

@@ -9,13 +9,13 @@
   	<div class="control-group">
 	    <label class="control-label" for="name">Event Name</label>
 	    <div class="controls">
-	      <input type="text" id="name" placeholder="">
+	      <input type="text" id="name" name="name" placeholder="">
 	    </div>
 	  </div>
 	  <div class="control-group">
 	    <label class="control-label" for="creator">Creator</label>
 	    <div class="controls">
-	      <input type="text" id="creator" placeholder="">
+	      <input type="text" id="creator" name="creator" placeholder="">
 	    </div>
 	  </div>
 	  <div class="control-group">
@@ -30,17 +30,18 @@
 			<input type="text" name="location" id="location">
 	    </div>
 	  </div>
+	  
 	<div class="control-group">
-	    <label class="control-label" for="gradelevel">Grade Level</label>
-	    <div class="controls">
-			<label class="radio inline"><input type="radio" name="gradelevel" value="Pre-K to Grade 2">Pre-K to Grade 2</label>
-			<label class="radio inline"><input type="radio" name="gradelevel" value="Grade 3-5">Grade 3-5</label>
-			<label class="radio inline"><input type="radio" name="gradelevel" value="Grade 9-12">Grade 9-12</label>
-			<label class="radio inline"><input type="radio" name="gradelevel" value="Post Secondary">Post Secondary</label>
-			<label class="radio inline"><input type="radio" name="gradelevel" value="Adults">Adults</label>
-			<label class="radio inline"><input type="radio" name="gradelevel" value="Families">Families</label>
-	    </div>
-	  </div>
+		<label class="control-label" for="gradelevel">Grade Level</label>
+		<select name="gradelevel" id="gradelevel" class="controls gradelevel">
+			<option value="Pre-K to Grade 2">Pre-K to Grade 2</option>
+			<option value="Grade 3-5">Grade 3-5</option>
+			<option value="Grade 9-12">Grade 9-12</option>
+			<option value="Post Secondary">Post Secondary</option>
+			<option value="Adults">Adults</option>
+			<option value="Families">Families</option>
+		</select>
+	</div>
 	  <!-- lat long fields go here -->
 
 	<div class="control-group">

@@ -38,7 +38,10 @@ OpenPath.main = {
 		this.initControls();
 		this.initUser();
 		initEventsMap();
-		initEventsList();
+		//initEventsList();
+
+		OpenPath.user.init();
+		OpenPath.events.init();
 	},
 	/**
 	 * Assigns behaviors to interface controls.
@@ -293,7 +296,7 @@ function deleteData(path){
 /**
 * Parses and displays events
 * @param array of json objects
-*/
+* deprecated
 function updateUser(lat, long){
 	$.ajax({
 		url: '/users/51c99e80b9cb021705000001',
@@ -319,39 +322,8 @@ function updateUser(lat, long){
 		}
 	});
 }
-/**
-* Parses and displays events
-* @param array of json objects
 */
-function initEventsList(){
-	// get events list from API
-	$.ajax({
-		url: '/events',
-	    dataType:'json',
-	    type:'GET',
-	    async:false,
-		success: function(list) {  
-			// parse and display list      
-	      	var output = "";
-			var evt;
-			for(var i in list){
-				evt = list[i];
-				output += '<article>';
-				output += '<a href="'+ evt.link +'" target="_blank"><h3>' + evt.name + '</h3></a>';
-				output += evt.startTime + ' to ' + evt.endTime + '<br>';
-				output += evt.locationDescription + '<br>';
-				output += '<p>' + evt.description + '</p>';
-				output += '</article>';
-			}
-			// write to both event lists
-			$('.eventsholder').html(output);
-	    },
-	    error: function(list){
-			console.log("events not found");
-			$('.eventsholder').html('No Events Found');
-		}
-	});
-}
+
   /**
   *
   */

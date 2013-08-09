@@ -226,17 +226,6 @@ video.avatar{width:100%; height:auto;}
 	color:#999999;
 }
 
-/**
- *addEventsModal
- */
-#addEventsModal  {
-	position:relative;
-}
-#addEventsModal .modal-body {
-	max-height: 300px;
-}
-
-
 
 
 
