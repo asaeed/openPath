@@ -19,6 +19,9 @@ OpenPath.events = {
 		});
 
 		//TODO: auto populate 'creator' with auth email
+		$("#location").geocomplete({
+			autocomplete : 'on'
+		})
 
 		//submit form => validate => update user
 		this.form.submit(function(e){
