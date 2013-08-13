@@ -123,6 +123,34 @@ video.avatar{width:100%; height:auto;}
 .eventslist .icon-plus{color:#fff;}
 .eventsholder{margin-top:10px; height:630px; overflow-x:hidden; overflow-y:auto;}
 
+
+
+/*add events modal*/
+#addEventsModal #gradelevel  {
+	padding:8px 0 0 0;
+	overflow: hidden;
+}
+#addEventsModal #gradelevel ul {
+	list-style-type: none;
+	padding:0;
+	margin:0;
+	float:left;
+	width:140px;
+}
+#addEventsModal #gradelevel ul li {
+
+	overflow:hidden;
+}
+#addEventsModal #gradelevel ul li label {
+	float:right;
+	font-size:12px;
+	margin:0;
+	width:120px;
+}
+#addEventsModal #gradelevel ul li input {
+	float:left;
+}
+
 .bootstrap-datetimepicker-widget{z-index:9999;}
 
 /********************************/

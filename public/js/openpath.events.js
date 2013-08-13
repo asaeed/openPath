@@ -10,53 +10,71 @@ OpenPath.events = {
 		this.form = this.modal.find('form');
 		this.addEventsBtn = $('.addEventsBtn');
 
+		//modal height FIX
 		//on addEventsBtn click => set modal to < window height
 		this.addEventsBtn.click(function(){
-			self.modal.css({
-				height:window.height() - 300
+			self.modal.find('.modal-body').css({
+				height : $(window).height() -350
 			});
-			console.log('hey modal modl')
 		});
+
+		//TODO: auto populate 'creator' with auth email
 
 		//submit form => validate => update user
 		this.form.submit(function(e){
-			//console.log('update profile',username,email,sessionID);
-			var firstName = $(this).find('.firstName').val(),
-				lastName = $(this).find('.lastName').val(),
-				gradelevel = $(this).find('.gradelevel').val(),
-				interests = $(this).find('.interests').val(),
-				colearners = $(this).find('.colearners').val(),
+			var gradelevelsArr = [];
+			//make grade levels array
+			$(this).find('input:checkbox[name=gradelevel]:checked').each(function(){
+				gradelevelsArr.push($(this).val());
+			});
+
+
+			var name = $(this).find('#name').val(),
+				creator = $(this).find('#creator').val(),
+				description = $(this).find('#description').val(),
+				location = $(this).find('#location').val(),
+				gradelevels = gradelevelsArr, //$(this).find('#gradelevel').val(),
+				startTime = $(this).find('.startTime').val(),
+				endTime = $(this).find('.endTime').val(),
 				data = {
-					//'Email':email,
-					'Name': {'First' : firstName, 'Last' : lastName},
-					'Grade': gradelevel,
-					'Interests': interests.split(',').join(', ')//,TODO : too many spaces, fix split join
-					//'HomeLocation': [lat, long],
-					//'Locations': [],
-					//'EventsInvitedTo': [],
-					//'SessionsInvitedTo': [],
-					//'EventsCreated': [],
-					//'SessionsCreated': []
-				}
+					'Name': name,
+					'Creator': creator,
+					'Description': description,
+ 					'Location': location,//[lat, long], //TODO!! 
+					'Grade': gradelevels,
+  					'StartTime': startTime,
+  					'EndTime': endTime,
+  					'Grades': gradelevels
+				};
 			
-			
-			OpenPath.user.update(data, function(d){
-				self.populate(d);
-				//dom hide/show change on success
-				self.showDisplayView();
+			OpenPath.events.add(data, function(d){
+				console.log('event has been added', d);
 			});
 			
 			
 			return false;
 		});
+	/*
+
+//TODO: aRRay!["PreK-2", "3-5", "6-8"]
+  					//'Interests' : interests.split(',').join(', ')//,TODO : too many spaces, fix split join
+  					 //["archaeology", "museums"]
+
+ 					//'LocationDescription': , ??
+ 					 HasPresenter: false,    
+  // if they have a presenter, they can start multiple sessions in view-only mode
+	// event creators would have this ability for their created event.
+  InvitedUsers: ["sam@email.com", "jill@email.com", "greg@email.com"],
+  Sessions: [10001, 10004, 10005]
+	*/
 	},
 	get : function(){
 
 	},
-	add : function(){
+	add : function( d, callback){
 		$.ajax({
 			url: '/events/',
-			data: {$set:d}, 
+			data: d, 
 			dataType:'json',
 			type:'POST',
 			async:false,
