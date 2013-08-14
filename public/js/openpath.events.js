@@ -19,9 +19,33 @@ OpenPath.events = {
 		});
 
 		//TODO: auto populate 'creator' with auth email
-		$("#location").geocomplete({
-			autocomplete : 'on'
-		})
+
+		//autocomplete location
+		var locationInput = document.getElementById("location");
+			autocomplete = new google.maps.places.Autocomplete(locationInput,'place_changed', function(){
+
+				console.log('map callback here')
+				var place = autocomplete.getPlace();
+				if (!place.geometry) {
+					// Inform the user that a place was not found and return.
+					return;
+				}
+
+				// If the place has a geometry, then present it on a map.
+				if (place.geometry.viewport) {
+					console.log(place.geometry)
+				}
+			});
+		
+		//autocomplete results zindex fix
+		$('.pac-container').each(function(){
+			$(this).css({
+				zIndex : 99999
+			});
+			console.log($(this))
+		});
+
+
 
 		//submit form => validate => update user
 		this.form.submit(function(e){

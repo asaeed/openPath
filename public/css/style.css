@@ -258,8 +258,16 @@ video.avatar{width:100%; height:auto;}
 
 
 
-
-
+/**
+ * bootstrap modal override for google autocomplete fix
+ */
+ .modal-backdrop {
+ 	z-index: 500 !important;
+ }
+ .modal {
+ 	z-index: 501 !important;
+ 	position:absolute;
+ }
 
 
 
