@@ -22,29 +22,28 @@ OpenPath.events = {
 
 		//autocomplete location
 		var locationInput = document.getElementById("location");
-			autocomplete = new google.maps.places.Autocomplete(locationInput,'place_changed', function(){
+		autocomplete = new google.maps.places.Autocomplete(locationInput);
+		google.maps.event.addListener(autocomplete, 'place_changed', function() {
+			var place = autocomplete.getPlace();
+			if (!place.geometry) {
+				// Inform the user that a place was not found and return.
+				return;
+			}
 
-				console.log('map callback here')
-				var place = autocomplete.getPlace();
-				if (!place.geometry) {
-					// Inform the user that a place was not found and return.
-					return;
-				}
+			console.log(place.geometry)
 
-				// If the place has a geometry, then present it on a map.
-				if (place.geometry.viewport) {
-					console.log(place.geometry)
-				}
-			});
-		
-		//autocomplete results zindex fix
-		$('.pac-container').each(function(){
-			$(this).css({
-				zIndex : 99999
-			});
-			console.log($(this))
+			/*
+			// If the place has a geometry, then present it on a map.
+			if (place.geometry.viewport) {
+				// Use the viewport if it is provided.
+				map.fitBounds(place.geometry.viewport);
+			} else {
+				// Otherwise use the location and set a chosen zoom level.
+				map.setCenter(place.geometry.location);
+				map.setZoom(17);
+			}
+			*/
 		});
-
 
 
 		//submit form => validate => update user
