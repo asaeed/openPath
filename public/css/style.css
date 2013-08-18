@@ -159,9 +159,10 @@ ul.eventslist li article{
 }
 ul.eventslist li .mapWrap{
 	float:right;
-	width:40%;
-	height:400px;
-	border-top:1px solid red;
+	width:35%;
+	height:200px;
+	margin-top:20px;
+	margin-left:5%;
 }
 ul.eventslist article h2{
 
