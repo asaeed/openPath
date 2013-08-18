@@ -5,6 +5,8 @@ OpenPath.events = {
 		console.log('OpenPath.events..init');
 
 		var self = this;
+
+		
 		//dom eles
 		this.modal = $('#addEventsModal'); 
 		this.form = this.modal.find('form');
@@ -94,12 +96,24 @@ OpenPath.events = {
   Sessions: [10001, 10004, 10005]
 	*/
 	},
-	get : function(){
-
+	get : function( callback ){
+		$.ajax({
+			url: '/events',
+			data: d, 
+			dataType:'json',
+			type:'GET',
+			async:false,
+			success: function(data) {
+				callback(data);
+			},
+			error: function(msg){
+				console.log('event not added',msg);
+			}
+		});
 	},
 	add : function( d, callback){
 		$.ajax({
-			url: '/events/',
+			url: '/events',
 			data: d, 
 			dataType:'json',
 			type:'POST',

@@ -15,19 +15,10 @@
 {% endblock %}
 
 {% block content %}
-<header id="mainheader">
-    <div id="openpath">
-		<a href="#main" data-toggle="tab"><img id="logo" src="img/openpath.png" alt="OpenPath"></a>
-	</div>
-    <nav id="mainnav">
-        <ul>
-			<li><a id="adduser-icon" href="#adduser" data-toggle="tab tooltip" title="Add Participants"></a></li>
-			<li><a id="map-icon" href="#events" data-toggle="tab tooltip" title="Events"></a></li>
-			<li><a id="profile-icon" href="#user" data-toggle="tab tooltip" title="Profile"><span class="badge badge-important">6</span></a></li>
-        </ul>
-    </nav>
-    <div class="clearer"></div>
-</header>
+
+<!-- ***** ADD USER ***** -->
+{% include "main.header.html" %}
+
 <div id="content">
 
 
