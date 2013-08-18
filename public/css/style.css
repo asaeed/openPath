@@ -271,6 +271,14 @@ video.avatar{width:100%; height:auto;}
 
 
 
+
+
+
+
+
+/**
+ * mobile?  TODO: move to own ss;
+ */
 @media all and (max-width: 768px){
 	.col1{width:66%;}
 	.col2{width:34%;}
