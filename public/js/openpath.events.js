@@ -5,17 +5,51 @@ OpenPath.events = {
 		console.log('OpenPath.events..init');
 
 		var self = this;
+		this.get(function(d){
+			self.populate(d);
+		});
+
+		//init add event form
 		this.addEvent.init();
 
 	},
+	populate : function( data ){
+		var self = this;
+		console.log(data)
+		// parse and display list      
+      	var output = "";
+		var evt;
+		for(var i in data){
+			evt = data[i];
+			output += '<li>';
+			output += '<article>';
+			output += '<h3><a href="'+ evt.link +'" target="_blank">' + evt.name + '</a></h3>';
+			output += '<p class="time">'+evt.startTime + ' to ' + evt.endTime + '</p>';
+			output += '<p class="location">'+evt.locationDescription + '</p>';
+			output += '<p>' + evt.description + '</p>';
+			output += '</article>';
+			output += '<div class="mapWrap" id="event_'+i+'" data-lat="'+evt.location[0]+'" data-lng="'+evt.location[1]+'"></div>';//map
+			output += '</li>';
+
+			
+		}
+		// write to both event lists
+		$('.eventslist').html(output);
+		$('.eventslist li').each(function(i){
+			var $mapWrap = $(this).find('.mapWrap');
+			//init map
+			self.getMap('event_'+i,$mapWrap.data('lat'),$mapWrap.data('lng'));
+		})
+	},
 	get : function( callback ){
+		console.log('get events');
 		$.ajax({
 			url: '/events',
-			data: d, 
 			dataType:'json',
 			type:'GET',
 			async:false,
 			success: function(data) {
+				//call populate
 				callback(data);
 			},
 			error: function(msg){
@@ -41,9 +75,34 @@ OpenPath.events = {
 	update : function(){
 
 	},
+	getMap : function(ele,lat,lng){
+		var pos = new google.maps.LatLng(lat, lng);
+		var options = {
+			map: eventsMap,
+			zoom: 6,
+			mapTypeId: google.maps.MapTypeId.ROADMAP,
+			mapTypeControl: true,
+			mapTypeControlOptions: {
+				style: google.maps.MapTypeControlStyle.HORIZONTAL_BAR,
+				position: google.maps.ControlPosition.BOTTOM_RIGHT
+			},
+			center: pos,
+			panControl: true,
+			panControlOptions: {
+				position: google.maps.ControlPosition.RIGHT_BOTTOM
+			},
+		};
+		eventsMap = new google.maps.Map(document.getElementById(ele), options);
+		eventsmapmarker = new google.maps.Marker({
+			position: options.center,
+			map: eventsMap,
+			icon: 'img/marker.png',
+			center: options.center
+		});
+	},
 	/**
 	 * Parses and displays events
-	 * @param array of json objects
+	 * @param array of json objects - 0ld
 	 */
 	initEventsList : function (){
 		// get events list from API

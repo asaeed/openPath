@@ -37,8 +37,8 @@ OpenPath.main = {
 		//this = OpenPath.main
 		this.initControls();
 		this.initUser();
-		initEventsMap();
-		//initEventsList();
+		//initEventsMap(); //**deprecated**/
+		//initEventsList(); //replaced
 
 		OpenPath.user.init();
 		OpenPath.events.init();
@@ -150,8 +150,8 @@ OpenPath.main = {
 
 	},
 	/**
-  * Starts video, chat, and geolocation
-  */
+ 	 * Starts video, chat, and geolocation
+  	 */
   	initUser : function(){
 		var target = "self_video"; // target video. String used to determine which thumb map to target
 		if (PeerConnection) {
