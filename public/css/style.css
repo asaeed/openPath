@@ -144,7 +144,11 @@ video.avatar{width:100%; height:auto;}
 ul.eventslist {
 	padding:0;
 	margin:0;
-	list-style-type: none;	
+	list-style-type: none;
+
+	height:400px;
+	overflow-y:scroll;
+
 }
 ul.eventslist li {
 	width:100%;
@@ -156,6 +160,7 @@ ul.eventslist li {
 ul.eventslist li article{
 	float:left;
 	width:60%;
+	padding:10px 0 0 0;
 }
 ul.eventslist li .mapWrap{
 	float:right;
@@ -164,14 +169,14 @@ ul.eventslist li .mapWrap{
 	margin-top:20px;
 	margin-left:5%;
 }
-ul.eventslist article h2{
-
+ul.eventslist article h3{
+	padding-bottom:5px;
 }
 ul.eventslist article p.time{
-	
+	padding-bottom:5px;
 }
 ul.eventslist article p.location{
-	
+	padding-bottom:5px;
 }
 .eventslist .icon-plus{color:#fff;}
 .eventsholder{}

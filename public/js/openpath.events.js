@@ -78,8 +78,9 @@ OpenPath.events = {
 	getMap : function(ele,lat,lng){
 		var pos = new google.maps.LatLng(lat, lng);
 		var options = {
-			map: eventsMap,
 			zoom: 6,
+    		center: new google.maps.LatLng(-34.397, 150.644),
+    		mapTypeId: google.maps.MapTypeId.ROADMAP/*
 			mapTypeId: google.maps.MapTypeId.ROADMAP,
 			mapTypeControl: true,
 			mapTypeControlOptions: {
@@ -91,6 +92,7 @@ OpenPath.events = {
 			panControlOptions: {
 				position: google.maps.ControlPosition.RIGHT_BOTTOM
 			},
+			*/
 		};
 		eventsMap = new google.maps.Map(document.getElementById(ele), options);
 		eventsmapmarker = new google.maps.Marker({
