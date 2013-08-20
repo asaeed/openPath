@@ -11,6 +11,8 @@ OpenPath.events.addEvent = {
 		this.form = this.modal.find('form');
 		this.addEventsBtn = $('.addEventsBtn');
 
+		this.lat = 0;
+		this.lng = 0;
 		//modal height FIX
 		//on addEventsBtn click => set modal to < window height
 		this.addEventsBtn.click(function(){
@@ -20,6 +22,7 @@ OpenPath.events.addEvent = {
 		});
 
 		//TODO: auto populate 'creator' with auth email
+		//this.form.find('#creator').val(email)
 
 		//autocomplete location
 		var locationInput = document.getElementById("location");
@@ -31,7 +34,8 @@ OpenPath.events.addEvent = {
 				return;
 			}
 
-			console.log(place.geometry)
+			self.lat = place.geometry.location.mb;
+			self.lng = place.geometry.location.nb;
 
 			/*
 			// If the place has a geometry, then present it on a map.
@@ -64,14 +68,14 @@ OpenPath.events.addEvent = {
 				startTime = $(this).find('.startTime').val(),
 				endTime = $(this).find('.endTime').val(),
 				data = {
-					'Name': name,
-					'Creator': creator,
-					'Description': description,
- 					'Location': location,//[lat, long], //TODO!! 
-					'Grade': gradelevels,
-  					'StartTime': startTime,
-  					'EndTime': endTime,
-  					'Grades': gradelevels
+					'name': name,
+					'creator': creator,
+					'description': description,
+ 					'location': [self.lat, self.lng], 
+					'grade': gradelevels,
+  					'startTime': startTime,
+  					'endTime': endTime,
+  					'grades': gradelevels
 				};
 			
 			OpenPath.events.add(data, function(d){

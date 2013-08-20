@@ -2,6 +2,9 @@ OpenPath = window.OpenPath || {};
 
 OpenPath.events = {
 	init : function(){
+		//init add event form
+		OpenPath.events.addEvent.init();
+
 		console.log('OpenPath.events..init');
 
 		var self = this;
@@ -9,13 +12,12 @@ OpenPath.events = {
 			self.populate(d);
 		});
 
-		//init add event form
-		this.addEvent.init();
+		
 
 	},
 	populate : function( data ){
 		var self = this;
-		console.log(data)
+		//console.log(data)
 		// parse and display list      
       	var output = "";
 		var evt;
@@ -26,7 +28,7 @@ OpenPath.events = {
 			output += '<h3><a href="'+ evt.link +'" target="_blank">' + evt.name + '</a></h3>';
 			output += '<p class="time">'+evt.startTime + ' to ' + evt.endTime + '</p>';
 			output += '<p class="location">'+evt.locationDescription + '</p>';
-			output += '<p>' + evt.description + '</p>';
+			output += '<p>' + evt.description + '</p>'+evt.location[0]+' '+evt.location[1];
 			output += '</article>';
 			output += '<div class="mapWrap" id="event_'+i+'" data-lat="'+evt.location[0]+'" data-lng="'+evt.location[1]+'"></div>';//map
 			output += '</li>';
@@ -49,6 +51,7 @@ OpenPath.events = {
 			type:'GET',
 			async:false,
 			success: function(data) {
+				console.log('events got ',data)
 				//call populate
 				callback(data);
 			},

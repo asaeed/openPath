@@ -48,14 +48,37 @@ li.active a#profile-icon, a#profile-icon:hover{background:url(/img/user-icon-ove
 .clearer{clear:both;}
 
 /* SUBNAV */
-.subnav ul{margin:10px 0 0 0; padding:0;}
-.subnav li{list-style:none; display:inline-block; border-right:2px solid #949494; padding:0 2.5510204%; text-align:center;}
-.subnav li:last-child{border-right:none;}
-.subnav li a{text-decoration:none;}
-.subnav li a:link{color:#949494;}
-.subnav li a:visited, .subnav li a:hover{color:#fff;}
-.subnav li a:hover{font-weight:bold;}
-.subnav li.active a{font-weight:bold !important;}
+.subnav ul{
+	margin:10px 0 0 0;
+	padding:0;
+	list-style:none;
+	overflow: hidden;
+}
+.subnav li{
+	float:left;
+	border-right:2px solid #949494; 
+	padding:0 10px; 
+	text-align:center;
+}
+.subnav li:last-child{
+	border-right:none;
+}
+.subnav li a {
+	text-decoration:none;
+}
+.subnav li a:link {
+	color:#949494;
+}
+.subnav li a:visited, 
+.subnav li a:hover{
+	color:#fff;
+}
+.subnav li a:hover{
+	font-weight:bold;
+}
+.subnav li.active a{
+	font-weight:bold !important;
+}
 
 /********************************/
 /* MAIN */
@@ -110,39 +133,34 @@ video.avatar{width:100%; height:auto;}
 /********************************/
 .events-single-col {
 	min-height:460px;
-	padding: 100px 4%;
+	padding:0;
 	background: #eeedeb;
 }
 /* EVENTS MENU */
 #eventsmenu{
 	width:96%; 
-	padding:5px 2%; 
-	position: absolute; 
-	z-index: 100;
+	padding:5px 2%;
 	background:#fff;
+	overflow: hidden;
 }
 #eventsmenu h2 {
 	float:left;
 }
 #eventsmenu .subnav {
 	float:right;
+	margin:10px 0 0 0;
 }
-#eventsmenu .subnav a{
+#eventsmenu .subnav a {
 	color:#949494 !important;
 }
-.form-search{
-	padding-top:5px;
+#eventsmenu .addEventsBtn{
+	margin:15px 0 0 20px;
 }
-/*
-#eventsmap{
-	width:100%; 
-	height:100%; 
-	min-height:640px;
-}*/
+
 
 /* EVENTS LIST */
 ul.eventslist {
-	padding:0;
+	padding:0 4%;
 	margin:0;
 	list-style-type: none;
 
