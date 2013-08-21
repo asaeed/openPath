@@ -40,7 +40,7 @@ OpenPath.events = {
 		$('.eventslist li').each(function(i){
 			var $mapWrap = $(this).find('.mapWrap');
 			//init map
-			self.getMap('event_'+i,$mapWrap.data('lat'),$mapWrap.data('lng'));
+			var map = new self.getMap('event_'+i,$mapWrap.data('lat'),$mapWrap.data('lng'));
 		})
 	},
 	get : function( callback ){
@@ -83,7 +83,7 @@ OpenPath.events = {
 		var pos = new google.maps.LatLng(lat, lng);
 		var options = {
 			zoom: 6,
-    		center: new google.maps.LatLng(-34.397, 150.644),
+    		center: new google.maps.LatLng(lat , lng),
     		mapTypeId: google.maps.MapTypeId.ROADMAP/*
 			mapTypeId: google.maps.MapTypeId.ROADMAP,
 			mapTypeControl: true,
@@ -98,8 +98,8 @@ OpenPath.events = {
 			},
 			*/
 		};
-		eventsMap = new google.maps.Map(document.getElementById(ele), options);
-		eventsmapmarker = new google.maps.Marker({
+		var eventsMap = new google.maps.Map(document.getElementById(ele), options);
+		var eventsmapmarker = new google.maps.Marker({
 			position: options.center,
 			map: eventsMap,
 			icon: 'img/marker.png',

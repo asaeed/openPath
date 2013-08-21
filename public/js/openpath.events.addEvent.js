@@ -8,7 +8,7 @@ OpenPath.events.addEvent = {
 
 		//dom eles
 		this.modal = $('#addEventsModal'); 
-		this.form = this.modal.find('form');
+		this.form = $('#addEventForm');
 		this.addEventsBtn = $('.addEventsBtn');
 
 		this.lat = 0;
@@ -23,6 +23,8 @@ OpenPath.events.addEvent = {
 
 		//TODO: auto populate 'creator' with auth email
 		//this.form.find('#creator').val(email)
+
+
 
 		//autocomplete location
 		var locationInput = document.getElementById("location");
@@ -52,21 +54,24 @@ OpenPath.events.addEvent = {
 
 
 		//submit form => validate => update user
-		this.form.submit(function(e){
+		this.form.validate({
+			submitHandler: function(form) {
+			// do other things for a valid form
+			
 			var gradelevelsArr = [];
 			//make grade levels array
-			$(this).find('input:checkbox[name=gradelevel]:checked').each(function(){
+			self.form.find('input:checkbox[name=gradelevel]:checked').each(function(){
 				gradelevelsArr.push($(this).val());
 			});
 
 
-			var name = $(this).find('#name').val(),
-				creator = $(this).find('#creator').val(),
-				description = $(this).find('#description').val(),
-				location = $(this).find('#location').val(),
+			var name = self.form.find('#name').val(),
+				creator = self.form.find('#creator').val(),
+				description = self.form.find('#description').val(),
+				location = self.form.find('#location').val(),
 				gradelevels = gradelevelsArr, //$(this).find('#gradelevel').val(),
-				startTime = $(this).find('.startTime').val(),
-				endTime = $(this).find('.endTime').val(),
+				startTime = self.form.find('.startTime').val(),
+				endTime = self.form.find('.endTime').val(),
 				data = {
 					'name': name,
 					'creator': creator,
@@ -80,10 +85,19 @@ OpenPath.events.addEvent = {
 			
 			OpenPath.events.add(data, function(d){
 				console.log('event has been added', d);
+				//hide modal
+				$('#addEventsModal').modal('hide');
+				//reload events
+				//openpath.events.get(function(d){
+				//	openpath.events.populate(d);
+				//});
 			});
 			
-			
+
 			return false;
+			//form.submit();
+
+			}
 		});
 	/*
 

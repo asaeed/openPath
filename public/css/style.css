@@ -226,7 +226,10 @@ ul.eventslist article p.location{
 #addEventsModal #gradelevel ul li input {
 	float:left;
 }
-
+#addEventsModal label.error {
+	font-size:11px;
+	color:#ff0000;
+}
 .bootstrap-datetimepicker-widget{z-index:9999;}
 
 /********************************/
