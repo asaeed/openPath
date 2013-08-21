@@ -1,6 +1,6 @@
 <div id="addEventsModal" class="modal hide fade" tabindex="-1" aria-hidden="true">
- 	<form class="form-horizontal">
-	  <div class="modal-header">
+ 	<form class="form-horizontal" id="addEvent">
+	  <div class="modal-header"> 
 	    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
 	    <h2>Add Event</h2>
 	  </div>
@@ -10,13 +10,13 @@
 	  	<div class="control-group">
 		    <label class="control-label" for="name">Event Name</label>
 		    <div class="controls">
-		      <input type="text" id="name" name="name" placeholder="Event Name">
+		      <input type="text" id="name" name="name" placeholder="Event Name" required>
 		    </div>
 		  </div>
 		  <div class="control-group">
 		    <label class="control-label" for="creator">Creator</label>
 		    <div class="controls">
-		      <input type="text" id="creator" name="creator" placeholder="someone@somewhere.com" data-provide="tag">
+		      <input type="text" id="creator" name="creator" placeholder="someone@somewhere.com" data-provide="tag" required>
 		    </div>
 		  </div>
 		  <div class="control-group">
@@ -28,7 +28,7 @@
 		<div class="control-group">
 		    <label class="control-label" for="location">Location</label>
 		    <div class="controls">
-				<input type="text" name="location" id="location">
+				<input type="text" name="location" id="location" required>
 		    </div>
 		  </div>
 		  
@@ -72,7 +72,7 @@
 		    <div class="controls">
 				<div class="well">
 				  <div id="starttime" class="input-append">
-				    <input data-format="MM/dd/yyyy HH:mm:ss PP" class="startTime" type="text"></input>
+				    <input data-format="MM/dd/yyyy HH:mm:ss PP" class="startTime" type="text" required ></input>
 				    <span class="add-on">
 				      <i data-time-icon="icon-time" data-date-icon="icon-calendar"></i>
 				    </span>
@@ -86,7 +86,7 @@
 		    <div class="controls">
 				<div class="well">
 				  <div id="endtime" class="input-append">
-				    <input data-format="MM/dd/yyyy HH:mm:ss PP" class="endTime" type="text"></input>
+				    <input data-format="MM/dd/yyyy HH:mm:ss PP" class="endTime" type="text" required></input>
 				    <span class="add-on">
 				      <i data-time-icon="icon-time" data-date-icon="icon-calendar"></i>
 				    </span>

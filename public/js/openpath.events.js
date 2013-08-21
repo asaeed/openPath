@@ -78,6 +78,7 @@ OpenPath.events = {
 	update : function(){
 
 	},
+	//make this a class
 	getMap : function(ele,lat,lng){
 		var pos = new google.maps.LatLng(lat, lng);
 		var options = {
