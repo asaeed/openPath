@@ -7,8 +7,8 @@ OpenPath.maps = {
 		if(navigator.geolocation) {
 
 			navigator.geolocation.getCurrentPosition(function(position) {
-			var targetMap;
-			var pos = new google.maps.LatLng(position.coords.latitude,  position.coords.longitude);
+				var targetMap;
+				var pos = new google.maps.LatLng(position.coords.latitude,  position.coords.longitude);
 				//updateUser(position.coords.latitude,  position.coords.longitude);  //fake func anyway
 				var mapOptions = {
 					zoom: 6,
@@ -31,7 +31,7 @@ OpenPath.maps = {
 			map2.setCenter(pos);
 
 			// get and display street address 
-			codeLatLng(pos, "#userlocation2");
+			this.codeLatLng(pos, "#userlocation2");
 			targetMap = map2;
 			}else{
 			map1 = new google.maps.Map(document.getElementById('usermap1'), mapOptions);
@@ -44,11 +44,11 @@ OpenPath.maps = {
 			map1.setCenter(pos);
 
 			// get and display street address 
-			codeLatLng(pos, "#userlocation1");
+			this.codeLatLng(pos, "#userlocation1");
 			targetMap = map1;
 			}			
 			}, function() {
-			handleNoGeolocation(true, targetMap);
+			this.handleNoGeolocation(true, targetMap);
 			});
 
 		} else {
@@ -130,7 +130,7 @@ OpenPath.maps = {
 
   /**
   * Initializes Map displaying local events
-  */
+  
   function initMyPathMap(){
 
 	var pos = new google.maps.LatLng(41.8500, -87.6500);
@@ -158,4 +158,4 @@ OpenPath.maps = {
 	  });	
   }
 
-
+*/
