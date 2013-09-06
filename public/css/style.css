@@ -1,3 +1,52 @@
+/*body{
+    margin:0;
+    padding:0;
+	font:18px/22px 'PT Sans', sans-serif;
+}
+h2{font-size:22px;}
+hr{margin: 10px 0; border-bottom:1px solid #f5f4f5; border-top:1px solid #d5d0d5; border-right:none; border-left:none;}
+#intro{text-shadow: 2px 2px rgba(0,0,0,0.5); padding-top:20px; width:350px; float:left;}
+
+#mainheader{overflow:hidden; height:430px; position:relative; color:#fff; background:#666 url(../img/home/headerbgd.jpg) no-repeat; background-size:cover;}
+#mainheader h1{font-size:26px;}
+.inner{width:960px; padding-left:30px; margin:0 auto;}
+#monitor{float:right; bottom:0; width:600px; height:327px; margin-top:103px;}
+
+.row{margin:0 auto; width:990px; padding:30px 0 30px 30px;}
+.col1,.col2,.col3{font-size:18px; float:left; width:300px; margin-right:30px;}
+.col1 img, .col2 img, .col3 img{max-width:100%; height:auto; margin:0 auto;}
+.clearer{clear:both;}
+
+.loginoptions{}
+.option1 p{font-size:12px; margin:0; padding:0;}
+.or{text-align:center; padding:10px 0;}
+#skip{color:#fff;padding-top: 10px; display: inline-block;}
+input.invite, input.email{
+	font-size:18px;
+	padding:8px;
+	margin-bottom:10px;
+	border-radius:5px;
+	width:270px;
+}
+
+#loadinggraphic{display:none;}
+
+#guestlogin{padding-top:100px;}
+#guestloginbtn{font: 18px/22px 'PT Sans', sans-serif;}
+
+#invitations, #guestlogin{display:none;}
+#invitations .btn{float:right; margin-left:10px;}
+
+#homefooter{text-align:center; font-size:14px; color:#ccc;}
+#homefooter a{text-decoration:none; color:#56acdd; padding:0 10px;}
+#homefooter ul, li{margin:0; padding:0;}
+#homefooter li{list-style:none; display:inline; border-right:1px solid #ccc;}
+#homefooter li:last-child{border-right:none;}
+
+.modal-header{background-color:#000;}
+.modal-header h3{color:#fff;}
+.close{color:#fff; opacity:1;}*/
+
 body, html {
 	/* Set to properly render Google Map instances */
 	height: 100%;
@@ -5,10 +54,30 @@ body, html {
 	margin:0;
 	padding:0;
 }
-body{background:#434545; font:18px/20px 'PT Sans', sans-serif;}
-h2{font-size:20px;}
-h3{color:#3e9ed5; font-size:18px; line-height:20px;}
-#mainheader{padding:0 20px; height:67px; background:rgba(0,0,0,0.6);}
+body{
+	background:#434545;
+	font-family:'PT Sans', sans-serif;
+	font-size:10px;
+	font:18px/20px 'PT Sans', sans-serif;
+}
+/**
+* globals
+*/
+h2{
+	font-size:20px;
+}
+h3{
+	color:#3e9ed5;
+	font-size:18px;
+	line-height:20px;
+}
+#mainheader{
+	position: relative;
+	padding:0 20px; 
+	height:67px;
+	background:rgba(0,0,0,0.6);
+
+}
 a:link, a:visited, a:hover{text-decoration:none;}
 label{font-size:20px; padding-bottom:10px;}
 

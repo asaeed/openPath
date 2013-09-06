@@ -8,7 +8,7 @@ OpenPath = {
 		//set room number
 		this.setRoomNumber();
 		//check status
-		this.checkIfLoggedIn();
+		//this.checkIfLoggedIn(); //why?? navigator does this no?
 
 		//this = OpenPath		
 		if(this.home){
@@ -27,10 +27,11 @@ OpenPath = {
 			//OpenPath.room = 1; //??
 		}
 	},
+	/*deprecated*/
 	checkIfLoggedIn : function(){
 		var self = this;
 		// call auth/status when page first loads to see if user is logged in already
-		var xhr = new XMLHttpRequest();
+		/*var xhr = new XMLHttpRequest();
 		xhr.open("POST", "/auth/status", true);
 		xhr.setRequestHeader("Content-Type", "application/json");
 
@@ -44,6 +45,19 @@ OpenPath = {
 		xhr.send(JSON.stringify({
 			//assertion: assertion
 		}));
+		*/
+		$.ajax({
+			url: "/auth/status",
+			type:'POST',
+			dataType:'json',
+			success: function(data) {
+				console.log(data)
+			
+			},
+			error: function(data){
+				console.log('auth status error');
+			}
+		});
 	},
 	/**
 	* Determines actions after login based on URL path.

@@ -112,14 +112,14 @@ OpenPath.main = {
  		}
 
  		//console.log("room: " + OpenPath.room);
- 
+ 		if(OpenPath.room !== null)
 		rtc.connect(server, OpenPath.room);
 
  		rtc.on('add remote stream', function(stream, socketId) {
    			console.log("Remote stream: " + stream + " " + socketId);
 
 			if (videos.length < max_num_videos) {
-				var newVideo = new initVideo(stream, socketId);
+				var newVideo = new OpenPath.Video(stream, socketId);
 			}
  		});
 	 
@@ -152,6 +152,7 @@ OpenPath.main = {
 
 	},
 	nav : function(){
+		$('.mainheader').show().slideDown();
 		// Main Navigation Tabs
 		$('#mainnav a').click(function (e) {
 			e.preventDefault();
@@ -204,24 +205,24 @@ OpenPath.main = {
 
 		
 /*
-		// determines tab to display based on hash
-		var url = document.location.toString();
-		if (url.match('#')) {
-		    $('#mainnav a[href=#'+url.split('#')[1]+']').tab('show') ;
-		} 
+// determines tab to display based on hash
+var url = document.location.toString();
+if (url.match('#')) {
+    $('#mainnav a[href=#'+url.split('#')[1]+']').tab('show') ;
+} 
 
-		// Change hash for page-reload
-		$('#mainnav a').on('shown', function (e) {
-		    window.location.hash = e.target.hash;
-		})
+// Change hash for page-reload
+$('#mainnav a').on('shown', function (e) {
+    window.location.hash = e.target.hash;
+})
 */
 
 
 
   /**
-  *
+  * OpenPath.Video class
   */
-function initVideo(stream, socketId) {
+OpenPath.Video = function (stream, socketId) {
 	this.stream = stream;
 	this.socketId = socketId;
 	this.domId = null;
