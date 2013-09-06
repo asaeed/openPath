@@ -20,6 +20,7 @@ OpenPath.maps = {
 					position: google.maps.ControlPosition.RIGHT_BOTTOM
 				}
 			};
+			
 			if(target == "other_video"){
 			map2 = new google.maps.Map(document.getElementById('usermap2'), mapOptions);
 
