@@ -27,13 +27,7 @@ OpenPath.main = {
 		//TODO: clean below and add to name space
 		console.log('openPath.main.init',this) 
 		
-		//room
-		if (getParameterByName('room') != null && getParameterByName('room') != "") {
-			room = getParameterByName('room');
-			console.log("Room Number: " + room);
-		}else{
-			room = 1;
-		}
+
 		//this = OpenPath.main
 		this.initControls();
 		this.initUser();
@@ -125,7 +119,7 @@ OpenPath.main = {
 		// Validates and submits email inviting participant
 		$('#adduserform').submit(function() {
 			var email = $('#to').val();
-			var isValid = validateEmail(email);
+			var isValid = OpenPath.utils.validateEmail(email);
 
 			if(!isValid){
 				$('#emailerror').modal();
@@ -155,24 +149,24 @@ OpenPath.main = {
   	initUser : function(){
 		var target = "self_video"; // target video. String used to determine which thumb map to target
 		if (PeerConnection) {
-	   			rtc.createStream({"video": true, "audio": true}, function(stream) {
-				document.getElementById('self_videoplayer').src = URL.createObjectURL(stream);
-	     				rtc.attachStream(stream, 'self_videoplayer');
-	   			});
-	 		} else {
-	   			alert('Sorry, your browser is not supported');
-	 		}
-	 		console.log("room: " + room);
-	 
-		rtc.connect(server, room);
+   			rtc.createStream({"video": true, "audio": true}, function(stream) {
+			document.getElementById('self_videoplayer').src = URL.createObjectURL(stream);
+     				rtc.attachStream(stream, 'self_videoplayer');
+   			});
+ 		} else {
+   			alert('Sorry, your browser is not supported');
+ 		}
+ 		console.log("room: " + OpenPath.room);
+ 
+		rtc.connect(server, OpenPath.room);
 
-	 		rtc.on('add remote stream', function(stream, socketId) {
-	   			console.log("Remote stream: " + stream + " " + socketId);
+ 		rtc.on('add remote stream', function(stream, socketId) {
+   			console.log("Remote stream: " + stream + " " + socketId);
 
 			if (videos.length < max_num_videos) {
 				var newVideo = new initVideo(stream, socketId);
 			}
-	 		});
+ 		});
 	 
 		rtc.on('disconnect stream', function(socketId) {
 			console.log('disconnect stream ' + socketId);
