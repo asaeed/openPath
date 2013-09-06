@@ -6,6 +6,8 @@ OpenPath = window.OpenPath || {};
 OpenPath.user.profile = {
 	init : function(){
 		//TODO: validate
+		console.log('OpenPath.user.profile init');
+		
 		var self = this;
 		//dom eles
 		this.profileWrapper = $('#profile');

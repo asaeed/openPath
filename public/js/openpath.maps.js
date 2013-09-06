@@ -7,7 +7,7 @@ OpenPath.maps = {
 	map2marker : null,
 	geolocate : function(target) {
 		var self = this;
-		console.log('initUserMap.target = ' + target);
+		//console.log('initUserMap.target = ' + target);
 		// Try HTML5 geolocation
 		if(navigator.geolocation) {
 
@@ -95,6 +95,24 @@ OpenPath.maps = {
 	      console.log('Geocoder failed due to: ' + status);
 	    }
 	  });
+	},
+	/**
+  	 * Hack to allow Google Maps to work with Bootstrap
+  	 */
+  	resetMaps : function (){
+		
+		//google.maps.event.trigger(eventsMap, 'resize');
+		//eventsMap.setCenter(eventsmapmarker.position);
+				
+		google.maps.event.trigger(this.map1, 'resize');
+	    this.map1.setCenter(this.map1marker.position);
+
+		google.maps.event.trigger(this.map2, 'resize');
+	    this.map2.setCenter(this.map2marker.position);
+
+		//google.maps.event.trigger(myPathMap, 'resize');
+		//myPathMap.setCenter(myPathMapMarker.position);
+
 	}
 };
 

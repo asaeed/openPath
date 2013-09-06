@@ -21,6 +21,17 @@ OpenPath.events.addEvent = {
 			});
 		});
 
+
+		// Events
+		$('#starttime').datetimepicker({
+		    language: 'en',
+		    pick12HourFormat: true
+		});
+		$('#endtime').datetimepicker({
+		    language: 'en',
+		    pick12HourFormat: true
+		});
+		
 		//TODO: auto populate 'creator' with auth email
 		//this.form.find('#creator').val(email)
 

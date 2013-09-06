@@ -68,7 +68,6 @@ OpenPath = {
 			
 		}else if(path == '/main'){
 			// ON LOGIN: do main handling
-			console.log('ON LOGIN: do main handling = getSessionIdHash');
 			this.getSessionIdHash(email);
 		}
 	},
@@ -105,7 +104,6 @@ OpenPath = {
 	* Creates new session in database.
 	*/
 	createNewSession : function(email){
-		console.log("createNewSession");
 		var self = this,
 			sessionObj = { 
 				/*

@@ -20,7 +20,7 @@ OpenPath.user = {
 		//TODO: FIX go through session or check auth
 	
 		$.ajax({
-			url: '/users-email/'+email,
+			url: '/users-email/'+OpenPath.email,
 			type:'GET',
 			success: function(data) { 
 				//console.log('user got');
