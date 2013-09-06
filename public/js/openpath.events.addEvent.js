@@ -82,7 +82,8 @@ OpenPath.events.addEvent = {
   					'endTime': endTime,
   					'grades': gradelevels
 				};
-			
+			console.log('event add',data)
+			return false;
 			OpenPath.events.add(data, function(d){
 				console.log('event has been added', d);
 				//hide modal

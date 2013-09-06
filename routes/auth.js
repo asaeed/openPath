@@ -13,9 +13,10 @@ exports.status = function authStatus(req, res) {
       audience: "http://localhost:8080"
 			//audience: "http://openpath.me"
     }
-  }, function(e, r, body) {
+  },function(e, r, body) {
+    //callback
     if(body && body.email) {
-      console.log("auth status: persona");
+      console.log("auth status: persona", body.email);
 
       // find user, if new user, then create them in database
       user.findByEmail(body.email, function(foundUser){

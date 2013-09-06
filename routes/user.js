@@ -122,6 +122,7 @@ exports.findByEmail = function(email, callback) {
 /**
  * calls for user profile
 TODO:FIX  - go through the session -jg //or check auth
+req.session.email,
  */
 exports.findUserByEmail = function(req, res) {
 	var email = req.params.email;
