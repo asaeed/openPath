@@ -1,7 +1,12 @@
 OpenPath = window.OpenPath || {};
 
 OpenPath.maps = {
-	initUserMap : function(target) {
+	map1 : null,
+	map1marker : null,
+	map2 : null,
+	map2marker : null,
+	geolocate : function(target) {
+		var self = this;
 		console.log('initUserMap.target = ' + target);
 		// Try HTML5 geolocation
 		if(navigator.geolocation) {
@@ -16,40 +21,40 @@ OpenPath.maps = {
 					mapTypeId: google.maps.MapTypeId.ROADMAP,
 					mapTypeControl: true,
 					mapTypeControlOptions: {
-					style: google.maps.MapTypeControlStyle.HORIZONTAL_BAR,
-					position: google.maps.ControlPosition.RIGHT_BOTTOM
-				}
-			};
-			
-			if(target == "other_video"){
-			map2 = new google.maps.Map(document.getElementById('usermap2'), mapOptions);
+						style: google.maps.MapTypeControlStyle.HORIZONTAL_BAR,
+						position: google.maps.ControlPosition.RIGHT_BOTTOM
+					}
+				};
 
-			map2marker = new google.maps.Marker({
-			position: pos,
-			map: map2,
-			title: ''
-			});
-			map2.setCenter(pos);
+				if(target == "other_video"){
+					self.map2 = new google.maps.Map(document.getElementById('usermap2'), mapOptions);
 
-			// get and display street address 
-			this.codeLatLng(pos, "#userlocation2");
-			targetMap = map2;
-			}else{
-			map1 = new google.maps.Map(document.getElementById('usermap1'), mapOptions);
+					self.map2marker = new google.maps.Marker({
+						position: pos,
+						map: self.map2,
+						title: ''
+					});
+					self.map2.setCenter(pos);
 
-			map1marker = new google.maps.Marker({
-			position: pos,
-			map: map1,
-			title: ''
-			});
-			map1.setCenter(pos);
+					// get and display street address 
+					this.codeLatLng(pos, "#userlocation2");
+					targetMap = self.map2;
+				}else{
+					self.map1 = new google.maps.Map(document.getElementById('usermap1'), mapOptions);
 
-			// get and display street address 
-			this.codeLatLng(pos, "#userlocation1");
-			targetMap = map1;
-			}			
+					self.map1marker = new google.maps.Marker({
+						position: pos,
+						map: self.map1,
+						title: ''
+					});
+					self.map1.setCenter(pos);
+
+					// get and display street address 
+					this.codeLatLng(pos, "#userlocation1");
+					targetMap = self.map1;
+				}			
 			}, function() {
-			this.handleNoGeolocation(true, targetMap);
+				this.handleNoGeolocation(true, targetMap);
 			});
 
 		} else {
@@ -71,19 +76,15 @@ OpenPath.maps = {
 			position: nycPos,
 			content: content
 		};
-	}
-};
-
-
-
-  /**
-  * Returns reverse-geocoded location
-  * @param pos		Lat/Long object
-  * @param target	target HTML element to write to
-  */
-  function codeLatLng(pos, target) {
-	  geocoder = new google.maps.Geocoder();
-	  geocoder.geocode({'latLng': pos}, function(results, status) {
+	},
+	/**
+	* Returns reverse-geocoded location
+	* @param pos		Lat/Long object
+	* @param target	target HTML element to write to
+	*/
+	codeLatLng : function(pos, target) {
+	  this.geocoder = new google.maps.Geocoder();
+	  this.geocoder.geocode({'latLng': pos}, function(results, status) {
 	    if (status == google.maps.GeocoderStatus.OK) {
 	      if (results[1]) {
 			$(target).html(results[1].formatted_address);
@@ -95,12 +96,19 @@ OpenPath.maps = {
 	    }
 	  });
 	}
+};
+
+
+
+  
 
 
 
   /**
   * Initializes Map displaying local events
   
+  var eventsMap, eventsmapmarker;
+
   function initEventsMap(){
 
 	var pos = new google.maps.LatLng(40.7142, -74.0064);
@@ -131,7 +139,7 @@ OpenPath.maps = {
 
   /**
   * Initializes Map displaying local events
-  
+    var myPathMap, myPathMapMarker;
   function initMyPathMap(){
 
 	var pos = new google.maps.LatLng(41.8500, -87.6500);

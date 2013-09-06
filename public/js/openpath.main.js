@@ -2,12 +2,6 @@ OpenPath = window.OpenPath || {};
 
 //old globals 
 //TODO: namespace 
-
-  var map1, map1marker, map2, map2marker;
-  var eventsMap, eventsmapmarker;
-  var myPathMap, myPathMapMarker;
-  var geocoder;
-
   //var room = 1;
   var max_num_videos = 2;
   //var server = "ws://www.walking-productions.com:8001/"; 
@@ -26,7 +20,14 @@ OpenPath.main = {
 
 		//this = OpenPath.main
 		this.initControls();
-		this.initUser();
+		this.connect();
+
+		//try to geolocate user
+		OpenPath.maps.geolocate("self_video");
+		//init chat
+	    OpenPath.chat init();
+
+		//initMyPathMap();//maybe deprecating soon
 		//initEventsMap(); //**deprecated**/
 		//initEventsList(); //replaced
 
@@ -142,9 +143,8 @@ OpenPath.main = {
 	/**
  	 * Starts video, chat, and geolocation
   	 */
-
-  	initUser : function(){
-		var target = "self_video"; // target video. String used to determine which thumb map to target
+  	connect : function(){
+		var target = ; // target video. String used to determine which thumb map to target
 		
 		if (PeerConnection) {
    			rtc.createStream({"video": true, "audio": true}, function(stream) {
@@ -154,7 +154,7 @@ OpenPath.main = {
  		} else {
    			alert('Sorry, your browser is not supported');
  		}
- 		
+
  		console.log("room: " + OpenPath.room);
  
 		rtc.connect(server, OpenPath.room);
@@ -194,10 +194,7 @@ OpenPath.main = {
 			console.log(data.socketid);
 		});
 
-		// initialize remainder of interface
-		initUserMap(target);
-		initMyPathMap();
-	    initChat();
+	
 
 
 		console.log('initUser.target = ' + target);

@@ -4,7 +4,7 @@ OpenPath.chat = {
   /**
   * Creates chat window.
   */
-  initChat :  function(){
+  init :  function(){
     var self = this,
         input = document.getElementById("chatinput");
 
@@ -13,17 +13,18 @@ OpenPath.chat = {
         if(input.value != ''){
             var key = event.which || event.keyCode;
             if (key === 13) {
-            var message = OpenPath.username + ": " + input.value; 
-            //rtc 
-            rtc._socket.send(JSON.stringify({
-                    "eventName": "chat_msg",
-                    "data": {
-                    "messages": message,
-                    "room": room
-                }
-                }));
-                addToChat(OpenPath.username, input.value);
-                input.value = "";
+              var message = OpenPath.username + ": " + input.value; 
+              //rtc 
+              rtc._socket.send(JSON.stringify({
+                      "eventName": "chat_msg",
+                      "data": {
+                        "messages": message,
+                        "room": room
+                      }
+              }));
+
+              self.addToChat(OpenPath.username, input.value);
+              input.value = "";
             }
         }
     }, false);
@@ -34,7 +35,7 @@ OpenPath.chat = {
     });
     
     rtc.on('main_video_socketid', function(data) {
-      console.log(data.socketid);
+      console.log('socketid',data.socketid);
       
     });
   },
