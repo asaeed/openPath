@@ -6,6 +6,16 @@ OpenPath.events.addEvent = {
 
 		var self = this;
 
+// Events
+		$('#starttime').datetimepicker({
+		    language: 'en',
+		    pick12HourFormat: true
+		});
+		$('#endtime').datetimepicker({
+		    language: 'en',
+		    pick12HourFormat: true
+		});
+		
 		//dom eles
 		this.modal = $('#addEventsModal'); 
 		this.form = $('#addEventForm');
@@ -22,15 +32,7 @@ OpenPath.events.addEvent = {
 		});
 
 
-		// Events
-		$('#starttime').datetimepicker({
-		    language: 'en',
-		    pick12HourFormat: true
-		});
-		$('#endtime').datetimepicker({
-		    language: 'en',
-		    pick12HourFormat: true
-		});
+		
 		
 		//TODO: auto populate 'creator' with auth email
 		//this.form.find('#creator').val(email)

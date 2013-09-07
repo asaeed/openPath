@@ -1,5 +1,6 @@
 @import  url("reset.css");
-/*body{
+/*HOME STYLES -TODO: responsive
+body{
     margin:0;
     padding:0;
 	font:18px/22px 'PT Sans', sans-serif;
@@ -48,6 +49,8 @@ input.invite, input.email{
 .modal-header h3{color:#fff;}
 .close{color:#fff; opacity:1;}*/
 
+*/
+/*MAIN STYLES - TODO: clean up above, Responsive*/;
 body, html {
 	/* Set to properly render Google Map instances */
 	height: 100%;
@@ -57,30 +60,25 @@ body{
 	background:#434545;
 	font-family:'PT Sans', sans-serif;
 	font-size:10px;
-	/*font:18px/20px 'PT Sans', sans-serif;*/
 }
 /**
 * globals
 */
 h2{
-	font-size:20px;
+	font-size:2em;
 }
 h3{
 	color:#3e9ed5;
-	font-size:18px;
-	line-height:20px;
+	font-size:1.8em;
 }
-#mainheader{
-	position: relative;
-	padding:0 20px; 
-	height:67px;
-	background:rgba(0,0,0,0.6);
+a:link, 
+a:visited, 
+a:hover{
+	text-decoration:none;
+}
 
-}
-a:link, a:visited, a:hover{text-decoration:none;}
 label{font-size:20px; padding-bottom:10px;}
 
-.clearer{clear:both;}
 .col50{width:40%;}
 .left{float:left; text-align:left;}
 .right{float:right; text-align:right;}
@@ -88,6 +86,15 @@ label{font-size:20px; padding-bottom:10px;}
 .modal-header h3{color:#fff;}
 
 /* HEADER */
+#mainheader{
+	position: relative;
+	padding:0 20px; 
+	height:67px;
+	background:rgba(0,0,0,0.6);
+
+}
+
+
 #openpath{width:205px; float:left;}
 
 #mainnav{display:block; text-align:right; /*width:205px;*/ width:65%; float:right;}

@@ -158,7 +158,7 @@ OpenPath.main = {
 			e.preventDefault();
 			$(this).tab('show');
 			
-			OpenPath.user.onMenuChange();
+			//OpenPath.user.onMenuChange();
 			
 			OpenPath.maps.resetMaps();
 		})
@@ -168,7 +168,7 @@ OpenPath.main = {
 			e.preventDefault();
 			$(this).tab('show');
 			
-			OpenPath.user.onMenuChange();
+			//OpenPath.user.onMenuChange();
 			
 			OpenPath.maps.resetMaps();
 		});
