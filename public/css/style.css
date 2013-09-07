@@ -52,14 +52,12 @@ body, html {
 	/* Set to properly render Google Map instances */
 	height: 100%;
 	width: 100%;
-	margin:0;
-	padding:0;
 }
 body{
 	background:#434545;
 	font-family:'PT Sans', sans-serif;
 	font-size:10px;
-	font:18px/20px 'PT Sans', sans-serif;
+	/*font:18px/20px 'PT Sans', sans-serif;*/
 }
 /**
 * globals
