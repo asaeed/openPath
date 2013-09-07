@@ -8,73 +8,72 @@
 {% endblock %}
 
 {% block content %}
-
-<header>
-    <div class="inner">
-		<div id="intro">
-            <img id="logo" src="img/home/openpath.png" alt="OpenPath">
-
-			<!-- LOGIN -->
+<div class="home">
+	<header>
+		<img id="logo" src="img/home/openpath.png" alt="OpenPath">
+	</header>
+	<section class="main">
+		<!-- LOGIN -->
+		<div id="login">
+            <h1>What do you want to learn?</h1>
 			
-			<div id="login">
-	            <h1>What do you want to learn?</h1>
+            <p>Chart your learning path through exhibits, tours, and special events</p>
+			<div class="loginoptions">
+			<a id="loginbtn" class="persona-button" data-loading-text="Loading...">
+				<span>Sign in with Persona</span></a>
+				<!--or <a id="guestbtn" class="btn">Sign in as Guest</a>-->
+			</div>
+		</div>
+		<div id="loadinggraphic"><i class="icon-spinner icon-spin icon-large">Loading User</i> </div>
+		<!-- GUEST -->
+		
+		<div id="guestlogin">
+			<form id="guestloginForm">
+	            <input type="text" name="email" id="email" class="email" placeholder="Your email" /> <br>
+	            <a id="guestloginbtn" class="btn">Login as Guest</a>
+	        </form>
+		</div>
+		<img src="img/home/monitor.png" alt="" />
+
+	</section>
 				
-	            <p>Chart your learning path through exhibits, tours, and special events</p>
-				<div class="loginoptions">
-				<a id="loginbtn" class="persona-button" data-loading-text="Loading...">
-					<span>Sign in with Persona</span></a>
-					<!--or <a id="guestbtn" class="btn">Sign in as Guest</a>-->
-				</div>
-			</div>
-			<div id="loadinggraphic"><i class="icon-spinner icon-spin icon-large">Loading User</i> </div>
-			<!-- GUEST -->
-			
-			<div id="guestlogin">
-				<form id="guestloginForm">
-		            <input type="text" name="email" id="email" class="email" placeholder="Your email" /> <br>
-		            <a id="guestloginbtn" class="btn">Login as Guest</a>
-		        </form>
-			</div>
 
-        </div>
-        <div id="monitor"><img src="img/home/monitor.png" alt=""></div>
-    </div>
-</header>
-<section class="bottom">
-	<ul class="touts">
-		<li>
-			<h2>Connect learning everywhere</h2>
-			<ul>
-		    	<li>Go on expert-guided virtual field trips</li>
-		    	<li>Facilitate place-based learning remotely</li>
-		    </ul>
-			<img src="img/home/map.jpg" alt="Map">
-		</li>
-		<li>
-			<h2>No downloads, no hassles</h2>
-			<ul>
-			  <li>Location-based video right in your browser</li>
-			  <li>Stream and share high-quality video, enabled by high-speed networks</li>
-			</ul>
-			<img src="img/home/no-downloads.png" alt="Never Miss">
-		</li>
-		<li>
-			<h2>Collaborate &amp; build community</h2>
-			<ul>
-			  <li>Curate experiences, sharing your favorite places</li>
-			  <li>Advocate for local causes, collaborate with people around the world</li>
-			</ul>
-			<img src="img/home/learn-together.png" alt="Learn Together">
-		</li>
-	</ul>
-</section>
-<footer id="homefooter">
-	<ul>
-		<li><a id="tosLink" data-toggle="modal" data-target="#metamodal-tos" href="/terms-of-service">Terms of Service</a></li>
-		<li><a id="privacyPolicyLink" data-target="#metamodal-pp" data-toggle="modal" href="/privacy-policy">Privacy Policy</a></li>
-		<li><a id="aboutLink" data-toggle="modal" data-target="#metamodal-about" href="/about">About</a></li>
-	</ul>
-</footer>
+	<section class="bottom">
+		<ul class="touts">
+			<li>
+				<h2>Connect learning everywhere</h2>
+				<ul>
+			    	<li>Go on expert-guided virtual field trips</li>
+			    	<li>Facilitate place-based learning remotely</li>
+			    </ul>
+				<img src="img/home/map.jpg" alt="Map">
+			</li>
+			<li>
+				<h2>No downloads, no hassles</h2>
+				<ul>
+				  <li>Location-based video right in your browser</li>
+				  <li>Stream and share high-quality video, enabled by high-speed networks</li>
+				</ul>
+				<img src="img/home/no-downloads.png" alt="Never Miss">
+			</li>
+			<li>
+				<h2>Collaborate &amp; build community</h2>
+				<ul>
+				  <li>Curate experiences, sharing your favorite places</li>
+				  <li>Advocate for local causes, collaborate with people around the world</li>
+				</ul>
+				<img src="img/home/learn-together.png" alt="Learn Together">
+			</li>
+		</ul>
+	</section>
+	<footer>
+		<ul>
+			<li><a id="tosLink" data-toggle="modal" data-target="#metamodal-tos" href="/terms-of-service">Terms of Service</a></li>
+			<li><a id="privacyPolicyLink" data-target="#metamodal-pp" data-toggle="modal" href="/privacy-policy">Privacy Policy</a></li>
+			<li><a id="aboutLink" data-toggle="modal" data-target="#metamodal-about" href="/about">About</a></li>
+		</ul>
+	</footer>
+</div>
 		
 <!-- MODALS -->
 <div id="metamodal-tos" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
