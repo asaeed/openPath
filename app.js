@@ -36,6 +36,7 @@ app.configure(function(){
   app.use(express.cookieParser('coldhands'));
   app.use(express.session());
   app.use(app.router);
+  app.use(require('less-middleware')({ src: __dirname + '/public' }));
   app.use(express.static(__dirname + '/public'));
   //app.use(express.csrf());
 });
