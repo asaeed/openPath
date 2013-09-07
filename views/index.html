@@ -9,7 +9,7 @@
 
 {% block content %}
 
-<header id="mainheader">
+<header>
     <div class="inner">
 		<div id="intro">
             <img id="logo" src="img/home/openpath.png" alt="OpenPath">
@@ -40,66 +40,70 @@
         <div id="monitor"><img src="img/home/monitor.png" alt=""></div>
     </div>
 </header>
-<section class="touts">
-			<div class="col1">
-				<h2>Connect learning everywhere</h2>
-				<ul>
-			    	<li>Go on expert-guided virtual field trips</li>
-			    	<li>Facilitate place-based learning remotely</li>
-			    </ul>
-				<img src="img/home/map.jpg" alt="Map">
-			</div>
-			<div class="col2">
-				<h2>No downloads, no hassles</h2>
-				<ul>
-				  <li>Location-based video right in your browser</li>
-				  <li>Stream and share high-quality video, enabled by high-speed networks</li>
-				</ul>
-				<img src="img/home/no-downloads.png" alt="Never Miss">
-			</div>
-			<div class="col3">
-				<h2>Collaborate &amp; build community</h2>
-				<ul>
-				  <li>Curate experiences, sharing your favorite places</li>
-				  <li>Advocate for local causes, collaborate with people around the world</li>
-				</ul>
-				<img src="img/home/learn-together.png" alt="Learn Together">
-			</div>
+<section class="bottom">
+	<ul class="touts">
+		<li>
+			<h2>Connect learning everywhere</h2>
+			<ul>
+		    	<li>Go on expert-guided virtual field trips</li>
+		    	<li>Facilitate place-based learning remotely</li>
+		    </ul>
+			<img src="img/home/map.jpg" alt="Map">
+		</li>
+		<li>
+			<h2>No downloads, no hassles</h2>
+			<ul>
+			  <li>Location-based video right in your browser</li>
+			  <li>Stream and share high-quality video, enabled by high-speed networks</li>
+			</ul>
+			<img src="img/home/no-downloads.png" alt="Never Miss">
+		</li>
+		<li>
+			<h2>Collaborate &amp; build community</h2>
+			<ul>
+			  <li>Curate experiences, sharing your favorite places</li>
+			  <li>Advocate for local causes, collaborate with people around the world</li>
+			</ul>
+			<img src="img/home/learn-together.png" alt="Learn Together">
+		</li>
+	</ul>
 </section>
-			<footer id="homefooter">
-				<ul>
-					<li><a id="tosLink" data-toggle="modal" data-target="#metamodal-tos" href="/terms-of-service">Terms of Service</a></li>
-					<li><a id="privacyPolicyLink" data-target="#metamodal-pp" data-toggle="modal" href="/privacy-policy">Privacy Policy</a></li>
-					<li><a id="aboutLink" data-toggle="modal" data-target="#metamodal-about" href="/about">About</a></li>
-				</ul>
-			</footer>
-		</div>
-		<!-- MODAL -->
-		<div id="metamodal-tos" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-		  <div class="modal-header">
-		    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-		    <img id="logo" src="img/openpath.png" alt="OpenPath">
-		  </div>
-		  <div class="modal-body">
-		  	<!-- content will be loaded here -->
-		  </div>
-		</div>
-		<div id="metamodal-pp" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-		  <div class="modal-header">
-		    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-		    <img id="logo" src="img/openpath.png" alt="OpenPath">
-		  </div>
-		  <div class="modal-body">
-		  	<!-- content will be loaded here -->
-		  </div>
-		</div>
-		<div id="metamodal-about" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-		  <div class="modal-header">
-		    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-		    <img id="logo" src="img/openpath.png" alt="OpenPath">
-		  </div>
-		  <div class="modal-body">
-		  	<!-- content will be loaded here -->
-		  </div>
-		</div>
+<footer id="homefooter">
+	<ul>
+		<li><a id="tosLink" data-toggle="modal" data-target="#metamodal-tos" href="/terms-of-service">Terms of Service</a></li>
+		<li><a id="privacyPolicyLink" data-target="#metamodal-pp" data-toggle="modal" href="/privacy-policy">Privacy Policy</a></li>
+		<li><a id="aboutLink" data-toggle="modal" data-target="#metamodal-about" href="/about">About</a></li>
+	</ul>
+</footer>
+		
+<!-- MODALS -->
+<div id="metamodal-tos" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+    <img id="logo" src="img/openpath.png" alt="OpenPath">
+  </div>
+  <div class="modal-body">
+  	<!-- content will be loaded here -->
+  </div>
+</div>
+
+<div id="metamodal-pp" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+    <img id="logo" src="img/openpath.png" alt="OpenPath">
+  </div>
+  <div class="modal-body">
+  	<!-- content will be loaded here -->
+  </div>
+</div>
+
+<div id="metamodal-about" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+    <img id="logo" src="img/openpath.png" alt="OpenPath">
+  </div>
+  <div class="modal-body">
+  	<!-- content will be loaded here -->
+  </div>
+</div>
 {% endblock %}
