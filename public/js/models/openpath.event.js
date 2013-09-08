@@ -15,6 +15,7 @@ OpenPath.Event = Backbone.Model.extend({
         if( attributes.name == '' ){
             return "You need to name the event";
         }
+        //TODO: more validation
     },
     initialize: function(){
         console.log("new Event initialized");

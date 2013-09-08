@@ -25,6 +25,9 @@ label {
   font-size: 2em;
   padding-bottom: 0.5em;
 }
+.tooltip {
+  border: 1px solid red !important;
+}
 /*content - centering div*/
 .content {
   position: relative;

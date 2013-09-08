@@ -179,9 +179,7 @@ OpenPath = {
 };
 
 $(document).ready(function(){
-	
-//TODO:namespace below
-
+	//old global vars
 	// var username;
   	//var email;
   	//var sessionID;
