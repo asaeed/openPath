@@ -9,7 +9,7 @@ OpenPath.Router = Backbone.Router.extend({
 var app_router = new OpenPath.Router;
 
 app_router.on('route:defaultRoute', function(actions) {
-    alert(actions);
+    console.log('route:',actions);
 })
 
 // Start Backbone history a necessary step for bookmarkable URL's

@@ -1,5 +1,3 @@
-@import url("reset.css");
-
 @import url("persona-buttons.css");
 /*@import url( "lesshat.less" );*/
 body {
@@ -8,6 +6,10 @@ body {
   background: #fff;
 }
 /* globals */
+h1 {
+  font-size: 3.8em;
+  font-weight: bold;
+}
 h2 {
   font-size: 2em;
   font-weight: bold;
@@ -24,9 +26,6 @@ a:hover {
 label {
   font-size: 2em;
   padding-bottom: 0.5em;
-}
-.tooltip {
-  border: 1px solid red !important;
 }
 /*content - centering div*/
 .content {
@@ -143,8 +142,15 @@ li {
   margin: 0 auto;
 }
 /* main styles */
+.main {
+  /* SUBNAV */
+
+  /*videos*/
+
+  /*addUser*/
+
+}
 .main header.main {
-  overflow: hidden;
   background: rgba(0, 0, 0, 0.6);
 }
 .main header.main .content {
@@ -158,6 +164,7 @@ li {
 }
 .main header.main nav.main ul {
   overflow: hidden;
+  list-style-type: none;
   padding: 1em 0 0 0;
 }
 .main header.main nav.main ul li {
@@ -201,4 +208,60 @@ li {
   position: absolute;
   padding: 0 0.5em;
   right: 0;
+}
+.main .subnav ul {
+  margin: 1em 0 0 0;
+  padding: 0;
+  list-style: none;
+  overflow: hidden;
+}
+.main .subnav ul li {
+  float: left;
+  border-right: 0.2em solid #949494;
+  padding: 0 1em;
+  text-align: center;
+}
+.main .subnav ul li a {
+  text-decoration: none;
+}
+.main .subnav ul li a:link {
+  color: #949494;
+}
+.main .subnav ul li a:visited,
+.main .subnav ul li a:hover {
+  color: #fff;
+}
+.main .subnav ul li a:hover {
+  font-weight: bold;
+}
+.main .subnav ul li:last-child {
+  border-right: none;
+}
+.main .subnav ul li.active a {
+  font-weight: bold !important;
+}
+.main .tab-pane {
+  padding: 7em 0 0 0;
+}
+.main #videos {
+  overflow: hidden;
+}
+.main #videos .col1 {
+  float: left;
+  position: relative;
+  width: 76.5625%;
+}
+.main #videos .col2 {
+  float: left;
+  position: relative;
+  width: 23.4375%;
+}
+.main #adduser {
+  min-height: 46em;
+  padding: 9em 2em 2em 2em;
+  background: #eeedeb;
+}
+.main #adduser textarea {
+  display: block;
+  width: 90%;
 }
