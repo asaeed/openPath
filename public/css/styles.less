@@ -1,11 +1,216 @@
-
 @import url( "reset.css" );
 @import url( "persona-buttons.css" );
-@import url( "lesshat.less" );
+/*@import url( "lesshat.less" );*/
 
 
 body {
 	font-size:10px;
-	font-family: arial, sans-serif;
+	font-family: 'PT Sans', arial, sans-serif;
+	background:#fff;
+}
+/* globals */
+h2{
+	font-size:2em;
+	font-weight: bold;
+}
+h3{
+	color:#3e9ed5;
+	font-size:1.8em;
+}
+a:link, 
+a:visited, 
+a:hover{
+	text-decoration:none;
+}
+
+label{
+	font-size:2em;
+	padding-bottom:0.5em;
+}
+
+/*content - centering div*/
+.content {
+	position:relative;
+	width:96em;
+	margin:0 auto;
+}
+
+/*header*/
+header.main {
+	width:100%;
+	position:absolute;
+	top:0;
+	height:6.7em;
+	z-index:2;
+	border:1px solid red;
 
 }
+footer {
+	text-align:center;
+	padding-bottom:3em;
+	ul{
+		li{
+			display:inline;
+			border-right:1px solid #ccc;
+			a{
+				color:#56acdd;
+				font-size:1.4em;
+				padding:0 0.7em;
+			}
+		}
+		li:last-child{
+			border-right:none;
+		}
+	} 
+	
+}
+
+#homefooter{text-align:center; font-size:14px; color:#ccc;}
+#homefooter a{text-decoration:none; color:#56acdd; padding:0 10px;}
+#homefooter ul, li{margin:0; padding:0;}
+#homefooter li{list-style:none; display:inline; border-right:1px solid #ccc;}
+#homefooter li:last-child{border-right:none;}
+
+/* home page styles */
+.home {
+	header.main {
+		padding-top:2em;
+	}
+	section.main {
+		position:relative; 
+		color:#fff;
+		background:#666 url(../img/home/headerbgd.jpg) no-repeat;
+		background-size:cover;
+		.content {
+			height:43.0em;
+			padding-top:2em;
+			article{
+				width:35em;
+				padding-top:7.7em;
+				h1 {
+					font-size:2.6em;
+					text-shadow: 2px 2px rgba(0,0,0,0.5);
+					font-weight: bold;
+				}
+				p {
+					font-size:1.8em;
+					line-height:1.1em;
+					text-shadow: 2px 2px rgba(0,0,0,0.5);
+					padding:1em 0 0.8em 0;
+				}
+
+			}
+			
+			img.monitor{
+				position:absolute;
+				right:0;
+				bottom:0;
+			}
+		}
+		
+	}
+	section.bottom {
+		background: #fff;
+		ul.touts {
+			overflow:hidden;
+			padding:3em 0 3em 0;
+			li.tout {
+				float:left;
+				width:33%;
+
+				h2 {
+					font-size:2.2em;
+				}
+				ul{
+					list-style-type: disc;
+					list-style-position: outside;
+					padding:1em 1em 0 2em;
+					li {
+						font-size:1.8em;
+						line-height:1.1em;
+					}
+				}
+				img {
+					margin:0 auto;
+				}
+			}
+		}
+	}
+}
+
+
+/* main styles */
+.main {
+	header.main {
+		overflow: hidden;
+		background: rgba(0,0,0,0.6);
+		.content {
+			width:94%;
+		}
+		a.logo {
+			float:left;
+		}
+		nav.main {
+			float:right;
+			ul {
+				overflow: hidden;
+				padding:1em 0 0 0;
+				li {
+					float:left;
+					padding:0 2em 0 0;
+					a {
+						position: relative;
+						display:block;
+						width:4em;
+						height:4em;
+
+					}
+					a:hover {
+						opacity:1;
+					}
+				}
+
+				li.active {
+					a{opacity:1;}
+				}
+				a#adduser-icon{background:url(/img/add-user-icon.png) no-repeat;}			
+				li.active a#adduser-icon, 
+				a#adduser-icon:hover{background:url(/img/add-user-icon-over.png) no-repeat;}
+						
+				a#map-icon{background:url(/img/map-icon.png) no-repeat;}
+				li.active a#map-icon, 
+				a#map-icon:hover{background:url(/img/map-icon-over.png) no-repeat;}
+
+				a#profile-icon{background:url(/img/user-icon.png) no-repeat;}
+				li.active a#profile-icon, 
+				a#profile-icon:hover{background:url(/img/user-icon-over.png) no-repeat;}
+
+				.badge-important{
+					position:absolute;
+					padding:0 0.5em; 
+					right:0;
+				}
+
+			}
+		}
+	}
+}
+
+#mainnav{display:block; text-align:right; /*width:205px;*/ width:65%; float:right;}
+#mainnav ul{margin:0; padding:0;}
+#mainnav li{list-style:none; display:inline-block; margin:10px 4% 0 0;}
+
+#mainnav li a:hover, #mainnav li.active a{opacity:1;}
+
+#mainnav a{display:inline-block; width:40px; height:40px; position:relative;}
+
+a#adduser-icon{background:url(/img/add-user-icon.png) no-repeat;}
+li.active a#adduser-icon, a#adduser-icon:hover{background:url(/img/add-user-icon-over.png) no-repeat;}
+		
+a#map-icon{background:url(/img/map-icon.png) no-repeat;}
+li.active a#map-icon, a#map-icon:hover{background:url(/img/map-icon-over.png) no-repeat;}
+
+a#profile-icon{background:url(/img/user-icon.png) no-repeat;}
+li.active a#profile-icon, a#profile-icon:hover{background:url(/img/user-icon-over.png) no-repeat;}
+
+.badge-important{position:absolute;padding-left: 5px; padding-right: 5px; right:0;}
