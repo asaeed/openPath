@@ -12,7 +12,10 @@ OpenPath = {
 
 		//this = OpenPath		
 		if(this.home){
-			this.home.init();
+			// Persona login button
+			$('#loginbtn').mouseup(function() {
+				navigator.id.request();
+			});
 		}
 		if(this.main){
 			this.main.init();
