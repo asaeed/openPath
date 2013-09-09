@@ -9,7 +9,7 @@ OpenPath = {
 	init : function(){
 
 		//set room number
-		//this.setRoomNumber();
+		this.setRoomNumber();
 
 
 		//check status
