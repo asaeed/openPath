@@ -2,28 +2,28 @@ OpenPath = window.OpenPath || {};
 
 OpenPath.Event = Backbone.Model.extend({
 	urlRoot: '/events',
-    defaults: {
-        name: '',
-        creator: '',
-        description: '',
-        location:[0,0],
-        grades:[],
-        startTime:'',
-        endTime:''
-    },
-    validate: function( attributes ){
-        if( attributes.name == '' ){
-            return "You need to name the event";
-        }
-        //TODO: more validation
-    },
-    initialize: function(){
-        console.log("new Event initialized");
-        this.bind("error", function(model, error){
-            // We have received an error, log it, alert it or forget it :)
-            alert( error );
-        });
-    }
+  defaults: {
+      name: '',
+      creator: '',
+      description: '',
+      location:[0,0],
+      grades:[],
+      startTime:'',
+      endTime:''
+  },
+  validate: function( attributes ){
+      if( attributes.name == '' ){
+          return "You need to name the event";
+      }
+      //TODO: more validation
+  },
+  initialize: function(){
+      console.log("new Event initialized");
+      this.bind("error", function(model, error){
+          // We have received an error, log it, alert it or forget it :)
+          alert( error );
+      });
+  }
 });
 
 /**

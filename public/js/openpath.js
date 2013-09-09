@@ -35,7 +35,7 @@ OpenPath = {
 			//OpenPath.room = 1; //??
 		}
 	},
-	/*deprecated*/
+	/*deprecated
 	checkIfLoggedIn : function(){
 		var self = this;
 		// call auth/status when page first loads to see if user is logged in already
@@ -53,21 +53,8 @@ OpenPath = {
 		xhr.send(JSON.stringify({
 			//assertion: assertion
 		}));
-		/*
-		$.ajax({
-			url: "/auth/status",
-			type:'POST',
-			dataType:'json',
-			success: function(data) {
-				console.log(data)
-			
-			},
-			error: function(data){
-				console.log('auth status error');
-			}
-		});
-		*/
 	},
+	*/
 	/**
 	* Determines actions after login based on URL path.
 	*/

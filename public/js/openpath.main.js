@@ -153,8 +153,9 @@ OpenPath.main = {
 	},
 	nav : function(){
 		// Main Navigation Tabs
+		
 		$('header.main a').click(function (e) {
-			e.preventDefault();
+			//e.preventDefault();
 			$(this).tab('show');
 			
 			//OpenPath.user.onMenuChange();
@@ -165,7 +166,7 @@ OpenPath.main = {
 		$("nav.main a").tooltip({placement:'bottom'});
 
 		$('#usernav a').click(function (e) {
-			e.preventDefault();
+			//e.preventDefault();
 			$(this).tab('show');
 			
 			//OpenPath.user.onMenuChange();

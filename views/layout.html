@@ -32,15 +32,16 @@
 	<script src="js/navigator.js"></script>
 	<script src="js/openpath.js"></script>
 
-	<script src="js/openpath.router.js"></script>
+	
 
 	<script src="js/openpath.utils.js"></script>
-<!--
 	<script src="js/openpath.maps.js"></script>
 	<script src="js/openpath.chat.js"></script>
--->
 
   {% endblock %}
+  <!--load router last-->
+  <script src="js/openpath.router.js"></script>
+  
 </head>
 <body>
   {% block content %}

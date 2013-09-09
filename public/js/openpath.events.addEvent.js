@@ -1,5 +1,6 @@
 OpenPath = window.OpenPath || {};
 
+OpenPath.events = {};
 OpenPath.events.addEvent = {
 	init : function(){
 		console.log('OpenPath.events.addEvent.init');
@@ -86,17 +87,25 @@ OpenPath.events.addEvent = {
 				startTime = self.form.find('.startTime').val(),
 				endTime = self.form.find('.endTime').val(),
 				data = {
-					'name': name,
-					'creator': creator,
-					'description': description,
- 					'location': [self.lat, self.lng], 
-					'grade': gradelevels,
-  					'startTime': startTime,
-  					'endTime': endTime,
-  					'grades': gradelevels
+					name: name,
+					creator: creator,
+					description: description,
+ 					location: [self.lat, self.lng], 
+					grade: gradelevels,
+  					startTime: startTime,
+  					endTime: endTime
 				};
-			console.log('event add',data)
+			console.log('event add',data);
+
+			var ev = new OpenPath.Event();
+			ev.save(data, {
+		        success: function (evv) {
+		            alert(evv.toJSON());
+		        }
+		    });
 			return false;
+
+			/*
 			OpenPath.events.add(data, function(d){
 				console.log('event has been added', d);
 				//hide modal
@@ -106,7 +115,7 @@ OpenPath.events.addEvent = {
 				//	openpath.events.populate(d);
 				//});
 			});
-			
+			*/
 
 			return false;
 			//form.submit();
