@@ -210,11 +210,7 @@ video.avatar{width:100%; height:auto;}
 /********************************/
 /* EVENTS */
 /********************************/
-.events-single-col {
-	min-height:460px;
-	padding:0;
-	background: #eeedeb;
-}
+
 /* EVENTS MENU */
 #eventsmenu{
 	width:96%; 

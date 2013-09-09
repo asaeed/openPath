@@ -262,5 +262,103 @@ footer {
 			width:90%;
 		}
 	}
+	/*events*/
+	#events {
+		#eventsmenu{
+			width:96%; 
+			padding:5px 2%;
+			background:#fff;
+			overflow: hidden;
+			h2 {
+				float:left;
+			}
+			.subnav {
+				float:right;
+				margin:1em 0 0 0;
+				a {
+					color:#949494 !important;
+				}
+			}
+			.addEventsBtn{
+				margin:1.5em 0 0 2em;
+			}
+		}
+		.events-single-col {
+			min-height:46em;
+			padding:0;
+			background: #eeedeb;
+		}
+		/* EVENTS LIST */
+		ul.eventslist {
+			padding:0 4%;
+			margin:0;
+			list-style-type: none;
 
+			height:400px;
+			overflow-y:scroll;
+			li {
+				width:100%;
+				overflow:hidden;
+				padding-bottom:20px; 
+				border-bottom:1px solid #c3c3c3;
+				article{
+					float:left;
+					width:60%;
+					padding:10px 0 0 0;
+					h3{
+						padding-bottom:5px;
+					}
+					p.time{
+						padding-bottom:5px;
+					}
+					p.location{
+						padding-bottom:5px;
+					}
+				}
+				.mapWrap{
+					float:right;
+					width:35%;
+					height:200px;
+					margin-top:20px;
+					margin-left:5%;
+				}
+			}
+		}
+		.eventslist .icon-plus{color:#fff;}
+		.eventsholder{}
+	}
 }
+
+
+/*modules*/
+/*add events modal*/
+#addEventsModal{
+	#gradelevel  {
+		padding:8px 0 0 0;
+		overflow: hidden;
+		ul {
+			list-style-type: none;
+			padding:0;
+			margin:0;
+			float:left;
+			width:140px;
+			li {
+				overflow:hidden;
+				label {
+					float:right;
+					font-size:12px;
+					margin:0;
+					width:120px;
+				}
+				input {
+					float:left;
+				}
+			}
+		}
+	}
+	label.error {
+		font-size:11px;
+		color:#ff0000;
+	}
+}
+.bootstrap-datetimepicker-widget{z-index:9999;}

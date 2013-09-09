@@ -149,6 +149,8 @@ li {
 
   /*addUser*/
 
+  /*events*/
+
 }
 .main header.main {
   background: rgba(0, 0, 0, 0.6);
@@ -264,4 +266,101 @@ li {
 .main #adduser textarea {
   display: block;
   width: 90%;
+}
+.main #events {
+  /* EVENTS LIST */
+
+}
+.main #events #eventsmenu {
+  width: 96%;
+  padding: 5px 2%;
+  background: #fff;
+  overflow: hidden;
+}
+.main #events #eventsmenu h2 {
+  float: left;
+}
+.main #events #eventsmenu .subnav {
+  float: right;
+  margin: 1em 0 0 0;
+}
+.main #events #eventsmenu .subnav a {
+  color: #949494 !important;
+}
+.main #events #eventsmenu .addEventsBtn {
+  margin: 1.5em 0 0 2em;
+}
+.main #events .events-single-col {
+  min-height: 46em;
+  padding: 0;
+  background: #eeedeb;
+}
+.main #events ul.eventslist {
+  padding: 0 4%;
+  margin: 0;
+  list-style-type: none;
+  height: 400px;
+  overflow-y: scroll;
+}
+.main #events ul.eventslist li {
+  width: 100%;
+  overflow: hidden;
+  padding-bottom: 20px;
+  border-bottom: 1px solid #c3c3c3;
+}
+.main #events ul.eventslist li article {
+  float: left;
+  width: 60%;
+  padding: 10px 0 0 0;
+}
+.main #events ul.eventslist li article h3 {
+  padding-bottom: 5px;
+}
+.main #events ul.eventslist li article p.time {
+  padding-bottom: 5px;
+}
+.main #events ul.eventslist li article p.location {
+  padding-bottom: 5px;
+}
+.main #events ul.eventslist li .mapWrap {
+  float: right;
+  width: 35%;
+  height: 200px;
+  margin-top: 20px;
+  margin-left: 5%;
+}
+.main #events .eventslist .icon-plus {
+  color: #fff;
+}
+/*modules*/
+/*add events modal*/
+#addEventsModal #gradelevel {
+  padding: 8px 0 0 0;
+  overflow: hidden;
+}
+#addEventsModal #gradelevel ul {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+  float: left;
+  width: 140px;
+}
+#addEventsModal #gradelevel ul li {
+  overflow: hidden;
+}
+#addEventsModal #gradelevel ul li label {
+  float: right;
+  font-size: 12px;
+  margin: 0;
+  width: 120px;
+}
+#addEventsModal #gradelevel ul li input {
+  float: left;
+}
+#addEventsModal label.error {
+  font-size: 11px;
+  color: #ff0000;
+}
+.bootstrap-datetimepicker-widget {
+  z-index: 9999;
 }

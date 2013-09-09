@@ -161,7 +161,8 @@ OpenPath.main = {
 			
 			OpenPath.maps.resetMaps();
 		})
-		$("header.main a").tooltip({placement:'bottom'});
+		$(".logo a").tooltip({placement:'right'});
+		$("nav.main a").tooltip({placement:'bottom'});
 
 		$('#usernav a').click(function (e) {
 			e.preventDefault();
