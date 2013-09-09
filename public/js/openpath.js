@@ -1,3 +1,6 @@
+OpenPath = window.OpenPath || {};
+
+
 OpenPath = {
 	username : null,
 	email : null,
@@ -6,11 +9,13 @@ OpenPath = {
 	init : function(){
 
 		//set room number
-		this.setRoomNumber();
+		//this.setRoomNumber();
+
+
 		//check status
 		//this.checkIfLoggedIn(); //why?? navigator does this no?
 
-		//this = OpenPath		
+		//checks for scripts		
 		if(this.home){
 			// Persona login button
 			$('#loginbtn').mouseup(function() {
@@ -34,7 +39,7 @@ OpenPath = {
 	checkIfLoggedIn : function(){
 		var self = this;
 		// call auth/status when page first loads to see if user is logged in already
-		/*var xhr = new XMLHttpRequest();
+		var xhr = new XMLHttpRequest();
 		xhr.open("POST", "/auth/status", true);
 		xhr.setRequestHeader("Content-Type", "application/json");
 
@@ -48,7 +53,7 @@ OpenPath = {
 		xhr.send(JSON.stringify({
 			//assertion: assertion
 		}));
-		*/
+		/*
 		$.ajax({
 			url: "/auth/status",
 			type:'POST',
@@ -61,6 +66,7 @@ OpenPath = {
 				console.log('auth status error');
 			}
 		});
+		*/
 	},
 	/**
 	* Determines actions after login based on URL path.
@@ -187,42 +193,4 @@ $(document).ready(function(){
 
 	OpenPath.init();
 
-});
-
-/*************************************/
-// PERSONA HANDLING
-/*************************************/
-navigator.id.watch({
-
-    // this is the callback that persona triggers when the user logs in
-    onlogin: function(assertion) {		
-      var xhr = new XMLHttpRequest();
-      xhr.open("POST", "/auth/status", true);
-      xhr.setRequestHeader("Content-Type", "application/json");
-      xhr.addEventListener("loadend", function(e) {
-      	var data = JSON.parse(this.responseText);
-
-		if (data && data.status === "okay") {
-			OpenPath.handleLogin(data.email);
-        }
-      }, false);
-      xhr.send(JSON.stringify({
-        assertion: assertion
-      }));
-    },
-
-    // this is the callback that persona triggers when the user logs out
-    onlogout: function() {
-      var xhr = new XMLHttpRequest();
-      xhr.open("GET", "/auth/logout", true);
-      xhr.addEventListener("loadend", function(e) {
-
-	  var path = window.location.pathname;
-	  console.log('onlogout path = ' + path);
-	  if(path == '/main'){
-		window.location = "/";
-	  }
-      }, false);
-      xhr.send();
-    }
 });

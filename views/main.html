@@ -20,7 +20,7 @@
 
 <div class="main">
 	<!-- ***** ADD USER ***** -->
-	{% include "main.header.html" %}
+	{% include "main/main.header.html" %}
 
 	<div id="content">
 		<div class="tab-content">
@@ -28,16 +28,16 @@
 	  	  <!-- ***** MAIN ***** -->
 			 
 			  <!-- ***** VIDEOS ***** -->
-			  {% include "main.videos.html" %}
+			  {% include "main/main.videos.html" %}
 
 			  <!-- ***** ADD USER ***** -->
-			  {% include "main.user.add.html" %}
+			  {% include "main/main.user.add.html" %}
 			
 			  <!-- ***** EVENTS ***** -->
-			  {% include "main.events.html" %}
+			  {% include "main/main.events.html" %}
 			
 			  <!-- ***** USER ***** -->
-			  {% include "main.user.html" %}
+			  {% include "main/main.user.html" %}
 
 
 			</div>
@@ -45,6 +45,6 @@
 	</div>
 </div>
 <!-- BEGIN ADD EVENTS MODAL -->
-{% include "main.events.add.html" %}
+{% include "main/main.events.add.html" %}
 <!-- END ADD EVENTS MODAL -->
 {% endblock %}
