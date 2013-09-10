@@ -21,8 +21,8 @@ OpenPath.EventView = Backbone.View.extend({
     loadMap : function(){
 
         var ele = this.mapWrap,
-            lat = this.model.attributes.location.lat(),
-            lng = this.model.attributes.location.lng(),
+            lat = this.model.attributes.location[0],
+            lng = this.model.attributes.location[1],
             pos = new google.maps.LatLng(lat, lng);
 
         var options = {
