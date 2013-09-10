@@ -6,7 +6,8 @@ OpenPath.EventsView = Backbone.View.extend({
         initialize:function(){
             this.collection = new OpenPath.EventsCollection();
             this.collection.fetch();
-            //set modal events
+
+            //set up modal and handle form submission
 			this.setModal();
 
             this.render();
@@ -28,11 +29,6 @@ OpenPath.EventsView = Backbone.View.extend({
             	border:'1px solid blue'
             });
         },
-        /*
-        events: {
-        	"click #addEventBtn" : "addEvent"
-        },*/
-
         /**
          * custom form setup & submission - unbackbone way
          */
@@ -58,23 +54,37 @@ OpenPath.EventsView = Backbone.View.extend({
 
 			this.form.validate({
 				submitHandler: function(form) {
-					alert('f sub');
-					console.log(self, 'oooooo')
+					
+					//make grade levels array
+					var gradelevelsArr = [];
+					self.form.find('input:checkbox[name=gradelevel]:checked').each(function(){
+						gradelevelsArr.push( $(this).val());
+					});
+
+
 					var name = self.form.find('#name').val(),
 						creator = self.form.find('#creator').val(),
 						description = self.form.find('#description').val(),
-						//
+						//location = self.form.find('#location').val(),
+						//locationDescription = '',//TODO
+						gradelevels = gradelevelsArr, 
+						startTime = self.form.find('.startTime').val(),
+						endTime = self.form.find('.endTime').val(),
 						data = {
 							name: name,
 							creator: creator,
-							description: description//,
+							description: description,
 		 					//location: [self.lat, self.lng], 
-							//grade: gradelevels,
-		  					//startTime: startTime,
-		  					//endTime: endTime
+							grade: gradelevels,
+		  					startTime: startTime,
+		  					endTime: endTime
 						};
-						
-					self.collection.add(new OpenPath.EventModel(data));
+
+					//self.collection.add(new OpenPath.EventModel(data));
+					self.collection.create(data);
+
+					self.modal.modal('hide');
+					self.form.find('input,textarea').val('');
 					return false;
 				}
 			});
