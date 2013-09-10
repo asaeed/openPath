@@ -1,28 +1,29 @@
 OpenPath = window.OpenPath || {};
 
-OpenPath.Event = Backbone.Model.extend({
+OpenPath.EventModel = Backbone.Model.extend({
 	urlRoot: '/events',
   defaults: {
-      name: '',
-      creator: '',
-      description: '',
-      location:[0,0],
-      grades:[],
-      startTime:'',
-      endTime:''
+    name: '',
+    creator: '',
+    description: '',
+    location:[0,0],
+    locationDescription : '',
+    grades:[],
+    startTime:'',
+    endTime:''
   },
   validate: function( attributes ){
-      if( attributes.name == '' ){
-          return "You need to name the event";
-      }
-      //TODO: more validation
+    if( attributes.name == '' ){
+        return "You need to name the event";
+    }
+    //TODO: more validation, st > et etc
   },
   initialize: function(){
-      console.log("new Event initialized");
-      this.bind("error", function(model, error){
-          // We have received an error, log it, alert it or forget it :)
-          alert( error );
-      });
+    console.log("new Event initialized");
+    this.bind("error", function(model, error){
+        // We have received an error, log it, alert it or forget it :)
+        alert( error );
+    });
   }
 });
 

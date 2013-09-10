@@ -7,12 +7,25 @@
 	<script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=true&libraries=places"></script>
 	<script src="js/webrtc.io.js"></script>
 
-	
+	<!--underscore templates-->
+	<script id="eventTemplate" type="text/template">
+		<article>
+			<h3><a href="#" target="_blank"><%= name %></a></h3>
+			<p class="time"><%= startTime %> to <%= endTime %></p>
+			<p class="location"><%= locationDescription %></p>
+			<p><%= description %></p>
+		</article>
+	</script>
+
+
 	<script src="js/openpath.main.js"></script>
 	<!--<script src="js/openpath.user.js"></script>
 	<script src="js/openpath.user.profile.js"></script>
 	<script src="js/openpath.user.settings.js"></script>-->
-	<script src="js/models/openpath.event.js"></script>
+	<script src="js/models/event.js"></script>
+	<script src="js/views/event.js"></script>
+	<script src="js/views/events.js"></script>
+	<script src="js/collections/events.js"></script>
 	<script src="js/openpath.events.addEvent.js"></script>
 {% endblock %}
 

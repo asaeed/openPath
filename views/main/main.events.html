@@ -14,10 +14,22 @@
 
 	<div class="events-single-col">
 		<!-- BEGIN EVENTS LIST -->
-	    <ul class="eventslist">
+	    <ul id="eventslist">
 			<!-- Dynamically-Generated Events Go Here -->
 			
 	    </ul>
 		<!-- END EVENTS LIST -->
 	</div>	
 </div>
+
+<!--using underscore's templating in header of main.html cus of rendering order
+
+<article>
+	<h3><a href="'+ evt.link +'" target="_blank">' + evt.name + '</a></h3>
+	<p class="time">'+evt.startTime + ' to ' + evt.endTime + '</p>
+	<p class="location">'+evt.locationDescription + '</p>
+	<p>' + evt.description + '</p>'+evt.location[0]+' '+evt.location[1]'+
+</article>
+<div class="mapWrap" id="event_'+i+'" data-lat="'+evt.location[0]+'" data-lng="'+evt.location[1]+'"></div>
+
+-->

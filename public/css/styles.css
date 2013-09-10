@@ -295,34 +295,35 @@ li {
   padding: 0;
   background: #eeedeb;
 }
-.main #events ul.eventslist {
+.main #events ul#eventslist {
   padding: 0 4%;
   margin: 0;
   list-style-type: none;
   height: 400px;
   overflow-y: scroll;
+  border: 1px solid red;
 }
-.main #events ul.eventslist li {
+.main #events ul#eventslist li.event {
   width: 100%;
   overflow: hidden;
   padding-bottom: 20px;
   border-bottom: 1px solid #c3c3c3;
 }
-.main #events ul.eventslist li article {
+.main #events ul#eventslist li.event article {
   float: left;
   width: 60%;
   padding: 10px 0 0 0;
 }
-.main #events ul.eventslist li article h3 {
+.main #events ul#eventslist li.event article h3 {
   padding-bottom: 5px;
 }
-.main #events ul.eventslist li article p.time {
+.main #events ul#eventslist li.event article p.time {
   padding-bottom: 5px;
 }
-.main #events ul.eventslist li article p.location {
+.main #events ul#eventslist li.event article p.location {
   padding-bottom: 5px;
 }
-.main #events ul.eventslist li .mapWrap {
+.main #events ul#eventslist li.event .mapWrap {
   float: right;
   width: 35%;
   height: 200px;

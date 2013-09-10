@@ -83,6 +83,7 @@ OpenPath.events.addEvent = {
 				creator = self.form.find('#creator').val(),
 				description = self.form.find('#description').val(),
 				location = self.form.find('#location').val(),
+				locationDescription = '',//TODO
 				gradelevels = gradelevelsArr, //$(this).find('#gradelevel').val(),
 				startTime = self.form.find('.startTime').val(),
 				endTime = self.form.find('.endTime').val(),
@@ -97,12 +98,14 @@ OpenPath.events.addEvent = {
 				};
 			console.log('event add',data);
 
-			var ev = new OpenPath.Event();
+			var ev = new OpenPath.EventModel();
 			ev.save(data, {
 		        success: function (evv) {
-		            alert(evv.toJSON());
+		            console.log('ev added', evv.toJSON());
 		        }
 		    });
+
+    		
 			return false;
 
 			/*
@@ -117,7 +120,7 @@ OpenPath.events.addEvent = {
 			});
 			*/
 
-			return false;
+			//return false;
 			//form.submit();
 
 			}

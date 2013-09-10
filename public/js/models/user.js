@@ -1,6 +1,6 @@
 OpenPath = window.OpenPath || {};
 
-OpenPath.User = Backbone.Model.extend({
+OpenPath.UserModel = Backbone.Model.extend({
 	urlRoot: '/users',
     defaults: {
         name: '',

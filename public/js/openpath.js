@@ -178,6 +178,9 @@ $(document).ready(function(){
   	//var sessionID;
   ///var room = "";
 
-	OpenPath.init();
+	
 
 });
+window.onload = function(){
+	OpenPath.init();
+};
