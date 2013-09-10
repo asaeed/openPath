@@ -19,7 +19,7 @@ OpenPath.EventModel = Backbone.Model.extend({
     //TODO: more validation, st > et etc
   },
   initialize: function(){
-    console.log("new Event initialized");
+    //console.log("new Event Model initialized");
     this.bind("error", function(model, error){
         // We have received an error, log it, alert it or forget it :)
         alert( error );

@@ -37,8 +37,6 @@ OpenPath.EventsView = Backbone.View.extend({
         	this.form = $('#addEvent');
 			this.modal = $('#addEventsModal');
 
-			console.log(this.form.length,$('#addEvent'));	
-
         	$('#starttime').datetimepicker({
 			    language: 'en',
 			    pick12HourFormat: true
