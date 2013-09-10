@@ -6,7 +6,7 @@ OpenPath.EventModel = Backbone.Model.extend({
     name: '',
     creator: '',
     description: '',
-    location:[40.7142, -74.0064],//lat , lng
+    location:[40.7142, -74.0064],//lat, lng NYC
     locationDescription : '',
     grades:[],
     startTime:'',

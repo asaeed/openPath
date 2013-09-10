@@ -365,3 +365,13 @@ li {
 .bootstrap-datetimepicker-widget {
   z-index: 9999;
 }
+/**
+ * bootstrap modal override for google autocomplete fix
+ */
+.modal-backdrop {
+  z-index: 500 !important;
+}
+.modal {
+  z-index: 501 !important;
+  position: absolute;
+}

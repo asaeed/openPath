@@ -43,6 +43,7 @@ OpenPath.events.addEvent = {
 		//autocomplete location
 		var locationInput = document.getElementById("location");
 		autocomplete = new google.maps.places.Autocomplete(locationInput);
+		
 		google.maps.event.addListener(autocomplete, 'place_changed', function() {
 			var place = autocomplete.getPlace();
 			if (!place.geometry) {

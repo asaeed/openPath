@@ -37,6 +37,7 @@ OpenPath.EventsView = Backbone.View.extend({
         	this.form = $('#addEvent');
 			this.modal = $('#addEventsModal');
 
+			//set date pickers
         	$('#starttime').datetimepicker({
 			    language: 'en',
 			    pick12HourFormat: true
@@ -45,11 +46,42 @@ OpenPath.EventsView = Backbone.View.extend({
 			    language: 'en',
 			    pick12HourFormat: true
 			});
-
+			//fix modal height so that dates won't get cut off
         	this.modal.find('.modal-body').css({
-				height : $(window).height() -200// -350
+				height : $(window).height() -350
 			});
 
+
+        	//autocomplete location
+			var lat = 0,
+				lng = 0,
+				locationInput = document.getElementById("location");
+			autocomplete = new google.maps.places.Autocomplete(locationInput);
+
+			google.maps.event.addListener(autocomplete, 'place_changed', function() {
+				var place = autocomplete.getPlace();
+				if (!place.geometry) {
+				// Inform the user that a place was not found and return.
+				return;
+				}
+
+				lat = place.geometry.location.mb;
+				lng = place.geometry.location.nb;
+
+				/*
+				// If the place has a geometry, then present it on a map.
+				if (place.geometry.viewport) {
+				// Use the viewport if it is provided.
+				map.fitBounds(place.geometry.viewport);
+				} else {
+				// Otherwise use the location and set a chosen zoom level.
+				map.setCenter(place.geometry.location);
+				map.setZoom(17);
+				}
+				*/
+			});
+
+        	//submit and validate
 			this.form.validate({
 				submitHandler: function(form) {
 					
@@ -58,6 +90,13 @@ OpenPath.EventsView = Backbone.View.extend({
 					self.form.find('input:checkbox[name=gradelevel]:checked').each(function(){
 						gradelevelsArr.push( $(this).val());
 					});
+					//make location arr
+					var locationArr = [];
+					if(lat !== 0 && lng == 0 ){
+						locationArr = [lat,lng];
+					}else{
+						locationArr = [40.7142, -74.0064],//lat, lng NYC
+					}
 
 
 					var name = self.form.find('#name').val(),
@@ -72,14 +111,14 @@ OpenPath.EventsView = Backbone.View.extend({
 							name: name,
 							creator: creator,
 							description: description,
-		 					//location: [self.lat, self.lng], 
+		 					location: locationArr, 
 							grade: gradelevels,
 		  					startTime: startTime,
 		  					endTime: endTime
 						};
 
 					//self.collection.add(new OpenPath.EventModel(data));
-					self.collection.create(data);
+					self.collection.create(data);//send to server
 
 					self.modal.modal('hide');
 					self.form.find('input,textarea').val('');
