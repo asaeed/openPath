@@ -53,8 +53,7 @@ OpenPath.EventsView = Backbone.View.extend({
 
 
         	//autocomplete location
-			var lat = 0,
-				lng = 0,
+			var newLocation = null,
 				locationInput = document.getElementById("location");
 			autocomplete = new google.maps.places.Autocomplete(locationInput);
 
@@ -64,10 +63,8 @@ OpenPath.EventsView = Backbone.View.extend({
 				// Inform the user that a place was not found and return.
 				return;
 				}
-
-				lat = place.geometry.location.mb;
-				lng = place.geometry.location.nb;
-
+				newLocation = place.geometry;
+				console.log('new',newLocation)
 				/*
 				// If the place has a geometry, then present it on a map.
 				if (place.geometry.viewport) {
@@ -90,14 +87,6 @@ OpenPath.EventsView = Backbone.View.extend({
 					self.form.find('input:checkbox[name=gradelevel]:checked').each(function(){
 						gradelevelsArr.push( $(this).val());
 					});
-					//make location arr
-					var locationArr = [];
-					if(lat !== 0 && lng == 0 ){
-						locationArr = [lat,lng];
-					}else{
-						locationArr = [40.7142, -74.0064],//lat, lng NYC
-					}
-
 
 					var name = self.form.find('#name').val(),
 						creator = self.form.find('#creator').val(),
@@ -111,7 +100,7 @@ OpenPath.EventsView = Backbone.View.extend({
 							name: name,
 							creator: creator,
 							description: description,
-		 					location: locationArr, 
+		 					location: newLocation, 
 							grade: gradelevels,
 		  					startTime: startTime,
 		  					endTime: endTime

@@ -21,9 +21,10 @@ OpenPath.EventView = Backbone.View.extend({
     loadMap : function(){
 
         var ele = this.mapWrap,
-            lat = this.model.attributes.location[0],
-            lng = this.model.attributes.location[1],
+            lat = this.model.attributes.location.lat(),
+            lng = this.model.attributes.location.lng(),
             pos = new google.maps.LatLng(lat, lng);
+
         var options = {
             zoom: 6,
             center: pos,
@@ -47,5 +48,6 @@ OpenPath.EventView = Backbone.View.extend({
             icon: 'img/marker.png',
             center: options.center
         });
+
     }
 });
