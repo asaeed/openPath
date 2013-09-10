@@ -1,30 +1,38 @@
 <div id="addEventsModal" class="modal hide fade" tabindex="-1" aria-hidden="true">
- 	<form class="form-horizontal" id="addEventForm">
-	  <div class="modal-header"> 
-	    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-	    <h2>Add Event</h2>
-	  </div>
-	  <div class="modal-body">
+	<form class="form-horizontal" id="addEvent" action="#">
+		<div class="modal-header"> 
+			<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+			<h2>Add Event</h2>
+		</div>
+		<div class="modal-body">
+			<div class="control-group">
+				<label class="control-label" for="name">Event Name</label>
+				<div class="controls">
+					<input type="text" id="name" name="name" placeholder="Event Name" required>
+				</div>
+			</div>
+			<div class="control-group">
+				<label class="control-label" for="creator">Creator</label>
+				<div class="controls">
+					<input type="text" id="creator" name="creator" placeholder="someone@somewhere.com" required>
+				</div>
+			</div>
+			<div class="control-group">
+				<label class="control-label" for="description">Description</label>
+				<div class="controls">
+					<textarea rows="4" name="description" id="description"></textarea>
+				</div>
+			</div>
+		</div>
+		<div class="modal-footer">
+			<button type="reset" class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
+			<!--<button type="submit" class="btn btn-primary" id="addEventBtn">Save Event</button>-->
+			<button id="addEventBtn">Save Event</button>
+		</div>
+	</form>
+</div>
+<!--
 
-		
-	  	<div class="control-group">
-		    <label class="control-label" for="name">Event Name</label>
-		    <div class="controls">
-		      <input type="text" id="name" name="name" placeholder="Event Name" required>
-		    </div>
-		  </div>
-		  <div class="control-group">
-		    <label class="control-label" for="creator">Creator</label>
-		    <div class="controls">
-		      <input type="text" id="creator" name="creator" placeholder="someone@somewhere.com" data-provide="tag" required>
-		    </div>
-		  </div>
-		  <div class="control-group">
-		    <label class="control-label" for="description">Description</label>
-		    <div class="controls">
-				<textarea rows="10" name="description" id="description"></textarea>
-		    </div>
-		  </div>
 		<div class="control-group">
 		    <label class="control-label" for="location">Location</label>
 		    <div class="controls">
@@ -65,7 +73,6 @@
 				</ul>
 			</fieldset>
 		</div>
-		  <!-- lat long fields go here -->
 
 		<div class="control-group">
 		    <label class="control-label" for="starttime">Start Time</label>
@@ -95,11 +102,4 @@
 		    </div>
 		  </div>
 		
-
-	  </div>
-		<div class="modal-footer">
-			<button type="reset" class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
-			<button type="submit" class="btn btn-primary">Save Event</button>
-		</div>
-	</form>
-</div>
+-->

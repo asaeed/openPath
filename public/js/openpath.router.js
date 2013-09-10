@@ -13,8 +13,8 @@ app_router.on('route:defaultRoute', function(actions) {
     console.log('route:',actions);
 
     if(actions === 'events'){
-        console.log($("#eventslist"))
         var evCollection = new OpenPath.EventsView();
+        
         /*
         var evModel = new OpenPath.EventModel({
                 name: 'text event',
@@ -36,7 +36,7 @@ app_router.on('route:defaultRoute', function(actions) {
         //console.log( OpenPath.eventsCollection.models );
 
 
-    	OpenPath.events.addEvent.init();
+    	//OpenPath.events.addEvent.init(evCollection);
     }
 
 });

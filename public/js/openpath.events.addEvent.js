@@ -2,12 +2,12 @@ OpenPath = window.OpenPath || {};
 
 OpenPath.events = {};
 OpenPath.events.addEvent = {
-	init : function(){
+	init : function(collection){
 		console.log('OpenPath.events.addEvent.init');
 
 		var self = this;
 
-// Events
+		// Events
 		$('#starttime').datetimepicker({
 		    language: 'en',
 		    pick12HourFormat: true
@@ -97,15 +97,17 @@ OpenPath.events.addEvent = {
   					endTime: endTime
 				};
 			console.log('event add',data);
-
+			alert('total bit')
+				/**
 			var ev = new OpenPath.EventModel();
 			ev.save(data, {
 		        success: function (evv) {
 		            console.log('ev added', evv.toJSON());
 		        }
 		    });
-
-    		
+			*/
+			collection.add(new OpenPath.EventModel(data));
+    		debugger;
 			return false;
 
 			/*

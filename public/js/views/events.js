@@ -1,42 +1,17 @@
 OpenPath = window.OpenPath || {};
 
-
-var eves = [
-            {
-                name: 'test event 1',
-                creator: 'ja',
-                description: 'lorem ip your butt',
-                location: [0, 0], 
-                grade: ['Pre-K to Grade 2'],
-                startTime: 0,
-                endTime: 0
-            },
-            {
-                name: 'test event 2',
-                creator: 'ja',
-                description: 'lorem ip your butt',
-                location: [0, 0], 
-                grade: ['Pre-K to Grade 2'],
-                startTime: 0,
-                endTime: 0
-            },
-            {
-                name: 'text event 3',
-                creator: 'ja',
-                description: 'lorem ip your butt',
-                location: [0, 0], 
-                grade: ['Pre-K to Grade 2'],
-                startTime: 0,
-                endTime: 0
-            }
-        ];
-
 //collection view
 OpenPath.EventsView = Backbone.View.extend({
 		el:"#eventslist",
         initialize:function(){
-            this.collection = new OpenPath.EventsCollection(eves);
+            this.collection = new OpenPath.EventsCollection();
+            this.collection.fetch();
+            //set modal events
+			this.setModal();
+
             this.render();
+            this.collection.on("add", this.renderEvent, this);
+            this.collection.on("reset", this.render, this);
         },
         render: function(){
             var self = this;
@@ -51,7 +26,57 @@ OpenPath.EventsView = Backbone.View.extend({
             this.$el.append(eventView.render().el);
             this.$el.css({
             	border:'1px solid blue'
-            })
-            console.log(this.$el,this.$el.length,eventView.render().el)
+            });
+        },
+        /*
+        events: {
+        	"click #addEventBtn" : "addEvent"
+        },*/
+
+        /**
+         * custom form setup & submission - unbackbone way
+         */
+        setModal : function(){
+        	var self = this;
+        	this.form = $('#addEvent');
+			this.modal = $('#addEventsModal');
+
+			console.log(this.form.length,$('#addEvent'));	
+
+        	$('#starttime').datetimepicker({
+			    language: 'en',
+			    pick12HourFormat: true
+			});
+			$('#endtime').datetimepicker({
+			    language: 'en',
+			    pick12HourFormat: true
+			});
+
+        	this.modal.find('.modal-body').css({
+				height : $(window).height() -200// -350
+			});
+
+			this.form.validate({
+				submitHandler: function(form) {
+					alert('f sub');
+					console.log(self, 'oooooo')
+					var name = self.form.find('#name').val(),
+						creator = self.form.find('#creator').val(),
+						description = self.form.find('#description').val(),
+						//
+						data = {
+							name: name,
+							creator: creator,
+							description: description//,
+		 					//location: [self.lat, self.lng], 
+							//grade: gradelevels,
+		  					//startTime: startTime,
+		  					//endTime: endTime
+						};
+						
+					self.collection.add(new OpenPath.EventModel(data));
+					return false;
+				}
+			});
         }
 });

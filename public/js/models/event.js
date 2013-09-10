@@ -1,7 +1,7 @@
 OpenPath = window.OpenPath || {};
 
 OpenPath.EventModel = Backbone.Model.extend({
-	urlRoot: '/events',
+	//urlRoot: '/events',
   defaults: {
     name: '',
     creator: '',
