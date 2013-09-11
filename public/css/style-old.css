@@ -172,6 +172,7 @@ li.active a#profile-icon, a#profile-icon:hover{background:url(/img/user-icon-ove
 video.avatar{width:100%; height:auto;}
 .usermeta{z-index:200; color:#fff; position:absolute; width:100%;}
 .usermetashowing{background:rgba(0,0,0,0.3);}
+
 .username{background:rgba(0,0,0,0.8); padding:7px;}
 .username > a:link, .username > a:visited{color:#fff !important;}
 .username > a:hover{color:#08c;}

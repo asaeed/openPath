@@ -249,8 +249,75 @@ footer {
 			position:relative;
 			width:23.4375%;
 		}
+		.userVideo {
+			position:relative;
+			min-height:180px;
+			overflow:hidden;
+			cursor:pointer;
+			transition:opacity 1s ease-out;
+			.usermeta{
+				z-index:2; 
+				color:#fff; 
+				position:absolute; 
+				width:100%;
+				.username{
+					background:rgba(0,0,0,0.8); 
+					padding:7px;
+					i{
+						display:block; 
+						float:right;
+					}
+					.icon-map-marker{
+						display:inline-block; 
+						float:right;
+						span{
+							display:none;
+						}
+					}
+					.icon-map-marker:hover{
+						color:#08c;
+					}
+				}
+				.username > a:link, 
+				.username > a:visited{
+					color:#fff !important;
+				}
+				.username > a:hover{
+					color:#08c;
+				}
+				.userlocation {
+					height:20px; 
+					font-size:11px; 
+					padding:2%; 
+					background:rgba(0,0,0,0.3);
+				}
+				.usermap{
+					margin:0; 
+					height:150px; 
+					background:#000;
+				}
 
-
+			}
+			.usermeta, 
+			.username, 
+			.userlocation, 
+			.usermap{
+				display:none;
+			}
+			.usermetashowing{
+				background:rgba(0,0,0,0.3);
+				.icon-map-marker span{
+					display:inline-block;
+				}
+				.icon-map-marker:before{
+					content:'' !important;
+				}
+			}
+			video.avatar{
+				width:100%; 
+				height:auto;
+			}
+		}
 	}
 	/*addUser*/
 	#adduser{

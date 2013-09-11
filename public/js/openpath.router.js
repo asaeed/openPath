@@ -11,7 +11,8 @@ var app_router = new OpenPath.Router;
 
 app_router.on('route:defaultRoute', function(actions) {
     console.log('route:',actions);
-
+    if(actions === 'main'){
+    }
     if(actions === 'events'){
         var evCollection = new OpenPath.EventsView();
     }

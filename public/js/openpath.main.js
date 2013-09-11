@@ -21,6 +21,9 @@ OpenPath.main = {
 		this.initControls();
 		this.nav();
 
+		//turn on videos tab
+        $('#videos').addClass('active');
+
 		//try to geolocate user
 		OpenPath.maps.geolocate("self_video");// target video. String used to determine which thumb map to target
 		//init chat
@@ -50,11 +53,11 @@ OpenPath.main = {
 		});
 
 		// User Icon - Right Column Main Screen
-		$('.user').mouseenter(function(event) {
+		$('.userVideo').mouseenter(function(event) {
 			$(this).find(".usermeta").fadeIn("slow");
 			$(this).find(".username").fadeIn("slow");
 		});
-		$('.user').mouseleave(function(event) {
+		$('.userVideo').mouseleave(function(event) {
 			var isShowing = $(this).find(".usermeta").hasClass("usermetashowing");
 			if(!isShowing){
 				$(this).find(".usermeta").fadeOut("slow");
