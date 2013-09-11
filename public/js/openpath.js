@@ -177,10 +177,6 @@ $(document).ready(function(){
   	//var email;
   	//var sessionID;
   ///var room = "";
-
-	
-
-});
-window.onload = function(){
 	OpenPath.init();
-};
+});
+

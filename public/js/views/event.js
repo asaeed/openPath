@@ -6,8 +6,7 @@ OpenPath.EventView = Backbone.View.extend({
     className:"event",
     template:$("#eventTemplate").html(),
     initialize:function () {
-       
-       
+       //init
     },
     render:function () {
         var tmpl = _.template(this.template); //tmpl is a function that takes a JSON object and returns html
