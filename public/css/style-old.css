@@ -187,7 +187,7 @@ video.avatar{width:100%; height:auto;}
 .usermetashowing .icon-map-marker:before{content:'' !important;}
 
 
-
+//TODO!!
 /* CHAT WINDOW */
 #chatwindow{/*height:42.96875%; max-width:240px;*/ height:130px; overflow:auto; padding:8px 10px; background:#ebeae7;}
 #chatwindow strong{font-weight:normal;}

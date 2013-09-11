@@ -39,7 +39,7 @@ header.main {
   position: absolute;
   top: 0;
   height: 6.7em;
-  z-index: 2;
+  z-index: 10;
   border: 1px solid red;
 }
 footer {
@@ -146,10 +146,13 @@ li {
   /* SUBNAV */
 
   /*videos*/
+  /*TODO: ems below*/
 
   /*addUser*/
 
   /*events*/
+
+  /*user*/
 
 }
 .main header.main {
@@ -247,6 +250,7 @@ li {
 }
 .main #videos {
   overflow: hidden;
+  padding: 0;
 }
 .main #videos .col1 {
   float: left;
@@ -400,6 +404,111 @@ li {
 }
 .main #events .eventslist .icon-plus {
   color: #fff;
+}
+.main #user {
+  /*profile display*/
+
+  /*mypathmap*/
+
+  /*settings*/
+
+}
+.main #user #usermenu {
+  background: #f6f6f6;
+  width: 92%;
+  height: 65px;
+  padding: 2% 4% 0 4%;
+  position: absolute;
+  overflow: hidden;
+  z-index: 9;
+}
+.main #user #usermenu .userIcon {
+  width: 40px;
+  height: 40px;
+  float: left;
+}
+.main #user #usermenu h1 {
+  font-size: 28px;
+  margin-left: 10px;
+  font-weight: normal;
+  float: left;
+}
+.main #user #usermenu .subnav li {
+  border-right: 2px solid #ccc;
+}
+.main #user #usermenu .subnav li a {
+  color: #3e9ed5 !important;
+}
+.main #user #usermenu .subnav li:last-child {
+  border-right: none;
+}
+.main #user .usertab-single-col {
+  min-height: 460px;
+  padding: 100px 4%;
+  background: #eeedeb;
+}
+.main #user #mypath .eventslist {
+  margin-top: 100px;
+  min-height: 560px;
+}
+.main #user #profile .displayView a.editProfileBtn {
+  float: right;
+}
+.main #user #profile .editView {
+  display: none;
+}
+.main #user #profile .editView .profileIntro {
+  padding-bottom: 20px;
+}
+.main #user #profile .editView form .userIcon {
+  position: absolute;
+  top: 90px;
+  left: 4%;
+  z-index: 10;
+  width: 40px;
+  height: 40px;
+  overflow: hidden;
+}
+.main #user #profile .editView form .userIcon input {
+  padding: 40px 0 40px 0;
+  opacity: 0;
+  cursor: pointer;
+}
+.main #user #profile .editView form fieldset.name {
+  position: absolute;
+  top: 100px;
+  left: 9%;
+  z-index: 10;
+}
+.main #user #profile #logout {
+  margin-top: 50px;
+}
+.main #user #profile label {
+  font-weight: bold;
+}
+.main #user #profile small {
+  font-size: 12px;
+}
+.main #user #mypathmap {
+  width: 100%;
+  height: 100%;
+  min-height: 640px;
+}
+.main #user #settings form article fieldset {
+  overflow: hidden;
+}
+.main #user #settings form article fieldset label {
+  float: left;
+}
+.main #user #settings form article fieldset input {
+  float: left;
+}
+.main #user #settings form article fieldset input[type="radio"] {
+  margin: 0 0 0 3px;
+}
+.main #user #settings form article.saved {
+  margin: 10px 0 0 0;
+  color: #999999;
 }
 /*modules*/
 /*add events modal*/
