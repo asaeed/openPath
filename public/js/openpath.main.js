@@ -22,7 +22,7 @@ OpenPath.main = {
 		this.nav();
 
 		//turn on videos tab
-        $('#videos').addClass('active');
+        //$('#videos').addClass('active');
 
 		//try to geolocate user
 		OpenPath.maps.geolocate("self_video");// target video. String used to determine which thumb map to target
@@ -160,7 +160,7 @@ OpenPath.main = {
 		$("nav.main a").tooltip({placement:'bottom'});
 		
 
-		
+		/*
 		$('header.main a').click(function (e) {
 			//e.preventDefault();
 			$(this).tab('show');
@@ -179,6 +179,7 @@ OpenPath.main = {
 			
 			OpenPath.maps.resetMaps();
 		});
+		*/
 	},
 	addUserForm : function(){
 		// Validates and submits email inviting participant

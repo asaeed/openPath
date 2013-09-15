@@ -247,15 +247,14 @@ li {
 .main .subnav ul li.active a {
   font-weight: bold !important;
 }
-.main .tab-pane {
+.main .main-tab {
   padding: 7em 0 0 0;
-}
-.main .tab-pane .tab-pane {
-  padding: 0;
+  display: none;
 }
 .main #videos {
   overflow: hidden;
   padding: 0;
+  display: block;
 }
 .main #videos .col1 {
   float: left;
@@ -335,12 +334,12 @@ li {
   width: 100%;
   height: auto;
 }
-.main #adduser {
+.main #addUser {
   min-height: 46em;
   padding: 9em 2em 2em 2em;
   background: #eeedeb;
 }
-.main #adduser textarea {
+.main #addUser textarea {
   display: block;
   width: 90%;
 }
@@ -368,7 +367,8 @@ li {
   margin: 1.5em 0 0 2em;
 }
 .main #events .events-single-col {
-  min-height: 46em;
+  /*min-height:46em;*/
+
   padding: 0;
   background: #eeedeb;
 }
@@ -376,9 +376,10 @@ li {
   padding: 0 4%;
   margin: 0;
   list-style-type: none;
-  height: 400px;
-  overflow-y: scroll;
-  border: 1px solid red;
+  /*
+			height:400px;
+			overflow-y:scroll;*/
+
 }
 .main #events ul#eventslist li.event {
   width: 100%;

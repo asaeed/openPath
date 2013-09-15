@@ -20,14 +20,22 @@
 
 
 	<script src="js/openpath.main.js"></script>
+	<script src="js/models/event.js"></script>
+	<script src="js/models/user.js"></script>
+
+	<script src="js/views/event.js"></script>
+	<script src="js/views/events.js"></script>
+	<script src="js/views/user.profile.js"></script>
+
+	<script src="js/collections/events.js"></script>
+
+	
+
+
 	<!--<script src="js/openpath.user.js"></script>
 	<script src="js/openpath.user.profile.js"></script>
 	<script src="js/openpath.user.settings.js"></script>
 	<script src="js/openpath.events.addEvent.js"></script>-->
-	<script src="js/models/event.js"></script>
-	<script src="js/views/event.js"></script>
-	<script src="js/views/events.js"></script>
-	<script src="js/collections/events.js"></script>
 	
 {% endblock %}
 
@@ -38,7 +46,7 @@
 	{% include "main/main.header.html" %}
 
 	<div id="content">
-		<div class="tab-content">
+		<div class="tabs">
 			
 	  	  <!-- ***** MAIN ***** -->
 			 
@@ -46,7 +54,7 @@
 			  {% include "main/main.videos.html" %}
 
 			  <!-- ***** ADD USER ***** -->
-			  {% include "main/main.user.add.html" %}
+			  {% include "main/main.adduser.html" %}
 			
 			  <!-- ***** EVENTS ***** -->
 			  {% include "main/main.events.html" %}

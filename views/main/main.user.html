@@ -1,4 +1,4 @@
-<div class="tab-pane main-tab" id="user">
+<div class="main-tab" id="user">
 	<!-- BEGIN USER MENU -->
     <div id="usermenu">
         <div class="col50 left">
@@ -10,17 +10,17 @@
         <div class="col50 right">
             <nav id="usernav" class="subnav">
                 <ul>
-					<li class="active"><a data-toggle="tab" href="#profile">Profile</a></li>
-                    <li><a data-toggle="tab" href="#mypath">My Path</a></li>
-                    <li><a data-toggle="tab" href="#notifications">Notifications</a></li>
-                    <li><a data-toggle="tab" href="#settings">Settings</a></li>
+					<li class="active"><a data-toggle="" href="#/user/profile">Profile</a></li>
+                    <li><a data-toggle="" href="#/user/mypath">My Path</a></li>
+                    <li><a data-toggle="" href="#/user/notifications">Notifications</a></li>
+                    <li><a data-toggle="" href="#/user/settings">Settings</a></li>
                 </ul>
             </nav>
         </div>
     </div>
 	<!-- END USER MENU -->
 	<!-- BEGIN USER TAB-CONTENT -->
-	<div class="tab-content">
+	<div class="tabs">
 		
 		{% include "main/main.user.profile.html" %}
 		

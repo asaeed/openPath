@@ -25,9 +25,6 @@ OpenPath.EventsView = Backbone.View.extend({
             model: item
         });
         this.$el.append(eventView.render().el);
-        this.$el.css({
-        	border:'1px solid blue'
-        });
     },
     /**
      * custom form setup & submission - unbackbone way

@@ -234,16 +234,15 @@ footer {
 		}
 	}
 	/*tabs*/
-	.tab-pane {
+	.main-tab {
 		padding:7em 0 0 0;
-		.tab-pane {
-			padding:0;
-		}
+		display:none;
 	}
 	/*videos*/ /*TODO: ems below*/
 	#videos {
 		overflow:hidden;
 		padding:0;
+		display:block;
 		.col1{
 			float:left;
 			position:relative;
@@ -325,7 +324,7 @@ footer {
 		}
 	}
 	/*addUser*/
-	#adduser{
+	#addUser{
 		min-height:46em;
 		padding:9em 2em 2em 2em;
 		background: #eeedeb;
@@ -356,7 +355,7 @@ footer {
 			}
 		}
 		.events-single-col {
-			min-height:46em;
+			/*min-height:46em;*/
 			padding:0;
 			background: #eeedeb;
 		}
@@ -365,10 +364,9 @@ footer {
 			padding:0 4%;
 			margin:0;
 			list-style-type: none;
-
+			/*
 			height:400px;
-			overflow-y:scroll;
-			border:1px solid red;
+			overflow-y:scroll;*/
 			li.event {
 				width:100%;
 				overflow:hidden;

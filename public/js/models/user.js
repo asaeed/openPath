@@ -10,11 +10,11 @@ OpenPath.UserModel = Backbone.Model.extend({
     homelocation:[0,0],
     locations : [{ location: [0, 0], atTime: 0 }],
     settings : {
-            alertsColearnerJoin:true,
-            alertsNearEvent:true,
-            alertsAllEvents:true,
-            profileAccess:'private'
-          }
+      alertsColearnerJoin:true,
+      alertsNearEvent:true,
+      alertsAllEvents:true,
+      profileAccess:'private'
+    }
   },
   initialize: function(){
     console.log("new User initialized");
