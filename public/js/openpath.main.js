@@ -156,6 +156,10 @@ OpenPath.main = {
 	},
 	nav : function(){
 		// Main Navigation Tabs
+		$(".logo a").tooltip({placement:'right'});
+		$("nav.main a").tooltip({placement:'bottom'});
+		
+
 		
 		$('header.main a').click(function (e) {
 			//e.preventDefault();
@@ -164,12 +168,11 @@ OpenPath.main = {
 			//OpenPath.user.onMenuChange();
 			
 			OpenPath.maps.resetMaps();
-		})
-		$(".logo a").tooltip({placement:'right'});
-		$("nav.main a").tooltip({placement:'bottom'});
-
+		});
+		
 		$('#usernav a').click(function (e) {
 			//e.preventDefault();
+			console.log($(this).attr('href'))
 			$(this).tab('show');
 			
 			//OpenPath.user.onMenuChange();

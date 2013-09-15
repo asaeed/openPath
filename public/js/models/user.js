@@ -1,14 +1,20 @@
 OpenPath = window.OpenPath || {};
 
 OpenPath.UserModel = Backbone.Model.extend({
-  //urlRoot: '/users',
+  urlRoot: '/users',
   defaults: {
     name: '',
     email: '',
     grade: '',
     interests: [],
     homelocation:[0,0],
-    locations : [{ location: [0, 0], atTime: 0 }]
+    locations : [{ location: [0, 0], atTime: 0 }],
+    settings : {
+            alertsColearnerJoin:true,
+            alertsNearEvent:true,
+            alertsAllEvents:true,
+            profileAccess:'private'
+          }
   },
   initialize: function(){
     console.log("new User initialized");

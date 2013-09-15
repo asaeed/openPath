@@ -74,7 +74,7 @@ OpenPath = {
 				hash = "#" + hash;
 			}
 			
-			window.location = "/main" + hash + this.room;
+			window.location = "/main"// + hash + this.room;  //TODO - room?
 			
 		}else if(path == '/main'){
 			// ON LOGIN: do main handling
@@ -172,11 +172,6 @@ OpenPath = {
 };
 
 $(document).ready(function(){
-	//old global vars
-	// var username;
-  	//var email;
-  	//var sessionID;
-  ///var room = "";
 	OpenPath.init();
 });
 

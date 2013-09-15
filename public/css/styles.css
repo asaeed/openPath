@@ -427,6 +427,12 @@ li {
   overflow: hidden;
   z-index: 9;
 }
+.main #user #usermenu .left {
+  float: left;
+}
+.main #user #usermenu .right {
+  float: right;
+}
 .main #user #usermenu .userIcon {
   width: 40px;
   height: 40px;
