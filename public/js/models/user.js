@@ -25,7 +25,8 @@ OpenPath.UserModel = Backbone.Model.extend({
         //var name = model.get("name"); // 'Stewie Griffin'
         //alert("Changed my name to " + name );
     });
-  }
+  },
+  idAttribute: "_id"
 });
 
 

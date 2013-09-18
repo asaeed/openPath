@@ -87,7 +87,8 @@ OpenPath = {
 	//sets new backbone user model
 	setUser : function(user){
 		//set user
-		this.user = new OpenPath.UserModel({_id: user._id});
+		//this.user = new OpenPath.UserModel({_id: user._id});
+        this.user = new OpenPath.UserModel(user);
         // The fetch below will perform GET /user/1
         // The server should return the id, name and email from the database
         this.user.fetch({

@@ -26,13 +26,14 @@ exports.status = function authStatus(req, res) {
             req.session.userId = newUser._id;
             newUser.status = "okay";
             res.json(newUser);
+            console.log('new user')
           });
         } else {
           req.session.email = foundUser.email;
           req.session.userId = foundUser._id;
           foundUser.status = "okay";
           res.json(foundUser);
-          console.log('foundUser',foundUser._id)
+          console.log('foundUser')
         }
       });    
 

@@ -103,7 +103,6 @@ app.post('/email', email.sendEmailRequest);
 
 app.get('/users', user.findAll);
 app.get('/users/:id', user.findById);
-app.get('/users-email/:email', user.findUserByEmail); ///TODO:FIX - go through session || auth
 app.post('/users', user.addItem);
 app.put('/users/:id', user.updateItem);
 app.delete('/users/:id', user.deleteItem);

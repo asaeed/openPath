@@ -47,9 +47,7 @@ OpenPath.EditUserProfileView = Backbone.View.extend({
 						//grade: gradelevel,
 						//interests : interests.split(',').join(', ')
 					};
-				alert('so far so...')
 				self.model.save(data);
-				alert('so ok')
 				return false;
 			}
 		});
