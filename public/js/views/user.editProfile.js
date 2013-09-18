@@ -49,7 +49,7 @@ OpenPath.EditUserProfileView = Backbone.View.extend({
 					};
 				self.model.save(data,{
 			        success: function (model) {
-			            alert(self.model.toJSON());
+			            console.log('save',model.toJSON());
 			        }
 			    });
 				return false;
