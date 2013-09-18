@@ -3,7 +3,10 @@ OpenPath = window.OpenPath || {};
 OpenPath.UserModel = Backbone.Model.extend({
   urlRoot: '/users',
   defaults: {
-    name: '',
+    name: {
+      first : '',
+      last : ''
+    },
     email: '',
     grade: '',
     interests: [],
@@ -18,6 +21,10 @@ OpenPath.UserModel = Backbone.Model.extend({
   },
   initialize: function(){
     console.log("new User initialized");
+    this.on("change:settings", function(model){
+        //var name = model.get("name"); // 'Stewie Griffin'
+        //alert("Changed my name to " + name );
+    });
   }
 });
 

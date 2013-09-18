@@ -25,10 +25,11 @@ OpenPath.user.settings = {
 		this.saved.hide();
 
 		//actions
+		/*
 		OpenPath.user.getByEmail(function(d){
 			self.populate(d);
 		});
-		
+		*/
 		this.form.submit(function(e){
 			//console.log('update profile',username,email,sessionID);
 			var alertsColearnerJoin = self.alertsColearnerJoin.is(':checked'),
@@ -43,12 +44,12 @@ OpenPath.user.settings = {
 						'profileAccess':profileAccess
 					}
 				};
-			
+			/*
 			OpenPath.user.update(data, function(d){
 				self.populate(d);
 				self.saved.fadeIn();
 			});
-			
+			*/
 			
 			return false;
 		});

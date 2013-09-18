@@ -32,6 +32,7 @@ exports.status = function authStatus(req, res) {
           req.session.userId = foundUser._id;
           foundUser.status = "okay";
           res.json(foundUser);
+          console.log('foundUser',foundUser._id)
         }
       });    
 

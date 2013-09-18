@@ -12,8 +12,8 @@ navigator.id.watch({
       xhr.addEventListener("loadend", function(e) {
       	var data = JSON.parse(this.responseText);
 
-		if (data && data.status === "okay") {
-			OpenPath.handleLogin(data.email);
+    		if (data && data.status === "okay") {
+    			OpenPath.handleLogin(data);
         }
       }, false);
       xhr.send(JSON.stringify({

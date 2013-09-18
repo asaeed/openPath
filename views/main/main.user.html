@@ -22,7 +22,12 @@
 	<!-- BEGIN USER TAB-CONTENT -->
 	<div class="tabs">
 		
-		{% include "main/main.user.profile.html" %}
+		<!--user profile-->
+		<div class="user-tab active" id="profile">
+			<div class="usertab-single-col">
+			</div>
+			<a id="logout" class="btn" href="#">Logout</a>
+		</div>
 		
 		{% include "main/main.user.mypath.html" %}
 		

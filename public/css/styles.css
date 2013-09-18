@@ -466,9 +466,6 @@ li {
 .main #user #profile .displayView a.editProfileBtn {
   float: right;
 }
-.main #user #profile .editView {
-  display: none;
-}
 .main #user #profile .editView .profileIntro {
   padding-bottom: 20px;
 }

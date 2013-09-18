@@ -2,6 +2,7 @@ OpenPath = window.OpenPath || {};
 
 
 OpenPath = {
+	user : null, //TODO: get rid of next two vars
 	username : null,
 	email : null,
 	sessionID : null,
@@ -58,9 +59,9 @@ OpenPath = {
 	/**
 	* Determines actions after login based on URL path.
 	*/
-	handleLogin : function( email ){
+	handleLogin : function( user ){
 		var path = window.location.pathname;
-		console.log('handleLogin path = ' + path);
+		console.log('handleLogin path = ' + path, this.user);
 		if(path == '/'){
 			// ON LOGIN: do homepage handling
 			console.log('ON LOGIN: do homepage handling');
@@ -78,8 +79,22 @@ OpenPath = {
 			
 		}else if(path == '/main'){
 			// ON LOGIN: do main handling
-			this.getSessionIdHash(email);
+			this.getSessionIdHash(user.email);
+			//set user
+			this.setUser(user);
 		}
+	},
+	//sets new backbone user model
+	setUser : function(user){
+		//set user
+		this.user = new OpenPath.UserModel({_id: user._id});
+        // The fetch below will perform GET /user/1
+        // The server should return the id, name and email from the database
+        this.user.fetch({
+            success: function (user) {
+                console.log(user.toJSON());
+            }
+        });
 	},
 	/**
 	* Checks /sessions/ for hash containing session id.
