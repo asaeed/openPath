@@ -37,8 +37,8 @@ OpenPath.EditUserProfileView = Backbone.View.extend({
     	//submit and validate
 		this.form.validate({
 			submitHandler: function(form) {
-				var firstName = $(this).find('.firstName').val(),
-					lastName = $(this).find('.lastName').val(),
+				var firstName = self.form.find('.firstName').val(),
+					lastName = self.form.find('.lastName').val(),
 					//gradelevel = $(this).find('.gradelevel').val(),
 					//interests = $(this).find('.interests').val(),
 					//colearners = $(this).find('.colearners').val(),
@@ -47,7 +47,11 @@ OpenPath.EditUserProfileView = Backbone.View.extend({
 						//grade: gradelevel,
 						//interests : interests.split(',').join(', ')
 					};
-				self.model.save(data);
+				self.model.save(data,{
+			        success: function (model) {
+			            alert(self.model.toJSON());
+			        }
+			    });
 				return false;
 			}
 		});
