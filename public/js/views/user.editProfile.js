@@ -47,9 +47,12 @@ OpenPath.EditUserProfileView = Backbone.View.extend({
 						//grade: gradelevel,
 						//interests : interests.split(',').join(', ')
 					};
-				self.model.save(data,{
+				self.model.set(data,{
 			        success: function (model) {
-			            console.log('save',model.toJSON());
+			            console.log('save',	model.toJSON());
+			        },
+			        error: function(err){
+			        	 console.log('error save',	err);
 			        }
 			    });
 				return false;

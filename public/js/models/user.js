@@ -1,8 +1,9 @@
 OpenPath = window.OpenPath || {};
 
 OpenPath.UserModel = Backbone.Model.extend({
-  urlRoot: '/users',
+  url: '/users',
   defaults: {
+    id:'',
     name: {
       first : '',
       last : ''

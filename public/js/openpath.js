@@ -61,10 +61,13 @@ OpenPath = {
 	*/
 	handleLogin : function( user ){
 		var path = window.location.pathname;
-		console.log('handleLogin path = ' + path, this.user);
+		console.log('handleLogin path = ' + path, user);
 		if(path == '/'){
 			// ON LOGIN: do homepage handling
 			console.log('ON LOGIN: do homepage handling');
+			
+			
+
 			
 			//window.location = "/main" +'#'+getHash();
 			if(this.room != ""){
@@ -79,13 +82,15 @@ OpenPath = {
 			
 		}else if(path == '/main'){
 			// ON LOGIN: do main handling
-			this.getSessionIdHash(user.email);
+			this.getSessionIdHash(user);
 			//set user
 			this.setUser(user);
+			
 		}
 	},
 	//sets new backbone user model
 	setUser : function(user){
+		console.log('set user')
 		//set user
 		//this.user = new OpenPath.UserModel({_id: user._id});
         this.user = new OpenPath.UserModel(user);
@@ -96,6 +101,8 @@ OpenPath = {
                 console.log(user.toJSON());
             }
         });
+        this.user.set({id:user._id});
+		//this.user.save();
 	},
 	/**
 	* Checks /sessions/ for hash containing session id.
@@ -167,14 +174,15 @@ OpenPath = {
 	* Display username in interface
 	*/
 	showUsername : function(user, idHash){
-		 this.email = user;
+			console.log(user)
+		 this.email = user.email;
 		 //alert("showUsername email = " + email);
 		 if(user != "guest"){
 			// pull username from front of email address and display in interface
 			// will allow user to change in future version; will store in user data along w prefs
-			this.username = user.match(/^([^@]*)@/)[1];		
+			this.username = user.email.match(/^([^@]*)@/)[1];		
 		}else{
-			this.username = user;
+			this.username = user.email;
 		};
 		document.querySelector("#username1").textContent = this.username;
 		document.querySelector("#profileUsername").textContent = this.username;	
