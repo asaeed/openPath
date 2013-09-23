@@ -61,14 +61,11 @@ OpenPath = {
 	*/
 	handleLogin : function( user ){
 		var path = window.location.pathname;
-		console.log('handleLogin path = ' + path, user);
+		console.log('handleLogin path = ' + path);
 		if(path == '/'){
 			// ON LOGIN: do homepage handling
 			console.log('ON LOGIN: do homepage handling');
-			
-			
-
-			
+	
 			//window.location = "/main" +'#'+getHash();
 			if(this.room != ""){
 				this.room = "?room=" + this.room;
@@ -82,7 +79,7 @@ OpenPath = {
 			
 		}else if(path == '/main'){
 			// ON LOGIN: do main handling
-			this.getSessionIdHash(user);
+			this.getSessionIdHash(user.email);
 			//set user
 			this.setUser(user);
 			
@@ -101,7 +98,7 @@ OpenPath = {
                 console.log(user.toJSON());
             }
         });
-        this.user.set({id:user._id});
+        //this.user.set({id:user._id});
 		//this.user.save();
 	},
 	/**
@@ -137,6 +134,7 @@ OpenPath = {
 	* Creates new session in database.
 	*/
 	createNewSession : function(email){
+		console.log('create new session', email)
 		var self = this,
 			sessionObj = { 
 				/*
@@ -173,16 +171,15 @@ OpenPath = {
 	/**
 	* Display username in interface
 	*/
-	showUsername : function(user, idHash){
-			console.log(user)
-		 this.email = user.email;
+	showUsername : function(email, idHash){
+		 this.email = email;
 		 //alert("showUsername email = " + email);
-		 if(user != "guest"){
+		 if(email != "guest"){
 			// pull username from front of email address and display in interface
 			// will allow user to change in future version; will store in user data along w prefs
-			this.username = user.email.match(/^([^@]*)@/)[1];		
+			this.username = email.match(/^([^@]*)@/)[1];		
 		}else{
-			this.username = user.email;
+			this.username =email;
 		};
 		document.querySelector("#username1").textContent = this.username;
 		document.querySelector("#profileUsername").textContent = this.username;	

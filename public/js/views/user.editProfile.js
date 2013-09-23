@@ -5,7 +5,7 @@ OpenPath.EditUserProfileView = Backbone.View.extend({
     className:"editView",
 	template:$("#editUserProfileTemplate").html(),
 	initialize : function(){
-
+		console.log('EditUserProfileView init')
         this.render();
 	},
 	render:function () {
@@ -47,7 +47,9 @@ OpenPath.EditUserProfileView = Backbone.View.extend({
 						//grade: gradelevel,
 						//interests : interests.split(',').join(', ')
 					};
-				self.model.set(data,{
+				console.log('form val sub mit handler')
+				/* backbone being bitchy, skip for now
+				self.model.save(data,{
 			        success: function (model) {
 			            console.log('save',	model.toJSON());
 			        },
@@ -55,6 +57,23 @@ OpenPath.EditUserProfileView = Backbone.View.extend({
 			        	 console.log('error save',	err);
 			        }
 			    });
+			    */
+			    console.log(self.model)
+				$.ajax({
+					url: '/users/'+self.model._id,//TODO: security?
+					//url : '/update/users/'+self._id+'/'+key+'/'+value,
+					data: {$set:data}, //{$set writes to individual keys rather than overriding whole entry
+					dataType:'json',
+					type:'PUT',
+					async:false,
+					success: function(new_data) { 
+						//console.log('user updated',new_data.$set);
+						callback(new_data.$set );
+					},
+					error: function(msg){
+						console.log('user not updated',msg);
+					}
+				});
 				return false;
 			}
 		});
