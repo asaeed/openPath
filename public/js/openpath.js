@@ -98,6 +98,17 @@ OpenPath = {
                 console.log(user.toJSON());
             }
         });
+        this.user.save({name : {first: 'firstName', last : 'lastName'}});
+				console.log('form val sub mit handler')
+		/* backbone being bitchy, skip for now
+		self.model.save(data,{
+	        success: function (model) {
+	            console.log('save',	model.toJSON());
+	        },
+	        error: function(err){
+	        	 console.log('error save',	err);
+	        }
+	    });*/
         //this.user.set({id:user._id});
 		//this.user.save();
 	},
