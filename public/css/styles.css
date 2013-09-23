@@ -40,7 +40,6 @@ header.main {
   top: 0;
   height: 6.7em;
   z-index: 10;
-  border: 1px solid red;
 }
 footer {
   text-align: center;
