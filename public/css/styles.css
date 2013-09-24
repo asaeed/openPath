@@ -88,6 +88,8 @@ li {
   position: relative;
   color: #fff;
   background: #666666 url(../img/home/headerbgd.jpg) no-repeat;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
   background-size: cover;
 }
 .home section.main .content {
@@ -158,6 +160,23 @@ li {
   /*user*/
 
 }
+.main .globalMarker {
+  width: 94%;
+  margin: 0 auto;
+  position: relative;
+}
+.main .globalMarker a.openPathMarker {
+  display: block;
+  position: absolute;
+  background: url('../img/marker.png') no-repeat scroll top left;
+  width: 44px;
+  height: 44px;
+  top: 1.2em;
+  z-index: 11;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  background-size: cover;
+}
 .main header.main {
   background: rgba(0, 0, 0, 0.6);
 }
@@ -166,6 +185,15 @@ li {
 }
 .main header.main a.logo {
   float: left;
+  padding: 1.6em 0 0 5.5em;
+}
+.main header.main a.logo span {
+  font-size: 3em;
+  font-weight: bold;
+  line-height: 1.1em;
+  text-shadow: 2px 2px rgba(0, 0, 0, 0.5);
+  color: #fff;
+  letter-spacing: 0.1em;
 }
 .main header.main nav.main {
   float: right;

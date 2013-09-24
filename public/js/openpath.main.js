@@ -156,7 +156,7 @@ OpenPath.main = {
 	},
 	navControls : function(){
 		// Main Navigation Tabs
-		$(".logo a").tooltip({placement:'right'});
+		$("a.logo").tooltip({placement:'bottom'});
 		$("nav.main a").tooltip({placement:'bottom'});
 		
 

@@ -83,7 +83,7 @@ footer {
 		position:relative; 
 		color:#fff;
 		background:#666 url(../img/home/headerbgd.jpg) no-repeat;
-		background-size:cover;
+		.background-size(cover);
 		.content {
 			height:43.0em;
 			padding-top:2em;
@@ -145,6 +145,22 @@ footer {
 /* main styles */
 .main {
 	/*main nav*/
+	.globalMarker {
+		width:94%;
+		margin:0 auto;
+		position:relative;
+		a.openPathMarker {
+			display:block;
+			position:absolute;
+			background: url('../img/marker.png') no-repeat scroll top left;
+			width: 44px;
+			height: 44px;
+			top:1.2em;
+			z-index:11;
+			.background-size(cover);
+		}
+	}
+	
 	header.main {
 		background: rgba(0,0,0,0.6);
 		.content {
@@ -152,6 +168,15 @@ footer {
 		}
 		a.logo {
 			float:left;
+			padding:1.6em 0 0 5.5em;
+			span{
+				font-size:3em;
+				font-weight:bold;
+				line-height:1.1em;
+				text-shadow: 2px 2px rgba(0,0,0,0.5);
+				color:#fff;
+				letter-spacing:0.1em;
+			}
 		}
 		nav.main {
 			float:right; 

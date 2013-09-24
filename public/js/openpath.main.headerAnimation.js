@@ -14,9 +14,25 @@ OpenPath.main.headerAnimation = {
         this.header.mouseout(function(){
         	self.overHeader = false;
         });
-
-        if($('.navHotSpot').length <= 0) return;  //if no place to re open header with, return
-
+		
+		if($('.openPathMarker').length <= 0) return;  //if no place to re open header with, return
+		
+		$('.openPathMarker').mouseover(function(){
+        	self.overHeader = true;
+        	if(self.headerShowing === false) self.showNav();
+        	
+        });
+        $('.openPathMarker').mouseout(function(){
+        	self.overHeader = false;
+        	setTimeout(function(){
+				if(self.overHeader === false){
+					self.hideNav();
+				}
+			}, 1000);
+        });
+		
+        
+		
         $('.navHotSpot').mouseover(function(){
         	self.overHeader = true;
         	if(self.headerShowing === false) self.showNav();
