@@ -95,7 +95,7 @@ OpenPath = {
         // The server should return the id, name and email from the database
         this.user.fetch({
             success: function (user) {
-                console.log('fetched user',user.toJSON());
+                //console.log('fetched user',user.toJSON());
             }
         });
 	},

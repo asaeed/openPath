@@ -15,11 +15,12 @@ var PeerConnection = window.PeerConnection || window.webkitPeerConnection00 || w
 
 OpenPath.main = {
 	init : function(){
-
+		
+		
 		//this = OpenPath.main
 		this.connect();
 		this.initControls();
-		this.nav();
+		this.navControls();
 
 		//turn on videos tab
         //$('#videos').addClass('active');
@@ -36,11 +37,10 @@ OpenPath.main = {
 
 		//TODO on menu change
 		this.addUserForm();
-
-
-		//OpenPath.user.init();
-		//OpenPath.events.init();
 	},
+
+	//below needs work
+
 	/**
 	 * Assigns behaviors to interface controls.
 	 */
@@ -154,7 +154,7 @@ OpenPath.main = {
 		});
 
 	},
-	nav : function(){
+	navControls : function(){
 		// Main Navigation Tabs
 		$(".logo a").tooltip({placement:'right'});
 		$("nav.main a").tooltip({placement:'bottom'});

@@ -54,18 +54,17 @@ OpenPath.EditUserProfileView = Backbone.View.extend({
 				var firstName = self.form.find('.firstName').val(),
 					lastName = self.form.find('.lastName').val(),
 					gradelevel = self.form.find('.gradelevel').val(),
-					//interests = $(this).find('.interests').val(),
+					interests = self.form.find('.interests').val(),
 					//colearners = $(this).find('.colearners').val(),
 					data = {
 						name : {first: firstName, last : lastName},
-						grade: gradelevel//,
-						//interests : interests.split(',').join(', ')
+						grade: gradelevel,
+						interests : interests.split(',').join(', ')
 					};
-				console.log('form val sub mit handler',gradelevel);
+				console.log('form val sub mit handler',interests);
 				/* backbone being bitchy, going old  way*/
 				$.ajax({
 					url: '/users/'+self.model.id,//TODO: security?
-					//url : '/update/users/'+self._id+'/'+key+'/'+value,
 					data: {$set:data}, //{$set writes to individual keys rather than overriding whole entry
 					dataType:'json',
 					type:'PUT',

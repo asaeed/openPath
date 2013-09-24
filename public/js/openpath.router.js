@@ -66,6 +66,7 @@ app_router.on('route:defaultRoute', function(actions) {
     });
 
     if(actions === 'main'){
+        OpenPath.main.headerAnimation.init();
         $('#videos').show();
     }
     if(actions === 'adduser'){

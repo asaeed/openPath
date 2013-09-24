@@ -1,5 +1,5 @@
 @import url( "persona-buttons.css" );
-/*@import url( "lesshat.less" );*/
+@import  "lesshat.less";
 
 
 body {
@@ -44,8 +44,10 @@ header.main {
 	position:absolute;
 	top:0;
 	height:6.7em;
-	z-index:10;
+	z-index:10;	
 }
+
+/*footer*/
 footer {
 	text-align:center;
 	padding-bottom:3em;
@@ -142,6 +144,7 @@ footer {
 
 /* main styles */
 .main {
+	/*main nav*/
 	header.main {
 		background: rgba(0,0,0,0.6);
 		.content {
@@ -250,6 +253,14 @@ footer {
 			float:left;
 			position:relative;
 			width:23.4375%;
+		}
+		.navHotSpot {
+			position: absolute;
+			top:0;
+			left:0;
+			width:100%;
+			height:8em;
+			z-index:3;
 		}
 		.userVideo {
 			position:relative;
