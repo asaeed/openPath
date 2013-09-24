@@ -16,12 +16,14 @@ exports.status = function authStatus(req, res) {
   },function(e, r, body) {
     //callback
     if(body && body.email) {
-      console.log("auth status: persona", body.email);
+      console.log("auth status: persona", body.email,req.session.email);
 
       // find user, if new user, then create them in database
       user.findByEmail(body.email, function(foundUser){
         if (!foundUser) {
-          
+          res.json({"email": req.session.email, "status": "okay"});
+
+         //let backbone do it on front end
           user.addUser(body.email, function(newUser){
             req.session.email = newUser.email;
             req.session.userId = newUser._id;

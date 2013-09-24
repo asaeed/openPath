@@ -61,7 +61,7 @@ OpenPath.EditUserProfileView = Backbone.View.extend({
 						grade: gradelevel,
 						interests : interests.split(',')
 					};
-				console.log('form val sub mit handler',interests);
+				console.log('form val sub mit handler',self.model);
 				/* backbone being bitchy, going old  way*/
 				$.ajax({
 					url: '/users/'+self.model.id,//TODO: security?
@@ -71,6 +71,7 @@ OpenPath.EditUserProfileView = Backbone.View.extend({
 					//async:false,
 					success: function(new_data) { 
 						console.log('user updated',new_data.$set);
+						self.model.sync("read", self.model)//nothing?
 					},
 					error: function(msg){
 						console.log('user not updated',msg);

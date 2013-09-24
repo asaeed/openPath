@@ -61,7 +61,7 @@ OpenPath = {
 	*/
 	handleLogin : function( user ){
 		var path = window.location.pathname;
-		console.log('handleLogin path = ' + path);
+		console.log('handleLogin path = ' , path,user);
 		if(path == '/'){
 			// ON LOGIN: do homepage handling
 			console.log('ON LOGIN: do homepage handling');
@@ -87,17 +87,19 @@ OpenPath = {
 	},
 	//sets new backbone user model
 	setUser : function(user){
+		var self = this;
 		console.log('set user',user)
 		//set user
-		this.user = new OpenPath.UserModel({_id: user._id});
-        //this.user = new OpenPath.UserModel({_id: user._id});
+		//this.user = new OpenPath.UserModel({id: user._id});
+        this.user = new OpenPath.UserModel({_id: user._id});//good
         // The fetch below will perform GET /user/1
         // The server should return the id, name and email from the database
         this.user.fetch({
             success: function (user) {
-                //console.log('fetched user',user.toJSON());
+                console.log('fetched user',user.toJSON());
             }
         });
+        //this.user.save({id: user._id, name:{first:'crap',last:'face'}})
 	},
 	/**
 	* Checks /sessions/ for hash containing session id.

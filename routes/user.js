@@ -16,9 +16,9 @@ db.open(function(err, db) {
 
         db.collection('users', function(err, collection){
             collection.findOne(function(err, item) {
-                if (!item){
-                    //populateDB();
-                }
+                //if (!item){
+                    populateDB();
+                //}
             });
         });
     }
@@ -149,15 +149,27 @@ var populateDB = function() {
     var users = [
 	  {
 	    "createDate": "2012-11-02 14:48:20",
-	    "name": "jared"
+	    "name": {
+            "first":"francis",
+            "last" : "drake"
+        },
+        "email" : "fan@moola.com"
 	  },
 	  {
 	    "createDate": "2012-12-03 14:48:20",
-	    "name": "rich"
+	    "name": {
+            "first":"goola",
+            "last" : "moola"
+        },
+        "email" : "goola@moola.com"
 	  },
 	  {
 	    "createDate": "2013-01-04 14:48:20",
-	    "name": "ahmad"
+        "name": {
+            "first":"ahmad",
+            "last" : "moola"
+        },
+        "email" : "ahmad@moola.com"
 	  }
 	];
 
