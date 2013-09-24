@@ -72,7 +72,7 @@ OpenPath = {
 			}
 			var hash = OpenPath.utils.getHash();
 			if(hash != ""){
-				hash = "#" + hash;
+				hash = "/#/" + hash;
 			}
 			
 			window.location = "/main"// + hash + this.room;  //TODO - room?

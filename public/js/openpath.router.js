@@ -7,7 +7,8 @@ OpenPath.Router = Backbone.Router.extend({
     }
 });
 // Initiate the router
-var app_router = new OpenPath.Router;
+var app_router = new OpenPath.Router,
+	loadRoute = {};
 
 app_router.on('route:loadView', function(route, action) {
     console.log('route:loadView',route,action);
@@ -15,35 +16,11 @@ app_router.on('route:loadView', function(route, action) {
      * user route
      */
     if(route === 'user'){
-        //hide other tabs
-        $('.user-tab').each(function(){
-            $(this).hide();
-            //console.log('hide user tabs')
-        });
-
         if(action === 'profile'){
-            $('#profile').show();
-            //$('#profile .editView').hide();
-            //$('#profile .displayView').show();
-            $('h1#profileUsername').show();
-
-            var userProfile = new OpenPath.UserProfileView({
-                model: OpenPath.user
-            });
-
-            $("#profile .usertab-single-col").html(userProfile.render().el);
+			loadRoute.user.profile();
         }
         if(action === 'edit-profile'){
-            $('#profile').show();
-            //$('#profile .displayView').hide();
-            //$('#profile .editView').show();
-            $('h1#profileUsername').hide();
-
-            var editUserProfile = new OpenPath.EditUserProfileView({
-                model: OpenPath.user
-            });
-
-            $("#profile .usertab-single-col").html(editUserProfile.render().el);
+			loadRoute.user.editProfile();
         }
         if(action === 'mypath'){
             $('#mypath').show();
@@ -52,7 +29,7 @@ app_router.on('route:loadView', function(route, action) {
             $('#notifications').show();
         }
         if(action === 'settings'){
-            $('#settings').show();
+			loadRoute.user.settings();
         }
     }
 
@@ -79,17 +56,50 @@ app_router.on('route:defaultRoute', function(actions) {
         var evCollection = new OpenPath.EventsView();
     }
     if(actions === 'user'){
-        $('#user').show();
+        //start with profile
+        loadRoute.user.profile();
+    }
+});
+//app routes
+loadRoute.user = {
+	init : function(){
+		$('#user').show();
         $('.user-tab').each(function(){
             $(this).hide();
             //console.log('hide user tabs')
         });
-        //start with profile
-        $('#profile').show();
+	},
+	profile : function(){
+		this.init();
+		$('#profile').show();
+        $('h1#profileUsername').show();
+
+        var userProfile = new OpenPath.UserProfileView({
+            model: OpenPath.user
+        });
+
+        $("#profile .usertab-single-col").html(userProfile.render().el);
+	},
+	editProfile : function(){
+		this.init();
+		$('#profile').show();
+        $('h1#profileUsername').hide();
+        var editUserProfile = new OpenPath.EditUserProfileView({
+            model: OpenPath.user
+        });
+        $("#profile .usertab-single-col").html(editUserProfile.render().el);
+	},
+	settings : function(){
+		this.init();
+        $('#settings').show();
+		var userSettings = new OpenPath.UserSettingsView({
+            model: OpenPath.user
+        });
+        $("#settings .usertab-single-col").html(userSettings.render().el);
+	}
+}  
 
 
-    }
-});
 
 // Start Backbone history a necessary step for bookmarkable URL's
 Backbone.history.start();
