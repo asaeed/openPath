@@ -59,7 +59,7 @@ OpenPath.EditUserProfileView = Backbone.View.extend({
 					data = {
 						name : {first: firstName, last : lastName},
 						grade: gradelevel,
-						interests : interests.split(',').join(', ')
+						interests : interests.split(',')
 					};
 				console.log('form val sub mit handler',interests);
 				/* backbone being bitchy, going old  way*/

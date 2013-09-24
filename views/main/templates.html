@@ -8,6 +8,8 @@
 	</article>
 	<div class="mapWrap"></div>
 </script>
+
+
 <!--userProfile template-->
 <script id="userProfileTemplate" type="text/template">
 	<a class="editProfileBtn" href="#/user/edit-profile">Edit</a>
@@ -19,7 +21,7 @@
 	<article class="interests">
 		<h2>Interests:</h2>
 		<div class="results">
-			<% _.each(interests, function(i) { %>  <%= interests[i] %> <% }); %>
+			<% _.each(interests, function(i) { %>  <%= i %> <% }); %>
 		</div>
 	</article>
 	<article class="colearners">
@@ -27,6 +29,8 @@
 		<div class="results"></div>
 	</article>
 </script>
+
+
 <!--editUserProfile template-->
 <script id="editUserProfileTemplate" type="text/template">
 	<div class="profileIntro">
@@ -42,7 +46,6 @@
 		<fieldset class="name">
 			<input type="text" name="firstName" class="firstName" placeholder="first name" value="<%= name.first %>" />
 			<input type="text" name="lastName" class="lastName" placeholder="last name" value="<%= name.last %>" />
-			<input type="text" name="createDate" class="createDate" placeholder="createdate" value="<%= createDate %>" />
 		</fieldset>
 		<fieldset>
 			<label>Grade Level:</label>
@@ -57,7 +60,7 @@
 		</fieldset>
 		<fieldset>
 			<label>Interests:</label>
-			<input type="text" class="interests" name="interests" data-provide="tag" value="<% _.each(interests, function(i) { %>  <%= interests[i] %> <% }); %>" />
+			<input type="text" class="interests" name="interests" data-provide="tag" value="<% _.each(interests, function(i) { %>  <%= i %> <% }); %>" />
 
 		</fieldset>
 		<fieldset>

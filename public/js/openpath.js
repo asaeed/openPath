@@ -89,8 +89,8 @@ OpenPath = {
 	setUser : function(user){
 		console.log('set user',user)
 		//set user
-		//this.user = new OpenPath.UserModel({_id: user._id});
-        this.user = new OpenPath.UserModel({_id: user._id,email:user.email});
+		this.user = new OpenPath.UserModel({_id: user._id});
+        //this.user = new OpenPath.UserModel({_id: user._id});
         // The fetch below will perform GET /user/1
         // The server should return the id, name and email from the database
         this.user.fetch({
