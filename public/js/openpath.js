@@ -87,10 +87,10 @@ OpenPath = {
 	},
 	//sets new backbone user model
 	setUser : function(user){
-		console.log('set user')
+		console.log('set user',user)
 		//set user
 		//this.user = new OpenPath.UserModel({_id: user._id});
-        this.user = new OpenPath.UserModel(user);
+        this.user = new OpenPath.UserModel({_id: user._id,email:user.email});
         // The fetch below will perform GET /user/1
         // The server should return the id, name and email from the database
         this.user.fetch({
@@ -98,8 +98,8 @@ OpenPath = {
                 console.log(user.toJSON());
             }
         });
-        this.user.save({name : {first: 'firstName', last : 'lastName'}});
-				console.log('form val sub mit handler')
+        //this.user.save({name : {first: 'firstName', last : 'lastName'}});
+		//console.log('form val sub mit handler')
 		/* backbone being bitchy, skip for now
 		self.model.save(data,{
 	        success: function (model) {
@@ -109,7 +109,7 @@ OpenPath = {
 	        	 console.log('error save',	err);
 	        }
 	    });*/
-        //this.user.set({id:user._id});
+        this.user.set({grade:'dub'});
 		//this.user.save();
 	},
 	/**

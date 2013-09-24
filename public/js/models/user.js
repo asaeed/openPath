@@ -1,9 +1,10 @@
 OpenPath = window.OpenPath || {};
 
 OpenPath.UserModel = Backbone.Model.extend({
-  url: '/users',
+  urlRoot: '/users',
   defaults: {
-    id:'',
+    createDate : '',
+    status : '',
     name: {
       first : '',
       last : ''
@@ -27,6 +28,12 @@ OpenPath.UserModel = Backbone.Model.extend({
         //alert("Changed my name to " + name );
     });
   },
+  /*,
+  parse:function (response) {
+    console.log('response',response);
+    response.id = response._id;
+    return response;
+  }*/
   idAttribute: "_id"
 });
 

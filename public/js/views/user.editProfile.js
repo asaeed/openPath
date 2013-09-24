@@ -5,13 +5,27 @@ OpenPath.EditUserProfileView = Backbone.View.extend({
     className:"editView",
 	template:$("#editUserProfileTemplate").html(),
 	initialize : function(){
-		console.log('EditUserProfileView init')
+		console.log('EditUserProfileView init');
+		//this.collection = new OpenPath.UserCollection();
+        //this.collection.fetch();
+
+
         this.render();
 	},
+	/*
+	render : function(){
+		var self = this;
+        _.each(this.collection.models, function(item){
+        	console.log(item)
+            self.renderUser(item);
+        }, this);
+	},
+	*/
 	render:function () {
         var tmpl = _.template(this.template);
         
         this.$el.html(tmpl(this.model.toJSON()));
+
 
         
 		//set up and handle form submission
@@ -60,7 +74,7 @@ OpenPath.EditUserProfileView = Backbone.View.extend({
 			    */
 			    console.log(self.model)
 				$.ajax({
-					url: '/users/'+self.model._id,//TODO: security?
+					url: '/users/'+self.model.id,//TODO: security?
 					//url : '/update/users/'+self._id+'/'+key+'/'+value,
 					data: {$set:data}, //{$set writes to individual keys rather than overriding whole entry
 					dataType:'json',

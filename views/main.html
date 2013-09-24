@@ -7,86 +7,10 @@
 	<script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=true&libraries=places"></script>
 	<script src="js/webrtc.io.js"></script>
 
-	<!--
-	/**
-	 *underscore templates
-	 */
-	-->
-	<!--event template-->
-	<script id="eventTemplate" type="text/template">
-		<article>
-			<h3><a href="#" target="_blank"><%= name %></a></h3>
-			<p class="time"><%= startTime %> to <%= endTime %></p>
-			<p class="location"><%= locationDescription %></p>
-			<p><%= description %></p>
-		</article>
-		<div class="mapWrap"></div>
-	</script>
-	<!--userProfile template-->
-	<script id="userProfileTemplate" type="text/template">
-		<a class="editProfileBtn" href="#/user/edit-profile">Edit</a>
-			
-		<article class="gradelevel">
-			<h2>Grade Level:</h2>
-			<div class="results"><%= grade %></div>
-		</article>
-		<article class="interests">
-			<h2>Interests:</h2>
-			<div class="results">
-				<% _.each(interests, function(i) { %>  <%= interests[i] %> <% }); %>
-			</div>
-		</article>
-		<article class="colearners">
-			<h2>List of Co-Learners:</h2>
-			<div class="results"></div>
-		</article>
-	</script>
-	<!--editUserProfile template-->
-	<script id="editUserProfileTemplate" type="text/template">
-		<div class="profileIntro">
-			<p><strong>Welcome to Open Path!</strong></p>
-			<p><strong>To get recommendations based on your interests, simply fill in something about yourself:</strong></p>
-		</div>
-		<form>
-			<div class="userIcon">
-				<fieldset>
-					<input type="file" name="userIcon"/>
-				</fieldset>
-			</div>
-			<fieldset class="name">
-				<input type="text" name="firstName" class="firstName" placeholder="first name" value="<%= name.first %>" />
-				<input type="text" name="lastName" class="lastName" placeholder="last name" value="<%= name.last %>" />
-				<input type="text" name="createDate" class="createDate" placeholder="createdate" value="<%= createDate %>" />
-			</fieldset>
-			<fieldset>
-				<label>Grade Level:</label>
-				<select name="gradelevel" class="gradelevel">
-					<option value="Pre-K to Grade 2">Pre-K to Grade 2</option>
-					<option value="Grade 3-5">Grade 3-5</option>
-					<option value="Grade 9-12">Grade 9-12</option>
-					<option value="Post Secondary">Post Secondary</option>
-					<option value="Adults">Adults</option>
-					<option value="Families">Families</option>
-				</select>
-			</fieldset>
-			<fieldset>
-				<label>Interests:</label>
-				<input type="text" class="interests" name="interests" data-provide="tag" value="<% _.each(interests, function(i) { %>  <%= interests[i] %> <% }); %>" />
 
-			</fieldset>
-			<fieldset>
-				<label>List of Co-Learners:</label>
-				<input type="text" class="colearners" name="colearners" data-provide="tag" />
-			</fieldset>
-			
-			<p class="required"><small><em>*Required</em></small></p>
-			<fieldset class="done">
-				<button type="submit" class="btn btn-primary">Done</button>
-			</fieldset>
-		</form>
-		
-	</script>
-
+	<!--underscore templates for backbone views-->
+	{% include "main/templates.html" %}
+	
 
 	<!--scripts-->
 	<script src="js/openpath.main.js"></script>
@@ -100,9 +24,9 @@
 	
 
 	<script src="js/models/user.js"></script>
-	
 	<script src="js/views/user.profile.js"></script>
 	<script src="js/views/user.editProfile.js"></script>
+	<script src="js/collections/users.js"></script>
 	
 
 

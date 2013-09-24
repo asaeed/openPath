@@ -9,7 +9,6 @@ OpenPath.chat = {
         input = document.getElementById("chatinput");
 
     input.addEventListener('keydown', function(event) {
-
         if(input.value != ''){
             var key = event.which || event.keyCode;
             if (key === 13) {
