@@ -15,8 +15,8 @@ var PeerConnection = window.PeerConnection || window.webkitPeerConnection00 || w
 
 OpenPath.main = {
 	init : function(){
-		
-		
+
+
 		//this = OpenPath.main
 		this.connect();
 		this.initControls();

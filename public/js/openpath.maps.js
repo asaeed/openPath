@@ -7,7 +7,7 @@ OpenPath.maps = {
 	map2marker : null,
 	geolocate : function(target) {
 		var self = this;
-		//console.log('initUserMap.target = ' + target);
+		console.log('initUserMap.target = ' + target);
 		// Try HTML5 geolocation
 		if(navigator.geolocation) {
 

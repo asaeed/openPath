@@ -277,9 +277,11 @@ li {
 }
 .main #videos .userVideo {
   position: relative;
-  min-height: 180px;
+  /*min-height:180px;*/
+
   overflow: hidden;
   cursor: pointer;
+  background-color: red;
   transition: opacity 1s ease-out;
 }
 .main #videos .userVideo .usermeta {
@@ -321,14 +323,17 @@ li {
 }
 .main #videos .userVideo .usermeta .usermap {
   margin: 0;
-  height: 150px;
+  /*height:150px;*/
+
+  height: 100%;
   background: #000;
 }
 .main #videos .userVideo .usermeta,
 .main #videos .userVideo .username,
 .main #videos .userVideo .userlocation,
 .main #videos .userVideo .usermap {
-  display: none;
+  /*display:none;*/
+
 }
 .main #videos .userVideo .usermetashowing {
   background: rgba(0, 0, 0, 0.3);
