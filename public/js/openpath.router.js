@@ -23,10 +23,10 @@ app_router.on('route:loadView', function(route, action) {
 			loadRoute.user.editProfile();
         }
         if(action === 'mypath'){
-            $('#mypath').show();
+			loadRoute.user.mypath();
         }
         if(action === 'notifications'){
-            $('#notifications').show();
+			loadRoute.user.notifications();
         }
         if(action === 'settings'){
 			loadRoute.user.settings();
@@ -61,9 +61,16 @@ app_router.on('route:defaultRoute', function(actions) {
     }
 });
 //app routes
+
+//user routes
 loadRoute.user = {
 	init : function(){
 		$('#user').show();
+		$('nav.main ul li').each(function(){
+			$(this).removeClass('active');
+		});
+		$('.profileIcon').addClass('active');
+		
         $('.user-tab').each(function(){
             $(this).hide();
             //console.log('hide user tabs')
@@ -89,9 +96,19 @@ loadRoute.user = {
         });
         $("#profile .usertab-single-col").html(editUserProfile.render().el);
 	},
+	mypath : function(){
+		this.init();
+		$('#mypath').show();
+	},
+	notifications : function(){
+		this.init();
+		$('#notifications').show();
+	},
 	settings : function(){
 		this.init();
         $('#settings').show();
+        $('h1#profileUsername').show();
+
 		var userSettings = new OpenPath.UserSettingsView({
             model: OpenPath.user
         });

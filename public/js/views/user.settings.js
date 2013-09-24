@@ -5,26 +5,18 @@ OpenPath.UserSettingsView = Backbone.View.extend({
     className:"displayView",
 	template:$("#userSettingsTemplate").html(),
 	initialize : function(){
-		console.log('userSettingsTemplate init');
-		//this.collection = new OpenPath.UserCollection();
-        //this.collection.fetch();
-
-
-        this.render();
+		//console.log('userSettingsTemplate init');
 	},
 	render:function () {
         var tmpl = _.template(this.template);
         
         this.$el.html(tmpl(this.model.toJSON()));
 
-
         //set user name
         var name = this.model.get("name");
         if(name.first !== '')
         $('h1#profileUsername').html(name.first + ' '+name.last);
         
-
-
 		//set up and handle form submission
 		this.setForm();
 
