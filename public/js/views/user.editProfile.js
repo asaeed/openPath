@@ -53,36 +53,25 @@ OpenPath.EditUserProfileView = Backbone.View.extend({
 			submitHandler: function(form) {
 				var firstName = self.form.find('.firstName').val(),
 					lastName = self.form.find('.lastName').val(),
-					//gradelevel = $(this).find('.gradelevel').val(),
+					gradelevel = self.form.find('.gradelevel').val(),
 					//interests = $(this).find('.interests').val(),
 					//colearners = $(this).find('.colearners').val(),
 					data = {
-						name : {first: firstName, last : lastName}//,
-						//grade: gradelevel,
+						name : {first: firstName, last : lastName},
+						grade: gradelevel//,
 						//interests : interests.split(',').join(', ')
 					};
-				console.log('form val sub mit handler')
-				/* backbone being bitchy, skip for now
-				self.model.save(data,{
-			        success: function (model) {
-			            console.log('save',	model.toJSON());
-			        },
-			        error: function(err){
-			        	 console.log('error save',	err);
-			        }
-			    });
-			    */
-			    console.log(self.model)
+				console.log('form val sub mit handler',gradelevel);
+				/* backbone being bitchy, going old  way*/
 				$.ajax({
 					url: '/users/'+self.model.id,//TODO: security?
 					//url : '/update/users/'+self._id+'/'+key+'/'+value,
 					data: {$set:data}, //{$set writes to individual keys rather than overriding whole entry
 					dataType:'json',
 					type:'PUT',
-					async:false,
+					//async:false,
 					success: function(new_data) { 
-						//console.log('user updated',new_data.$set);
-						callback(new_data.$set );
+						console.log('user updated',new_data.$set);
 					},
 					error: function(msg){
 						console.log('user not updated',msg);

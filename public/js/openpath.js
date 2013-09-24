@@ -95,22 +95,9 @@ OpenPath = {
         // The server should return the id, name and email from the database
         this.user.fetch({
             success: function (user) {
-                console.log(user.toJSON());
+                console.log('fetched user',user.toJSON());
             }
         });
-        //this.user.save({name : {first: 'firstName', last : 'lastName'}});
-		//console.log('form val sub mit handler')
-		/* backbone being bitchy, skip for now
-		self.model.save(data,{
-	        success: function (model) {
-	            console.log('save',	model.toJSON());
-	        },
-	        error: function(err){
-	        	 console.log('error save',	err);
-	        }
-	    });*/
-        this.user.set({grade:'dub'});
-		//this.user.save();
 	},
 	/**
 	* Checks /sessions/ for hash containing session id.
