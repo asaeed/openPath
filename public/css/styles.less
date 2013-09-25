@@ -4,7 +4,7 @@
 
 body {
 	font-size:10px;
-	font-family: 'PT Sans', arial, sans-serif;
+	font-family: 'Myriad Pro','PT Sans', arial, sans-serif;
 	background:#fff;
 }
 /* globals */
@@ -361,6 +361,40 @@ footer {
 				width:100%; 
 				height:auto;
 			}
+		}
+		/*#chat*/
+		#chat {
+			/*position: relative;
+			bottom:0;
+			z-index:11;*/
+			border:1px solid blue;
+			#chatwindow{
+				/*height:42.96875%; max-width:240px;*/ 
+				height:130px; 
+				overflow:auto; 
+				padding:8px 10px; 
+				background:#ebeae7;
+				strong{
+					font-weight:normal;
+				}
+				ol{
+					margin:0;
+					padding:0;
+					li{
+						display:block;
+						list-style:none;
+						padding:7px 0;
+						border-bottom:1px solid #ccc;
+					}
+				}
+			}
+			input.commentfield{
+				width:87.5%; 
+				max-width:215px; 
+				margin:4.1666667%;
+			}
+			.user1 span{color:#3e9ed5;}
+			.user2 span{color:#747474;}
 		}
 	}
 	/*addUser*/
