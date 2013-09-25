@@ -34,9 +34,6 @@ OpenPath.main = {
 		//initEventsMap(); //**deprecated**/
 		//initEventsList(); //replaced
 
-
-		//TODO on menu change
-		this.addUserForm();
 	},
 
 	//below needs work
@@ -180,33 +177,6 @@ OpenPath.main = {
 			OpenPath.maps.resetMaps();
 		});
 		*/
-	},
-	addUserForm : function(){
-		// Validates and submits email inviting participant
-		$('#adduserform').submit(function() {
-			var email = $('#to').val();
-			var isValid = OpenPath.utils.validateEmail(email);
-
-			if(!isValid){
-				$('#emailerror').modal();
-			}else{
-				var data = $('#adduserform').serialize(); // serialize all the data in the form 
-				$.ajax({
-					url: '/email',
-					data: data,
-					dataType:'json',
-					type:'POST',
-					async:false,
-					success: function(data) {        
-						for (key in data.email) {
-							alert(data.email[key]);
-						}
-					},
-					error: function(data){}
-				});
-			};
-			return false;
-		});
 	}
 };
 

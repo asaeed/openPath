@@ -47,13 +47,10 @@ app_router.on('route:defaultRoute', function(actions) {
         $('#videos').show();
     }
     if(actions === 'adduser'){
-        $('#addUser').show();
+        loadRoute.adduser.init();
     }
     if(actions === 'events'){
-        $('#events').show();
-        //clear
-    	$('#eventslist').html();
-        var evCollection = new OpenPath.EventsView();
+        loadRoute.event.init();//TODO: on first load pick one
     }
     if(actions === 'user'){
         //start with profile
@@ -61,19 +58,65 @@ app_router.on('route:defaultRoute', function(actions) {
     }
 });
 //app routes
+loadRoute.adduser = {
+    init : function(){
+        
+        $('#addUser').show();
+            // Validates and submits email inviting participant
+        $('#adduserform').submit(function() {
+            var email = $('#to').val();
+            var isValid = OpenPath.utils.validateEmail(email);
+
+            if(!isValid){
+                $('#emailerror').modal();
+            }else{
+                var data = $('#adduserform').serialize(); // serialize all the data in the form 
+                $.ajax({
+                    url: '/email',
+                    data: data,
+                    dataType:'json',
+                    type:'POST',
+                    async:false,
+                    success: function(data) {        
+                        for (key in data.email) {
+                            alert(data.email[key]);
+                        }
+                    },
+                    error: function(data){}
+                });
+            };
+            return false;
+        });
+    }
+};
+//events routes
+loadRoute.events = {
+    init : function(){
+        $('#events').show();
+        //clear
+        $('#eventslist').html();
+        var evCollection = new OpenPath.EventsView();
+    },
+    nearby : function(){
+        //todo
+    },
+    upcoming : function(){
+        //todo
+    }
+};
 
 //user routes
 loadRoute.user = {
 	init : function(){
 		$('#user').show();
+        //nav icon
 		$('nav.main ul li').each(function(){
 			$(this).removeClass('active');
 		});
 		$('.profileIcon').addClass('active');
-		
+		//correct tab
         $('.user-tab').each(function(){
             $(this).hide();
-            //console.log('hide user tabs')
         });
 	},
 	profile : function(){

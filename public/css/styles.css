@@ -305,8 +305,7 @@ li {
 }
 .main #videos .userVideo {
   position: relative;
-  /*min-height:180px;*/
-
+  min-height: 180px;
   overflow: hidden;
   cursor: pointer;
   background-color: red;
@@ -322,6 +321,9 @@ li {
   background: rgba(0, 0, 0, 0.8);
   padding: 7px;
 }
+.main #videos .userVideo .usermeta .username a {
+  font-size: 1.6em;
+}
 .main #videos .userVideo .usermeta .username i {
   display: block;
   float: right;
@@ -329,6 +331,7 @@ li {
 .main #videos .userVideo .usermeta .username .icon-map-marker {
   display: inline-block;
   float: right;
+  font-size: 1.6em;
 }
 .main #videos .userVideo .usermeta .username .icon-map-marker span {
   display: none;
@@ -351,8 +354,7 @@ li {
 }
 .main #videos .userVideo .usermeta .usermap {
   margin: 0;
-  /*height:150px;*/
-
+  height: 150px;
   height: 100%;
   background: #555;
 }
