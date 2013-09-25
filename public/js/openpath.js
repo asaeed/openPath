@@ -54,6 +54,8 @@ OpenPath = {
 		xhr.send(JSON.stringify({
 			//assertion: assertion
 		}));
+
+		
 	},
 	*/
 	/**
