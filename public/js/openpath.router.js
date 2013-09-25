@@ -50,7 +50,7 @@ app_router.on('route:defaultRoute', function(actions) {
         loadRoute.adduser.init();
     }
     if(actions === 'events'){
-        loadRoute.event.init();//TODO: on first load pick one
+        loadRoute.events.init();//TODO: on first load pick one
     }
     if(actions === 'user'){
         //start with profile
@@ -62,6 +62,13 @@ loadRoute.adduser = {
     init : function(){
         
         $('#addUser').show();
+
+        //nav icon
+        $('nav.main ul li').each(function(){
+            $(this).removeClass('active');
+        });
+        $('.addUserIcon').addClass('active');
+
             // Validates and submits email inviting participant
         $('#adduserform').submit(function() {
             var email = $('#to').val();
@@ -93,6 +100,11 @@ loadRoute.adduser = {
 loadRoute.events = {
     init : function(){
         $('#events').show();
+        //nav icon
+        $('nav.main ul li').each(function(){
+            $(this).removeClass('active');
+        });
+        $('.eventsIcon').addClass('active');
         //clear
         $('#eventslist').html();
         var evCollection = new OpenPath.EventsView();
