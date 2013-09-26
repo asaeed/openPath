@@ -16,7 +16,7 @@ OpenPath = {
 		//check status
 		//this.checkIfLoggedIn(); //why?? navigator does this no?
 
-		//checks for scripts		
+		//checks for scripts
 		if(this.home){
 			// Persona login button
 			$('#loginbtn').mouseup(function() {
@@ -66,7 +66,7 @@ OpenPath = {
 		//console.log('handleLogin path = ' , path,user);
 		if(path == '/'){
 			// ON LOGIN: do homepage handling
-			console.log('ON LOGIN: do homepage handling');
+			console.log('ON LOGIN: do homepage handling',this.room);
 	
 			//window.location = "/main" +'#'+getHash();
 			if(this.room != ""){

@@ -18,7 +18,7 @@ OpenPath.chat = {
                       "eventName": "chat_msg",
                       "data": {
                         "messages": message,
-                        "room": room
+                        "room": OpenPath.utils.room
                       }
               }));
 

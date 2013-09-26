@@ -15,7 +15,12 @@ var PeerConnection = window.PeerConnection || window.webkitPeerConnection00 || w
 
 OpenPath.main = {
 	init : function(){
-
+		if (OpenPath.utils.getParameterByName('room') != null && OpenPath.utils.getParameterByName('room') != "") {
+			this.room = OpenPath.utils.getParameterByName('room');
+			console.log("Room Number: " + this.room);
+		}else{
+			this.room = 1;
+		}
 
 		//this = OpenPath.main
 		this.connect();
