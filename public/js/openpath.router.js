@@ -45,7 +45,8 @@ app_router.on('route:defaultRoute', function(actions) {
     if(actions === 'main'){
         OpenPath.main.headerAnimation.init();
         $('#videos').show();
-		console.log($(window).height(),$('#videos').height(),$('#video').height());
+		//console.log($(window).height(),$('#videos').height(),$('#video').height());
+		
         //set section height to window height
         function resizePage(){
             $('#videos').height( $(window).height() );

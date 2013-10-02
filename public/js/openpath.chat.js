@@ -8,6 +8,10 @@ OpenPath.chat = {
     var self = this,
         input = document.getElementById("chatinput");
 
+    //fill message TEST
+    $('#chat header p.msg').html('Hi Bud');
+
+
     input.addEventListener('keydown', function(event) {
         if(input.value != ''){
             var key = event.which || event.keyCode;

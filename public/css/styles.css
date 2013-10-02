@@ -370,7 +370,8 @@ li {
 .main #videos .userVideo .username,
 .main #videos .userVideo .userlocation,
 .main #videos .userVideo .usermap {
-  display: none;
+  /*display:none;*/
+
 }
 .main #videos .userVideo .usermetashowing {
   background: rgba(0, 0, 0, 0.3);
@@ -393,6 +394,22 @@ li {
   z-index: 11;
   background: rgba(0, 0, 0, 0.6);
   border: 1px solid blue;
+}
+.main #videos #chat header {
+  overflow: hidden;
+}
+.main #videos #chat header p.msg {
+  float: left;
+  color: #d6d6d6;
+  font-size: 1.8em;
+}
+.main #videos #chat header a.toggler {
+  border: 1px solid red;
+  background: url('../img/sprite-chat-icon.png') no-repeat scroll 0 0;
+  width: 12px;
+  height: 12px;
+  float: right;
+  text-indent: -9999px;
 }
 .main #videos #chat #chatwindow {
   /*height:42.96875%; max-width:240px;*/

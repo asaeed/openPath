@@ -33,7 +33,7 @@ OpenPath.main = {
 		//try to geolocate user
 		OpenPath.maps.geolocate("self_video");// target video. String used to determine which thumb map to target
 		//init chat
-	    OpenPath.chat.init();
+	    OpenPath.chat.init(); 
 
 		//initMyPathMap();//maybe deprecating soon
 		//initEventsMap(); //**deprecated**/
