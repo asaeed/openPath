@@ -1,6 +1,7 @@
 @import url( "persona-buttons.css" );
 @import  "lesshat.less";
 
+@headerOpacity: 0.6;
 
 body {
 	font-size:10px;
@@ -162,7 +163,7 @@ footer {
 	}
 	
 	header.main {
-		background: rgba(0,0,0,0.6);
+		background: rgba(0,0,0,@headerOpacity);
 		.content {
 			width:94%;
 		}
@@ -272,12 +273,12 @@ footer {
 		.col1{
 			float:left;
 			position:relative;
-			width:76.5625%;
+			width:75%;
 		}
 		.col2{
 			float:left;
 			position:relative;
-			width:23.4375%;
+			width:25%;
 		}
 		.navHotSpot {
 			position: absolute;
@@ -287,20 +288,25 @@ footer {
 			height:8em;
 			z-index:3;
 		}
+		video#main_videoplayer {
+			background:blue;
+		}
 		.userVideo {
+			/*
 			position:relative;
-			min-height:180px;
+			min-height:180px;*/
+			line-height: 0 !important;
 			overflow:hidden;
 			cursor:pointer;
-			background-color: red;
 			transition:opacity 1s ease-out;
+			border:1px dotted red;
 			.usermeta{
 				z-index:2; 
 				color:#fff; 
 				position:absolute; 
 				width:100%;
 				.username{
-					background:rgba(0,0,0,0.8); 
+					background:rgba(0,0,0,@headerOpacity); 
 					padding:7px;
 					a {
 						font-size:1.6em;
@@ -346,7 +352,7 @@ footer {
 			.username, 
 			.userlocation, 
 			.usermap{
-				/*display:none;*/
+				display:none;
 			}
 			.usermetashowing{
 				background:rgba(0,0,0,0.3);
@@ -358,22 +364,30 @@ footer {
 				}
 			}
 			video.avatar{
-				width:100%; 
-				height:auto;
+				width: 100% !important;
+				height: 100% !important;
+
+				background-color: green;
 			}
 		}
 		/*#chat*/
 		#chat {
-			/*position: relative;
+			position:absolute;
+			width:100%;
 			bottom:0;
-			z-index:11;*/
+			z-index:11;
+			background:rgba(0,0,0,@headerOpacity);
 			border:1px solid blue;
+			header {
+				
+			}
 			#chatwindow{
 				/*height:42.96875%; max-width:240px;*/ 
 				height:130px; 
 				overflow:auto; 
 				padding:8px 10px; 
-				background:#ebeae7;
+				/*background:#ebeae7;*/
+				border:1px dotted blue;
 				strong{
 					font-weight:normal;
 				}
@@ -390,7 +404,7 @@ footer {
 			}
 			input.commentfield{
 				width:87.5%; 
-				max-width:215px; 
+				/*max-width:215px; */
 				margin:4.1666667%;
 			}
 			.user1 span{color:#3e9ed5;}

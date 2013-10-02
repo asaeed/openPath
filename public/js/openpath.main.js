@@ -24,7 +24,7 @@ OpenPath.main = {
 
 		//this = OpenPath.main
 		this.connect();
-		this.initControls();
+		//this.initControls();
 		this.navControls();
 
 		//turn on videos tab

@@ -290,12 +290,12 @@ li {
 .main #videos .col1 {
   float: left;
   position: relative;
-  width: 76.5625%;
+  width: 75%;
 }
 .main #videos .col2 {
   float: left;
   position: relative;
-  width: 23.4375%;
+  width: 25%;
 }
 .main #videos .navHotSpot {
   position: absolute;
@@ -305,13 +305,19 @@ li {
   height: 8em;
   z-index: 3;
 }
+.main #videos video#main_videoplayer {
+  background: blue;
+}
 .main #videos .userVideo {
-  position: relative;
-  min-height: 180px;
+  /*
+			position:relative;
+			min-height:180px;*/
+
+  line-height: 0 !important;
   overflow: hidden;
   cursor: pointer;
-  background-color: red;
   transition: opacity 1s ease-out;
+  border: 1px dotted red;
 }
 .main #videos .userVideo .usermeta {
   z-index: 2;
@@ -320,7 +326,7 @@ li {
   width: 100%;
 }
 .main #videos .userVideo .usermeta .username {
-  background: rgba(0, 0, 0, 0.8);
+  background: rgba(0, 0, 0, 0.6);
   padding: 7px;
 }
 .main #videos .userVideo .usermeta .username a {
@@ -364,8 +370,7 @@ li {
 .main #videos .userVideo .username,
 .main #videos .userVideo .userlocation,
 .main #videos .userVideo .usermap {
-  /*display:none;*/
-
+  display: none;
 }
 .main #videos .userVideo .usermetashowing {
   background: rgba(0, 0, 0, 0.3);
@@ -377,14 +382,16 @@ li {
   content: '' !important;
 }
 .main #videos .userVideo video.avatar {
-  width: 100%;
-  height: auto;
+  width: 100% !important;
+  height: 100% !important;
+  background-color: green;
 }
 .main #videos #chat {
-  /*position: relative;
-			bottom:0;
-			z-index:11;*/
-
+  position: absolute;
+  width: 100%;
+  bottom: 0;
+  z-index: 11;
+  background: rgba(0, 0, 0, 0.6);
   border: 1px solid blue;
 }
 .main #videos #chat #chatwindow {
@@ -392,7 +399,9 @@ li {
   height: 130px;
   overflow: auto;
   padding: 8px 10px;
-  background: #ebeae7;
+  /*background:#ebeae7;*/
+
+  border: 1px dotted blue;
 }
 .main #videos #chat #chatwindow strong {
   font-weight: normal;
@@ -409,7 +418,8 @@ li {
 }
 .main #videos #chat input.commentfield {
   width: 87.5%;
-  max-width: 215px;
+  /*max-width:215px; */
+
   margin: 4.1666667%;
 }
 .main #videos #chat .user1 span {

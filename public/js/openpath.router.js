@@ -45,6 +45,22 @@ app_router.on('route:defaultRoute', function(actions) {
     if(actions === 'main'){
         OpenPath.main.headerAnimation.init();
         $('#videos').show();
+		console.log($(window).height(),$('#videos').height(),$('#video').height());
+        //set section height to window height
+        function resizePage(){
+            $('#videos').height( $(window).height() );
+            $('#main_videoplayer').height( $(window).height() );
+            $('.userVideo').each(function(){
+                $(this).height( $(window).height()  /  4 );
+            });
+        }
+        //set page elements height
+        window.onresize = function(e){
+            resizePage();
+        };
+        resizePage();
+
+
     }
     if(actions === 'adduser'){
         loadRoute.adduser.init();
@@ -57,6 +73,11 @@ app_router.on('route:defaultRoute', function(actions) {
         loadRoute.user.profile();
     }
 });
+
+
+/**
+ *  loadRoute obj
+ */
 //app routes
 loadRoute.adduser = {
     init : function(){
