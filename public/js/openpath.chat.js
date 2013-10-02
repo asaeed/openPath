@@ -11,6 +11,16 @@ OpenPath.chat = {
     //fill message TEST
     $('#chat header p.msg').html('Hi Bud');
 
+    //hide/show control
+    $('#chat .toggler').click(function(){
+      if($('#chat').hasClass('open')){
+        $('#chat').removeClass('open');
+      }else{
+       $('#chat').addClass('open');
+      }
+    });
+
+
 
     input.addEventListener('keydown', function(event) {
         if(input.value != ''){

@@ -374,20 +374,22 @@ footer {
 		#chat {
 			position:absolute;
 			width:100%;
-			bottom:0;
+			bottom:-230px;
 			z-index:11;
 			background:rgba(0,0,0,@headerOpacity);
-			border:1px solid blue;
+			.transition(~"bottom 1s ease-in-out"); 
 			header {
 				overflow:hidden;
+				padding:0.8em 1em;
 				p.msg {
 					float:left;
 					color:#d6d6d6;
 					font-size:1.8em;
+					padding:0;
+					margin:0;
 				}
 				a.toggler {
-					border:1px solid red;
-					background: url('../img/sprite-chat-icon.png') no-repeat scroll 0 0;
+					background: url('../img/sprite-chat-icon.png') no-repeat scroll 0 -12px;
 					width: 12px;
 					height: 12px;
 					float:right;
@@ -398,7 +400,7 @@ footer {
 				/*height:42.96875%; max-width:240px;*/ 
 				height:130px; 
 				overflow:auto; 
-				padding:8px 10px; 
+				padding:0 10px; 
 				/*background:#ebeae7;*/
 				border:1px dotted blue;
 				strong{
@@ -423,6 +425,17 @@ footer {
 			.user1 span{color:#3e9ed5;}
 			.user2 span{color:#747474;}
 		}
+		/*chat open*/
+		#chat.open {
+			bottom:0;
+			header {
+				a.toggler {
+					background-position: 0 0;
+				}
+			}
+		}
+
+
 	}
 	/*addUser*/
 	#addUser{

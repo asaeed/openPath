@@ -286,6 +286,8 @@ li {
   display: block;
   /*#chat*/
 
+  /*chat open*/
+
 }
 .main #videos .col1 {
   float: left;
@@ -390,22 +392,28 @@ li {
 .main #videos #chat {
   position: absolute;
   width: 100%;
-  bottom: 0;
+  bottom: -230px;
   z-index: 11;
   background: rgba(0, 0, 0, 0.6);
-  border: 1px solid blue;
+  -webkit-transition: bottom 1s ease-in-out;
+  -moz-transition: bottom 1s ease-in-out;
+  -o-transition: bottom 1s ease-in-out;
+  -ms-transition: bottom 1s ease-in-out;
+  transition: bottom 1s ease-in-out;
 }
 .main #videos #chat header {
   overflow: hidden;
+  padding: 0.8em 1em;
 }
 .main #videos #chat header p.msg {
   float: left;
   color: #d6d6d6;
   font-size: 1.8em;
+  padding: 0;
+  margin: 0;
 }
 .main #videos #chat header a.toggler {
-  border: 1px solid red;
-  background: url('../img/sprite-chat-icon.png') no-repeat scroll 0 0;
+  background: url('../img/sprite-chat-icon.png') no-repeat scroll 0 -12px;
   width: 12px;
   height: 12px;
   float: right;
@@ -415,7 +423,7 @@ li {
   /*height:42.96875%; max-width:240px;*/
   height: 130px;
   overflow: auto;
-  padding: 8px 10px;
+  padding: 0 10px;
   /*background:#ebeae7;*/
 
   border: 1px dotted blue;
@@ -444,6 +452,12 @@ li {
 }
 .main #videos #chat .user2 span {
   color: #747474;
+}
+.main #videos #chat.open {
+  bottom: 0;
+}
+.main #videos #chat.open header a.toggler {
+  background-position: 0 0;
 }
 .main #addUser {
   min-height: 46em;
