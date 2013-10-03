@@ -9,7 +9,7 @@ OpenPath.chat = {
         input = document.getElementById("chatinput");
 
     //fill message TEST
-    $('#chat header p.msg').html('Hi Bud');
+    $('#chat header p.msg').html('Hi Bud, have a chat');
 
     //hide/show control
     $('#chat .toggler').click(function(){
@@ -21,7 +21,7 @@ OpenPath.chat = {
     });
 
 
-
+    //input
     input.addEventListener('keydown', function(event) {
         if(input.value != ''){
             var key = event.which || event.keyCode;

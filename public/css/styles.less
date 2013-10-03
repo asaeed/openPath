@@ -270,6 +270,10 @@ footer {
 		overflow:hidden;
 		padding:0;
 		display:block;
+		video {
+			background: url('../img/poster.png') no-repeat scroll center;
+			.background-size(cover);
+		}
 		.col1{
 			float:left;
 			position:relative;
@@ -289,7 +293,6 @@ footer {
 			z-index:3;
 		}
 		video#main_videoplayer {
-			background:blue;
 		}
 		.userVideo {
 			/*
@@ -299,7 +302,6 @@ footer {
 			overflow:hidden;
 			cursor:pointer;
 			transition:opacity 1s ease-out;
-			border:1px dotted red;
 			.usermeta{
 				z-index:2; 
 				color:#fff; 
@@ -310,6 +312,7 @@ footer {
 					padding:7px;
 					a {
 						font-size:1.6em;
+						line-height:1.2em;
 					}
 					i{
 						display:block; 
@@ -356,8 +359,8 @@ footer {
 			}
 			.usermetashowing{
 				background:rgba(0,0,0,0.3);
-				.icon-map-marker span{
-					display:inline-block;
+				.icon-map-marker span {
+					display:inline-block !important;
 				}
 				.icon-map-marker:before{
 					content:'' !important;
@@ -366,15 +369,13 @@ footer {
 			video.avatar{
 				width: 100% !important;
 				height: 100% !important;
-
-				background-color: green;
 			}
 		}
 		/*#chat*/
 		#chat {
 			position:absolute;
 			width:100%;
-			bottom:-230px;
+			bottom:-225px;
 			z-index:11;
 			background:rgba(0,0,0,@headerOpacity);
 			.transition(~"bottom 1s ease-in-out"); 

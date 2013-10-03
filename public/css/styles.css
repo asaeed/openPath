@@ -289,6 +289,12 @@ li {
   /*chat open*/
 
 }
+.main #videos video {
+  background: url('../img/poster.png') no-repeat scroll center;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  background-size: cover;
+}
 .main #videos .col1 {
   float: left;
   position: relative;
@@ -307,9 +313,6 @@ li {
   height: 8em;
   z-index: 3;
 }
-.main #videos video#main_videoplayer {
-  background: blue;
-}
 .main #videos .userVideo {
   /*
 			position:relative;
@@ -319,7 +322,6 @@ li {
   overflow: hidden;
   cursor: pointer;
   transition: opacity 1s ease-out;
-  border: 1px dotted red;
 }
 .main #videos .userVideo .usermeta {
   z-index: 2;
@@ -333,6 +335,7 @@ li {
 }
 .main #videos .userVideo .usermeta .username a {
   font-size: 1.6em;
+  line-height: 1.2em;
 }
 .main #videos .userVideo .usermeta .username i {
   display: block;
@@ -379,7 +382,7 @@ li {
   background: rgba(0, 0, 0, 0.3);
 }
 .main #videos .userVideo .usermetashowing .icon-map-marker span {
-  display: inline-block;
+  display: inline-block !important;
 }
 .main #videos .userVideo .usermetashowing .icon-map-marker:before {
   content: '' !important;
@@ -387,12 +390,11 @@ li {
 .main #videos .userVideo video.avatar {
   width: 100% !important;
   height: 100% !important;
-  background-color: green;
 }
 .main #videos #chat {
   position: absolute;
   width: 100%;
-  bottom: -230px;
+  bottom: -225px;
   z-index: 11;
   background: rgba(0, 0, 0, 0.6);
   -webkit-transition: bottom 1s ease-in-out;
