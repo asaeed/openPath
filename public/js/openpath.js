@@ -77,7 +77,7 @@ OpenPath = {
 				hash = "/#/" + hash;
 			}
 			
-			window.location = "/main"// + hash + this.room;  //TODO - room?
+			window.location = "/main" + hash + this.room;  //TODO - room?
 			
 		}else if(path == '/main'){
 			// ON LOGIN: do main handling

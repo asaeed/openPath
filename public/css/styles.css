@@ -328,9 +328,9 @@ li {
   color: #fff;
   position: absolute;
   width: 100%;
+  background: rgba(0, 0, 0, 0.6);
 }
 .main #videos .userVideo .usermeta .username {
-  background: rgba(0, 0, 0, 0.6);
   padding: 7px;
 }
 .main #videos .userVideo .usermeta .username a {
@@ -363,13 +363,11 @@ li {
   height: 20px;
   font-size: 11px;
   padding: 2%;
-  background: rgba(0, 0, 0, 0.3);
 }
 .main #videos .userVideo .usermeta .usermap {
   margin: 0;
-  height: 150px;
-  height: 100%;
-  background: #555;
+  height: 100px;
+  background: rgba(255, 255, 255, 0.2);
 }
 .main #videos .userVideo .usermeta,
 .main #videos .userVideo .username,

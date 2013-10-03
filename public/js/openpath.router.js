@@ -44,7 +44,7 @@ app_router.on('route:defaultRoute', function(actions) {
 
     if(actions === 'main'){
         OpenPath.main.headerAnimation.init();
-        $('#videos').show();
+        $('#videos').fadeIn();
 		//console.log($(window).height(),$('#videos').height(),$('#video').height());
 		
         //set section height to window height
@@ -83,7 +83,7 @@ app_router.on('route:defaultRoute', function(actions) {
 loadRoute.adduser = {
     init : function(){
         
-        $('#addUser').show();
+        $('#addUser').fadeIn();
 
         //nav icon
         $('nav.main ul li').each(function(){
@@ -121,7 +121,7 @@ loadRoute.adduser = {
 //events routes
 loadRoute.events = {
     init : function(){
-        $('#events').show();
+        $('#events').fadeIn();
         //nav icon
         $('nav.main ul li').each(function(){
             $(this).removeClass('active');
@@ -142,7 +142,7 @@ loadRoute.events = {
 //user routes
 loadRoute.user = {
 	init : function(){
-		$('#user').show();
+		$('#user').fadeIn();
         //nav icon
 		$('nav.main ul li').each(function(){
 			$(this).removeClass('active');
@@ -155,7 +155,7 @@ loadRoute.user = {
 	},
 	profile : function(){
 		this.init();
-		$('#profile').show();
+		$('#profile').fadeIn();
         $('h1#profileUsername').show();
 
         var userProfile = new OpenPath.UserProfileView({
@@ -166,7 +166,7 @@ loadRoute.user = {
 	},
 	editProfile : function(){
 		this.init();
-		$('#profile').show();
+		$('#profile').fadeIn();
         $('h1#profileUsername').hide();
         var editUserProfile = new OpenPath.EditUserProfileView({
             model: OpenPath.user
@@ -175,15 +175,15 @@ loadRoute.user = {
 	},
 	mypath : function(){
 		this.init();
-		$('#mypath').show();
+		$('#mypath').fadeIn();
 	},
 	notifications : function(){
 		this.init();
-		$('#notifications').show();
+		$('#notifications').fadeIn();
 	},
 	settings : function(){
 		this.init();
-        $('#settings').show();
+        $('#settings').fadeIn();
         $('h1#profileUsername').show();
 
 		var userSettings = new OpenPath.UserSettingsView({

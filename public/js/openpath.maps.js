@@ -15,6 +15,7 @@ OpenPath.maps = {
 				var targetMap;
 				var pos = new google.maps.LatLng(position.coords.latitude,  position.coords.longitude);
 				//updateUser(position.coords.latitude,  position.coords.longitude);  //fake func anyway
+				console.log('pos',pos)
 				var mapOptions = {
 					zoom: 6,
 					center: pos,
@@ -49,17 +50,18 @@ OpenPath.maps = {
 					});
 					self.map1.setCenter(pos);
 
+					console.log("#userlocation1",pos)
 					// get and display street address 
-					this.codeLatLng(pos, "#userlocation1");
+					self.codeLatLng(pos, "#userlocation1");
 					targetMap = self.map1;
 				}			
 			}, function() {
-				this.handleNoGeolocation(true, targetMap);
+				self.handleNoGeolocation(true, targetMap);
 			});
 
 		} else {
 			// Browser doesn't support Geolocation
-			this.handleNoGeolocation(false, targetMap);
+			self.handleNoGeolocation(false, targetMap);
 		}
 	},
 	handleNoGeolocation : function(errorFlag, map) {
