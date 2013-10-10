@@ -10,8 +10,8 @@ exports.status = function authStatus(req, res) {
       // removed :8080 because rerouted 80 to 8080 using:
       // sudo iptables -t nat -A PREROUTING -p tcp --dport 80 -j REDIRECT --to 8080
       //audience: "http://ec2-54-241-230-171.us-west-1.compute.amazonaws.com"
-      audience: "http://localhost:8080"
-			//audience: "http://openpath.me"
+      //audience: "http://localhost:8080"
+			audience: "http://openpath.me"
     }
   },function(e, r, body) {
     //callback
