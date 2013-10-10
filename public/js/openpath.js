@@ -8,7 +8,9 @@ OpenPath = {
 	sessionID : null,
 	room : null,
 	init : function(){
-
+		//init persona
+		OpenPath.navigator.init();
+		
 		//set room number
 		this.setRoomNumber();
 
@@ -195,6 +197,6 @@ OpenPath = {
 };
 
 $(document).ready(function(){
-	OpenPath.init();
+	//OpenPath.init();
 });
 

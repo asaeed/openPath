@@ -35,7 +35,9 @@ app_router.on('route:loadView', function(route, action) {
 
 });
 app_router.on('route:defaultRoute', function(actions) {
-    console.log('route:',actions);
+    console.log('route:',actions,OpenPath);
+	OpenPath.init();
+
     //hide other tabs
     $('.main-tab').each(function(){
         $(this).hide();

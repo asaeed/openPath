@@ -29,18 +29,15 @@
 	<script src="bootstrap/js/bootstrap-tag.js"></script>
 	
 	<script src="https://login.persona.org/include.js"></script>
-	<script src="js/navigator.js"></script>
-
 
 	<script src="js/openpath.js"></script>
-
+	<script src="js/openpath.navigator.js"></script>
 
 	<script src="js/openpath.utils.js"></script>
 	<script src="js/openpath.maps.js"></script>
 	<script src="js/openpath.chat.js"></script>
   {% endblock %}
-  <!--load router last-->
-  <script src="js/openpath.router.js"></script>
+
   
 </head>
 <body>
@@ -56,6 +53,10 @@
 	  	Sorry, your email is invalid. Please try again.
 	  </div>
 	</div>
+	
+	<!--load router last-->
+	<script src="js/openpath.router.js"></script>
+	
 	<script>
 		(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
 		(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
