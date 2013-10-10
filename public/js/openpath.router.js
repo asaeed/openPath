@@ -44,7 +44,7 @@ app_router.on('route:defaultRoute', function(actions) {
         //console.log('hide main tabs')
     });
 
-    if(actions === 'main'){
+    if(actions === 'main' || !actions ){
         OpenPath.main.headerAnimation.init();
         $('#videos').fadeIn();
 		//console.log($(window).height(),$('#videos').height(),$('#video').height());

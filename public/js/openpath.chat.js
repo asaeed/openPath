@@ -9,7 +9,7 @@ OpenPath.chat = {
         input = document.getElementById("chatinput");
 
     //fill message TEST
-    $('#chat header p.msg').html('Hi Bud, have a chat');
+    $('#chat header p.msg').html('Chat');
 
     //hide/show control
     $('#chat .toggler').click(function(){

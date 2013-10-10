@@ -373,8 +373,7 @@ li {
 .main #videos .userVideo .username,
 .main #videos .userVideo .userlocation,
 .main #videos .userVideo .usermap {
-  /*display:none;*/
-
+  display: none;
 }
 .main #videos .userVideo .usermetashowing {
   background: rgba(0, 0, 0, 0.3);
