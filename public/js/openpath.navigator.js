@@ -12,7 +12,7 @@ OpenPath.navigator = {
 		      xhr.open("POST", "/auth/status", true);
 		      xhr.setRequestHeader("Content-Type", "application/json");
 		      xhr.addEventListener("loadend", function(e) {
-		      	var data = JSON.parse(this.responseText);
+		      		var data = JSON.parse(this.responseText);
 
 		    		if (data && data.status === "okay") {
 		    			OpenPath.handleLogin(data);

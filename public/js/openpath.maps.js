@@ -7,7 +7,7 @@ OpenPath.maps = {
 	map2marker : null,
 	geolocate : function(target) {
 		var self = this;
-		console.log('initUserMap.target = ' + target);
+		//console.log('initUserMap.target = ' + target);
 		// Try HTML5 geolocation
 		if(navigator.geolocation) {
 
@@ -15,7 +15,7 @@ OpenPath.maps = {
 				var targetMap;
 				var pos = new google.maps.LatLng(position.coords.latitude,  position.coords.longitude);
 				//updateUser(position.coords.latitude,  position.coords.longitude);  //fake func anyway
-				console.log('pos',pos)
+				//console.log('pos',pos)
 				var mapOptions = {
 					zoom: 6,
 					center: pos,
@@ -50,7 +50,7 @@ OpenPath.maps = {
 					});
 					self.map1.setCenter(pos);
 
-					console.log("#userlocation1",pos)
+					//console.log("#userlocation1",pos)
 					// get and display street address 
 					self.codeLatLng(pos, "#userlocation1");
 					targetMap = self.map1;

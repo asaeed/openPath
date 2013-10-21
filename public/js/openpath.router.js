@@ -43,27 +43,11 @@ app_router.on('route:defaultRoute', function(actions) {
         $(this).hide();
         //console.log('hide main tabs')
     });
-
-    if(actions === 'main' || !actions ){
-        OpenPath.main.headerAnimation.init();
-        $('#videos').fadeIn();
-		//console.log($(window).height(),$('#videos').height(),$('#video').height());
+	if(!actions){
 		
-        //set section height to window height
-        function resizePage(){
-            $('#videos').height( $(window).height() );
-            $('#main_videoplayer').height( $(window).height() );
-            $('.userVideo').each(function(){
-                $(this).height( $(window).height()  /  4 );
-            });
-        }
-        //set page elements height
-        window.onresize = function(e){
-            resizePage();
-        };
-        resizePage();
-
-
+	}
+    if(actions === 'main'){
+		loadRoute.main.init();
     }
     if(actions === 'adduser'){
         loadRoute.adduser.init();
@@ -82,6 +66,27 @@ app_router.on('route:defaultRoute', function(actions) {
  *  loadRoute obj
  */
 //app routes
+loadRoute.mian = {
+	init: function(){
+		OpenPath.main.headerAnimation.init();
+        $('#videos').fadeIn();
+		//console.log($(window).height(),$('#videos').height(),$('#video').height());
+		
+        //set section height to window height
+        function resizePage(){
+            $('#videos').height( $(window).height() );
+            $('#main_videoplayer').height( $(window).height() );
+            $('.userVideo').each(function(){
+                $(this).height( $(window).height()  /  4 );
+            });
+        }
+        //set page elements height
+        window.onresize = function(e){
+            resizePage();
+        };
+        resizePage();
+	}
+};
 loadRoute.adduser = {
     init : function(){
         

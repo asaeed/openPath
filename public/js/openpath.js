@@ -8,6 +8,7 @@ OpenPath = {
 	sessionID : null,
 	room : null,
 	init : function(){
+		console.log('openPath init')
 		//init persona
 		OpenPath.navigator.init();
 		
@@ -36,30 +37,10 @@ OpenPath = {
 			console.log("Room Number: " + OpenPath.room);
 		}else{
 			//OpenPath.room = 1; //??
+			console.log("Room Number: " + OpenPath.room);
+			
 		}
 	},
-	/*deprecated
-	checkIfLoggedIn : function(){
-		var self = this;
-		// call auth/status when page first loads to see if user is logged in already
-		var xhr = new XMLHttpRequest();
-		xhr.open("POST", "/auth/status", true);
-		xhr.setRequestHeader("Content-Type", "application/json");
-
-		xhr.addEventListener("loadend", function(e) {
-			var data = JSON.parse(this.responseText);
-			if (data && data.status === "okay") {
-				self.handleLogin(data.email);
-			}
-		}, false);
-
-		xhr.send(JSON.stringify({
-			//assertion: assertion
-		}));
-
-		
-	},
-	*/
 	/**
 	* Determines actions after login based on URL path.
 	*/
@@ -76,10 +57,10 @@ OpenPath = {
 			}
 			var hash = OpenPath.utils.getHash();
 			if(hash != ""){
-				hash = "/#/" + hash;
+				hash = "/#" + hash;
 			}
 			
-			window.location = "/main" + hash + this.room;  //TODO - room?
+			window.location = "/main" + this.room //+ hash + this.room;  //TODO - room?
 			
 		}else if(path == '/main'){
 			// ON LOGIN: do main handling
