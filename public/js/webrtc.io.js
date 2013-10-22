@@ -60,8 +60,10 @@ var getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia || nav
    * Connects to the websocket server.
    */
   rtc.connect = function(server, room) {
+	
     room = room || ""; // by default, join a room called the blank string
-    rtc._socket = new WebSocket(server);
+    console.log('rtc room', room)
+	rtc._socket = new WebSocket(server);
 
     rtc._socket.onopen = function() {
 

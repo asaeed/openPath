@@ -43,8 +43,19 @@ app_router.on('route:defaultRoute', function(actions) {
         $(this).hide();
         //console.log('hide main tabs')
     });
+	//if no actions, check if home or main
 	if(!actions){
-		
+		//checks for scripts
+		if(OpenPath.home){
+			OpenPath.navigator.init();
+			// Persona login button
+			$('#loginbtn').mouseup(function() {
+				navigator.id.request();
+			});
+		}
+		if(OpenPath.main){
+			loadRoute.main.init();
+		}
 	}
     if(actions === 'main'){
 		loadRoute.main.init();
@@ -66,8 +77,10 @@ app_router.on('route:defaultRoute', function(actions) {
  *  loadRoute obj
  */
 //app routes
-loadRoute.mian = {
+loadRoute.main = {
 	init: function(){
+		
+		OpenPath.main.init();
 		OpenPath.main.headerAnimation.init();
         $('#videos').fadeIn();
 		//console.log($(window).height(),$('#videos').height(),$('#video').height());

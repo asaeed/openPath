@@ -9,26 +9,14 @@ OpenPath = {
 	room : null,
 	init : function(){
 		console.log('openPath init')
+		/*	*/
 		//init persona
 		OpenPath.navigator.init();
 		
 		//set room number
 		this.setRoomNumber();
 
-
-		//check status
-		//this.checkIfLoggedIn(); //why?? navigator does this no?
-
-		//checks for scripts
-		if(this.home){
-			// Persona login button
-			$('#loginbtn').mouseup(function() {
-				navigator.id.request();
-			});
-		}
-		if(this.main){
-			this.main.init();
-		}
+	
 	},
 	setRoomNumber : function(){
 		// retreives room number based on query string
@@ -36,7 +24,7 @@ OpenPath = {
 			OpenPath.room = OpenPath.utils.getParameterByName('room');
 			console.log("Room Number: " + OpenPath.room);
 		}else{
-			//OpenPath.room = 1; //??
+			OpenPath.room = 1; //??
 			console.log("Room Number: " + OpenPath.room);
 			
 		}
@@ -55,12 +43,13 @@ OpenPath = {
 			if(this.room != ""){
 				this.room = "?room=" + this.room;
 			}
+			//retreive hash from url
 			var hash = OpenPath.utils.getHash();
 			if(hash != ""){
-				hash = "/#" + hash;
+				hash = "&h=" + hash;
 			}
-			
-			window.location = "/main" + this.room //+ hash + this.room;  //TODO - room?
+			//alert(hash)
+			window.location = "/main" + this.room + hash;// + this.room;  //TODO - room?
 			
 		}else if(path == '/main'){
 			// ON LOGIN: do main handling
@@ -92,7 +81,10 @@ OpenPath = {
 	*/
 	getSessionIdHash : function(email){
 		var self = this,
-			id = OpenPath.utils.getHash();
+			id = OpenPath.utils.getParameterByName('h');
+				//id = OpenPath.utils.getHash();//fails
+			
+			
 		if (id != '') {	
 			// call API and check for id in database
 			$.ajax({
@@ -119,7 +111,7 @@ OpenPath = {
 	* Creates new session in database.
 	*/
 	createNewSession : function(email){
-		console.log('create new session', email)
+	//	console.log('create new session', email)
 		var self = this,
 			sessionObj = { 
 				/*
