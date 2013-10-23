@@ -6,13 +6,14 @@ exports.status = function authStatus(req, res) {
     url: 'https://login.persona.org/verify',
     json: {
       assertion: req.body.assertion,
-      //audience: "http://ec2-54-241-230-171.us-west-1.compute.amazonaws.com:8080"
-      // removed :8080 because rerouted 80 to 8080 using:
-      // sudo iptables -t nat -A PREROUTING -p tcp --dport 80 -j REDIRECT --to 8080
-      //audience: "http://ec2-54-241-230-171.us-west-1.compute.amazonaws.com"
-      //audience: "http://localhost:8080"
+		//audience: "http://ec2-54-241-230-171.us-west-1.compute.amazonaws.com:8080"
+		// removed :8080 because rerouted 80 to 8080 using:
+		// sudo iptables -t nat -A PREROUTING -p tcp --dport 80 -j REDIRECT --to 8080
+		//audience: "http://ec2-54-241-230-171.us-west-1.compute.amazonaws.com"
+		audience: "http://localhost:8080"
 		//audience: "http://openpath.me"
-		audience: "http://10.0.1.15:8080"
+		//audience: "http://10.0.1.15:8080"
+		//audience: "http://10.29.58.59:8080"
     }
   },function(e, r, body) {
     //callback
