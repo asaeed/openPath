@@ -2,7 +2,6 @@ OpenPath = window.OpenPath || {};
 
 //old globals 
 //TODO: namespace 
-  //var room = 1;
   var max_num_videos = 2;
   //var server = "ws://www.walking-productions.com:8001/"; 
   var server = "ws://www.openpath.me:8001/";
@@ -27,7 +26,6 @@ OpenPath.main = {
 		//this = OpenPath.main
 		this.connect();
 		this.initControls();
-		this.navControls();
 
 		//turn on videos tab
         //$('#videos').addClass('active');
@@ -100,7 +98,9 @@ OpenPath.main = {
 			
 		});
 
-
+		// Main Navigation Tabs
+		$("a.logo").tooltip({placement:'bottom'});
+		$("nav.main a").tooltip({placement:'bottom'});
 
 
 	},
@@ -118,9 +118,11 @@ OpenPath.main = {
    			alert('Sorry, your browser is not supported');
  		}
 
- 		//console.log("room: " + OpenPath.room);
- 		if(OpenPath.room !== null)
-		rtc.connect(server, OpenPath.room);
+ 		if(this.room !== null){
+				rtc.connect(server, this.room);
+				console.log("room: " + this.room);
+		}
+	
 
  		rtc.on('add remote stream', function(stream, socketId) {
    			console.log("Remote stream: " + stream + " " + socketId);
@@ -157,33 +159,6 @@ OpenPath.main = {
 			console.log(data.socketid);
 		});
 
-	},
-	navControls : function(){
-		// Main Navigation Tabs
-		$("a.logo").tooltip({placement:'bottom'});
-		$("nav.main a").tooltip({placement:'bottom'});
-		
-
-		/*
-		$('header.main a').click(function (e) {
-			//e.preventDefault();
-			$(this).tab('show');
-			
-			//OpenPath.user.onMenuChange();
-			
-			OpenPath.maps.resetMaps();
-		});
-		
-		$('#usernav a').click(function (e) {
-			//e.preventDefault();
-			console.log($(this).attr('href'))
-			$(this).tab('show');
-			
-			//OpenPath.user.onMenuChange();
-			
-			OpenPath.maps.resetMaps();
-		});
-		*/
 	}
 };
 

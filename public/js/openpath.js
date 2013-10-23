@@ -169,7 +169,4 @@ OpenPath = {
 	}
 };
 
-$(document).ready(function(){
-	//OpenPath.init();
-});
 
