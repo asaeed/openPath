@@ -7,9 +7,9 @@ OpenPath.chat = {
 	init :  function(){
 		var self = this,
 			input = document.getElementById("chatinput");
-
-		//fill header message TODO: for real
-		$('#chat header p.msg').html('Chat');
+			//fill header message
+			$('#chat header p.msg').html('Chat')
+		
 
 		//hide/show control
 		$('#chat .toggler').click(function(){
@@ -17,6 +17,7 @@ OpenPath.chat = {
 				$('#chat').removeClass('open');
 			}else{
 				$('#chat').addClass('open');
+				$('#chat header p.msg').html('Chat')
 			}
 		});
 		
@@ -63,8 +64,17 @@ OpenPath.chat = {
 			var user1 = msg.split(':')[0];
 			msg = msg.split(':').slice(1).join(':');
 			msg = '<li class="user2"><span>'+ user1 +'</span>: ' + msg + '</li>';
+
+			//fill header message
+			if(!$('#chat').hasClass('open')){
+				$('#chat header p.msg').html('New Chat from '+user1+'').fadeOut('slow').fadeIn('slow').fadeOut('slow').fadeIn('slow');
+			}else{
+				$('#chat header p.msg').html('Chat');
+			}
+			
 		}else{
 			msg = '<li class="user1"><span>'+ user +'</span>: ' + msg + '</li>';
+
 		}
 	
 		

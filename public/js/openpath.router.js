@@ -98,6 +98,7 @@ loadRoute.main = {
             $('.userVideo').each(function(){
                 $(this).height( $(window).height()  /  4 );
             });
+            $('header.main').width( $('#main_videoplayer').width() );
         }
         //set page elements height
         window.onresize = function(e){
@@ -108,7 +109,7 @@ loadRoute.main = {
 };
 loadRoute.adduser = {
     init : function(){
-        
+        $('header.main').width( '100%' );
         $('#addUser').fadeIn();
 
         //nav icon
@@ -147,6 +148,7 @@ loadRoute.adduser = {
 //events routes
 loadRoute.events = {
     init : function(){
+        $('header.main').width( '100%' );
         $('#events').fadeIn();
         //nav icon
         $('nav.main ul li').each(function(){
@@ -168,6 +170,7 @@ loadRoute.events = {
 //user routes
 loadRoute.user = {
 	init : function(){
+        
 		$('#user').fadeIn();
         //nav icon
 		$('nav.main ul li').each(function(){
