@@ -32,10 +32,17 @@ app_router.on('route:loadView', function(route, action) {
 			loadRoute.user.settings();
         }
     }
-
+	if(route === 'events'){
+        if(action === 'upcoming'){
+			loadRoute.events.upcoming();
+        }
+		if(action === 'addNew'){
+			loadRoute.events.addNew();
+        }
+	}
 });
 app_router.on('route:defaultRoute', function(actions) {
-    console.log('route:',actions,OpenPath);
+    console.log('route:',actions);
 	if(!OpenPath.initialized){
 		OpenPath.init();//only init once
 	}
@@ -63,7 +70,7 @@ app_router.on('route:defaultRoute', function(actions) {
         loadRoute.adduser.init();
     }
     if(actions === 'events'){
-        loadRoute.events.init();//TODO: on first load pick one
+        loadRoute.events.upcoming();//TODO: on first load pick one
     }
     if(actions === 'user'){
         //start with profile
@@ -164,18 +171,42 @@ loadRoute.events = {
             $(this).removeClass('active');
         });
         $('.eventsIcon').addClass('active');
-        //clear
-        $('#eventslist').html();
-        var evCollection = new OpenPath.EventsView();
+		//clear sub nav
+		$('#eventsmenu nav.subnav ul li').each(function(){
+			$(this).find('a').removeClass('active');
+		});
     },
     nearby : function(){
         //todo
     },
     upcoming : function(){
         //todo
-    }
+		this.init();
+		//show list
+		$('#eventslist').show();
+		//hide form
+		$('#addEvent').hide();
+		//set header copy
+		$('#eventsmenu h2').html('List of Events');
+		//highlight menu item
+		$('#eventsmenu a.upcoming').addClass('active');
+        //clear list
+        $('#eventslist').html();
+        var evCollection = new OpenPath.EventsView();
+    },
+	addNew : function(){
+		this.init();
+		//show form
+		$('#addEvent').show();
+        //hide list
+        $('#eventslist').hide();
+		//set header copy
+		$('#eventsmenu h2').html('Add New Event');
+		//highlight menu item
+		$('#eventsmenu a.addNew').addClass('active');
+		var AddNewEvent = new OpenPath.AddEventView();
+	}
 };
-
 //user routes
 loadRoute.user = {
 	init : function(){
@@ -195,6 +226,7 @@ loadRoute.user = {
 	},
 	profile : function(){
 		this.init();
+		console.log('profile')
 		$('#profile').fadeIn();
         $('h1#profileUsername').show();
 

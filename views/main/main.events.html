@@ -5,11 +5,11 @@
 	    <h2>List of Events</h2> 
 	    <nav class="subnav">
             <ul>
-                <!--<li><a href="#">Nearby</a></li>-->
-                <li><a href="javascript:void(0);">Upcoming</a></li>
+                <!--<li><a href="#/events/nearby">Nearby</a></li>-->
+                <li><a href="#/events/upcoming" class="upcoming">Upcoming</a></li>
+				<li><a href="#/events/addNew"  class="addNew">Add New Event</a></li>
             </ul>
         </nav>
-        <a href="#addEventsModal" data-toggle="modal" class="btn btn-primary addEventsModalBtn"><span class="icon-plus"></span> Add</a>
     </div>
 
 	<div class="events-single-col">
@@ -19,6 +19,32 @@
 			
 	    </ul>
 		<!-- END EVENTS LIST -->
+		<!-- BEGIN ADD EVENT  -->
+	    <div id="addEvent">
+			<form>
+				<fieldset>
+					<label for="name">Event Name:</label>
+					<input type="text" id="name" name="name" placeholder="Event Name" required />
+				</fieldset>
+				<fieldset>
+					<label for="websiteLink">Website Link:</label>
+					<input type="text" id="websiteLink" name="websiteLink" required />
+				</fieldset>
+				<fieldset>
+					<label for="date">Date:</label>
+					<input type="text" id="websiteLink" name="websiteLink" required />
+				</fieldset>
+				<fieldset>
+					<label for="venue">Venue:</label>
+					<input type="text" id="venue" name="venue" required>
+				</fieldset>
+				<fieldset>
+					<label for="description">Description:</label>
+					<input type="text" id="description" name="description" />
+				</fieldset>
+			</form>
+	    </div>
+		<!-- END ADD EVENT  -->
 	</div>	
 </div>
 

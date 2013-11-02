@@ -236,6 +236,7 @@ footer {
 				border-right:0.2em solid #949494; 
 				padding:0 1em; 
 				text-align:center;
+				/*
 				a {
 					text-decoration:none;
 				}
@@ -245,9 +246,18 @@ footer {
 				a:visited, 
 				a:hover{
 					color:#fff;
-				}
+				}*/
 				a:hover{
 					font-weight:bold;
+				}
+				a {
+					text-decoration:none;
+					color:#949494;
+				}
+				a.active,
+				a:hover {
+					font-weight:bold;
+					color:rgba(27,27,27,1);
 				}
 			}
 			li:last-child{
@@ -462,12 +472,6 @@ footer {
 			.subnav {
 				float:right;
 				margin:1em 0 0 0;
-				a {
-					color:#949494 !important;
-				}
-			}
-			.addEventsModalBtn {
-				margin:1.5em 0 0 2em;
 			}
 		}
 		.events-single-col {
@@ -513,6 +517,38 @@ footer {
 		}
 		.eventslist .icon-plus{color:#fff;}
 		.eventsholder{}
+			
+		/*addEvent*/
+		#addEvent{
+			#gradelevel  {
+				padding:8px 0 0 0;
+				overflow: hidden;
+				ul {
+					list-style-type: none;
+					padding:0;
+					margin:0;
+					float:left;
+					width:140px;
+					li {
+						overflow:hidden;
+						label {
+							float:right;
+							font-size:12px;
+							margin:0;
+							width:120px;
+						}
+						input {
+							float:left;
+						}
+					}
+				}
+			}
+			label.error {
+				font-size:11px;
+				color:#ff0000;
+			}
+		}
+		.bootstrap-datetimepicker-widget{z-index:9999;}
 	}
 	/*user*/
 	#user {
@@ -654,38 +690,7 @@ footer {
 }
 
 
-/*modules*/
-/*add events modal*/
-#addEventsModal{
-	#gradelevel  {
-		padding:8px 0 0 0;
-		overflow: hidden;
-		ul {
-			list-style-type: none;
-			padding:0;
-			margin:0;
-			float:left;
-			width:140px;
-			li {
-				overflow:hidden;
-				label {
-					float:right;
-					font-size:12px;
-					margin:0;
-					width:120px;
-				}
-				input {
-					float:left;
-				}
-			}
-		}
-	}
-	label.error {
-		font-size:11px;
-		color:#ff0000;
-	}
-}
-.bootstrap-datetimepicker-widget{z-index:9999;}
+
 /**
  * bootstrap modal override for google autocomplete fix
  */
