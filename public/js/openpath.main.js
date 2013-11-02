@@ -13,6 +13,7 @@ OpenPath = window.OpenPath || {};
 var PeerConnection = window.PeerConnection || window.webkitPeerConnection00 || window.webkitRTCPeerConnection || window.mozRTCPeerConnection;
 
 OpenPath.main = {
+	initialized : false,
 	init : function(){
 		
 		
@@ -38,7 +39,9 @@ OpenPath.main = {
 		//initMyPathMap();//maybe deprecating soon
 		//initEventsMap(); //**deprecated**/
 		//initEventsList(); //replaced
-
+		
+		
+		this.initialized = true;
 	},
 
 	//below needs work

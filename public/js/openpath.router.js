@@ -36,7 +36,10 @@ app_router.on('route:loadView', function(route, action) {
 });
 app_router.on('route:defaultRoute', function(actions) {
     console.log('route:',actions,OpenPath);
-	OpenPath.init();
+	if(!OpenPath.initialized){
+		OpenPath.init();//only init once
+	}
+	
 
     //hide other tabs
     $('.main-tab').each(function(){
@@ -84,10 +87,12 @@ loadRoute.home = {
 };
 loadRoute.main = {
 	init: function(){
+		if(!OpenPath.main.initialized){
+			OpenPath.main.init();//only init once
+		}
 		
-		OpenPath.main.init();
 		OpenPath.main.headerAnimation.init();
-		
+		//show content
         $('#videos').fadeIn();
 		//console.log($(window).height(),$('#videos').height(),$('#video').height());
 		
@@ -109,7 +114,9 @@ loadRoute.main = {
 };
 loadRoute.adduser = {
     init : function(){
+		//set header width
         $('header.main').width( '100%' );
+		//show content
         $('#addUser').fadeIn();
 
         //nav icon
@@ -148,7 +155,9 @@ loadRoute.adduser = {
 //events routes
 loadRoute.events = {
     init : function(){
-        $('header.main').width( '100%' );
+        //set header width
+		$('header.main').width( '100%' );
+		//show content
         $('#events').fadeIn();
         //nav icon
         $('nav.main ul li').each(function(){
@@ -170,7 +179,9 @@ loadRoute.events = {
 //user routes
 loadRoute.user = {
 	init : function(){
-        
+        //set header width
+		$('header.main').width( '100%' );
+		//show content
 		$('#user').fadeIn();
         //nav icon
 		$('nav.main ul li').each(function(){

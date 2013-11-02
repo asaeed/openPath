@@ -7,16 +7,17 @@ OpenPath = {
 	email : null,
 	sessionID : null,
 	room : null,
+	initialized : false,
 	init : function(){
-		console.log('openPath init')
+		console.log('openPath init ********')
 		/*	*/
 		//init persona
 		OpenPath.navigator.init();
 		
 		//set room number
 		this.setRoomNumber();
-
-	
+		
+		this.initialized = true;
 	},
 	setRoomNumber : function(){
 		// retreives room number based on query string
