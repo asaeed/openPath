@@ -3,43 +3,58 @@ OpenPath = window.OpenPath || {};
 OpenPath.AddEventView = Backbone.View.extend({
 	//model: new OpenPath.EventModel,
     el : '#addEvent',
-    template:$("#addEventTemplate").html(),
+    //template:$("#addEventTemplate").html(),
     initialize:function () {
        //init
-	   console.log('add new event form inited')
+       this.collection = new OpenPath.EventsCollection();
     },
     render:function () {
         var tmpl = _.template(this.template); //tmpl is a function that takes a JSON object and returns html
         
         this.$el.html(tmpl(this.model.toJSON())); //this.el is what we defined in tagName. use $el to get access to jQuery html() function
-  
+		
+		
+  	  
         return this;
     },
+	events : {
+		'submit #addEventForm':'addEvent'
+	},
+	addEvent : function(e){
+		e.preventDefault();
+		
+		//set form
+		this.form = $('#addEventForm');
+		//make grade levels array
+		var gradelevelsArr = [];
+		this.form.find('input:checkbox[name=gradelevel]:checked').each(function(){
+			gradelevelsArr.push( $(this).val());
+		});
+		
+		var name = this.form.find('#name').val(),
+			description = this.form.find('#description').val(),
+			//location = this.form.find('#location').val(),//TODO maps
+			gradelevels = gradelevelsArr, 
+			date = this.form.find('#date').val(),
+			data = {
+				name: name,
+				creator: OpenPath.email,
+				description: description,
+				location: 'location location location', 
+				grade: gradelevels,
+				date: date
+			};
+		
+		this.collection.create(new OpenPath.EventModel(data));
+
+		console.log('add event submit',date);
+	},
     /**
      * custom form setup & submission - unbackbone way
      */
-    setModal : function(){
+    setForm : function(){
     	var self = this;
-    	this.form = $('#addEvent');
-		this.modal = $('#addEventsModal');
-
-		//set date pickers
-    	$('#starttime').datetimepicker({
-		    language: 'en',
-		    pick12HourFormat: true
-		});
-		$('#endtime').datetimepicker({
-		    language: 'en',
-		    pick12HourFormat: true
-		});
-		//populate creator
-		$('#creator').val(OpenPath.email);
-
-		//fix modal height so that dates won't get cut off
-    	this.modal.find('.modal-body').css({
-			height : $(window).height() -350
-		});
-
+    	
 
     	//autocomplete location
 		var lat = null,
@@ -89,21 +104,18 @@ OpenPath.AddEventView = Backbone.View.extend({
 
 
 				var name = self.form.find('#name').val(),
-					creator = self.form.find('#creator').val(),
 					description = self.form.find('#description').val(),
 					//location = self.form.find('#location').val(),
 					//locationDescription = '',//TODO
 					gradelevels = gradelevelsArr, 
-					startTime = self.form.find('.startTime').val(),
-					endTime = self.form.find('.endTime').val(),
+					date = self.form.find('#date').val()
 					data = {
 						name: name,
-						creator: creator,
+						creator: OpenPath.email,
 						description: description,
 	 					location: locationArr, 
 						grade: gradelevels,
-	  					startTime: startTime,
-	  					endTime: endTime
+	  					date: date
 					};
 
 				//self.collection.add(new OpenPath.EventModel(data));

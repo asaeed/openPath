@@ -3,14 +3,12 @@ OpenPath = window.OpenPath || {};
 OpenPath.EventModel = Backbone.Model.extend({
 	//urlRoot: '/events',
   defaults: {
-    name: '',
-    creator: '',
-    description: '',
-    location:{},//[40.7142, -74.0064],//lat, lng NYC
-    locationDescription : '',
-    grades:[],
-    startTime:'',
-    endTime:''
+	name: '',
+	creator: '',
+	description: '',
+	location: '', 
+	grades: [],
+	date: ''
   },
   validate: function( attributes ){
     if( attributes.name == '' ){

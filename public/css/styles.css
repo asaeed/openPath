@@ -269,12 +269,10 @@ li {
 				}*/
 
 }
-.main .subnav ul li a:hover {
-  font-weight: bold;
-}
 .main .subnav ul li a {
   text-decoration: none;
   color: #949494;
+  font-size: 1.3em;
 }
 .main .subnav ul li a.active,
 .main .subnav ul li a:hover {
@@ -530,7 +528,7 @@ li {
 .main #events ul#eventslist li.event article h3 {
   padding-bottom: 5px;
 }
-.main #events ul#eventslist li.event article p.time {
+.main #events ul#eventslist li.event article p.date {
   padding-bottom: 5px;
 }
 .main #events ul#eventslist li.event article p.location {
@@ -546,35 +544,48 @@ li {
 .main #events .eventslist .icon-plus {
   color: #fff;
 }
-.main #events #addEvent #gradelevel {
-  padding: 8px 0 0 0;
+.main #events #addEvent {
+  padding: 20px 4%;
+}
+.main #events #addEvent input[type="text"],
+.main #events #addEvent input[type="date"],
+.main #events #addEvent textarea {
+  width: 35em;
+}
+.main #events #addEvent fieldset label {
+  font-weight: 600;
+  font-size: 2em;
+  padding-bottom: 0.1em;
+}
+.main #events #addEvent fieldset textarea {
+  height: 6em;
+}
+.main #events #addEvent fieldset#gradelevel {
+  padding: 0.8em 0 1em 0;
   overflow: hidden;
 }
-.main #events #addEvent #gradelevel ul {
+.main #events #addEvent fieldset#gradelevel ul {
   list-style-type: none;
   padding: 0;
   margin: 0;
   float: left;
   width: 140px;
 }
-.main #events #addEvent #gradelevel ul li {
+.main #events #addEvent fieldset#gradelevel ul li {
   overflow: hidden;
 }
-.main #events #addEvent #gradelevel ul li label {
+.main #events #addEvent fieldset#gradelevel ul li label {
   float: right;
-  font-size: 12px;
+  font-size: 1.3em;
   margin: 0;
   width: 120px;
 }
-.main #events #addEvent #gradelevel ul li input {
+.main #events #addEvent fieldset#gradelevel ul li input {
   float: left;
 }
 .main #events #addEvent label.error {
   font-size: 11px;
   color: #ff0000;
-}
-.main #events .bootstrap-datetimepicker-widget {
-  z-index: 9999;
 }
 .main #user {
   /*profile display*/

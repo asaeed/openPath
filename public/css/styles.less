@@ -247,12 +247,10 @@ footer {
 				a:hover{
 					color:#fff;
 				}*/
-				a:hover{
-					font-weight:bold;
-				}
 				a {
 					text-decoration:none;
 					color:#949494;
+					font-size:1.3em;
 				}
 				a.active,
 				a:hover {
@@ -499,7 +497,7 @@ footer {
 					h3{
 						padding-bottom:5px;
 					}
-					p.time{
+					p.date{
 						padding-bottom:5px;
 					}
 					p.location{
@@ -520,8 +518,24 @@ footer {
 			
 		/*addEvent*/
 		#addEvent{
-			#gradelevel  {
-				padding:8px 0 0 0;
+			padding:20px 4%;
+			input[type="text"],
+			input[type="date"],
+			textarea {
+				width:35em;
+			}
+			fieldset {
+				label {
+					font-weight:600;
+					font-size:2em;
+					padding-bottom:0.1em;
+				}
+				textarea {
+					height:6em;
+				}
+			}
+			fieldset#gradelevel  {
+				padding:0.8em 0 1em 0;
 				overflow: hidden;
 				ul {
 					list-style-type: none;
@@ -533,7 +547,7 @@ footer {
 						overflow:hidden;
 						label {
 							float:right;
-							font-size:12px;
+							font-size:1.3em;
 							margin:0;
 							width:120px;
 						}
@@ -548,7 +562,6 @@ footer {
 				color:#ff0000;
 			}
 		}
-		.bootstrap-datetimepicker-widget{z-index:9999;}
 	}
 	/*user*/
 	#user {
