@@ -7,6 +7,8 @@ OpenPath.AddEventView = Backbone.View.extend({
     initialize:function () {
        //init
        this.collection = new OpenPath.EventsCollection();
+	   this.map();
+	   console.log('add event here')
     },
     render:function () {
         var tmpl = _.template(this.template); //tmpl is a function that takes a JSON object and returns html
@@ -14,11 +16,30 @@ OpenPath.AddEventView = Backbone.View.extend({
         this.$el.html(tmpl(this.model.toJSON())); //this.el is what we defined in tagName. use $el to get access to jQuery html() function
 		
 		
-  	  
         return this;
     },
 	events : {
 		'submit #addEventForm':'addEvent'
+	},
+	map :function(){
+		//map
+		this.locationData = null;
+		var self = this;
+		var locationInput = document.getElementById("location");
+		var autocomplete = new google.maps.places.Autocomplete(locationInput);
+		
+		google.maps.event.addListener(autocomplete, 'place_changed', function() {
+			//infowindow.close();
+			
+			var place = autocomplete.getPlace();
+			if (!place.geometry) {
+				// Inform the user that a place was not found and return.
+				alert('location not found')
+				return;
+			}
+			self.locationData = place;
+			console.log(self.locationData)
+		});
 	},
 	addEvent : function(e){
 		e.preventDefault();
@@ -28,103 +49,27 @@ OpenPath.AddEventView = Backbone.View.extend({
 		//make grade levels array
 		var gradelevelsArr = [];
 		this.form.find('input:checkbox[name=gradelevel]:checked').each(function(){
-			gradelevelsArr.push( $(this).val());
+			gradelevelsArr.push( $(this).val() );
 		});
 		
+		
+		//data to send
 		var name = this.form.find('#name').val(),
 			description = this.form.find('#description').val(),
-			//location = this.form.find('#location').val(),//TODO maps
 			gradelevels = gradelevelsArr, 
 			date = this.form.find('#date').val(),
 			data = {
 				name: name,
 				creator: OpenPath.email,
 				description: description,
-				location: 'location location location', 
-				grade: gradelevels,
+				location: this.locationData, 
+				grades: gradelevelsArr,
 				date: date
 			};
 		
+		//TODO: need a check here
 		this.collection.create(new OpenPath.EventModel(data));
-
-		console.log('add event submit',date);
-	},
-    /**
-     * custom form setup & submission - unbackbone way
-     */
-    setForm : function(){
-    	var self = this;
-    	
-
-    	//autocomplete location
-		var lat = null,
-			lng = null,
-			locationInput = document.getElementById("location");
-		autocomplete = new google.maps.places.Autocomplete(locationInput);
-
-		google.maps.event.addListener(autocomplete, 'place_changed', function() {
-			var place = autocomplete.getPlace();
-			if (!place.geometry) {
-			// Inform the user that a place was not found and return.
-			return;
-			}
-
-			lat = place.geometry.location.lat();
-			lng = place.geometry.location.lng();
-			//console.log('new',lat,lng)
-			/*
-			// If the place has a geometry, then present it on a map.
-			if (place.geometry.viewport) {
-			// Use the viewport if it is provided.
-			map.fitBounds(place.geometry.viewport);
-			} else {
-			// Otherwise use the location and set a chosen zoom level.
-			map.setCenter(place.geometry.location);
-			map.setZoom(17);
-			}
-			*/
-		});
-
-    	//submit and validate
-		this.form.validate({
-			submitHandler: function(form) {
-				
-				//make grade levels array
-				var gradelevelsArr = [];
-				self.form.find('input:checkbox[name=gradelevel]:checked').each(function(){
-					gradelevelsArr.push( $(this).val());
-				});
-				//make location arr
-				var locationArr = [];
-				if(lat && lng  ){
-					locationArr = [lat,lng];
-				}else{
-					locationArr = [40.7142, -74.0064];//lat, lng NYC
-				}
-
-
-				var name = self.form.find('#name').val(),
-					description = self.form.find('#description').val(),
-					//location = self.form.find('#location').val(),
-					//locationDescription = '',//TODO
-					gradelevels = gradelevelsArr, 
-					date = self.form.find('#date').val()
-					data = {
-						name: name,
-						creator: OpenPath.email,
-						description: description,
-	 					location: locationArr, 
-						grade: gradelevels,
-	  					date: date
-					};
-
-				//self.collection.add(new OpenPath.EventModel(data));
-				self.collection.create(data);//send to server
-
-				self.modal.modal('hide');
-				self.form.find('input,textarea').val('');
-				return false;
-			}
-		});
-    }
+		//TODO: need to relocate to events or some other page
+		alert('event submitted',data);
+	}
 });

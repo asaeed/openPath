@@ -182,8 +182,8 @@ loadRoute.events = {
     upcoming : function(){
         //todo
 		this.init();
-		//show list
-		$('#eventslist').show();
+		//empty and show list
+		$('#eventslist').html('').show();
 		//hide form
 		$('#addEvent').hide();
 		//set header copy

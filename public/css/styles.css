@@ -545,6 +545,7 @@ li {
   color: #fff;
 }
 .main #events #addEvent {
+  display: none;
   padding: 20px 4%;
 }
 .main #events #addEvent input[type="text"],
