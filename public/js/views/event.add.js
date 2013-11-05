@@ -67,9 +67,14 @@ OpenPath.AddEventView = Backbone.View.extend({
 				date: date
 			};
 		
-		//TODO: need a check here
-		this.collection.create(new OpenPath.EventModel(data));
-		//TODO: need to relocate to events or some other page
-		alert('event submitted',data);
+		if(name !== '' && description !== '' && gradelevels.length > 0 && date !== ''){
+			this.collection.create(new OpenPath.EventModel(data));
+			//TODO: need to relocate to events or some other page
+			alert('event submitted',data);
+			window.location.hash = '#/events/upcoming';
+		}else{
+			alert('please fill out all the fields')
+		}
+		
 	}
 });
