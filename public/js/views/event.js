@@ -63,7 +63,8 @@ OpenPath.EventView = Backbone.View.extend({
 				}
 		
 				marker.setIcon(({
-					url: place.icon,
+					//url: place.icon,
+					url: 'img/marker.png',
 					size: new google.maps.Size(71, 71),
 					origin: new google.maps.Point(0, 0),
 					anchor: new google.maps.Point(17, 34),
