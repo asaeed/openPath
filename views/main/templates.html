@@ -2,9 +2,13 @@
 <script id="eventTemplate" type="text/template">
 	<article>
 		<h3><a href="#" target="_blank"><%= name %></a></h3>
+		<p class="link"><a href="<%= websiteLink %>"><%= websiteLink %></a></p>
 		<p class="date"><%= OpenPath.utils.convertTimeStampToDate(date) %></p>
 		<p class="location"><%= location.formatted_address %></p>
 		<p><%= description %></p>
+		<div class="buttons">
+			<button class="btn btn-primary" id="join">Join</button>
+		</div>
 	</article>
 	<div class="mapWrap"></div>
 </script>

@@ -4,6 +4,7 @@ OpenPath.EventModel = Backbone.Model.extend({
 	//urlRoot: '/events',
   defaults: {
 	name: '',
+	websiteLink: '',
 	creator: '',
 	description: '',
 	location: '', 

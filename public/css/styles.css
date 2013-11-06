@@ -526,7 +526,10 @@ li {
   padding: 10px 0 0 0;
 }
 .main #events ul#eventslist li.event article h3 {
-  padding-bottom: 5px;
+  padding-bottom: 0px;
+}
+.main #events ul#eventslist li.event article p {
+  font-size: 1.3em;
 }
 .main #events ul#eventslist li.event article p.date {
   padding-bottom: 5px;

@@ -57,11 +57,13 @@ OpenPath.AddEventView = Backbone.View.extend({
 		
 		//data to send
 		var name = this.form.find('#name').val(),
+			websiteLink = this.form.find('#websiteLink').val(),
 			description = this.form.find('#description').val(),
 			gradelevels = gradelevelsArr, 
 			date = this.form.find('#date').val(),
 			data = {
 				name: name,
+				websiteLink: websiteLink,
 				creator: OpenPath.email,
 				description: description,
 				location: this.locationData, 
