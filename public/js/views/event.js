@@ -7,6 +7,10 @@ OpenPath.EventView = Backbone.View.extend({
 	template:$("#eventTemplate").html(),
 	initialize:function () {
 		//init
+		//console.log(this.model.attributes.date, new Date() );
+		
+		
+		
 	},
 	render:function () {
 		var tmpl = _.template(this.template); //tmpl is a function that takes a JSON object and returns html
@@ -14,10 +18,12 @@ OpenPath.EventView = Backbone.View.extend({
 		
 		var self = this;
 		this.mapWrap = this.el.querySelector(".mapWrap");
-		//this.loadMap();
+		/*
 		google.maps.event.addDomListener(window, 'load', function(){
-			self.loadMap();
+			//self.loadMap();
 		});
+		*/
+		setTimeout(function(){self.loadMap()},100);
 		
 		return this;
 	},
@@ -25,7 +31,7 @@ OpenPath.EventView = Backbone.View.extend({
 		var ele = this.mapWrap,
 			location = this.model.attributes.location;
 			
-		console.log(location)
+		//console.log(location)
 		
 		var mapOptions = {
 			center: new google.maps.LatLng(-33.8688, 151.2195),
@@ -47,7 +53,7 @@ OpenPath.EventView = Backbone.View.extend({
 					map: map,
 					position: place.geometry.location
 				});
-				console.log('ok, lets see')
+				
 				google.maps.event.addListener(marker, 'click', function() {
 					infowindow.setContent(place.name);
 					infowindow.open(map, this);

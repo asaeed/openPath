@@ -186,12 +186,13 @@ loadRoute.events = {
 		$('#eventslist').html('').show();
 		//hide form
 		$('#addEvent').hide();
+		
 		//set header copy
 		$('#eventsmenu h2').html('List of Events');
 		//highlight menu item
 		$('#eventsmenu a.upcoming').addClass('active');
         //clear list
-        $('#eventslist').html();
+        $('#eventslist').html('');
         var evCollection = new OpenPath.EventsView();
     },
 	addNew : function(){
@@ -200,11 +201,16 @@ loadRoute.events = {
 		$('#addEvent').show();
         //hide list
         $('#eventslist').hide();
+		
+        
+		
 		//set header copy
 		$('#eventsmenu h2').html('Add New Event');
 		//highlight menu item
 		$('#eventsmenu a.addNew').addClass('active');
 		var AddNewEvent = new OpenPath.AddEventView();
+		
+		$("#addEvent").html(AddNewEvent.render().el);
 	}
 };
 //user routes

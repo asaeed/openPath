@@ -27,7 +27,7 @@ OpenPath.utils = {
 	* Retrieves and returns formatted date time
 	*/
 	getDateTimeStamp:function(){
-		var dateobj=new Date();
+		var dateobj = new Date();
 	    var year = dateobj.getFullYear();
 	    var month= ("0" + (dateobj.getMonth()+1)).slice(-2);
 	    var day = ("0" + dateobj.getDate()).slice(-2);
@@ -38,6 +38,24 @@ OpenPath.utils = {
 		var converted_time = hours + ":" + minutes + ":" + seconds;
 	    return converted_date + " " + converted_time;
   	},
+	convertDateToTimeStamp : function(date){
+		var myDate = date.split('-').join(',');
+		var newDate = new Date(myDate).getTime();
+		console.log( myDate , newDate);
+		return newDate;
+	},
+	convertTimeStampToDate : function(UNIX_timestamp){
+		var date = new Date(UNIX_timestamp);
+		var months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+		var year = date.getFullYear();
+		var month = months[date.getMonth()];
+		var day = date.getDate();
+		var hour = date.getHours();
+		var min = date.getMinutes();
+		var sec = date.getSeconds();
+		var time = month+' '+day+', '+year;// '+hour+':'+min+':'+sec ;
+		return time;
+	},
   	/**
 	* Gets and returns hash value, otherwise, returns empty string.
 	*/

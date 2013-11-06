@@ -8,6 +8,7 @@ OpenPath.EventsView = Backbone.View.extend({
         this.collection.fetch();
 		
         this.render();
+		
         this.collection.on("add", this.renderEvent, this);
         this.collection.on("reset", this.render, this);
     },
@@ -18,7 +19,7 @@ OpenPath.EventsView = Backbone.View.extend({
         }, this);
     },
     renderEvent:function(item){
-		console.log('on add render me',item)
+		//console.log('on add render me',item)
         var eventView = new OpenPath.EventView({
             model: item
         });

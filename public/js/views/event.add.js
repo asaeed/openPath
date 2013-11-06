@@ -1,21 +1,22 @@
 OpenPath = window.OpenPath || {};
 
 OpenPath.AddEventView = Backbone.View.extend({
-	//model: new OpenPath.EventModel,
-    el : '#addEvent',
-    //template:$("#addEventTemplate").html(),
+	model: new OpenPath.EventModel,
+    //el : '#addEvent',
+    tagName:"div",
+    className:"addEventWrap",
+    template:$("#addEventTemplate").html(),
     initialize:function () {
        //init
        this.collection = new OpenPath.EventsCollection();
-	   this.map();
+	   
 	   console.log('add event here')
     },
     render:function () {
-        var tmpl = _.template(this.template); //tmpl is a function that takes a JSON object and returns html
-        
-        this.$el.html(tmpl(this.model.toJSON())); //this.el is what we defined in tagName. use $el to get access to jQuery html() function
+        var tmpl = _.template(this.template);
+        this.$el.html(tmpl(this.model.toJSON()));
 		
-		
+		this.map();
         return this;
     },
 	events : {
@@ -25,7 +26,8 @@ OpenPath.AddEventView = Backbone.View.extend({
 		//map
 		this.locationData = null;
 		var self = this;
-		var locationInput = document.getElementById("location");
+		var locationInput = this.$el.find("#location").get(0);//document.getElementById("location");//
+		console.log(locationInput);
 		var autocomplete = new google.maps.places.Autocomplete(locationInput);
 		
 		google.maps.event.addListener(autocomplete, 'place_changed', function() {
@@ -45,7 +47,7 @@ OpenPath.AddEventView = Backbone.View.extend({
 		e.preventDefault();
 		
 		//set form
-		this.form = $('#addEventForm');
+		this.form = this.$el.find('#addEventForm');
 		//make grade levels array
 		var gradelevelsArr = [];
 		this.form.find('input:checkbox[name=gradelevel]:checked').each(function(){
@@ -64,7 +66,7 @@ OpenPath.AddEventView = Backbone.View.extend({
 				description: description,
 				location: this.locationData, 
 				grades: gradelevelsArr,
-				date: date
+				date: OpenPath.utils.convertDateToTimeStamp(date)
 			};
 		
 		if(name !== '' && description !== '' && gradelevels.length > 0 && date !== ''){
