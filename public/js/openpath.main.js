@@ -137,7 +137,7 @@ OpenPath.main = {
 
  		if(this.room !== null){
 				rtc.connect(server, this.room);
-				console.log("room: " + this.room);
+				console.log("this.room: " + this.room);
 		}
 	
 
@@ -211,11 +211,11 @@ OpenPath.Video = function (stream, socketId) {
 		videos.push(this);
 		console.log("Adding video as main_videoplayer");
 	} else if (other_video == null) {
-		rtc.attachStream(stream, 'other_videoplayer');
+		rtc.attachStream(stream, 'other_videoplayer2');
 		other_video = this;	
-		this.domId = 'other_videoplayer';
+		this.domId = 'other_videoplayer2';
 		videos.push(this);
-		console.log("Adding video as other_videoplayer");
+		console.log("Adding video as other_videoplayer2");
 	} else {
 		console.log("No room for more videos");
 	}

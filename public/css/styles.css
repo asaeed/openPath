@@ -293,6 +293,12 @@ li {
   overflow: hidden;
   padding: 0;
   display: block;
+  /*#usermeta*/
+
+  /*main vidoe*/
+
+  /*side videos*/
+
   /*#chat*/
 
   /*chat open*/
@@ -322,6 +328,79 @@ li {
   height: 8em;
   z-index: 3;
 }
+.main #videos .usermeta {
+  z-index: 2;
+  color: #fff;
+  position: absolute;
+  width: 100%;
+  background: rgba(0, 0, 0, 0.6);
+}
+.main #videos .usermeta .username {
+  padding: 7px;
+}
+.main #videos .usermeta .username a {
+  font-size: 1.6em;
+  line-height: 1.2em;
+}
+.main #videos .usermeta .username i {
+  display: block;
+  float: right;
+}
+.main #videos .usermeta .username .icon-map-marker {
+  display: inline-block;
+  float: right;
+  font-size: 1.6em;
+}
+.main #videos .usermeta .username .icon-map-marker span {
+  display: none;
+}
+.main #videos .usermeta .username .icon-map-marker:hover {
+  color: #08c;
+}
+.main #videos .usermeta .username > a:link,
+.main #videos .usermeta .username > a:visited {
+  color: #fff !important;
+}
+.main #videos .usermeta .username > a:hover {
+  color: #08c;
+}
+.main #videos .usermeta .userlocation {
+  height: 20px;
+  font-size: 11px;
+  padding: 2%;
+}
+.main #videos .usermeta .usermap {
+  margin: 0;
+  height: 100px;
+  background: rgba(255, 255, 255, 0.2);
+}
+.main #videos .usermetashowing {
+  background: rgba(0, 0, 0, 0.3);
+}
+.main #videos .usermetashowing .icon-map-marker span {
+  display: inline-block !important;
+}
+.main #videos .usermetashowing .icon-map-marker:before {
+  content: '' !important;
+}
+.main #videos #video .usermeta {
+  position: absolute;
+  top: 10em;
+  width: 30em;
+  -webkit-transition: width 1s ease-in-out;
+  -moz-transition: width 1s ease-in-out;
+  -o-transition: width 1s ease-in-out;
+  -ms-transition: width 1s ease-in-out;
+  transition: width 1s ease-in-out;
+}
+.main #videos #video .usermeta .usermap {
+  height: 0;
+  -webkit-transition: height 1s ease-in-out;
+  -moz-transition: height 1s ease-in-out;
+  -o-transition: height 1s ease-in-out;
+  -ms-transition: height 1s ease-in-out;
+  transition: height 1s ease-in-out;
+}
 .main #videos .userVideo {
   /*
 			position:relative;
@@ -332,70 +411,15 @@ li {
   cursor: pointer;
   transition: opacity 1s ease-out;
 }
-.main #videos .userVideo .usermeta {
-  z-index: 2;
-  color: #fff;
-  position: absolute;
-  width: 100%;
-  background: rgba(0, 0, 0, 0.6);
-}
-.main #videos .userVideo .usermeta .username {
-  padding: 7px;
-}
-.main #videos .userVideo .usermeta .username a {
-  font-size: 1.6em;
-  line-height: 1.2em;
-}
-.main #videos .userVideo .usermeta .username i {
-  display: block;
-  float: right;
-}
-.main #videos .userVideo .usermeta .username .icon-map-marker {
-  display: inline-block;
-  float: right;
-  font-size: 1.6em;
-}
-.main #videos .userVideo .usermeta .username .icon-map-marker span {
-  display: none;
-}
-.main #videos .userVideo .usermeta .username .icon-map-marker:hover {
-  color: #08c;
-}
-.main #videos .userVideo .usermeta .username > a:link,
-.main #videos .userVideo .usermeta .username > a:visited {
-  color: #fff !important;
-}
-.main #videos .userVideo .usermeta .username > a:hover {
-  color: #08c;
-}
-.main #videos .userVideo .usermeta .userlocation {
-  height: 20px;
-  font-size: 11px;
-  padding: 2%;
-}
-.main #videos .userVideo .usermeta .usermap {
-  margin: 0;
-  height: 100px;
-  background: rgba(255, 255, 255, 0.2);
+.main #videos .userVideo video.avatar {
+  width: 100% !important;
+  height: 100% !important;
 }
 .main #videos .userVideo .usermeta,
 .main #videos .userVideo .username,
 .main #videos .userVideo .userlocation,
 .main #videos .userVideo .usermap {
   display: none;
-}
-.main #videos .userVideo .usermetashowing {
-  background: rgba(0, 0, 0, 0.3);
-}
-.main #videos .userVideo .usermetashowing .icon-map-marker span {
-  display: inline-block !important;
-}
-.main #videos .userVideo .usermetashowing .icon-map-marker:before {
-  content: '' !important;
-}
-.main #videos .userVideo video.avatar {
-  width: 100% !important;
-  height: 100% !important;
 }
 .main #videos #chat {
   position: absolute;

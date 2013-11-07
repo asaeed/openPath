@@ -300,8 +300,82 @@ footer {
 			height:8em;
 			z-index:3;
 		}
-		video#main_videoplayer {
+		/*#usermeta*/
+		.usermeta{
+			z-index:2; 
+			color:#fff; 
+			position:absolute; 
+			width:100%;
+			background:rgba(0,0,0,@headerOpacity); 
+			.username{
+				padding:7px;
+				a {
+					font-size:1.6em;
+					line-height:1.2em;
+				}
+				i{
+					display:block; 
+					float:right;
+				}
+				.icon-map-marker{
+					display:inline-block; 
+					float:right;
+					font-size:1.6em;
+					span{
+						display:none;
+					}
+				}
+				.icon-map-marker:hover{
+					color:#08c;
+				}
+			}
+			.username > a:link, 
+			.username > a:visited{
+				color:#fff !important;
+			}
+			.username > a:hover{
+				color:#08c;
+			}
+			.userlocation {
+				height:20px; 
+				font-size:11px; 
+				padding:2%; 
+			}
+			.usermap{
+				margin:0; 
+				height:100px;
+				background:rgba(255,255,255,0.2);
+			}
+
 		}
+		
+		.usermetashowing{
+			background:rgba(0,0,0,0.3);
+			.icon-map-marker span {
+				display:inline-block !important;
+			}
+			.icon-map-marker:before{
+				content:'' !important;
+			}
+		}
+		/*main vidoe*/
+		#video {
+			.usermeta {
+				position:absolute;
+				top:10em;
+				width:30em;
+				
+				.transition(~"width 1s ease-in-out"); 
+				.usermap{
+					height:0;
+					.transition(~"height 1s ease-in-out"); 
+				}
+			}
+		}
+		video#main_videoplayer {
+			
+		}
+		/*side videos*/
 		.userVideo {
 			/*
 			position:relative;
@@ -310,72 +384,20 @@ footer {
 			overflow:hidden;
 			cursor:pointer;
 			transition:opacity 1s ease-out;
-			.usermeta{
-				z-index:2; 
-				color:#fff; 
-				position:absolute; 
-				width:100%;
-				background:rgba(0,0,0,@headerOpacity); 
-				.username{
-					padding:7px;
-					a {
-						font-size:1.6em;
-						line-height:1.2em;
-					}
-					i{
-						display:block; 
-						float:right;
-					}
-					.icon-map-marker{
-						display:inline-block; 
-						float:right;
-						font-size:1.6em;
-						span{
-							display:none;
-						}
-					}
-					.icon-map-marker:hover{
-						color:#08c;
-					}
-				}
-				.username > a:link, 
-				.username > a:visited{
-					color:#fff !important;
-				}
-				.username > a:hover{
-					color:#08c;
-				}
-				.userlocation {
-					height:20px; 
-					font-size:11px; 
-					padding:2%; 
-				}
-				.usermap{
-					margin:0; 
-					height:100px;
-					background:rgba(255,255,255,0.2)				}
-
+			
+			video.avatar{
+				width: 100% !important;
+				height: 100% !important;
 			}
+			
 			.usermeta, 
 			.username, 
 			.userlocation, 
 			.usermap{
 				display:none;
 			}
-			.usermetashowing{
-				background:rgba(0,0,0,0.3);
-				.icon-map-marker span {
-					display:inline-block !important;
-				}
-				.icon-map-marker:before{
-					content:'' !important;
-				}
-			}
-			video.avatar{
-				width: 100% !important;
-				height: 100% !important;
-			}
 		}
+		
 		/*#chat*/
 		#chat {
 			position:absolute;

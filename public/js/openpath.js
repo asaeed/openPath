@@ -140,6 +140,10 @@ OpenPath = {
 			success: function(data) {
 				console.log('new session created and session id = ' + data._id);
 				self.showUsername(email, data._id);
+				
+				
+				//here the magjor call back !!!!
+				
 			},
 			error: function(data){
 				console.log('there was an error creating a new session' + data);

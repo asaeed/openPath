@@ -10,37 +10,7 @@ OpenPath.Router = Backbone.Router.extend({
 var app_router = new OpenPath.Router,
 	loadRoute = {};
 
-app_router.on('route:loadView', function(route, action) {
-    console.log('route:loadView',route,action);
-    /**
-     * user route
-     */
-    if(route === 'user'){
-        if(action === 'profile'){
-			loadRoute.user.profile();
-        }
-        if(action === 'edit-profile'){
-			loadRoute.user.editProfile();
-        }
-        if(action === 'mypath'){
-			loadRoute.user.mypath();
-        }
-        if(action === 'notifications'){
-			loadRoute.user.notifications();
-        }
-        if(action === 'settings'){
-			loadRoute.user.settings();
-        }
-    }
-	if(route === 'events'){
-        if(action === 'upcoming'){
-			loadRoute.events.upcoming();
-        }
-		if(action === 'addNew'){
-			loadRoute.events.addNew();
-        }
-	}
-});
+
 app_router.on('route:defaultRoute', function(actions) {
     console.log('route:',actions);
 	if(!OpenPath.initialized){
@@ -77,7 +47,43 @@ app_router.on('route:defaultRoute', function(actions) {
         loadRoute.user.profile();
     }
 });
-
+/**
+ *  route:loadView
+ */
+app_router.on('route:loadView', function(route, action) {
+    console.log('route:loadView',route,action);
+    /**
+     * user route
+     */
+    if(route === 'user'){
+        if(action === 'profile'){
+			loadRoute.user.profile();
+        }
+        if(action === 'edit-profile'){
+			loadRoute.user.editProfile();
+        }
+        if(action === 'mypath'){
+			loadRoute.user.mypath();
+        }
+        if(action === 'notifications'){
+			loadRoute.user.notifications();
+        }
+        if(action === 'settings'){
+			loadRoute.user.settings();
+        }
+    }
+    /**
+     * events route
+     */
+	if(route === 'events'){
+        if(action === 'upcoming'){
+			loadRoute.events.upcoming();
+        }
+		if(action === 'addNew'){
+			loadRoute.events.addNew();
+        }
+	}
+});
 
 /**
  *  loadRoute obj

@@ -72,11 +72,13 @@ Note, the "to" field can also contain "Jared <jaredlamenzo@gmail.com>, Ahmad <as
 so that would make the body:
 {"to":"Ahmad <asaeed@gmail.com>, Jared <jaredlamenzo@gmail.com>","subject":"test subj","text":"test txt"}
 
-
+---
 
 We'll be making more specific service calls for our needs 
 as we build out user profiles and event profiles. 
 
+Like: 
+1. gravatar for node https://github.com/emerleite/node-gravatar
 
 **Some important things to note:
 
