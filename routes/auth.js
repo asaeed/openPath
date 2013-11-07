@@ -22,6 +22,9 @@ exports.status = function authStatus(req, res) {
 
       // find user, if new user, then create them in database
       user.findByEmail(body.email, function(foundUser){
+		  
+
+		  
         if (!foundUser) {
           res.json({"email": req.session.email, "status": "okay"});
 
@@ -30,7 +33,7 @@ exports.status = function authStatus(req, res) {
             req.session.email = newUser.email;
             req.session.userId = newUser._id;
             newUser.status = "okay";
-           
+			
             res.json(newUser);
 
             console.log('new user')
@@ -41,9 +44,13 @@ exports.status = function authStatus(req, res) {
           req.session.email = foundUser.email;
           req.session.userId = foundUser._id;
           foundUser.status = "okay";
+		  
           res.json(foundUser);
           console.log('foundUser')
         }
+		
+		
+		
       });    
 
     } else {

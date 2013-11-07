@@ -71,7 +71,8 @@ OpenPath = {
         // The server should return the id, name and email from the database
         this.user.fetch({
             success: function (user) {
-                //console.log('fetched user',user.toJSON());
+                console.log('fetched user',user.toJSON());
+				
             }
         });
         //this.user.save({id: user._id, name:{first:'crap',last:'face'}})
@@ -141,8 +142,9 @@ OpenPath = {
 				console.log('new session created and session id = ' + data._id);
 				self.showUsername(email, data._id);
 				
-				
+				//TODO!!!
 				//here the magjor call back !!!!
+				//to start the router
 				
 			},
 			error: function(data){
@@ -170,8 +172,26 @@ OpenPath = {
 		var msg = document.querySelector("#text").value;
 		msg = msg.replace("USERNAME", this.username);
 		msg = msg.replace("LINK", "http://www.openpath.me#" + idHash);
+		
 		document.querySelector("#text").value = msg;
-	}
+		
+		//this.showGravatar(email);
+	}/*,
+	showGravatar : function(email){
+		$.ajax({
+			url: '/gravatar/',
+			//dataType: 'json',
+			data : email,
+			type:'GET',
+			//async:false,
+			success: function(msg) {
+				console.log('gravatar found',msg);
+			},
+			error: function(err){
+				console.log('gravatar NOT found',err);
+			}
+		});
+	}*/
 };
 
 

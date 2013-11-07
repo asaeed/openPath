@@ -10,6 +10,7 @@ OpenPath.UserModel = Backbone.Model.extend({
       last : ''
     },
     email: '',
+	gravatarUrl : '',
     grade: '',
     interests: [],
     homelocation:[0,0],
