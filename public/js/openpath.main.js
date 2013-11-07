@@ -90,17 +90,31 @@ OpenPath.main = {
 			$(this).parent().removeClass('closebtn');
 			event.stopPropagation();
 		});
-		$('#other_videoplayer').dblclick(function(event) {
+		/**
+		 * video to main
+		 */
+		function videoToMain(id){
 			var tempsrc = document.getElementById('main_videoplayer').src;
-			document.getElementById('main_videoplayer').src = document.getElementById('other_videoplayer').src;
-			document.getElementById('other_videoplayer').src = tempsrc;
+			document.getElementById('main_videoplayer').src = document.getElementById( id ).src;
+			document.getElementById( id ).src = tempsrc;
 
 			var tempvideo = main_video;
 			main_video = other_video;
 			other_video = tempvideo;
-			
+		}
+		$('#self_videoplayer').dblclick(function(event) {
+			videoToMain('self_videoplayer');
 		});
-
+		$('#other_videoplayer2').dblclick(function(event) {
+			videoToMain('other_videoplayer2');
+		});
+		$('#other_videoplayer3').dblclick(function(event) {
+			videoToMain('other_videoplayer3');
+		});
+		$('#other_videoplayer4').dblclick(function(event) {
+			videoToMain('other_videoplayer4');
+		});
+		
 		// Main Navigation Tabs
 		$("a.logo").tooltip({placement:'bottom'});
 		$("nav.main a").tooltip({placement:'bottom'});

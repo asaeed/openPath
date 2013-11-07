@@ -171,6 +171,7 @@ loadRoute.events = {
             $(this).removeClass('active');
         });
         $('.eventsIcon').addClass('active');
+		
 		//clear sub nav
 		$('#eventsmenu nav.subnav ul li').each(function(){
 			$(this).find('a').removeClass('active');
@@ -199,17 +200,15 @@ loadRoute.events = {
 		this.init();
 		//show form
 		$('#addEvent').show();
-        //hide list
-        $('#eventslist').hide();
-		
-        
-		
+		//hide list
+		$('#eventslist').hide();
+
 		//set header copy
 		$('#eventsmenu h2').html('Add New Event');
 		//highlight menu item
 		$('#eventsmenu a.addNew').addClass('active');
 		var AddNewEvent = new OpenPath.AddEventView();
-		
+		//render
 		$("#addEvent").html(AddNewEvent.render().el);
 	}
 };
