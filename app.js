@@ -13,7 +13,6 @@ var express = require('express')
   , email = require('./routes/email')
   , http = require('http')
   , path = require('path')
-//  , gravatar = require('gravatar')
   , request = require('request');
 
 var app = express();
@@ -119,20 +118,6 @@ app.get('/events/:id', eventRoute.findById);
 app.post('/events', eventRoute.addItem);
 app.put('/events/:id', eventRoute.updateItem);
 app.delete('/events/:id', eventRoute.deleteItem);
-
-/*
-app.get('/gravatar/',function(req, res){
-console.log('requesting gravatar')
-	var gravatarUrl = gravatar.url( req, {s: '200', r: 'pg', d: '404'});
-	var secureUrl = gravatar.url( req, {s: '100', r: 'x', d: 'retro'}, true);
-	
-	console.log('res gravatar',gravatarUrl)
-	res.json({
-		gravatarUrl : gravatarUrl,
-		secureUrl : secureUrl
-	});
-});
-*/
 
 http.createServer(app).listen(app.get('port'), function(){
   console.log("Server listening on port " + app.get('port'));

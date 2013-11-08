@@ -214,7 +214,15 @@ footer {
 				a#profile-icon{background:url(/img/user-icon.png) no-repeat;}
 				li.active a#profile-icon, 
 				a#profile-icon:hover{background:url(/img/user-icon-over.png) no-repeat;}
-
+				
+				/*with gravatar*/
+				a#profile-icon.gravatar {
+					.border-radius(2.5em);
+					border:2px solid rgba(255,255,255,0.8);
+					background-size :contain;
+				}
+				
+				
 				.badge-important{
 					position:absolute;
 					padding:0 0.5em; 
@@ -360,11 +368,12 @@ footer {
 		}
 		/*main vidoe*/
 		#video {
+			/*TODO hook  up -  hide till later*/
 			.usermeta {
 				position:absolute;
 				top:10em;
 				width:30em;
-				
+				display:none;
 				.transition(~"width 1s ease-in-out"); 
 				.usermap{
 					height:0;
@@ -612,7 +621,15 @@ footer {
 				width:40px;
 				height:40px;
 				float:left;
+				background:url(/img/user-icon.png) no-repeat;
 			}
+			/*with gravatar*/
+			.userIcon.gravatar {
+				.border-radius(2.5em);
+				border:2px solid rgba(255,255,255,0.8);
+				background-size :contain;
+			}
+			
 			h1 {
 				font-size:28px;
 				margin-left:10px; 

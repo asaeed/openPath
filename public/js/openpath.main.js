@@ -92,7 +92,7 @@ OpenPath.main = {
 		});
 		/**
 		 * video to main
-		 */
+		//off until sound and meta replacement hooked up
 		function videoToMain(id){
 			var tempsrc = document.getElementById('main_videoplayer').src;
 			document.getElementById('main_videoplayer').src = document.getElementById( id ).src;
@@ -114,6 +114,8 @@ OpenPath.main = {
 		$('#other_videoplayer4').dblclick(function(event) {
 			videoToMain('other_videoplayer4');
 		});
+		*/
+		
 		
 		// Main Navigation Tabs
 		$("a.logo").tooltip({placement:'bottom'});

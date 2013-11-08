@@ -63,16 +63,23 @@ OpenPath = {
 	//sets new backbone user model
 	setUser : function(user){
 		var self = this;
-		//console.log('set user',user)
+		console.log('set user',user);
+		//user diff than returned from fetch
+		
+		
+		
 		//set user
 		//this.user = new OpenPath.UserModel({id: user._id});
         this.user = new OpenPath.UserModel({_id: user._id});//good
+		
+		this.user.set("gravatarUrl", user.gravatarUrl);
         // The fetch below will perform GET /user/1
         // The server should return the id, name and email from the database
         this.user.fetch({
             success: function (user) {
                 console.log('fetched user',user.toJSON());
-				
+				OpenPath.showGravatar();
+		
             }
         });
         //this.user.save({id: user._id, name:{first:'crap',last:'face'}})
@@ -174,24 +181,19 @@ OpenPath = {
 		msg = msg.replace("LINK", "http://www.openpath.me#" + idHash);
 		
 		document.querySelector("#text").value = msg;
+
+		console.log('showUsername',email)
 		
-		//this.showGravatar(email);
-	}/*,
-	showGravatar : function(email){
-		$.ajax({
-			url: '/gravatar/',
-			//dataType: 'json',
-			data : email,
-			type:'GET',
-			//async:false,
-			success: function(msg) {
-				console.log('gravatar found',msg);
-			},
-			error: function(err){
-				console.log('gravatar NOT found',err);
-			}
+	},
+	showGravatar : function(){
+		console.log('showGravatar',this.user.attributes.gravatarUrl)
+		$('#profile-icon').addClass('gravatar').css({
+			'background':'url('+this.user.attributes.gravatarUrl+')'
 		});
-	}*/
+		$('#usermenu .userIcon').addClass('gravatar').css({
+			'background':'url('+this.user.attributes.gravatarUrl+')'
+		});
+	}
 };
 
 

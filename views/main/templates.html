@@ -8,6 +8,9 @@
 		<p><%= description %></p>
 		<div class="buttons">
 			<button class="btn btn-primary" id="join">Join</button>
+			<% if (typeof(date) != "undefined") { %>
+			    <span class="date"><%= date %></span>
+			<% } %>
 		</div>
 	</article>
 	<div class="mapWrap"></div>
@@ -107,9 +110,9 @@
 	</div>
 	<form>
 		<div class="userIcon">
-			<fieldset>
+			<!--<fieldset>
 				<input type="file" name="userIcon"/>
-			</fieldset>
+			</fieldset>-->
 		</div>
 		<fieldset class="name">
 			<input type="text" name="firstName" class="firstName" placeholder="first name" value="<%= name.first %>" />
