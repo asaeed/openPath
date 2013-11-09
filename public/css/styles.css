@@ -26,6 +26,17 @@ label {
   font-size: 2em;
   padding-bottom: 0.5em;
 }
+/*with gravatar*/
+.gravatar {
+  -webkit-border-radius: 2.5em;
+  -webkit-background-clip: padding-box;
+  -moz-border-radius: 2.5em;
+  -moz-background-clip: padding;
+  border-radius: 2.5em;
+  background-clip: padding-box;
+  border: 2px solid rgba(255, 255, 255, 0.8);
+  background-size: contain;
+}
 /*content - centering div*/
 .content {
   position: relative;
@@ -202,8 +213,6 @@ li {
   overflow: hidden;
   list-style-type: none;
   padding: 1em 0 0 0;
-  /*with gravatar*/
-
 }
 .main header.main nav.main ul li {
   float: left;
@@ -241,16 +250,6 @@ li {
 .main header.main nav.main ul li.active a#profile-icon,
 .main header.main nav.main ul a#profile-icon:hover {
   background: url(/img/user-icon-over.png) no-repeat;
-}
-.main header.main nav.main ul a#profile-icon.gravatar {
-  -webkit-border-radius: 2.5em;
-  -webkit-background-clip: padding-box;
-  -moz-border-radius: 2.5em;
-  -moz-background-clip: padding;
-  border-radius: 2.5em;
-  background-clip: padding-box;
-  border: 2px solid rgba(255, 255, 255, 0.8);
-  background-size: contain;
 }
 .main header.main nav.main ul .badge-important {
   position: absolute;
@@ -648,8 +647,6 @@ li {
   position: absolute;
   overflow: hidden;
   z-index: 9;
-  /*with gravatar*/
-
 }
 .main #user #usermenu .left {
   float: left;
@@ -662,16 +659,6 @@ li {
   height: 40px;
   float: left;
   background: url(/img/user-icon.png) no-repeat;
-}
-.main #user #usermenu .userIcon.gravatar {
-  -webkit-border-radius: 2.5em;
-  -webkit-background-clip: padding-box;
-  -moz-border-radius: 2.5em;
-  -moz-background-clip: padding;
-  border-radius: 2.5em;
-  background-clip: padding-box;
-  border: 2px solid rgba(255, 255, 255, 0.8);
-  background-size: contain;
 }
 .main #user #usermenu h1 {
   font-size: 28px;
@@ -711,11 +698,39 @@ li {
   width: 40px;
   height: 40px;
   overflow: hidden;
+  /* if we want to do an image upload but for now gravatar
+						input {
+							padding:40px 0 40px 0;
+							opacity:0;
+							cursor:pointer;
+						}
+						*/
+
+  /*gravatar logo*/
+
 }
-.main #user #profile .editView form .userIcon input {
-  padding: 40px 0 40px 0;
+.main #user #profile .editView form .userIcon a {
+  display: inline-block;
+  width: 90%;
+  height: 90%;
+  background-image: url('http://www.gravatar.com/avatar/00000000000000000000000000000000');
+  background-size: contain;
   opacity: 0;
-  cursor: pointer;
+  -webkit-border-radius: 2.5em;
+  -webkit-background-clip: padding-box;
+  -moz-border-radius: 2.5em;
+  -moz-background-clip: padding;
+  border-radius: 2.5em;
+  background-clip: padding-box;
+  border: 2px solid rgba(255, 255, 255, 0.8);
+  -webkit-transition: opacity 1s ease-in-out;
+  -moz-transition: opacity 1s ease-in-out;
+  -o-transition: opacity 1s ease-in-out;
+  -ms-transition: opacity 1s ease-in-out;
+  transition: opacity 1s ease-in-out;
+}
+.main #user #profile .editView form .userIcon a:hover {
+  opacity: 1;
 }
 .main #user #profile .editView form fieldset.name {
   position: absolute;

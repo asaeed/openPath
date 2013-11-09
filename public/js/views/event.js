@@ -13,10 +13,22 @@ OpenPath.EventView = Backbone.View.extend({
 		
 	},
 	render:function () {
+		var self = this;
+		function checkCreator(){
+			if(self.model.attributes.creator === OpenPath.email){
+				return true;
+			}else{
+				return false;
+			}
+		}
+		console.log(checkCreator())
+		
+		var vars = { isCreator: checkCreator() }
+		
 		var tmpl = _.template(this.template); //tmpl is a function that takes a JSON object and returns html
 		this.$el.html(tmpl(this.model.toJSON())); //this.el is what we defined in tagName. use $el to get access to jQuery html() function
+		 //$(this.el).html(_.template(html)($.extend({}, this.model.toJSON(), App.lists.toJSON())))
 		
-		var self = this;
 		this.mapWrap = this.el.querySelector(".mapWrap");
 		/*
 		google.maps.event.addDomListener(window, 'load', function(){

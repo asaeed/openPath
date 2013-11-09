@@ -7,9 +7,11 @@
 		<p class="location"><%= location.formatted_address %></p>
 		<p><%= description %></p>
 		<div class="buttons">
-			<button class="btn btn-primary" id="join">Join</button>
-			<% if (typeof(date) != "undefined") { %>
-			    <span class="date"><%= date %></span>
+			<% if(creator === OpenPath.email) { %>
+				<button class="btn" id="invite">Invite</button>
+				<button class="btn" id="edit">Edit</button>
+			<% }else{ %>
+				<button class="btn btn-primary" id="join">Join</button>
 			<% } %>
 		</div>
 	</article>
@@ -110,9 +112,12 @@
 	</div>
 	<form>
 		<div class="userIcon">
-			<!--<fieldset>
+			<a href="http://gravatar.com/" target="_blank"></a>
+			<!--
+			<fieldset>
 				<input type="file" name="userIcon"/>
-			</fieldset>-->
+			</fieldset>
+			-->
 		</div>
 		<fieldset class="name">
 			<input type="text" name="firstName" class="firstName" placeholder="first name" value="<%= name.first %>" />

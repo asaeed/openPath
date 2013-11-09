@@ -32,6 +32,12 @@ label{
 	padding-bottom:0.5em;
 }
 
+/*with gravatar*/
+.gravatar {
+	.border-radius(2.5em);
+	border:2px solid rgba(255,255,255,0.8);
+	background-size :contain;
+}
 /*content - centering div*/
 .content {
 	position:relative;
@@ -214,13 +220,6 @@ footer {
 				a#profile-icon{background:url(/img/user-icon.png) no-repeat;}
 				li.active a#profile-icon, 
 				a#profile-icon:hover{background:url(/img/user-icon-over.png) no-repeat;}
-				
-				/*with gravatar*/
-				a#profile-icon.gravatar {
-					.border-radius(2.5em);
-					border:2px solid rgba(255,255,255,0.8);
-					background-size :contain;
-				}
 				
 				
 				.badge-important{
@@ -622,13 +621,9 @@ footer {
 				height:40px;
 				float:left;
 				background:url(/img/user-icon.png) no-repeat;
+				
 			}
-			/*with gravatar*/
-			.userIcon.gravatar {
-				.border-radius(2.5em);
-				border:2px solid rgba(255,255,255,0.8);
-				background-size :contain;
-			}
+			
 			
 			h1 {
 				font-size:28px;
@@ -679,10 +674,27 @@ footer {
 						width:40px;
 						height:40px;
 						overflow:hidden;
+						/* if we want to do an image upload but for now gravatar
 						input {
 							padding:40px 0 40px 0;
 							opacity:0;
 							cursor:pointer;
+						}
+						*/
+						/*gravatar logo*/
+						a {
+							display:inline-block;
+							width:90%;
+							height:90%;
+							background-image:url('http://www.gravatar.com/avatar/00000000000000000000000000000000');
+							background-size:contain;
+							opacity:0;
+							.border-radius(2.5em);
+							border:2px solid rgba(255,255,255,0.8);
+							.transition(~"opacity 1s ease-in-out"); 
+						}
+						a:hover{
+							opacity:1;
 						}
 					}
 					fieldset.name {
