@@ -187,16 +187,14 @@ OpenPath = {
 	},
 	showGravatar : function(){
 		console.log('showGravatar',this.user.attributes.gravatarUrl)
-		if(this.user.attributes.gravatarUrl.indexOf('404') !== -1){
-			console.log('404 grav'); //no gravatar
-		}else{
-			$('#profile-icon').addClass('gravatar').css({
-				'background':'url('+this.user.attributes.gravatarUrl+')'
-			});
-			$('#usermenu .userIcon').addClass('gravatar').css({
-				'background':'url('+this.user.attributes.gravatarUrl+')'
-			});
-		}
+		
+		$('#profile-icon').addClass('gravatar').css({
+			'background':'url('+this.user.attributes.gravatarUrl+')'
+		});
+		$('#usermenu .userIcon').addClass('gravatar').css({
+			'background':'url('+this.user.attributes.gravatarUrl+')'
+		});
+	
 		
 	}
 };

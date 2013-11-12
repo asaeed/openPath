@@ -48,7 +48,6 @@ app.configure('development', function(){
 //
 // Security Middleware (must go before Routes)
 //
-
 function requireLogin(req, res, next) {
   //auth.status(req, res, function(){
   //  console.log("checking auth - user email: " + JSON.stringify(res.body));

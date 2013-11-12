@@ -577,6 +577,12 @@ li {
 .main #events ul#eventslist li.event article p.location {
   padding-bottom: 5px;
 }
+.main #events ul#eventslist li.event article .buttons {
+  overflow: hidden;
+}
+.main #events ul#eventslist li.event article .buttons #edit {
+  float: right;
+}
 .main #events ul#eventslist li.event .mapWrap {
   float: right;
   width: 35%;
