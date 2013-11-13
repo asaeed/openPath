@@ -8,12 +8,12 @@ OpenPath.EventView = Backbone.View.extend({
 	initialize:function () {
 		//init
 		//console.log(this.model.attributes.date, new Date() );
-		
-		
-		
 	},
 	render:function () {
 		var self = this;
+		/**
+		 * check if creator
+		 */
 		function checkCreator(){
 			if(self.model.attributes.creator === OpenPath.email){
 				return true;
@@ -30,14 +30,37 @@ OpenPath.EventView = Backbone.View.extend({
 		 //$(this.el).html(_.template(html)($.extend({}, this.model.toJSON(), App.lists.toJSON())))
 		
 		this.mapWrap = this.el.querySelector(".mapWrap");
-		/*
-		google.maps.event.addDomListener(window, 'load', function(){
-			//self.loadMap();
-		});
-		*/
+
+		//load map after a few
 		setTimeout(function(){self.loadMap()},100);
 		
 		return this;
+	},
+	events : {
+		'click #invite':'invite'
+	},
+	invite: function(){
+		console.log('#/events/invite');
+		window.scrollTo(0,0);
+		
+		
+		//show invite
+		$('#inviteToEvent').show();
+		//hide form
+		$('#addEvent').hide();
+		//hide list
+		$('#eventslist').hide();
+		
+		//set header copy
+		$('#eventsmenu h2').html('Invite');
+		
+		var inviteToEvent = new OpenPath.inviteToEventView({ eventId : this.model.attributes._id });
+		//render
+		$("#inviteToEvent").html(inviteToEvent.render().el);
+		
+		//window.location.hash = '#/events/invite';
+		
+		//TODO: pass id or something.
 	},
 	loadMap : function(){
 		var ele = this.mapWrap,

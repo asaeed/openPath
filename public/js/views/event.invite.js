@@ -1,15 +1,15 @@
 OpenPath = window.OpenPath || {};
 
-OpenPath.AddEventView = Backbone.View.extend({
+OpenPath.inviteToEventView = Backbone.View.extend({
 	model: new OpenPath.EventModel,
     tagName:"div",
     className:"inviteToEventWrap",
     template:$("#inviteToEventTemplate").html(),
-    initialize:function () {
+    initialize:function (Id) {
        //init
-       this.collection = new OpenPath.EventsCollection();
+       //this.collection = new OpenPath.EventsCollection();
 	   
-	   console.log('invite to event here')
+	   console.log('invite to event here', Id)
     },
     render:function () {
         var tmpl = _.template(this.template);
@@ -26,6 +26,7 @@ OpenPath.AddEventView = Backbone.View.extend({
 		//set form
 		this.form = this.$el.find('#inviteToEventForm');
 		
+		console.log('invite to event ::: event')
 		
 		/*
 		//make grade levels array

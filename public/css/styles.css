@@ -525,6 +525,8 @@ li {
 
   /*addEvent*/
 
+  /*inviteToEvent*/
+
 }
 .main #events #eventsmenu {
   width: 96%;
@@ -580,8 +582,10 @@ li {
 .main #events ul#eventslist li.event article .buttons {
   overflow: hidden;
 }
+.main #events ul#eventslist li.event article .buttons #invite,
 .main #events ul#eventslist li.event article .buttons #edit {
   float: right;
+  margin: 0 0.5em;
 }
 .main #events ul#eventslist li.event .mapWrap {
   float: right;
@@ -636,6 +640,17 @@ li {
 .main #events #addEvent label.error {
   font-size: 11px;
   color: #ff0000;
+}
+.main #events #inviteToEventForm {
+  padding: 1em 2em 2em 2em;
+  background: #eeedeb;
+}
+.main #events #inviteToEventForm h1 {
+  font-size: 2em;
+}
+.main #events #inviteToEventForm textarea {
+  display: block;
+  width: 90%;
 }
 .main #user {
   /*profile display*/

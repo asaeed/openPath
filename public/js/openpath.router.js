@@ -82,6 +82,13 @@ app_router.on('route:loadView', function(route, action) {
 		if(action === 'addNew'){
 			loadRoute.events.addNew();
         }
+		if(action === 'invite'){
+			//loadRoute.events.invite();
+			
+			//ridirect cus above is created in event.js view
+			loadRoute.events.upcoming();
+			
+        }
 	}
 });
 
@@ -191,8 +198,9 @@ loadRoute.events = {
 		this.init();
 		//empty and show list
 		$('#eventslist').html('').show();
-		//hide form
+		//hide add form & invite form
 		$('#addEvent').hide();
+		$('#inviteToEvent').hide();
 		
 		//set header copy
 		$('#eventsmenu h2').html('List of Events');
@@ -206,17 +214,37 @@ loadRoute.events = {
 		this.init();
 		//show form
 		$('#addEvent').show();
-		//hide list
+		//hide list & invite form
 		$('#eventslist').hide();
+		$('#inviteToEvent').hide();
 
 		//set header copy
 		$('#eventsmenu h2').html('Add New Event');
 		//highlight menu item
 		$('#eventsmenu a.addNew').addClass('active');
+		
 		var AddNewEvent = new OpenPath.AddEventView();
 		//render
 		$("#addEvent").html(AddNewEvent.render().el);
-	}
+	},
+	/*
+	invite : function(){
+		this.init();
+		
+		//show invite
+		$('#inviteToEvent').show();
+		//hide form
+		$('#addEvent').hide();
+		//hide list
+		$('#eventslist').hide();
+		
+		//set header copy
+		$('#eventsmenu h2').html('Invite');
+		
+		var inviteToEvent = new OpenPath.inviteToEventView();
+		//render
+		$("#inviteToEvent").html(inviteToEvent.render().el);
+	}*/
 };
 //user routes
 loadRoute.user = {
