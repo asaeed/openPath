@@ -54,7 +54,7 @@ OpenPath.EventView = Backbone.View.extend({
 		//set header copy
 		$('#eventsmenu h2').html('Invite');
 		
-		var inviteToEvent = new OpenPath.inviteToEventView({ eventId : this.model.attributes._id });
+		var inviteToEvent = new OpenPath.inviteToEventView({ model : this.model });
 		//render
 		$("#inviteToEvent").html(inviteToEvent.render().el);
 		

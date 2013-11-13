@@ -91,11 +91,11 @@
 	    <label>Email Address</label>
 	    <input type="text" name="to" id="to" placeholder="">
 	    <label>Subject</label>
-	    <input type="text" name="subject" id="subject" value="Open Path Invitation" placeholder="">
+	    <input type="text" name="subject" id="subject" value="Open Path Invitation : <%= name %> " placeholder="">
 		<textarea rows="10" name="text" id="text">
 Hi,
 
-USERNAME would like to invite you to a video session on Open Path. Click here to join:
+USERNAME would like to invite you to a video session on Open Path on <%= OpenPath.utils.convertTimeStampToDate(date) %> called - <%= name %> - Click here to join:
 
 LINK
 
