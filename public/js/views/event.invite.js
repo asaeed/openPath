@@ -43,7 +43,7 @@ OpenPath.inviteToEventView = Backbone.View.extend({
 		console.log('invite to event ::: event')
 		
 		// Validates and submits email inviting participant
-		$('#adduserform').submit(function() {
+		$('#inviteToEventForm').submit(function() {
 			var email = $('#to').val();
 			var isValid = OpenPath.utils.validateEmail(email);
 			
