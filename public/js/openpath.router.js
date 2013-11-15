@@ -134,6 +134,10 @@ loadRoute.main = {
 };
 loadRoute.adduser = {
     init : function(){
+		
+		//TODO make BB view
+		
+		
 		//set header width
         $('header.main').width( '100%' );
 		//show content

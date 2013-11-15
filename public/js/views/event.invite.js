@@ -36,11 +36,37 @@ OpenPath.inviteToEventView = Backbone.View.extend({
 	},
 	inviteToEvent : function(e){
 		e.preventDefault();
-		
+		var self = this;
 		//set form
 		this.form = this.$el.find('#inviteToEventForm');
 		
 		console.log('invite to event ::: event')
+		
+		// Validates and submits email inviting participant
+		$('#adduserform').submit(function() {
+			var email = $('#to').val();
+			var isValid = OpenPath.utils.validateEmail(email);
+			
+			if(!isValid){
+				$('#emailerror').modal();
+			}else{
+				var data = self.form.serialize(); // serialize all the data in the form 
+				$.ajax({
+					url: '/email',
+					data: data,
+					dataType:'json',
+					type:'POST',
+					async:false,
+					success: function(data) {        
+						for (key in data.email) {
+							alert(data.email[key]);
+						}
+					},
+					error: function(data){}
+				});
+			};
+			return false;
+		});
 		
 		/*
 		//make grade levels array
