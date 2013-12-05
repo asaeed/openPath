@@ -11,7 +11,8 @@ OpenPath.inviteToEventView = Backbone.View.extend({
 	   this.model = model.model;
 	   
 	   console.log('invite to event here',this.model.attributes._id)
-	
+		
+	   
 	   /*
 		this.user = new OpenPath.UserModel({_id: user._id});//good
 
@@ -29,22 +30,32 @@ OpenPath.inviteToEventView = Backbone.View.extend({
         var tmpl = _.template(this.template);
         this.$el.html(tmpl(this.model.toJSON()));
 		
+		this.inviteToEvent();
+		
         return this;
     },
 	events : {
-		'submit #inviteToEventForm':'inviteToEvent'
+		//'submit #inviteToEventForm':'inviteToEvent'
 	},
 	inviteToEvent : function(e){
-		e.preventDefault();
+		//e.preventDefault();
 		var self = this;
 		//set form
 		this.form = this.$el.find('#inviteToEventForm');
 		
 		console.log('invite to event ::: event')
 		
+		// change invitation message
+		/*console.log( document.querySelector("#inviteToEventText"))
+		var msg = document.querySelector("#inviteToEventText").value;
+		msg = msg.replace("USERNAME", OpenPath.username );
+		msg = msg.replace("LINK", "http://www.openpath.me?s=" + this.model.attributes._id);// OpenPath.sessionID
+		
+		document.querySelector("#inviteToEventText").value = msg;
+		*/
 		// Validates and submits email inviting participant
 		$('#inviteToEventForm').submit(function() {
-			var email = $('#to').val();
+			var email = $('#inviteToEventTo').val();
 			var isValid = OpenPath.utils.validateEmail(email);
 			
 			if(!isValid){

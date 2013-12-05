@@ -89,15 +89,15 @@
 	  <fieldset>
 	    <h1>Invite Participants</h1>
 	    <label>Email Address</label>
-	    <input type="text" name="to" id="to" placeholder="">
+	    <input type="text" name="to" id="inviteToEventTo" placeholder="">
 	    <label>Subject</label>
-	    <input type="text" name="subject" id="subject" value="Open Path Invitation : <%= name %> " placeholder="">
-		<textarea rows="10" name="text" id="text">
+	    <input type="text" name="subject" value="Open Path Invitation : <%= name %> " placeholder="">
+		<textarea rows="10" name="text" id="inviteToEventText">
 Hi,
 
-USERNAME would like to invite you to a video session on Open Path on <%= OpenPath.utils.convertTimeStampToDate(date) %> called - <%= name %> - Click here to join:
+<%= OpenPath.username %> would like to invite you to a video session on Open Path on <%= OpenPath.utils.convertTimeStampToDate(date) %> called - <%= name %> - Click here to join:
 
-LINK
+http://www.openpath.me?s=<%= _id %>
 
 Let&apos;s learn together!
 

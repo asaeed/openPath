@@ -17,7 +17,7 @@ db.open(function(err, db) {
         db.collection('sessions', function(err, collection){
             collection.findOne(function(err, item) {
                 if (!item){
-                    populateDB();
+                    //populateDB();
                 }
             });
         });

@@ -104,6 +104,8 @@ OpenPath = {
 				success: function() {
 					// session id found, proceed to display username
 					console.log('session id found');
+
+					self.startRouter();
 					self.showUsername(email, id);
 				},
 				error: function(){
@@ -147,23 +149,29 @@ OpenPath = {
 			async:false,
 			success: function(data) {
 				console.log('new session created and session id = ' + data._id);
+
+				self.startRouter();
 				self.showUsername(email, data._id);
-				
-				//TODO!!!
-				//here the magjor call back !!!!
-				//to start the router
-				
 			},
 			error: function(data){
 				console.log('there was an error creating a new session' + data);
 			}
 		});
 	},
+	//to start the router
+	startRouter : function(){
+		
+		//TODO!!!
+		//here the magjor call back !!!!
+		
+		//Backbone.history.start();
+	},
 	/**
 	* Display username in interface
 	*/
 	showUsername : function(email, idHash){
-		 this.email = email;
+		this.sessionID = idHash;
+		this.email = email;
 		 //alert("showUsername email = " + email);
 		 if(email != "guest"){
 			// pull username from front of email address and display in interface
@@ -178,11 +186,11 @@ OpenPath = {
 		// change invitation message
 		var msg = document.querySelector("#text").value;
 		msg = msg.replace("USERNAME", this.username);
-		msg = msg.replace("LINK", "http://www.openpath.me#" + idHash);
+		msg = msg.replace("LINK", "http://www.openpath.me?s=" + idHash);
 		
 		document.querySelector("#text").value = msg;
 
-		console.log('showUsername',email)
+		console.log('showUsername',email);
 		
 	},
 	showGravatar : function(){
