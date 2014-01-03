@@ -1,4 +1,5 @@
 var request = require('request')
+  , gravatar = require('gravatar')
   , user = require('./user');
 
 exports.status = function authStatus(req, res) {
@@ -18,9 +19,10 @@ exports.status = function authStatus(req, res) {
   },function(e, r, body) {
     //callback
     if(body && body.email) {
-
+		var gravatarUrl = gravatar.url( body.email, {s: '200', r: 'pg', d: '404'});
+		var secureUrl = gravatar.url( body.email, {s: '100', r: 'x', d: 'retro'}, true);
 	
-      console.log("auth status: persona", body.email, req.session.email);
+      console.log("auth status: persona", body.email, req.session.email, gravatarUrl);
 
       // find user, if new user, then create them in database
       user.findByEmail(body.email, function(foundUser){
@@ -30,10 +32,11 @@ exports.status = function authStatus(req, res) {
         if (!foundUser) {
           res.json({"email": req.session.email, "status": "okay"});
 
-         //let backbone do it on front end ??
+         //let backbone do it on front end
           user.addUser(body.email, function(newUser){
             req.session.email = newUser.email;
             req.session.userId = newUser._id;
+			newUser.gravatarUrl = ""+gravatarUrl+"";//set gravatar
             newUser.status = "okay";
 			
             res.json(newUser);
@@ -45,6 +48,7 @@ exports.status = function authStatus(req, res) {
         } else {
           req.session.email = foundUser.email;
           req.session.userId = foundUser._id;
+		  foundUser.gravatarUrl = ""+gravatarUrl+"";//set gravatar
           foundUser.status = "okay";
 		  
           res.json(foundUser);

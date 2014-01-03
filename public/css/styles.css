@@ -26,7 +26,17 @@ label {
   font-size: 2em;
   padding-bottom: 0.5em;
 }
-
+/*with gravatar*/
+.gravatar {
+  -webkit-border-radius: 2.5em;
+  -webkit-background-clip: padding-box;
+  -moz-border-radius: 2.5em;
+  -moz-background-clip: padding;
+  border-radius: 2.5em;
+  background-clip: padding-box;
+  border: 2px solid rgba(255, 255, 255, 0.8);
+  background-size: contain;
+}
 /*content - centering div*/
 .content {
   position: relative;
@@ -245,6 +255,9 @@ li {
   position: absolute;
   padding: 0 0.5em;
   right: 0;
+  display: none;
+  /*hide for now*/
+
 }
 .main .subnav ul {
   margin: 1em 0 0 0;
@@ -723,8 +736,8 @@ li {
 .main #user #profile .editView form .userIcon a {
   display: inline-block;
   width: 90%;
-  height: 90%;/*
-  background-image: url('http://www.gravatar.com/avatar/00000000000000000000000000000000');*/
+  height: 90%;
+  background-image: url('http://www.gravatar.com/avatar/00000000000000000000000000000000');
   background-size: contain;
   opacity: 0;
   -webkit-border-radius: 2.5em;
