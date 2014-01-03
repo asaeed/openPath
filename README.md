@@ -77,9 +77,6 @@ so that would make the body:
 We'll be making more specific service calls for our needs 
 as we build out user profiles and event profiles. 
 
-Like: 
-1. gravatar for node https://github.com/emerleite/node-gravatar
-
 **Some important things to note:
 
 1.  When doing a PUT request, you must have the header: Content-Type: application/json
