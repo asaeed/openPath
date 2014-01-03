@@ -21,7 +21,7 @@ OpenPath.EventView = Backbone.View.extend({
 				return false;
 			}
 		}
-		console.log(checkCreator())
+		//console.log(checkCreator())
 		
 		var vars = { isCreator: checkCreator() }
 		

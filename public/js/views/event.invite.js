@@ -44,15 +44,7 @@ OpenPath.inviteToEventView = Backbone.View.extend({
 		this.form = this.$el.find('#inviteToEventForm');
 		
 		console.log('invite to event ::: event')
-		
-		// change invitation message
-		/*console.log( document.querySelector("#inviteToEventText"))
-		var msg = document.querySelector("#inviteToEventText").value;
-		msg = msg.replace("USERNAME", OpenPath.username );
-		msg = msg.replace("LINK", "http://www.openpath.me?s=" + this.model.attributes._id);// OpenPath.sessionID
-		
-		document.querySelector("#inviteToEventText").value = msg;
-		*/
+
 		// Validates and submits email inviting participant
 		$('#inviteToEventForm').submit(function() {
 			var email = $('#inviteToEventTo').val();

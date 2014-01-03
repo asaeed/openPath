@@ -44,6 +44,7 @@ OpenPath = {
 			if(this.room != ""){
 				this.room = "?room=" + this.room;
 			}
+			
 			//retreive hash from url
 			var hash = OpenPath.utils.getHash();
 			if(hash != ""){
