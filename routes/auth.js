@@ -22,7 +22,7 @@ exports.status = function authStatus(req, res) {
 		var gravatarUrl = gravatar.url( body.email, {s: '200', r: 'pg', d: '404'});
 		var secureUrl = gravatar.url( body.email, {s: '100', r: 'x', d: 'retro'}, true);
 	
-      console.log("auth status: persona", body.email,req.session.email,gravatarUrl);
+      console.log("auth status: persona", body.email, req.session.email, gravatarUrl);
 
       // find user, if new user, then create them in database
       user.findByEmail(body.email, function(foundUser){

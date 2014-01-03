@@ -111,7 +111,7 @@ loadRoute.main = {
 			OpenPath.main.init();//only init once
 		}
 		
-		OpenPath.main.headerAnimation.init();
+		//OpenPath.main.headerAnimation.init();
 		//show content
         $('#videos').fadeIn();
 		//console.log($(window).height(),$('#videos').height(),$('#video').height());
