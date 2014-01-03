@@ -73,13 +73,11 @@ OpenPath = {
 		//this.user = new OpenPath.UserModel({id: user._id});
         this.user = new OpenPath.UserModel({_id: user._id});//good
 		
-		this.user.set("gravatarUrl", user.gravatarUrl);
         // The fetch below will perform GET /user/1
         // The server should return the id, name and email from the database
         this.user.fetch({
             success: function (user) {
                 console.log('fetched user',user.toJSON());
-				OpenPath.showGravatar();
 		
             }
         });
@@ -192,18 +190,6 @@ OpenPath = {
 		document.querySelector("#text").value = msg;
 
 		console.log('showUsername',email);
-		
-	},
-	showGravatar : function(){
-		console.log('showGravatar',this.user.attributes.gravatarUrl)
-		
-		$('#profile-icon').addClass('gravatar').css({
-			'background':'url('+this.user.attributes.gravatarUrl+')'
-		});
-		$('#usermenu .userIcon').addClass('gravatar').css({
-			'background':'url('+this.user.attributes.gravatarUrl+')'
-		});
-	
 		
 	}
 };
