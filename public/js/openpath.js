@@ -195,7 +195,7 @@ OpenPath = {
 		
 	},
 	showGravatar : function(){
-		console.log('showGravatar',this.user.attributes.gravatarUrl)
+		//console.log('showGravatar',this.user.attributes.gravatarUrl)
 		
 		$('#profile-icon').addClass('gravatar').css({
 			'background':'url('+this.user.attributes.gravatarUrl+')'

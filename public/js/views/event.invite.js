@@ -42,11 +42,9 @@ OpenPath.inviteToEventView = Backbone.View.extend({
 		var self = this;
 		//set form
 		this.form = this.$el.find('#inviteToEventForm');
-		
-		console.log('invite to event ::: event',this.form)
 
 		// Validates and submits email inviting participant
-		$('#inviteToEventForm').submit(function() {
+		this.form.submit(function() {
 			var email = $('#inviteToEventTo').val();
 			var isValid = OpenPath.utils.validateEmail(email);
 			
@@ -60,15 +58,21 @@ OpenPath.inviteToEventView = Backbone.View.extend({
 					dataType:'json',
 					type:'POST',
 					async:false,
-					success: function(data) {        
+					success: function(data) { 
+						console.log(data)
+						       
 						for (key in data.email) {
 							alert(data.email[key]);
 						}
 					},
-					error: function(data){}
+					error: function(data){
+						console.log('error',data)
+						
+					}
 				});
 			};
 			return false;
+			
 		});
 		
 		/*
