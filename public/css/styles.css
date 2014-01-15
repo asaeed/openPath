@@ -355,33 +355,30 @@ li {
   transition: height 1s ease-in-out;
 }
 .main #videos .videoWrap {
-  /*
-			position:relative;
-			min-height:180px;*/
-
+  border: 1px solid blue;
+  position: relative;
   line-height: 0 !important;
   overflow: hidden;
   cursor: pointer;
-  transition: opacity 1s ease-out;
 }
 .main #videos .videoWrap video.video {
+  position: relative;
+  z-index: 1;
   width: 100% !important;
   height: 100% !important;
 }
-.main #videos .videoWrap .usermeta,
-.main #videos .videoWrap .userlocation,
-.main #videos .videoWrap .usermap {
-  display: none;
-}
 .main #videos .videoWrap .usermeta {
-  z-index: 2;
-  color: #fff;
   position: absolute;
+  z-index: 3;
+  color: #fff;
   width: 100%;
-  background: rgba(0, 0, 0, 0.6);
 }
 .main #videos .videoWrap .usermeta header {
+  position: relative;
+  background: rgba(0, 0, 0, 0.6);
   padding: 7px;
+  opacity: 0;
+  transition: opacity 0.5s ease-out;
 }
 .main #videos .videoWrap .usermeta header a.username {
   font-size: 1.6em;
@@ -391,16 +388,19 @@ li {
   display: block;
   float: right;
 }
+.main #videos .videoWrap .usermeta header .icon-remove,
 .main #videos .videoWrap .usermeta header .icon-map-marker {
   display: inline-block;
-  float: right;
+  position: absolute;
+  right: 8px;
   font-size: 1.6em;
 }
-.main #videos .videoWrap .usermeta header .icon-map-marker span {
-  display: none;
-}
+.main #videos .videoWrap .usermeta header .icon-remove:hover,
 .main #videos .videoWrap .usermeta header .icon-map-marker:hover {
   color: #08c;
+}
+.main #videos .videoWrap .usermeta header .icon-remove {
+  display: none;
 }
 .main #videos .videoWrap .usermeta header > a:link,
 .main #videos .videoWrap .usermeta header > a:visited {
@@ -410,23 +410,22 @@ li {
   color: #08c;
 }
 .main #videos .videoWrap .usermeta .userlocation {
-  height: 20px;
   font-size: 11px;
   padding: 2%;
+  opacity: 0;
+  transition: opacity 0.5s ease-out;
 }
-.main #videos .videoWrap .usermeta .usermap {
+.main #videos .videoWrap .usermap {
+  background: rgba(0, 0, 0, 0.6);
+  position: absolute;
+  opacity: 0;
+  transition: opacity 0.5s ease-out;
+  top: 0;
   margin: 0;
-  height: 100px;
+  width: 100% !important;
+  height: 100% !important;
   background: rgba(255, 255, 255, 0.2);
-}
-.main #videos .videoWrap .usermetashowing {
-  background: rgba(0, 0, 0, 0.3);
-}
-.main #videos .videoWrap .usermetashowing .icon-map-marker span {
-  display: inline-block !important;
-}
-.main #videos .videoWrap .usermetashowing .icon-map-marker:before {
-  content: '' !important;
+  z-index: 2;
 }
 .main #videos #chat {
   position: absolute;

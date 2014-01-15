@@ -319,33 +319,33 @@ footer {
 		}
 		/*side videos*/
 		.videoWrap {
-			/*
+			border:1px solid blue;
 			position:relative;
-			min-height:180px;*/
 			line-height: 0 !important;
 			overflow:hidden;
 			cursor:pointer;
-			transition:opacity 1s ease-out;
+			
 			
 			video.video{
+				position:relative;
+				z-index:1; 
 				width: 100% !important;
 				height: 100% !important;
 			}
 			
-			.usermeta,
-			.userlocation, 
-			.usermap{
-				display:none;
-			}
-			
 			.usermeta{
-				z-index:2; 
-				color:#fff; 
-				position:absolute; 
+				position:absolute;
+				z-index:3; 
+				color:#fff;  
 				width:100%;
-				background:rgba(0,0,0,@headerOpacity); 
+				
 				header{
+					position:relative;
+					background:rgba(0,0,0,@headerOpacity);
 					padding:7px;
+					opacity:0;
+					transition:opacity 0.5s ease-out;
+					
 					a.username {
 						font-size:1.6em;
 						line-height:1.2em;
@@ -354,16 +354,19 @@ footer {
 						display:block; 
 						float:right;
 					}
+					.icon-remove,
 					.icon-map-marker{
 						display:inline-block; 
-						float:right;
+						position:absolute;
+						right:8px;
 						font-size:1.6em;
-						span{
-							display:none;
-						}
 					}
+					.icon-remove:hover,
 					.icon-map-marker:hover{
 						color:#08c;
+					}
+					.icon-remove {
+						display:none;
 					}
 				}
 				header > a:link, 
@@ -375,26 +378,25 @@ footer {
 				}
 				
 				.userlocation {
-					height:20px; 
 					font-size:11px; 
-					padding:2%; 
+					padding:2%;
+					opacity:0;
+					transition:opacity 0.5s ease-out;
 				}
-				.usermap{
-					margin:0; 
-					height:100px;
-					background:rgba(255,255,255,0.2);
-				}
-
 			}
-		
-			.usermetashowing {
-				background:rgba(0,0,0,0.3);
-				.icon-map-marker span {
-					display:inline-block !important;
-				}
-				.icon-map-marker:before{
-					content:'' !important;
-				}
+			.usermap{
+				background:rgba(0,0,0,@headerOpacity);
+				position:absolute;
+				
+				opacity:0;
+				transition:opacity 0.5s ease-out;
+				
+				top:0;
+				margin:0;
+				width: 100% !important;
+				height: 100% !important;
+				background:rgba(255,255,255,0.2);
+				z-index:2;
 			}
 		}
 		

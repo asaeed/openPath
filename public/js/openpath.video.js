@@ -10,7 +10,7 @@ OpenPath.Video.prototype.getMarkup = function(){
 	this.header = document.createElement('header');
 	this.username = document.createElement('a');
 	this.iconMapMarker = document.createElement('div');
-	this.iconRemove = document.createElement('span');
+	this.iconRemove = document.createElement('div');
 	this.userlocation = document.createElement('div');
 	this.usermap = document.createElement('div');
 	this.video = document.createElement('video');
@@ -30,13 +30,14 @@ OpenPath.Video.prototype.getMarkup = function(){
 	
 	
 	//append created eles
-	this.iconMapMarker.appendChild(this.iconRemove);
+	this.header.appendChild(this.iconRemove);
 	this.header.appendChild(this.iconMapMarker);
 	this.header.appendChild(this.username);
+	//this.header.appendChild(this.userlocation);
 	this.meta.appendChild(this.header);
-	this.meta.appendChild(this.userlocation);
-	this.meta.appendChild(this.usermap);
+	
 	this.ele.appendChild(this.meta);
+	this.ele.appendChild(this.usermap);
 	this.ele.appendChild(this.video);
 	
 	
@@ -50,35 +51,27 @@ OpenPath.Video.prototype.getMarkup = function(){
 OpenPath.Video.prototype.events = function(){
 	var self = this;
 	
+	this.ele.addEventListener('mouseover',function(){
+		self.header.style.opacity = 1;
+	},false);
 	
-	// User Icon - Right Column Main Screen
-	$(this.ele).mouseenter(function(event) {
-		$(this).find(".usermeta").fadeIn("slow");
-	});
-	$(this.ele).mouseleave(function(event) {
-		var isShowing = $(this).find(".usermeta").hasClass("usermetashowing");
-		if(!isShowing){
-			$(this).find(".usermeta").fadeOut("slow");
-		}
-	});
-	$(this.ele).find('.icon-map-marker').click(function(event) {
-		$(this).parent().parent().addClass('usermetashowing');
-		$(this).parent().parent().find('.usermap').fadeIn("slow");
-		$(this).parent().parent().find('.userlocation').fadeIn("slow");
-
-		$(this).addClass('closebtn');	
-		event.stopPropagation();
-
-		OpenPath.maps.resetMaps();
-	});
-	$(this.ele).find('.icon-remove').click(function(event) {
-		$(this).parent().parent().parent().removeClass('usermetashowing');
-		$(this).parent().parent().fadeOut("slow");
-		$(this).parent().parent().parent().find('.usermap').fadeOut("slow");
-		$(this).parent().parent().parent().find('.userlocation').fadeOut("slow");
-		$(this).parent().removeClass('closebtn');
-		event.stopPropagation();
-	});
+	this.ele.addEventListener('mouseout',function(){
+		self.header.style.opacity = 0;
+	},false);
+	
+	this.iconMapMarker.addEventListener('click',function(){
+		self.usermap.style.opacity = 1;
+		//self.userlocation.style.opacity = 1;
+		self.iconMapMarker.style.display = 'none';
+		self.iconRemove.style.display = 'inline-block';
+	},false);
+	
+	this.iconRemove.addEventListener('click',function(){
+		self.usermap.style.opacity = 0;
+		//self.userlocation.style.opacity = 0;
+		self.iconMapMarker.style.display = 'inline-block';
+		self.iconRemove.style.display = 'none';
+	},false);
 	
 };
 OpenPath.Video.prototype.loadMap = function() {
