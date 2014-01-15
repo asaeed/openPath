@@ -354,10 +354,6 @@ li {
   -ms-transition: height 1s ease-in-out;
   transition: height 1s ease-in-out;
 }
-.main #videos #presenterVideo video.video {
-  width: 100% !important;
-  height: auto !important;
-}
 .main #videos .videoWrap {
   /*
 			position:relative;

@@ -110,33 +110,12 @@ loadRoute.main = {
 		if(!OpenPath.main.initialized){
 			OpenPath.main.init();//only init once, load user videos
 		}
-		
-		//OpenPath.main.headerAnimation.init();
-		//show content
-        $('#videos').fadeIn();
-		//console.log($(window).height(),$('#videos').height(),$('#video').height());
-		
-        //set section height to window height
-        function resizePage(){
-            $('#videos').height( $(window).height() );
-            $('#main_videoplayer').height( $(window).height() );
-            $('.userVideo').each(function(){
-                $(this).height( $(window).height()  /  4 );
-            });
-            $('header.main').width( $('#main_videoplayer').width() );
-        }
-        //set page elements height
-        window.onresize = function(e){
-            resizePage();
-        };
-        resizePage();
 	}
 };
 loadRoute.adduser = {
     init : function(){
 		
 		//TODO make BB view
-		
 		
 		//set header width
         $('header.main').width( '100%' );

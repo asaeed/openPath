@@ -5,7 +5,7 @@ OpenPath.Video = function ( id ){
 	this._id = id;
 };
 OpenPath.Video.prototype.getMarkup = function () {
-	this.wrap = document.createElement('div');
+	this.ele = document.createElement('div');
 	this.meta = document.createElement('div');
 	this.header = document.createElement('header');
 	this.username = document.createElement('a');
@@ -16,7 +16,7 @@ OpenPath.Video.prototype.getMarkup = function () {
 	this.video = document.createElement('video');
 	
 	//add classes
-	this.wrap.classList.add('videoWrap');
+	this.ele.classList.add('videoWrap');
 	this.meta.classList.add('usermeta');
 	this.username.classList.add('username');
 	this.iconMapMarker.classList.add('icon-map-marker');
@@ -36,10 +36,10 @@ OpenPath.Video.prototype.getMarkup = function () {
 	this.meta.appendChild(this.header);
 	this.meta.appendChild(this.userlocation);
 	this.meta.appendChild(this.usermap);
-	this.wrap.appendChild(this.meta);
-	this.wrap.appendChild(this.video);
+	this.ele.appendChild(this.meta);
+	this.ele.appendChild(this.video);
 	
-	return this.wrap;
+	return this.ele;
 };
 OpenPath.Video.prototype.connect = function (stream, socketId) {
 	this.stream = stream;

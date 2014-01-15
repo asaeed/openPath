@@ -12,6 +12,7 @@ OpenPath.rtc.server= "ws://www.openpath.me:8001/";
 OpenPath.main = {
 	initialized : false,
 	init : function(){
+		var self = this;
 		this.presenterVideo = document.getElementById('presenterVideo');
 		this.userVideos = document.getElementById('userVideos');
 		
@@ -32,16 +33,41 @@ OpenPath.main = {
 		for(var i = 0; i<this.maxNumberOfVideos;i++){
 			var newVideo =  new OpenPath.Video('video_'+i)
 			this.videos.push( newVideo );
-			
+
+			//attach videos //TODO: can be moved for when user actually connects
 			if(i === 0){
 				this.presenterVideo.appendChild( newVideo.getMarkup() );
 			}else{
 				this.userVideos.appendChild( newVideo.getMarkup() );
 			}
 		}
-		//attach videos //TODO: can be moved for when user actually connects
 		
+		//show content
+        $('#videos').fadeIn();
+		//console.log($(window).height(),$('#videos').height(),$('#video').height());
 		
+        //set section height to window height
+        function resizePage(){
+			console.log('resize',$(window).height(),self.videos[0].ele)
+			var newWindowHeight = $(window).height();
+			
+			for(var i = 0; i<self.videos.length;i++){
+				if(i === 0){
+					self.videos[i].ele.style.height = newWindowHeight + 'px';
+				}else{
+					self.videos[i].ele.style.height = newWindowHeight /  4  + 'px';
+				}
+			}
+			
+			
+            $('#videos').height( newWindowHeight );
+            $('header.main').width( $( self.videos[0].ele ).width() );
+        }
+        //set page elements height
+        window.onresize = function(e){
+            resizePage();
+        };
+        resizePage();
 		
 		
 		this.connect();
