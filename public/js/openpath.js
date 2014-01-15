@@ -9,8 +9,7 @@ OpenPath = {
 	room : null,
 	initialized : false,
 	init : function(){
-		console.log('openPath init ********')
-		/*	*/
+		/**/
 		//init persona
 		OpenPath.navigator.init();
 		
@@ -23,11 +22,9 @@ OpenPath = {
 		// retreives room number based on query string
 		if (OpenPath.utils.getParameterByName('room') != null && OpenPath.utils.getParameterByName('room') != "") {
 			OpenPath.room = OpenPath.utils.getParameterByName('room');
-			console.log("Room Number: " + OpenPath.room);
 		}else{
-			OpenPath.room = 1; //??
-			console.log("Room Number: " + OpenPath.room);
-			
+			OpenPath.room = 1;
+			console.log("No Room Number: " + OpenPath.room);
 		}
 	},
 	/**
@@ -64,10 +61,7 @@ OpenPath = {
 	//sets new backbone user model
 	setUser : function(user){
 		var self = this;
-		console.log('set user',user);
 		//user diff than returned from fetch
-		
-		
 		
 		//set user
 		//this.user = new OpenPath.UserModel({id: user._id});
@@ -181,7 +175,7 @@ OpenPath = {
 		}else{
 			this.username =email;
 		};
-		document.querySelector("#username1").textContent = this.username;
+		//document.querySelector("#username1").textContent = this.username;
 		document.querySelector("#profileUsername").textContent = this.username;	
 
 		// change invitation message

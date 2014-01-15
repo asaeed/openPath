@@ -108,7 +108,7 @@ loadRoute.home = {
 loadRoute.main = {
 	init: function(){
 		if(!OpenPath.main.initialized){
-			OpenPath.main.init();//only init once
+			OpenPath.main.init();//only init once, load user videos
 		}
 		
 		//OpenPath.main.headerAnimation.init();

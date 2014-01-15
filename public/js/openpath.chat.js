@@ -50,6 +50,7 @@ OpenPath.chat = {
 
 		rtc.on('main_video_socketid', function(data) {
 			console.log('socketid',data.socketid);
+			alert('socketid',data.socketid);
 		});
 	},
 	/**

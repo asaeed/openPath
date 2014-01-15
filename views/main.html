@@ -14,8 +14,8 @@
 
 	<!--scripts-->
 	<script src="js/openpath.main.js"></script>
-	<script src="js/openpath.main.headerAnimation.js"></script>
-
+	<script src="js/openpath.video.js"></script>
+	
 	<script src="js/models/event.js"></script>
 	<script src="js/views/event.js"></script>
 	<script src="js/views/event.add.js"></script>
@@ -40,6 +40,28 @@
 {% endblock %}
 
 {% block content %}
+
+<!-- Invalid Email Modal -->
+<div id="emailerror" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+    <h3 id="myModalLabel">Error</h3>
+  </div>
+  <div class="modal-body">
+  	Sorry, your email is invalid. Please try again.
+  </div>
+</div>
+
+<!-- Invalid Email Modal -->
+<div id="userInvited" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+    <h3 id="myModalLabel">Success</h3>
+  </div>
+  <div class="modal-body">
+	  Your email has been sent.
+  </div>
+</div>
 
 <div class="main">
 	<!-- ***** ADD USER ***** -->

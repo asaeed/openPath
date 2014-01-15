@@ -301,80 +301,15 @@ footer {
 			position:relative;
 			width:25%;
 		}
-		.navHotSpot {
-			position: absolute;
-			top:0;
-			left:0;
-			width:100%;
-			height:8em;
-			z-index:3;
-		}
-		/*#usermeta*/
-		.usermeta{
-			z-index:2; 
-			color:#fff; 
-			position:absolute; 
-			width:100%;
-			background:rgba(0,0,0,@headerOpacity); 
-			.username{
-				padding:7px;
-				a {
-					font-size:1.6em;
-					line-height:1.2em;
-				}
-				i{
-					display:block; 
-					float:right;
-				}
-				.icon-map-marker{
-					display:inline-block; 
-					float:right;
-					font-size:1.6em;
-					span{
-						display:none;
-					}
-				}
-				.icon-map-marker:hover{
-					color:#08c;
-				}
-			}
-			.username > a:link, 
-			.username > a:visited{
-				color:#fff !important;
-			}
-			.username > a:hover{
-				color:#08c;
-			}
-			.userlocation {
-				height:20px; 
-				font-size:11px; 
-				padding:2%; 
-			}
-			.usermap{
-				margin:0; 
-				height:100px;
-				background:rgba(255,255,255,0.2);
-			}
-
-		}
 		
-		.usermetashowing{
-			background:rgba(0,0,0,0.3);
-			.icon-map-marker span {
-				display:inline-block !important;
-			}
-			.icon-map-marker:before{
-				content:'' !important;
-			}
-		}
 		/*main vidoe*/
-		#video {
+		#presenterVideo {
 			/*TODO hook  up -  hide till later*/
 			.usermeta {
 				position:absolute;
 				top:10em;
 				width:30em;
-				display:none;
+				// display:none;
 				.transition(~"width 1s ease-in-out"); 
 				.usermap{
 					height:0;
@@ -382,11 +317,8 @@ footer {
 				}
 			}
 		}
-		video#main_videoplayer {
-			
-		}
 		/*side videos*/
-		.userVideo {
+		.videoWrap {
 			/*
 			position:relative;
 			min-height:180px;*/
@@ -395,16 +327,74 @@ footer {
 			cursor:pointer;
 			transition:opacity 1s ease-out;
 			
-			video.avatar{
+			video.video{
 				width: 100% !important;
 				height: 100% !important;
 			}
 			
-			.usermeta, 
-			.username, 
+			.usermeta,
 			.userlocation, 
 			.usermap{
 				display:none;
+			}
+			
+			.usermeta{
+				z-index:2; 
+				color:#fff; 
+				position:absolute; 
+				width:100%;
+				background:rgba(0,0,0,@headerOpacity); 
+				header{
+					padding:7px;
+					a.username {
+						font-size:1.6em;
+						line-height:1.2em;
+					}
+					i{
+						display:block; 
+						float:right;
+					}
+					.icon-map-marker{
+						display:inline-block; 
+						float:right;
+						font-size:1.6em;
+						span{
+							display:none;
+						}
+					}
+					.icon-map-marker:hover{
+						color:#08c;
+					}
+				}
+				header > a:link, 
+				header > a:visited{
+					color:#fff !important;
+				}
+				header > a:hover{
+					color:#08c;
+				}
+				
+				.userlocation {
+					height:20px; 
+					font-size:11px; 
+					padding:2%; 
+				}
+				.usermap{
+					margin:0; 
+					height:100px;
+					background:rgba(255,255,255,0.2);
+				}
+
+			}
+		
+			.usermetashowing {
+				background:rgba(0,0,0,0.3);
+				.icon-map-marker span {
+					display:inline-block !important;
+				}
+				.icon-map-marker:before{
+					content:'' !important;
+				}
 			}
 		}
 		
