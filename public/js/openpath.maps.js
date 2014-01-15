@@ -8,7 +8,7 @@ OpenPath.maps = {
 	geolocate : function(target) {
 		var self = this;
 		//console.log('initUserMap.target = ' + target);
-		// Try HTML5 geolocation
+		//Try HTML5 geolocation
 		if(navigator.geolocation) {
 
 			navigator.geolocation.getCurrentPosition(function(position) {

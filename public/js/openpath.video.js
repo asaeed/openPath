@@ -4,7 +4,7 @@
 OpenPath.Video = function ( id ){
 	this._id = id;
 };
-OpenPath.Video.prototype.getMarkup = function () {
+OpenPath.Video.prototype.getMarkup = function(){
 	this.ele = document.createElement('div');
 	this.meta = document.createElement('div');
 	this.header = document.createElement('header');
@@ -31,7 +31,7 @@ OpenPath.Video.prototype.getMarkup = function () {
 	
 	//append created eles
 	this.iconMapMarker.appendChild(this.iconRemove);
-	this.username.appendChild(this.iconMapMarker);
+	this.header.appendChild(this.iconMapMarker);
 	this.header.appendChild(this.username);
 	this.meta.appendChild(this.header);
 	this.meta.appendChild(this.userlocation);
@@ -39,13 +39,112 @@ OpenPath.Video.prototype.getMarkup = function () {
 	this.ele.appendChild(this.meta);
 	this.ele.appendChild(this.video);
 	
+	
+	this.username.innerHTML = 'no one here yet';
+	
+	this.events();
+	this.loadMap();
+	
 	return this.ele;
+};
+OpenPath.Video.prototype.events = function(){
+	var self = this;
+	
+	
+	// User Icon - Right Column Main Screen
+	$(this.ele).mouseenter(function(event) {
+		$(this).find(".usermeta").fadeIn("slow");
+	});
+	$(this.ele).mouseleave(function(event) {
+		var isShowing = $(this).find(".usermeta").hasClass("usermetashowing");
+		if(!isShowing){
+			$(this).find(".usermeta").fadeOut("slow");
+		}
+	});
+	$(this.ele).find('.icon-map-marker').click(function(event) {
+		$(this).parent().parent().addClass('usermetashowing');
+		$(this).parent().parent().find('.usermap').fadeIn("slow");
+		$(this).parent().parent().find('.userlocation').fadeIn("slow");
+
+		$(this).addClass('closebtn');	
+		event.stopPropagation();
+
+		OpenPath.maps.resetMaps();
+	});
+	$(this.ele).find('.icon-remove').click(function(event) {
+		$(this).parent().parent().parent().removeClass('usermetashowing');
+		$(this).parent().parent().fadeOut("slow");
+		$(this).parent().parent().parent().find('.usermap').fadeOut("slow");
+		$(this).parent().parent().parent().find('.userlocation').fadeOut("slow");
+		$(this).parent().removeClass('closebtn');
+		event.stopPropagation();
+	});
+	
+};
+OpenPath.Video.prototype.loadMap = function() {
+	var ele = this.usermap,
+		location = nycPos = new google.maps.LatLng(40.7142, -74.0064);
+		
+		
+	if(navigator.geolocation) {
+		navigator.geolocation.getCurrentPosition(function(position) {
+			location = new google.maps.LatLng(position.coords.latitude,  position.coords.longitude);
+			console.log('is geo', location)
+		},function(){
+			console.log('no geo loc')
+		});
+	}
+	
+	
+	var mapOptions = {
+		center: new google.maps.LatLng(-33.8688, 151.2195),
+		zoom: 13,
+		mapTypeId: google.maps.MapTypeId.ROADMAP
+	};
+	
+	var map = new google.maps.Map(ele, mapOptions);
+	
+	var infowindow = new google.maps.InfoWindow();
+
+	var service = new google.maps.places.PlacesService(map);
+	
+    service.getDetails( location, function(place, status) {
+		if (status == google.maps.places.PlacesServiceStatus.OK) {
+			var marker = new google.maps.Marker({
+				map: map,
+				position: place.geometry.location
+			});
+			
+			google.maps.event.addListener(marker, 'click', function() {
+				infowindow.setContent(place.name);
+				infowindow.open(map, this);
+			});
+			
+			// If the place has a geometry, then present it on a map.
+			if (place.geometry.viewport) {
+				map.fitBounds(place.geometry.viewport);
+			} else {
+				map.setCenter(place.geometry.location);
+				map.setZoom(17);  // Why 17? Because it looks good.
+			}
+	
+			marker.setIcon(({
+				//url: place.icon,
+				url: 'img/marker.png',
+				size: new google.maps.Size(71, 71),
+				origin: new google.maps.Point(0, 0),
+				anchor: new google.maps.Point(17, 34),
+				scaledSize: new google.maps.Size(35, 35)
+			}));
+			marker.setPosition(place.geometry.location);
+			marker.setVisible(true);
+		}
+    });
+	
 };
 OpenPath.Video.prototype.connect = function (stream, socketId) {
 	this.stream = stream;
 	this.socketId = socketId;
-	
-	console.log('new video')
 	/*
 	if (main_video == null) {
    	  	rtc.attachStream(stream, 'main_videoplayer');
@@ -62,35 +161,33 @@ OpenPath.Video.prototype.connect = function (stream, socketId) {
 	} else {
 		console.log("No room for more videos");
 	}
-	
-	<div class="userVideo">
-		<div class="usermeta">
-			<div class="username">
-				<a href="javascript:void(0);"></a>
-				<div class="icon-map-marker">
-					<span class="icon-remove"></span>
-				</div>
-			</div>
-			<div class="userlocation"></div>
-			<div class="usermap"></div>
-	    </div>
-	    <video id="" class="avatar"  muted autoplay></video>
-	</div>
-	
-	
-        	<div class="usermeta">
-				<div class="username">
-					<a href="javascript:void(0);" id="username0"></a>
-					<div class="icon-map-marker">
-						<span class="icon-remove"></span>
-					</div>
-				</div>
-				<div id="userlocation0" class="userlocation"></div>
-				<div id="usermap0" class="usermap"></div>
-			</div>
-			<video id="main_videoplayer" width="100%" height="auto"  autoplay> <!--poster="img/poster.png"-->
-	    		Your browser does not support the video tag.
-			</video>
-	
+
 	*/
+};
+
+/* video to main
+//off until sound and meta replacement hooked up
+function videoToMain(id){
+	var tempsrc = document.getElementById('main_videoplayer').src;
+	document.getElementById('main_videoplayer').src = document.getElementById( id ).src;
+	document.getElementById( id ).src = tempsrc;
+
+	var tempvideo = main_video;
+	main_video = other_video;
+	other_video = tempvideo;
 }
+$('#self_videoplayer').dblclick(function(event) {
+	videoToMain('self_videoplayer');
+});
+$('#other_videoplayer2').dblclick(function(event) {
+	videoToMain('other_videoplayer2');
+});
+$('#other_videoplayer3').dblclick(function(event) {
+	videoToMain('other_videoplayer3');
+});
+$('#other_videoplayer4').dblclick(function(event) {
+	videoToMain('other_videoplayer4');
+});
+*/
+
+

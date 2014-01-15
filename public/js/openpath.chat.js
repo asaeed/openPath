@@ -54,7 +54,7 @@ OpenPath.chat = {
 		});
 	},
 	/**
-	* Adds user's message to chat window.
+	* Adds user's message to chat window.//TODO more than 2 users
 	*/
 	addToChat : function(user, msg, toFrom) {
 		console.log("addToChat("+user+")",msg)

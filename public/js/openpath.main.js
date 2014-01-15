@@ -34,7 +34,7 @@ OpenPath.main = {
 			var newVideo =  new OpenPath.Video('video_'+i)
 			this.videos.push( newVideo );
 
-			//attach videos //TODO: can be moved for when user actually connects
+			//attach videos //TODO: can be moved for when user actually connects??
 			if(i === 0){
 				this.presenterVideo.appendChild( newVideo.getMarkup() );
 			}else{
@@ -48,18 +48,17 @@ OpenPath.main = {
 		
         //set section height to window height
         function resizePage(){
-			console.log('resize',$(window).height(),self.videos[0].ele)
 			var newWindowHeight = $(window).height();
 			
 			for(var i = 0; i<self.videos.length;i++){
 				if(i === 0){
+					//resize main vid
 					self.videos[i].ele.style.height = newWindowHeight + 'px';
 				}else{
+					//resize user vids
 					self.videos[i].ele.style.height = newWindowHeight /  4  + 'px';
 				}
 			}
-			
-			
             $('#videos').height( newWindowHeight );
             $('header.main').width( $( self.videos[0].ele ).width() );
         }
@@ -71,97 +70,25 @@ OpenPath.main = {
 		
 		
 		this.connect();
-		//this.initControls();
-
-		//turn on videos tab
-        //$('#videos').addClass('active');
 
 		//try to geolocate user
 		//OpenPath.maps.geolocate("self_video");//target video. String used to determine which thumb map to target
 		//init chat
 	    OpenPath.chat.init(); 
-
-		this.initialized = true;
-	},
-
-	//below needs work
-
-	/**
-	 * Assigns behaviors to interface controls.
-	 */
-	initControls : function(){
-		var self = this;
-
-
+		
+		
+		//misc dom stuff
 		$('#logout').mouseup(function() {
 			navigator.id.logout('button pressed');
 		});
 
-		// User Icon - Right Column Main Screen
-		$('.userVideo').mouseenter(function(event) {
-			$(this).find(".usermeta").fadeIn("slow");
-			$(this).find(".username").fadeIn("slow");
-		});
-		$('.userVideo').mouseleave(function(event) {
-			var isShowing = $(this).find(".usermeta").hasClass("usermetashowing");
-			if(!isShowing){
-				$(this).find(".usermeta").fadeOut("slow");
-				$(this).find(".username").fadeOut("slow");
-			}
-		});	
-		
-
-		
-		$('.icon-map-marker').click(function(event) {
-			$(this).parent().parent().addClass('usermetashowing');
-			$(this).parent().parent().find('.usermap').fadeIn("slow");
-			$(this).parent().parent().find('.userlocation').fadeIn("slow");
-
-			$(this).addClass('closebtn');	
-			event.stopPropagation();
-
-			OpenPath.maps.resetMaps();
-		});
-		$('.icon-remove').click(function(event) {
-			$(this).parent().parent().parent().removeClass('usermetashowing');
-			$(this).parent().parent().fadeOut("slow");
-			$(this).parent().parent().parent().find('.usermap').fadeOut("slow");
-			$(this).parent().parent().parent().find('.userlocation').fadeOut("slow");
-			$(this).parent().removeClass('closebtn');
-			event.stopPropagation();
-		});
-		/**
-		 * video to main
-		//off until sound and meta replacement hooked up
-		function videoToMain(id){
-			var tempsrc = document.getElementById('main_videoplayer').src;
-			document.getElementById('main_videoplayer').src = document.getElementById( id ).src;
-			document.getElementById( id ).src = tempsrc;
-
-			var tempvideo = main_video;
-			main_video = other_video;
-			other_video = tempvideo;
-		}
-		$('#self_videoplayer').dblclick(function(event) {
-			videoToMain('self_videoplayer');
-		});
-		$('#other_videoplayer2').dblclick(function(event) {
-			videoToMain('other_videoplayer2');
-		});
-		$('#other_videoplayer3').dblclick(function(event) {
-			videoToMain('other_videoplayer3');
-		});
-		$('#other_videoplayer4').dblclick(function(event) {
-			videoToMain('other_videoplayer4');
-		});
-		*/
-		
-		
 		// Main Navigation Tabs
 		$("a.logo").tooltip({placement:'bottom'});
 		$("nav.main a").tooltip({placement:'bottom'});
-
-
+		
+		
+		//set initialized var
+		this.initialized = true;
 	},
 	/**
  	 * Starts video, chat, and geolocation
@@ -174,7 +101,7 @@ OpenPath.main = {
    			rtc.createStream({"video": true, "audio": true}, function(stream) {
 			document.getElementById('self_videoplayer').src = URL.createObjectURL(stream);
 				//attach to top left corner
-				rtc.attachStream(stream, self.videos[0]._id);
+				rtc.attachStream(stream, self.videos[1]._id);
    			});
  		} else {
    			alert('Sorry, your browser is not supported');
@@ -190,7 +117,7 @@ OpenPath.main = {
    			console.log("Remote stream: " + stream + " " + socketId);
 
 			if (videos.length < OpenPath.main.max_num_videos) {
-				OpenPath.main.videos.push( new OpenPath.Video(stream, socketId) );
+				//OpenPath.main.videos.push( new OpenPath.Video(stream, socketId) );
 			}
  		});
 	 
