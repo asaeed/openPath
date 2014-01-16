@@ -102,6 +102,9 @@ OpenPath.main = {
 		var vidIndex = 1;//0 taken by main
 		
 		if (OpenPath.rtc.PeerConnection) {
+			
+			//TODO: determine if you're hosting event  and fork
+			
    			rtc.createStream({"video": true, "audio": true}, function(stream) {
 				document.getElementById(self.videos[vidIndex]._id).src = URL.createObjectURL(stream);
 				//attach to top left corner
