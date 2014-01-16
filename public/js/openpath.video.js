@@ -43,8 +43,9 @@ OpenPath.Video.prototype.getMarkup = function(){
 	
 	this.username.innerHTML = 'no one here yet';
 	
+	//attach events
 	this.events();
-	this.loadMap();
+	//this.loadMap();
 	
 	return this.ele;
 };
@@ -76,69 +77,62 @@ OpenPath.Video.prototype.events = function(){
 };
 OpenPath.Video.prototype.loadMap = function() {
 	var ele = this.usermap,
-		location = nycPos = new google.maps.LatLng(40.7142, -74.0064);
+		location = '';// nycPos = new google.maps.LatLng(40.7142, -74.0064);
 		
 		
 	if(navigator.geolocation) {
 		navigator.geolocation.getCurrentPosition(function(position) {
 			location = new google.maps.LatLng(position.coords.latitude,  position.coords.longitude);
 			console.log('is geo', location)
+			loadFromLocation( location )
 		},function(){
 			console.log('no geo loc')
 		});
 	}
 	
-	
-	var mapOptions = {
-		center: new google.maps.LatLng(-33.8688, 151.2195),
-		zoom: 13,
-		mapTypeId: google.maps.MapTypeId.ROADMAP
-	};
-	
-	var map = new google.maps.Map(ele, mapOptions);
-	
-	var infowindow = new google.maps.InfoWindow();
-
-	var service = new google.maps.places.PlacesService(map);
-	
-    service.getDetails( location, function(place, status) {
-		if (status == google.maps.places.PlacesServiceStatus.OK) {
-			var marker = new google.maps.Marker({
-				map: map,
-				position: place.geometry.location
-			});
-			
-			google.maps.event.addListener(marker, 'click', function() {
-				infowindow.setContent(place.name);
-				infowindow.open(map, this);
-			});
-			
-			// If the place has a geometry, then present it on a map.
-			if (place.geometry.viewport) {
-				map.fitBounds(place.geometry.viewport);
-			} else {
-				map.setCenter(place.geometry.location);
-				map.setZoom(17);  // Why 17? Because it looks good.
+	function loadFromLocation( location ){
+		
+		var mapOptions = {
+			center:location,
+			zoom: 13,
+			mapTypeId: google.maps.MapTypeId.ROADMAP,
+			mapTypeControl: true,
+			mapTypeControlOptions: {
+				style: google.maps.MapTypeControlStyle.HORIZONTAL_BAR,
+				position: google.maps.ControlPosition.RIGHT_BOTTOM
 			}
+		};
 	
-			marker.setIcon(({
-				//url: place.icon,
-				url: 'img/marker.png',
-				size: new google.maps.Size(71, 71),
-				origin: new google.maps.Point(0, 0),
-				anchor: new google.maps.Point(17, 34),
-				scaledSize: new google.maps.Size(35, 35)
-			}));
-			marker.setPosition(place.geometry.location);
-			marker.setVisible(true);
-		}
-    });
+		var map = new google.maps.Map(ele, mapOptions);
+		var marker = new google.maps.Marker({
+			map: map,
+			position: location
+		});
+		marker.setIcon(({
+			//url: place.icon,
+			url: 'img/marker.png',
+			size: new google.maps.Size(71, 71),
+			origin: new google.maps.Point(0, 0),
+			anchor: new google.maps.Point(17, 34),
+			scaledSize: new google.maps.Size(35, 35)
+		}));
+		marker.setPosition( location );
+		marker.setVisible(true);
+		
+		
+		var infowindow = new google.maps.InfoWindow();
+	}
+
 	
 };
+OpenPath.Video.prototype.setUserName = function(name) {
+	this.username.innerHTML = name;
+};
+/*
 OpenPath.Video.prototype.connect = function (stream, socketId) {
 	this.stream = stream;
 	this.socketId = socketId;
-	/*
+	
 	if (main_video == null) {
    	  	rtc.attachStream(stream, 'main_videoplayer');
 		main_video = this;
@@ -155,9 +149,9 @@ OpenPath.Video.prototype.connect = function (stream, socketId) {
 		console.log("No room for more videos");
 	}
 
-	*/
+	
 };
-
+*/
 /* video to main
 //off until sound and meta replacement hooked up
 function videoToMain(id){

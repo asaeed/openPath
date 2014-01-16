@@ -355,7 +355,6 @@ li {
   transition: height 1s ease-in-out;
 }
 .main #videos .videoWrap {
-  border: 1px solid blue;
   position: relative;
   line-height: 0 !important;
   overflow: hidden;
@@ -383,6 +382,7 @@ li {
 .main #videos .videoWrap .usermeta header a.username {
   font-size: 1.6em;
   line-height: 1.2em;
+  color: #fff;
 }
 .main #videos .videoWrap .usermeta header i {
   display: block;

@@ -69,6 +69,10 @@ OpenPath.main = {
         resizePage();
 		
 		
+		//testing maps
+		this.videos[1].loadMap();
+		
+		
 		this.connect();
 
 		//try to geolocate user
@@ -95,13 +99,15 @@ OpenPath.main = {
   	 */
   	connect : function(){ 
 		var self = this;
-		
+		var vidIndex = 1;//0 taken by main
 		
 		if (OpenPath.rtc.PeerConnection) {
    			rtc.createStream({"video": true, "audio": true}, function(stream) {
-			document.getElementById('self_videoplayer').src = URL.createObjectURL(stream);
+				document.getElementById(self.videos[vidIndex]._id).src = URL.createObjectURL(stream);
 				//attach to top left corner
-				rtc.attachStream(stream, self.videos[1]._id);
+				rtc.attachStream(stream, self.videos[vidIndex]._id);
+				self.videos[vidIndex].setUserName('user you');
+				vidIndex ++;
    			});
  		} else {
    			alert('Sorry, your browser is not supported');
@@ -111,16 +117,24 @@ OpenPath.main = {
 			rtc.connect(OpenPath.rtc.server, this.room);
 			console.log("this.room: " + this.room);
 		}
-	
+		
 		//attach other users streams 
  		rtc.on('add remote stream', function(stream, socketId) {
-   			console.log("Remote stream: " + stream + " " + socketId);
-
-			if (videos.length < OpenPath.main.max_num_videos) {
-				//OpenPath.main.videos.push( new OpenPath.Video(stream, socketId) );
+			if(vidIndex < self.videos.length){
+	   			console.log("user joined:"+vidIndex+" Remote stream: " + stream + " " + socketId);
+				rtc.attachStream(stream, self.videos[vidIndex]._id);
+				self.videos[vidIndex].setUserName('user '+vidIndex+'');
+				vidIndex ++;
+			}else{
+				console.log('no more users can join')
 			}
  		});
-	 
+
+			
+
+			
+			
+		/*TODO
 		rtc.on('disconnect stream', function(socketId) {
 			console.log('disconnect stream ' + socketId);
 			var domId = null;
@@ -143,7 +157,7 @@ OpenPath.main = {
 				}	
 			}
 	 		});
-
+		*/
 		rtc.on('main_video_socketid', function(data) {
 			console.log(data.socketid);
 		});
