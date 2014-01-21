@@ -102,7 +102,7 @@ OpenPath.main = {
 		var vidIndex = 1;//0 taken by main
 		
 		if (OpenPath.rtc.PeerConnection) {
-			
+			console.log(this.room, 'coo')
 			//TODO: determine if you're hosting event  and fork
 			
    			rtc.createStream({"video": true, "audio": true}, function(stream) {

@@ -37,7 +37,8 @@ OpenPath.EventView = Backbone.View.extend({
 		return this;
 	},
 	events : {
-		'click #invite':'invite'
+		'click #invite':'invite',
+		'click #join':'join'
 	},
 	invite: function(){
 		console.log('#/events/invite');
@@ -61,6 +62,10 @@ OpenPath.EventView = Backbone.View.extend({
 		//window.location.hash = '#/events/invite';
 		
 		//TODO: pass id or something.
+	},
+	join : function(){
+		console.log('hoin event', this.model.attributes._id);
+		window.location = "/main" +"?room=" + this.model.attributes._id;
 	},
 	loadMap : function(){
 		var ele = this.mapWrap,
