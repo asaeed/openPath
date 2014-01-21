@@ -49,8 +49,8 @@ OpenPath.chat = {
 		});
 
 		rtc.on('main_video_socketid', function(data) {
-			console.log('socketid',data.socketid);
-			alert('socketid',data.socketid);
+			console.log('main_video_socketid',data.socketid);
+			alert('main_video_socketid',data.socketid);
 		});
 	},
 	/**

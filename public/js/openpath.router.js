@@ -174,7 +174,7 @@ loadRoute.events = {
 		});
     },
     nearby : function(){
-        //todo
+        //TODO
     },
     upcoming : function(){
         //todo

@@ -64,7 +64,7 @@ OpenPath.EventView = Backbone.View.extend({
 		//TODO: pass id or something.
 	},
 	join : function(){
-		console.log('hoin event', this.model.attributes._id);
+		console.log('join event', this.model.attributes._id);
 		window.location = "/main" +"?room=" + this.model.attributes._id;
 	},
 	loadMap : function(){

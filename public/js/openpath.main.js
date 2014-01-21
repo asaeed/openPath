@@ -19,6 +19,7 @@ OpenPath.main = {
 		
 		this.maxNumberOfVideos = 5;
 		this.videos = [];
+		this.vidIndex = 0;
 		
 		//get room, again? yes, cuz passing from login
 		if (OpenPath.utils.getParameterByName('room') != null && OpenPath.utils.getParameterByName('room') != "") {
@@ -70,8 +71,7 @@ OpenPath.main = {
 		
 		
 		//testing maps
-		this.videos[1].loadMap();
-		
+		//this.videos[1].loadMap();
 		
 		this.connect();
 
@@ -94,45 +94,88 @@ OpenPath.main = {
 		//set initialized var
 		this.initialized = true;
 	},
-	/**
- 	 * Starts video, chat, and geolocation
-  	 */
-  	connect : function(){ 
+	checkForEventCreator : function(callback){
 		var self = this;
-		var vidIndex = 1;//0 taken by main
+		console.log('checkForEventCreator',this.room )
+		//find events
+		$.ajax({
+			url: '/events/'+this.room,
+			dataType:'json',
+			type:'GET',
+			//async:false,
+			success: function(data) { 
+				callback(data);
+			},
+			error: function(msg){
+				console.log('no events: error',msg);
+			}
+		});
+	},
+	/**
+	  * Starts video, chat, and geolocation
+	  */
+	connect : function(){ 
+		var self = this;
+		
+		//connect to Room!
+ 		if(this.room !== null){
+			rtc.connect(OpenPath.rtc.server, this.room);
+			console.log("rtc.connect: " + this.room);
+		}
 		
 		if (OpenPath.rtc.PeerConnection) {
 			console.log(this.room, 'coo')
 			//TODO: determine if you're hosting event  and fork
 			
    			rtc.createStream({"video": true, "audio": true}, function(stream) {
-				document.getElementById(self.videos[vidIndex]._id).src = URL.createObjectURL(stream);
-				//attach to top left corner
-				rtc.attachStream(stream, self.videos[vidIndex]._id);
-				self.videos[vidIndex].setUserName('user you');
-				vidIndex ++;
+				document.getElementById(self.videos[self.vidIndex]._id).src = URL.createObjectURL(stream);
+			
+		
+				self.checkForEventCreator(function(data){
+					//if you
+					if(data.creator === OpenPath.email){
+						//attach to main
+						rtc.attachStream(stream, self.videos[self.vidIndex]._id);
+						self.videos[self.vidIndex].setUserName( OpenPath.username );
+						self.vidIndex ++;
+					}else{
+						self.vidIndex = 1;
+						//attach to top left corner
+						rtc.attachStream(stream, self.videos[self.vidIndex]._id);
+						self.videos[self.vidIndex].setUserName( OpenPath.username );
+						self.vidIndex ++;
+					}
+				});//TODO: need email or something of vid stream, check chat
+				
+				
    			});
+		
  		} else {
    			alert('Sorry, your browser is not supported');
  		}
+		
 
- 		if(this.room !== null){
-			rtc.connect(OpenPath.rtc.server, this.room);
-			console.log("this.room: " + this.room);
-		}
 		
 		//attach other users streams 
  		rtc.on('add remote stream', function(stream, socketId) {
-			if(vidIndex < self.videos.length){
+			if(self.vidIndex < self.videos.length){
+				console.log(stream)
 	   			console.log("user joined:"+vidIndex+" Remote stream: " + stream + " " + socketId);
-				rtc.attachStream(stream, self.videos[vidIndex]._id);
-				self.videos[vidIndex].setUserName('user '+vidIndex+'');
-				vidIndex ++;
+				
+				//self.checkForEventCreator();
+				
+				
+				rtc.attachStream(stream, self.videos[self.vidIndex]._id);
+				self.videos[self.vidIndex].setUserName('user '+vidIndex+'');
+				self.vidIndex ++;
 			}else{
 				console.log('no more users can join')
 			}
- 		});
+		});
 
+		rtc.on('get_peers',function(data){
+			console.log('get peers', data)
+		})
 			
 
 			
@@ -162,7 +205,7 @@ OpenPath.main = {
 	 		});
 		*/
 		rtc.on('main_video_socketid', function(data) {
-			console.log(data.socketid);
+			console.log('main_video_socketid',data.socketid);
 		});
 
 	}
@@ -187,7 +230,7 @@ $('#mainnav a').on('shown', function (e) {
 
   /**
   * OpenPath.Video class
-  */
+
 OpenPath.Video = function (stream, socketId) {
 	this.stream = stream;
 	this.socketId = socketId;
@@ -210,7 +253,7 @@ OpenPath.Video = function (stream, socketId) {
 	}
 }
 
-
+  */
 
 
 
