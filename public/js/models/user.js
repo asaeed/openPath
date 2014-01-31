@@ -23,11 +23,11 @@ OpenPath.UserModel = Backbone.Model.extend({
     }
   },
   initialize: function(){
-    console.log("new User initialized");
+    //console.log("new User initialized");
     this.on("change", function(model){//:settings
         //var name = model.get("name"); // 'Stewie Griffin'
         //alert("Changed my name to " + name );
-        console.log('model change')
+        //console.log('model change')
     });
   },
   /*,

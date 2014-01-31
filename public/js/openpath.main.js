@@ -117,20 +117,27 @@ OpenPath.main = {
 	connect : function(){ 
 		var self = this;
 		
+		//socket io
+		var socket = io.connect('http://localhost');
+		socket.on('news', function (data) {
+			console.log(data);
+			socket.emit('my other event', { my: 'data' });
+		});
+		
+		
 		//connect to Room!
  		if(this.room !== null){
 			rtc.connect(OpenPath.rtc.server, this.room);
 			console.log("rtc.connect: " + this.room);
 		}
-		
 		if (OpenPath.rtc.PeerConnection) {
-			console.log(this.room, 'coo')
 			//TODO: determine if you're hosting event  and fork
-			
+
+			self.vidIndex = 1; //skip main for now
    			rtc.createStream({"video": true, "audio": true}, function(stream) {
 				document.getElementById(self.videos[self.vidIndex]._id).src = URL.createObjectURL(stream);
 			
-		
+				/*
 				self.checkForEventCreator(function(data){
 					//if you
 					if(data.creator === OpenPath.email){
@@ -146,8 +153,11 @@ OpenPath.main = {
 						self.vidIndex ++;
 					}
 				});//TODO: need email or something of vid stream, check chat
-				
-				
+				*/
+				//attach to top left corner
+				rtc.attachStream(stream, self.videos[self.vidIndex]._id);
+				self.videos[self.vidIndex].setUserName( OpenPath.username );
+				self.vidIndex ++;
    			});
 		
  		} else {
@@ -160,13 +170,13 @@ OpenPath.main = {
  		rtc.on('add remote stream', function(stream, socketId) {
 			if(self.vidIndex < self.videos.length){
 				console.log(stream)
-	   			console.log("user joined:"+vidIndex+" Remote stream: " + stream + " " + socketId);
+	   			console.log("user joined:"+self.vidIndex+" Remote stream: " + stream + " " + socketId);
 				
 				//self.checkForEventCreator();
 				
 				
 				rtc.attachStream(stream, self.videos[self.vidIndex]._id);
-				self.videos[self.vidIndex].setUserName('user '+vidIndex+'');
+				self.videos[self.vidIndex].setUserName('user '+self.vidIndex+'');
 				self.vidIndex ++;
 			}else{
 				console.log('no more users can join')

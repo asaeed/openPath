@@ -11,11 +11,16 @@ var express = require('express')
   , eventRoute = require('./routes/event')
   , sessionRoute = require('./routes/session')
   , email = require('./routes/email')
-  , http = require('http')
+  //, http = require('http')
   , path = require('path')
   , request = require('request');
 
 var app = express();
+
+//create server
+var http = require('http').createServer(app),
+	io = require('socket.io').listen(http);
+
 
 //
 // CONFIG
@@ -118,6 +123,22 @@ app.post('/events', eventRoute.addItem);
 app.put('/events/:id', eventRoute.updateItem);
 app.delete('/events/:id', eventRoute.deleteItem);
 
-http.createServer(app).listen(app.get('port'), function(){
+
+/**
+ * socket.io
+ */
+io.sockets.on('connection', function (socket) {
+	socket.emit('news', { hello: 'world' });
+	socket.on('my other event', function (data) {
+		console.log(data);
+	});
+});
+
+
+
+
+
+
+http.listen(app.get('port'), function(){
   console.log("Server listening on port " + app.get('port'));
 });

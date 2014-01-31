@@ -170,11 +170,13 @@ var getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia || nav
     pc.onopen = function() {
       // TODO: Finalize this API
       rtc.fire('peer connection opened');
+	  console.log('peer connection opened',OpenPath.user);
     };
 
     pc.onaddstream = function(event) {
       // TODO: Finalize this API
       rtc.fire('add remote stream', event.stream, id);
+	  console.log('add remote stream', event.stream, OpenPath.username);
     };
     return pc;
   };
