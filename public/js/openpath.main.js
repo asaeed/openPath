@@ -118,14 +118,6 @@ OpenPath.main = {
 	connect : function(){ 
 		var self = this;
 		
-		//socket io
-		var socket = io.connect('http://localhost');
-		socket.on('news', function (data) {
-			console.log(data);
-			socket.emit('my other event', { my: 'data' });
-		});
-		
-		
 		//connect to Room!
  		if(this.room !== null){
 			rtc.connect(OpenPath.rtc.server, this.room);
@@ -158,11 +150,17 @@ OpenPath.main = {
 				
 				
 				//TODO tell socket i'm here with email and location and hopefully that works
-   			});
 		
- 		} else {
-   			alert('Sorry, your browser is not supported');
- 		}
+				//socket io
+				var socket = io.connect('http://localhost');
+				socket.emit('joinedVideo', { name: OpenPath.username });
+				
+				console.log('joinedVideo', OpenPath.username  )
+			});
+		
+		} else {
+			alert('Sorry, your browser is not supported');
+		}
 		
 
 		

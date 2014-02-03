@@ -40,12 +40,12 @@ OpenPath.Video.prototype.getMarkup = function(){
 	this.ele.appendChild(this.usermap);
 	this.ele.appendChild(this.video);
 	
-	
+	this.loc;
 	this.username.innerHTML = 'no one here yet';
 	
 	//attach events
 	this.events();
-	//this.loadMap();
+	this.loadMap();
 	
 	return this.ele;
 };
@@ -76,14 +76,15 @@ OpenPath.Video.prototype.events = function(){
 	
 };
 OpenPath.Video.prototype.loadMap = function() {
-	var ele = this.usermap,
+	var self = this,
+		ele = this.usermap,
 		location = '';// nycPos = new google.maps.LatLng(40.7142, -74.0064);
 		
 		
 	if(navigator.geolocation) {
-		navigator.geolocation.getCurrentPosition(function(position) {
+		navigator.geolocation.getCurrentPosition(function( position ) {
 			location = new google.maps.LatLng(position.coords.latitude,  position.coords.longitude);
-			console.log('is geo', location)
+			self.loc = location;
 			loadFromLocation( location )
 		},function(){
 			console.log('no geo loc')
@@ -128,6 +129,7 @@ OpenPath.Video.prototype.loadMap = function() {
 OpenPath.Video.prototype.setUserName = function(name) {
 	this.username.innerHTML = name;
 };
+
 /*
 OpenPath.Video.prototype.connect = function (stream, socketId) {
 	this.stream = stream;

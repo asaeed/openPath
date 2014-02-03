@@ -128,9 +128,9 @@ app.delete('/events/:id', eventRoute.deleteItem);
  * socket.io
  */
 io.sockets.on('connection', function (socket) {
-	socket.emit('news', { hello: 'world' });
-	socket.on('my other event', function (data) {
-		console.log(data);
+	//socket.emit('news', { hello: 'world' });
+	socket.on('joinedVideo', function (data) {
+		console.log('joinedVideo',data);
 	});
 });
 
