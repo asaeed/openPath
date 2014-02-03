@@ -108,6 +108,7 @@ OpenPath.main = {
 			},
 			error: function(msg){
 				console.log('no events: error',msg);
+				callback(msg);
 			}
 		});
 	},
@@ -133,31 +134,30 @@ OpenPath.main = {
 		if (OpenPath.rtc.PeerConnection) {
 			//TODO: determine if you're hosting event  and fork
 
-			self.vidIndex = 1; //skip main for now
+			self.vidIndex = 0;
    			rtc.createStream({"video": true, "audio": true}, function(stream) {
-				document.getElementById(self.videos[self.vidIndex]._id).src = URL.createObjectURL(stream);
+				
 			
-				/*
 				self.checkForEventCreator(function(data){
 					//if you
 					if(data.creator === OpenPath.email){
+						document.getElementById(self.videos[self.vidIndex]._id).src = URL.createObjectURL(stream);
 						//attach to main
 						rtc.attachStream(stream, self.videos[self.vidIndex]._id);
 						self.videos[self.vidIndex].setUserName( OpenPath.username );
 						self.vidIndex ++;
 					}else{
 						self.vidIndex = 1;
+						document.getElementById(self.videos[self.vidIndex]._id).src = URL.createObjectURL(stream);
 						//attach to top left corner
 						rtc.attachStream(stream, self.videos[self.vidIndex]._id);
 						self.videos[self.vidIndex].setUserName( OpenPath.username );
 						self.vidIndex ++;
 					}
 				});//TODO: need email or something of vid stream, check chat
-				*/
-				//attach to top left corner
-				rtc.attachStream(stream, self.videos[self.vidIndex]._id);
-				self.videos[self.vidIndex].setUserName( OpenPath.username );
-				self.vidIndex ++;
+				
+				
+				//TODO tell socket i'm here with email and location and hopefully that works
    			});
 		
  		} else {
@@ -184,7 +184,7 @@ OpenPath.main = {
 		});
 
 		rtc.on('get_peers',function(data){
-			console.log('get peers', data)
+			//console.log('get peers', data)
 		})
 			
 
