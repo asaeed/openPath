@@ -23,8 +23,12 @@ OpenPath = {
 		if (OpenPath.utils.getParameterByName('room') != null && OpenPath.utils.getParameterByName('room') != "") {
 			OpenPath.room = OpenPath.utils.getParameterByName('room');
 		}else{
-			OpenPath.room = 1;
-			console.log("No Room Number: " + OpenPath.room);
+			var max = 999999999999999,
+				min = 1;
+			OpenPath.room = Math.random() * (max - min) + min;
+			console.log("No Room Number (not logged in): " + OpenPath.room);
+			//TODO: talk to server through sockets to find list of taken rooms
+			
 		}
 	},
 	/**
@@ -147,6 +151,7 @@ OpenPath = {
 
 				self.startRouter();
 				self.showUsername(email, data._id);
+				self.addUserMessage();
 			},
 			error: function(data){
 				console.log('there was an error creating a new session' + data);
@@ -177,16 +182,24 @@ OpenPath = {
 		};
 		//document.querySelector("#username1").textContent = this.username;
 		document.querySelector("#profileUsername").textContent = this.username;	
+		
+		
 
+		console.log('showUsername',email);
+	},
+	/**
+	 * add user message
+	 */
+	addUserMessage : function(){
+		
 		// change invitation message
 		var msg = document.querySelector("#text").value;
 		msg = msg.replace("USERNAME", this.username);
-		msg = msg.replace("LINK", "http://www.openpath.me?s=" + idHash);
+		//msg = msg.replace("LINK", "http://www.openpath.me?s=" + idHash);
+		msg = msg.replace("LINK", "http://www.openpath.me/?room=" + this.room);
+		
 		
 		document.querySelector("#text").value = msg;
-
-		console.log('showUsername',email);
-		
 	},
 	showGravatar : function(){
 		//console.log('showGravatar',this.user.attributes.gravatarUrl)
