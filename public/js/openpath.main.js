@@ -155,10 +155,10 @@ OpenPath.main = {
 				//TODO tell socket i'm here with email and location and hopefully that works
 		
 				//socket io
-				var socket = io.connect('http://localhost');
-				socket.emit('joinedVideo', { name: OpenPath.username });
+				//var socket = io.connect('http://localhost');
+				//socket.emit('joinedVideo', { name: OpenPath.username });
 				
-				console.log('joinedVideo', OpenPath.username  )
+				//console.log('joinedVideo', OpenPath.username  )
 			});
 		
 		} else {
