@@ -17,7 +17,7 @@ app_router.on('route:defaultRoute', function(actions) {
 		OpenPath.init();//only init once
 	}
 	
-
+	console.log('default route')
     //hide other tabs
     $('.main-tab').each(function(){
         $(this).hide();
@@ -109,6 +109,9 @@ loadRoute.main = {
 	init: function(){
 		if(!OpenPath.main.initialized){
 			OpenPath.main.init();//only init once, load user videos
+		}else{
+			//show content
+	        $('#videos').fadeIn();
 		}
 	}
 };
