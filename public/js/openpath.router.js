@@ -12,7 +12,11 @@ var app_router = new OpenPath.Router,
 
 
 app_router.on('route:defaultRoute', function(actions) {
-    console.log('route:',actions);
+    console.log('route:',actions,window.location.href);
+    OpenPath.room = OpenPath.utils.getParameterByName('room');
+    //clean up url
+    window.history.pushState({"html":'',"pageTitle":'boo'},"", window.location.origin +window.location.pathname +'?room='+OpenPath.room);
+
 	if(!OpenPath.initialized){
 		OpenPath.init();//only init once
 	}
