@@ -129,6 +129,7 @@ loadRoute.main = {
 		}else{
 			//show content
 	        $('#videos').fadeIn();
+	        $('header.main').width( $( OpenPath.main.videos[0].ele ).width() );
 		}
 	}
 };
