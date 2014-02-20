@@ -14,11 +14,6 @@ db.open(function(err, db) {
     if(!err) {
         console.log("Connected to 'openpathdb' database");
 
-        //erase
-        db.collection('events', function(err, collection) {
-        	collection.remove({});
-   		});
-
         db.collection('events', function(err, collection){
             collection.findOne(function(err, item) {
                 if (!item){
