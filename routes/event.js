@@ -14,13 +14,13 @@ db.open(function(err, db) {
     if(!err) {
         console.log("Connected to 'openpathdb' database");
 
-        //erase
+        /*erase all
         db.collection('events', function(err, collection) {
         	collection.remove({},function(err, removed){
         		console.log('remvoed')
         	});
    		});
-
+        */
         db.collection('events', function(err, collection){
             collection.findOne(function(err, item) {
                 if (!item){
