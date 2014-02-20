@@ -16,7 +16,9 @@ db.open(function(err, db) {
 
         //erase
         db.collection('events', function(err, collection) {
-        	collection.remove();
+        	collection.remove({},function(err, removed){
+        		console.log('remvoed')
+        	});
    		});
 
         db.collection('events', function(err, collection){
