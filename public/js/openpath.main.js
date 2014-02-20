@@ -21,17 +21,6 @@ OpenPath.main = {
 		this.videos = [];
 		this.vidIndex = 0;
 		
-		//get room, again? yes, cuz passing from login
-		if (OpenPath.utils.getParameterByName('room') !== null && OpenPath.utils.getParameterByName('room') != "") {
-			this.room = OpenPath.utils.getParameterByName('room');
-		}else{
-			var max = 999999999999999,
-				min = 1;
-			OpenPath.room = Math.random() * (max - min) + min;
-			console.log("No Room Number (main): " + this.room);
-			//TODO: talk to server through sockets to find list of taken rooms
-			
-		}
 		
 		//create videos
 		for(var i = 0; i<this.maxNumberOfVideos;i++){
