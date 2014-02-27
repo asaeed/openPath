@@ -25,7 +25,7 @@ OpenPath = {
 		}else{
 			var max = 999999999999999,
 				min = 1;
-			OpenPath.room = Math.random() * (max - min) + min;
+			OpenPath.room = Math.floor( Math.random() * (max - min) + min );
 			console.log("No Room Number (not logged in): " + OpenPath.room);
 			//TODO: talk to server through sockets to find list of taken rooms
 			

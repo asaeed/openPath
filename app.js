@@ -132,6 +132,9 @@ io.sockets.on('connection', function (socket) {
 	socket.on('joinedVideo', function (data) {
 		console.log('joinedVideo',data);
 	});
+
+
+  
 });
 
 

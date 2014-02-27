@@ -14,19 +14,34 @@ var app_router = new OpenPath.Router,
 app_router.on('route:defaultRoute', function(actions) {
     console.log('route:',actions,window.location.href);
 
+
     //set room
 	//get room, again? yes, cuz passing from login
 	if (OpenPath.utils.getParameterByName('room') !== null && OpenPath.utils.getParameterByName('room') != "") {
 		OpenPath.room = OpenPath.utils.getParameterByName('room');
+		//gettin room - could be called on either home or main
+		console.log('getting room')
+
+		OpenPath.isCreatorOfRoom = false;
 	}else{
-		var max = 999999999999999,
-			min = 1;
-		OpenPath.room = Math.random() * (max - min) + min;
-		console.log("No Room Number (main): " + OpenPath.room);
-		//TODO: talk to server through sockets to find list of taken rooms
-		
+
+		if(actions === null){
+			// you are on home page
+		}else{
+			//create random room #
+			var max = 999999999999999,
+				min = 1;
+			OpenPath.room = Math.random() * (max - min) + min;
+
+			OpenPath.room = Math.round(OpenPath.room);
+			console.log("No Room Number (home): " + OpenPath.room);
+			//TODO: talk to server through sockets to find list of taken rooms
+			//TODO create "event" or "session"  //set user as creator
+			OpenPath.isCreatorOfRoom = true;
+		}
 	}
 
+	if(actions !== null)
     //clean up url pass room
     window.history.pushState({"html":'',"pageTitle":'boo'},"", window.location.origin +window.location.pathname +'?room='+OpenPath.room);
 

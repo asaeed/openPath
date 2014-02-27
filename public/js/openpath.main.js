@@ -121,24 +121,34 @@ OpenPath.main = {
 			self.vidIndex = 0;
    			rtc.createStream({"video": true, "audio": true}, function(stream) {
 				
-			
-				self.checkForEventCreator(function(data){
-					//if you
-					if(data.creator === OpenPath.email){
-						document.getElementById(self.videos[self.vidIndex]._id).src = URL.createObjectURL(stream);
-						//attach to main
-						rtc.attachStream(stream, self.videos[self.vidIndex]._id);
-						self.videos[self.vidIndex].setUserName( OpenPath.username );
-						self.vidIndex ++;
-					}else{
-						self.vidIndex = 1;
-						document.getElementById(self.videos[self.vidIndex]._id).src = URL.createObjectURL(stream);
-						//attach to top left corner
-						rtc.attachStream(stream, self.videos[self.vidIndex]._id);
-						self.videos[self.vidIndex].setUserName( OpenPath.username );
-						self.vidIndex ++;
-					}
-				});//TODO: need email or something of vid stream, check chat
+				if(!OpenPath.isCreatorOfRoom){
+					self.checkForEventCreator(function(data){
+						//if you
+						if(data.creator === OpenPath.email){
+							document.getElementById(self.videos[self.vidIndex]._id).src = URL.createObjectURL(stream);
+							//attach to main
+							rtc.attachStream(stream, self.videos[self.vidIndex]._id);
+							self.videos[self.vidIndex].setUserName( OpenPath.username );
+							self.vidIndex ++;
+						}else{
+							self.vidIndex = 1;
+							document.getElementById(self.videos[self.vidIndex]._id).src = URL.createObjectURL(stream);
+							//attach to top left corner
+							rtc.attachStream(stream, self.videos[self.vidIndex]._id);
+							self.videos[self.vidIndex].setUserName( OpenPath.username );
+							self.vidIndex ++;
+						}
+					});//TODO: need email or something of vid stream, check chat
+					
+				}else{
+					//is creator of room, go to big screen
+					document.getElementById(self.videos[self.vidIndex]._id).src = URL.createObjectURL(stream);
+					//attach to main
+					rtc.attachStream(stream, self.videos[self.vidIndex]._id);
+					self.videos[self.vidIndex].setUserName( OpenPath.username );
+					self.vidIndex ++;
+
+				}
 				
 				
 				//TODO tell socket i'm here with email and location and hopefully that works
