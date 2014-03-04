@@ -34,10 +34,12 @@ app_router.on('route:defaultRoute', function(actions) {
 			OpenPath.room = Math.random() * (max - min) + min;
 
 			OpenPath.room = Math.round(OpenPath.room);
-			console.log("No Room Number (home): " + OpenPath.room);
+
+			//OpenPath.isCreatorOfRoom = true;
 			//TODO: talk to server through sockets to find list of taken rooms
 			//TODO create "event" or "session"  //set user as creator
-			OpenPath.isCreatorOfRoom = true;
+			
+			//console.log("No Room Number (home): " + OpenPath.room, 'is creator', OpenPath.isCreatorOfRoom );
 		}
 	}
 

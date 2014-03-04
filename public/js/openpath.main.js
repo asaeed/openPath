@@ -111,9 +111,9 @@ OpenPath.main = {
 		var self = this;
 		
 		//connect to Room!
- 		if(this.room !== null){
-			rtc.connect(OpenPath.rtc.server, this.room);
-			console.log("rtc.connect: " + this.room);
+ 		if(OpenPath.room !== null){
+			rtc.connect(OpenPath.rtc.server, OpenPath.room);
+			console.log("rtc.connect: " + OpenPath.room);
 		}
 		if (OpenPath.rtc.PeerConnection) {
 			//TODO: determine if you're hosting event  and fork

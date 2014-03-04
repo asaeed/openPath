@@ -78,7 +78,7 @@ OpenPath = {
             success: function (user) {
                 console.log('fetched user',user.toJSON());
 				OpenPath.showGravatar();
-		
+				//TODO: call connect on openpath.main
             }
         });
         //this.user.save({id: user._id, name:{first:'crap',last:'face'}})
