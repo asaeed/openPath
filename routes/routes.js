@@ -10,17 +10,19 @@ module.exports = function(app, passport){
 		if(req.isAuthenticated()){
 			res.render("home", { user : req.user}); 
 		}else{
-			res.render("login", { user : null });
+			res.render("home", { user : null });
 		}
 	});
 
-
+	/**
+	 * login, signup, logout
+	 */
 	app.get("/login", function(req, res){ 
 		res.render("login");
 	});
 
-	app.post("/login" 
-		,passport.authenticate('local',{
+	app.post("/login",
+		passport.authenticate('local',{
 			successRedirect : "/",
 			failureRedirect : "/login",
 		})
@@ -40,12 +42,22 @@ module.exports = function(app, passport){
 		});
 	});
 
+	app.get('/logout', function(req, res){
+		req.logout();
+		res.redirect('/login');
+	});
 
+
+	/**
+	 * users
+	 */
 	app.get("/users", function (req, res) {
 		User.find(function (err, items) {
 			if (err) return console.error(err);
-			console.log(items)
 			res.send(items);
 		});
 	});
+
+
+
 };

@@ -1,5 +1,11 @@
 <h1>Open Path</h1>
 
-
-<h2>Home - welcome <span></span></h2>
-
+{{#if user}}
+	<h2>Home - hey again <span>{{user.email}}</span></h2>
+	<a href="/logout">Logout</a>
+	<a href="/profile">Profile</a>
+{{else}}
+	<h2>Home - welcome</h2>
+	<a href="/signup">signup</a>
+	<a href="/login">login</a>
+{{/if}}
