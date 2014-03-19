@@ -4,11 +4,25 @@ var Auth = require('../utils/auth');
 /**
  * routes 
  */
-module.exports = function(app, passport){
+module.exports = function(app, io, passport){
 
 	app.get("/", function(req, res){ 
 		if(req.isAuthenticated()){
-			res.render("home", { user : req.user}); 
+			res.render("home", { user : req.user});
+
+			/**
+			 * socket.io
+			 */
+			io.sockets.on('connection', function (socket) {
+			  socket.broadcast.emit('userConnected', { hello: 'world' });
+			  //socket.emit('news', { hello: 'world' });
+			  /*
+			  socket.on('joinedVideo', function (data) {
+			    console.log('joinedVideo',data);
+			  });
+			  */
+			});
+
 		}else{
 			res.render("home", { user : null });
 		}
@@ -37,7 +51,7 @@ module.exports = function(app, passport){
 			if(err) throw err;
 			req.login(user, function(err){
 				if(err) return next(err);
-				return res.redirect("profile");
+				return res.redirect("home");
 			});
 		});
 	});
@@ -49,12 +63,13 @@ module.exports = function(app, passport){
 
 
 	/**
-	 * users
+	 * users TODO: check if admin user
 	 */
 	app.get("/users", function (req, res) {
 		User.find(function (err, items) {
 			if (err) return console.error(err);
-			res.send(items);
+			//res.send(items);
+			res.render("admin/users", { user: items});
 		});
 	});
 
