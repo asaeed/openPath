@@ -7,9 +7,14 @@
 	<a href="/logout">Logout</a>
 
 	<video id="myvideo" width="320" height="240"></video>
+	<video id="othervideo" width="320" height="240"></video>
 </div>
 {{else}}
 	<h2>Home - welcome</h2>
 	<a href="/signup">signup</a>
 	<a href="/login">login</a>
+
+	{{> login}}
+
+	{{> signup}}
 {{/if}}

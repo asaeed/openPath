@@ -27,8 +27,7 @@ mongoose.connect( config.db );
 var db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error:'));
 db.once('open', function callback () {
-  // yay!
-  console.log('yay, connected to openpathdb')
+  console.log('yay, connected to openpathdb');
 });
 
 //get mongoose models

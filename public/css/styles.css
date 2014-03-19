@@ -1,1 +1,1 @@
-@import url("libraries/reset.css");body{background:#fff;font-family:"Lucida Grande",Helvetica,Arial,Verdana,sans-serif;font-size:10px;-webkit-tap-highlight-color:rgba(255,0,255,0.7)}::selection{background:rgba(255,0,255,0.7)}::-moz-selection{background:rgba(255,0,255,0.7)}
+@import url("libraries/reset.css");body{background:#fff;font-family:"Lucida Grande",Helvetica,Arial,Verdana,sans-serif;font-size:10px;-webkit-tap-highlight-color:rgba(255,0,255,0.7)}body video{border:1px dotted red}::selection{background:rgba(255,0,255,0.7)}::-moz-selection{background:rgba(255,0,255,0.7)}
