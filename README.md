@@ -1,12 +1,15 @@
 OpenPath Implementation
 
+We are working on peer branch of openpath currently, so this code will be deprecated in future builds.
+
+=====================================================================================
 
 Our first steps at connecting place-based learning. 
 This is part of our development in rounds one and two of Mozilla Ignite.
 http://openpathme.tumblr.com/
 
 Our WebRTC videochat code is located here: 
-://github.com/vanevery/openpath/blob/master/README.md
+http://github.com/vanevery/openpath/blob/master/README.md
 
 part of Mozilla Ignite (mozillaignite.org)
 
@@ -17,12 +20,13 @@ https://mozillaignite.org/apps/438/
 Thanks!
 
 ====================================================================================
-OpenPath's data model is divided into users, sessions, and events.
-Look at the datamodel file to learn how it is structured.
+OpenPath's data model is divided into users, sessions, and events. 
+We simplified the code recently so that sessions and events are treated similarly (see peer branch).
+
 Be forewarned, this is a work in progress.
 
-Both the User and Session service API's follow the standard "RESTful" setup and include the following methods 
-(these will mostly be removed eventually)
+The service API's follow the standard "RESTful" setup. We are cleaning all of this up in the peer branch.
+
 
 There are 2 ways to save any type of data be it an item in the "users" or "sessions" collections:
 
