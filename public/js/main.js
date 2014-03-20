@@ -7,15 +7,44 @@ OpenPath = {
 		console.log('OpenPath init');
 
 		//dom vars
-		var home = document.getElementById('home');
-		if(home ){
+		var intro = document.getElementById('intro'),
+			home = document.getElementById('home');
+
+
+		if( home ){
 			this.peerHandler();
+		}else{
+			this.intro();
 		}
+	},
+	intro : function(){
+		var toggles = document.getElementsByClassName('toggle'),
+			signupBtn = document.getElementById('signupBtn'),
+			loginBtn = document.getElementById('loginBtn');
+
+		function toggle( className ){
+			for(var i=0;i<toggles.length;i++){
+				if(toggles[i].classList.contains(className)){
+					toggles[i].style.display = 'block';
+				}else{
+					toggles[i].style.display = 'none';
+				}
+				
+			}
+		}
+		//events
+		loginBtn.addEventListener('click',function(){
+			toggle('login');
+		},false);
+		signupBtn.addEventListener('click',function(){
+			toggle('signup');
+		},false);
+
 	},
 	peerHandler : function(){
 		var self = this;
 
-		this.peer = new Peer({key: 'w8hlftc242jzto6r'}); //TODO: out own peer server?
+		this.peer = new Peer({key: 'w8hlftc242jzto6r'}); //TODO: out own peer server? //OpenPath.rtc.server= "ws://www.openpath.me:8001/";
 		this.peer_id = null;
 
 

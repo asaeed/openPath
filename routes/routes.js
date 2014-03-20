@@ -1,4 +1,5 @@
 var User = require('../models/user');
+var Room = require('../models/room') 
 var Auth = require('../utils/auth');
 
 
@@ -70,14 +71,14 @@ module.exports = function(app, io, passport){
 			if(err) throw err;
 			req.login(user, function(err){
 				if(err) return next(err);
-				return res.redirect("home");
+				return res.redirect("/");
 			});
 		});
 	});
 
 	app.get('/logout', function(req, res){
 		req.logout();
-		res.redirect('/login');
+		res.redirect('/');
 	});
 
 

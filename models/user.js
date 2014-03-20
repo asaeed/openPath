@@ -17,7 +17,9 @@ UserSchema = mongoose.Schema({
 		id:       String,
 		email:    String,
 		name:     String
-	}
+	},
+	dateCreated:  Date,
+	dateModified: Date
 });
 
 
@@ -29,7 +31,9 @@ UserSchema.statics.signup = function(email, password, done){
 		User.create({
 			email : email,
 			salt : salt,
-			hash : hash
+			hash : hash,
+			dateCreated : Date.now(),
+			dateModified : Date.now()
 		}, function(err, user){
 			if(err) throw err;
 			// if (err) return done(err);
