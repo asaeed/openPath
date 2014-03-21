@@ -6,6 +6,16 @@ OpenPath = {
 	init : function(){
 		console.log('OpenPath init');
 
+		//count to check for reloads - delete
+		var c = 0;
+		function count(){
+			c++;
+			console.log(c);
+			setTimeout(function(){
+				count();
+			},1000)
+		}
+		//count();
 
 
 		//dom vars
@@ -16,6 +26,8 @@ OpenPath = {
 		if( home ){
 			this.Router.init();
 			this.peerHandler();
+
+
 		}else{
 			this.intro();
 		}

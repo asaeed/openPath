@@ -5,7 +5,7 @@
 
 body {
 	background:#fff;
-	font-family:"Lucida Grande",Helvetica,Arial,Verdana,sans-serif;
+	font-family: 'Myriad Pro','PT Sans', arial, sans-serif;
 	font-size:10px;
 	/*
 	-webkit-user-select: none;
@@ -21,6 +21,9 @@ body {
 	/**
 	 * globals
 	 */
+	a {
+		text-decoration: none;
+	}
 	button {
 		background:@pink;
 		border:none;
@@ -30,7 +33,6 @@ body {
 	button:hover {
 		background:#ccc;
 	}
-
 	table {
 		width:100%;
 		border:1px solid black;
@@ -46,6 +48,16 @@ body {
 			}
 		}
 	}
+	.content {
+		margin:0 auto;
+		position:relative;
+	}
+
+
+	@import "modules/header.less";
+
+
+
 	/**
 	 * pages
 	 */

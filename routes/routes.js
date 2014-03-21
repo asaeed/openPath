@@ -45,7 +45,7 @@ module.exports = function(app, io, passport){
 					console.log("Client has disconnected");
 				});
 			});
-
+			//TODO move
 			
 
 		}else{
@@ -76,7 +76,7 @@ module.exports = function(app, io, passport){
 			if(err) throw err;
 			req.login(user, function(err){
 				if(err) return next(err);
-				return res.redirect("/#/portfolio");
+				return res.redirect("/#/edit-profile");
 			});
 		});
 	});
@@ -104,11 +104,16 @@ module.exports = function(app, io, passport){
 		User.updateProfile(req , function(err,user){
 			if(err) throw err;
 			console.log(user.email + '\'s profile updated');
-			res.redirect("/#/portfolio");
+			res.redirect("/#/profile");
 		});
 	});
+
+
+
+
 	/**
-	 * rooms TODO: check if admin user
+	 * rooms 
+	 * TODO: check if admin user
 	 */
 	app.get("/rooms", function (req, res) {
 		Room.find(function (err, items) {

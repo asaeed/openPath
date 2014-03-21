@@ -1,12 +1,15 @@
 {{#if user}}
 	<div id="home">
+
+		{{> header }}
+
+
 		<h2>Home - hey again <span>{{user.email}}</span></h2>
-		<a href="/logout">Logout</a>
 
 		<video id="myvideo" width="320" height="240"></video>
 		<video id="othervideo" width="320" height="240"></video>
 
-		{{> profile }}
+		{{> editProfile }}
 
 		
 	</div>
