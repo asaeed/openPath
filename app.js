@@ -19,7 +19,7 @@ var env = process.env.NODE_ENV || 'development',
     config = require('./config')[env];
 
 //create server
-var http = require('http').createServer(app),
+var http = http.createServer(app),
     io = require('socket.io').listen(http);
 
 //connect to mongo

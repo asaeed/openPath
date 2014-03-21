@@ -1,5 +1,5 @@
 var User = require('../models/user');
-var Room = require('../models/room') 
+var Room = require('../models/room');
 var Auth = require('../utils/auth');
 
 
@@ -12,6 +12,11 @@ module.exports = function(app, io, passport){
 		if(req.isAuthenticated()){
 			res.render("home", { user : req.user });
 
+			//var room = Room({creatorID:req.user._id});
+			Room.makeRoom(req.user._id, function(err, room){
+				if(err) throw err;
+				console.log(room);
+			});
 			/**
 			 * socket.io
 			 */
@@ -71,7 +76,7 @@ module.exports = function(app, io, passport){
 			if(err) throw err;
 			req.login(user, function(err){
 				if(err) return next(err);
-				return res.redirect("/");
+				return res.redirect("/#/portfolio");
 			});
 		});
 	});
@@ -92,7 +97,16 @@ module.exports = function(app, io, passport){
 			res.render("admin/users", { user: items });
 		});
 	});
-
+	/**
+	 * rooms TODO: check if admin user
+	 */
+	app.get("/rooms", function (req, res) {
+		Room.find(function (err, items) {
+			if (err) return console.error(err);
+			res.send(items);
+			//res.render("admin/rooms", { user: items });
+		});
+	});
 
 
 };

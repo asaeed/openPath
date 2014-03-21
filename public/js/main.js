@@ -6,6 +6,8 @@ OpenPath = {
 	init : function(){
 		console.log('OpenPath init');
 
+
+
 		//dom vars
 		var intro = document.getElementById('intro'),
 			home = document.getElementById('home');
