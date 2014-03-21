@@ -46,7 +46,7 @@ module.exports = function(app, io, passport){
 				});
 			});
 
-
+			
 
 		}else{
 			res.render("home", { user : null });
@@ -88,7 +88,8 @@ module.exports = function(app, io, passport){
 
 
 	/**
-	 * users TODO: check if admin user
+	 * users 
+	 * TODO: check if admin user
 	 */
 	app.get("/users", function (req, res) {
 		User.find(function (err, items) {
@@ -99,12 +100,12 @@ module.exports = function(app, io, passport){
 	});
 	//profile
 	app.post("/profile", Auth.userExist, function(req, res, next){
-		User.update({firstName: req.body.firstName},{lastName: req.body.lastName},function(err, numberAffected, raw){
-			if (err) return console.error(err);
-			  console.log('The number of updated documents was %d', numberAffected);
-			  console.log('The raw response from Mongo was ', raw);
+		console.log(req.user._id,req.body.firstName,req.body.lastName);
+		User.updateProfile(req , function(err,user){
+			if(err) throw err;
+			console.log(user.email + '\'s profile updated');
+			res.redirect("/#/portfolio");
 		});
-	
 	});
 	/**
 	 * rooms TODO: check if admin user

@@ -58,6 +58,9 @@ UserSchema.statics.isValidUserPassword = function(email, password, done) {
 	});
 };
 
+/**
+ * @deprecated from tutorial
+ */
 // Create a new user given a profile
 UserSchema.statics.findOrCreateOAuthUser = function(profile, done){
 	var User = this;
@@ -122,8 +125,24 @@ UserSchema.statics.findOrCreateOAuthUser = function(profile, done){
 /**
  * update profile
  */
-UserSchema.statics.updateProfile = function(email, password, done){
+UserSchema.statics.updateProfile = function(req, done){
+	User.findOne(req.user._id, function(err, user){
+		if(err) throw err;
 
+		// If a user is returned, load the given user
+		if(user){
+
+			user.update({firstName: req.body.firstName , lastName: req.body.lastName},function(err, numberAffected, raw){
+				if (err) return console.error(err);
+				console.log('The number of updated documents was %d', numberAffected);
+				console.log('The raw response from Mongo was ', raw);
+				done(null, user);
+			});
+			console.log('user: ' + user.email)
+		} else {
+			console.log('There is no user by that id so no profile updating happening.')
+		}
+	});
 };
 
 var User = mongoose.model("User", UserSchema);
