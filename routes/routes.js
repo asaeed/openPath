@@ -97,6 +97,15 @@ module.exports = function(app, io, passport){
 			res.render("admin/users", { user: items });
 		});
 	});
+	//profile
+	app.post("/profile", Auth.userExist, function(req, res, next){
+		User.update({firstName: req.body.firstName},{lastName: req.body.lastName},function(err, numberAffected, raw){
+			if (err) return console.error(err);
+			  console.log('The number of updated documents was %d', numberAffected);
+			  console.log('The raw response from Mongo was ', raw);
+		});
+	
+	});
 	/**
 	 * rooms TODO: check if admin user
 	 */

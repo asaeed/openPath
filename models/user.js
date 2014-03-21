@@ -40,7 +40,7 @@ UserSchema.statics.signup = function(email, password, done){
 			done(null, user);
 		});
 	});
-}
+};
 
 
 UserSchema.statics.isValidUserPassword = function(email, password, done) {
@@ -116,7 +116,15 @@ UserSchema.statics.findOrCreateOAuthUser = function(profile, done){
 			});
 		}
 	});
-}
+};
+
+
+/**
+ * update profile
+ */
+UserSchema.statics.updateProfile = function(email, password, done){
+
+};
 
 var User = mongoose.model("User", UserSchema);
 module.exports = User;
