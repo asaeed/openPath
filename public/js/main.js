@@ -2,6 +2,10 @@
 
 var OpenPath = window.OpenPath || {};
 
+/**
+ * OpenPath
+ * @author jamiegilmartin@gmail.com
+ */
 OpenPath = {
 	init : function(){
 		console.log('OpenPath init');
@@ -25,6 +29,8 @@ OpenPath = {
 
 		if( home ){
 			this.Router.init();
+			this.Router.checkRoute();
+			
 			this.peerHandler();
 
 

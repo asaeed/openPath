@@ -33,6 +33,10 @@ body {
 	button:hover {
 		background:#ccc;
 	}
+
+	.admin {
+		padding:1em 2em;
+	}
 	table {
 		width:100%;
 		border:1px solid black;
@@ -48,15 +52,7 @@ body {
 			}
 		}
 	}
-	.content {
-		margin:0 auto;
-		position:relative;
-	}
-
-
-	@import "modules/header.less";
-
-
+	
 
 	/**
 	 * pages
@@ -67,6 +63,20 @@ body {
 	#home {
 		video {
 			border:1px dotted red;
+		}
+
+		@import "modules/header.less";
+
+		/**
+		 * page
+		 */
+		.page {
+			.content {
+				width:94%;
+				margin:0 auto;
+				position:relative;
+			}
+			@import "modules/subnav.less";
 		}
 	}
 

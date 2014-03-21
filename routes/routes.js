@@ -118,8 +118,8 @@ module.exports = function(app, io, passport){
 	app.get("/rooms", function (req, res) {
 		Room.find(function (err, items) {
 			if (err) return console.error(err);
-			res.send(items);
-			//res.render("admin/rooms", { user: items });
+			//res.send(items);
+			res.render("admin/rooms", { user: items });
 		});
 	});
 

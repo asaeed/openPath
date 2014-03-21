@@ -1,3 +1,9 @@
+/**
+ * @author jamiegilmartin@gmail.com
+ * @see http://scotch.io/tutorials/javascript/easy-node-authentication-setup-and-local
+ * @see http://itp.nyu.edu/~sve204/liveweb_fall2013/week5.html
+ */
+
 
 /**
  * Module dependencies.

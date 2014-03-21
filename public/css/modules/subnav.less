@@ -1,0 +1,29 @@
+/**
+ * subnav
+ */
+nav.subnav {
+	border:1px solid red;
+	background:#f6f6f6;
+	.content {
+		ul {
+			li {
+				display:inline-block;
+				border-right:0.2em solid #949494; 
+				padding:0 1em; 
+				text-align:center;
+				a {
+					font-weight:bold;
+					color:#949494;
+					font-size:1.3em;
+				}
+				a.active,
+				a:hover {
+					color:rgba(27,27,27,1);
+				}
+			}
+			li:last-child{
+				border-right:none;
+			}
+		}
+	}
+}
