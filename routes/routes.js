@@ -15,7 +15,7 @@ module.exports = function(app, io, passport){
 			//var room = Room({creatorID:req.user._id});
 			Room.makeRoom(req.user._id, function(err, room){
 				if(err) throw err;
-				console.log(room);
+				console.log('room=',room);
 			});
 			/**
 			 * socket.io
