@@ -1,4 +1,4 @@
-'use strict'; //TODO everywhere
+'use strict';
 
 OpenPath = window.OpenPath || {};
 

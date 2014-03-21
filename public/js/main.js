@@ -14,6 +14,7 @@ OpenPath = {
 
 
 		if( home ){
+			this.Router.init();
 			this.peerHandler();
 		}else{
 			this.intro();
