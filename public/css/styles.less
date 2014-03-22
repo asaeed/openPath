@@ -2,7 +2,7 @@
 @import "libraries/lesshat.less";
 
 @pink:rgba(255,0,255,0.7);
-
+@blue:#56acdd;
 body {
 	background:#fff;
 	font-family: 'Myriad Pro','PT Sans', arial, sans-serif;
@@ -22,37 +22,56 @@ body {
 	 * globals
 	 */
 	a {
+		color:@blue;
 		text-decoration: none;
 	}
+
+	//buttons
+	.btn,
 	button {
 		background:@pink;
 		border:none;
 		outline:none;
 		cursor:pointer;
 	}
+	.btn,
 	button:hover {
 		background:#ccc;
 	}
-
-	.admin {
-		padding:1em 2em;
-	}
-	table {
-		width:100%;
-		border:1px solid black;
-		tr {
-			th,
-			td {
-				border:1px solid #ccc;
-				text-align:center;
-				padding:3px 0 3px 0;
-			}
-			th {
-				font-weight:bold;
-			}
+	//forms
+	form {
+		fieldset {
+			padding:0 0 3em 0;
+		}
+		input[type=text],
+		textarea {
+			font-size: 1.8em;
+			border:1px solid #dddddd;
+			padding:0.3em 0.5em;
+			.border-radius(2px);
 		}
 	}
-	
+	label,
+	h3.label {
+		font-size:2em;
+		font-weight:bold;
+		display: block;
+	}
+
+	/* a centering div */
+	.content {
+		width:94%;
+		margin:0 auto;
+		position:relative;
+	}
+
+
+
+
+	/**
+	 * admin
+	 */
+	@import "modules/admin.less";
 
 	/**
 	 * pages
@@ -74,12 +93,13 @@ body {
 		 * page
 		 */
 		section.page {
-			.content {
-				width:94%;
-				margin:0 auto;
-				position:relative;
-			}
+
 			@import "modules/subnav.less";
+
+			.view {
+				background:#eeedeb;
+				padding:2em 0;
+			}
 		}
 		/**
 		 * individual 'pages'
@@ -88,7 +108,6 @@ body {
 			@import "modules/profile.less";
 		}
 	}
-
 }
 ::selection {
 	background:@pink; /* Safari & Chrome */

@@ -1,21 +1,27 @@
 <section id="myProfile" class="view">
-	<a href="#/edit-profile" class="route editProfileBtn">Edit</a>
-	
-	<article class="gradelevel">
-		<h2>Grade Level:</h2>
-		<div class="results"><%= grade %></div>
-	</article>
-	<article class="interests">
-		<h2>Interests:</h2>
-		<div class="results">
-			<% _.each(interests, function(i) { %>  <%= i %> <% }); %>
-			{{#each user.interests}}
+	<div class="content">
+		<a href="#/edit-profile" class="route editBtn">Edit</a>
 
-			{{/each}}
-		</div>
-	</article>
-	<article class="colearners">
-		<h2>List of Co-Learners:</h2>
-		<div class="results"></div>
-	</article>	
+
+		<article>
+			<h3 class="label">Grade Level:</h3>
+			<div class="results">
+				{{user.gradeLevel}}
+			</div>
+		</article>
+		<article>
+			<h3 class="label">Interests:</h3>
+			<div class="results">
+				{{user.interests}}
+			</div>
+		</article>
+		<article>
+			<h3 class="label">List of Co-Learners:</h3>
+			<div class="results">
+				{{user.coLearners}}
+			</div>
+		</article>
+
+		<a href="/logout" class="logoutBtn btn">Logout</a>
+	</div>
 </section>

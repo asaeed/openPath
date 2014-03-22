@@ -21,7 +21,8 @@ UserSchema = mongoose.Schema({
 	dateCreated:  Date,
 	dateModified: Date,
 	gradeLevel : String,
-	interests : [String]
+	interests : [String],
+	coLearners : [String]
 	//TODO : locations, settings
 });
 

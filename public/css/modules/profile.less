@@ -1,31 +1,88 @@
 
+/**
+ * myProfile
+ */
+#myProfile {
+	.content {
+		a.editBtn {
+			font-size:1.8em;
+			float:right;
+		}
+		article {
+			padding:0 0 3em 0;
+		}
+	}
+}
 
+/**
+ * editProfile
+ */
+#editProfile {
+	.content {
+		.profileIntro {
+			padding: 0 0 3em 0;
+			p {
+				font-size:2em;
+				line-height:1.3em;
+				font-weight:bold;
+			}
+		}
+		form {
+			header.name {
+				position: absolute;
+				background:#f6f6f6;
+				top:-70px;
+				.userIcon {
+					position:absolute;
+					top:2px;
+					z-index:10;
+					width:3.6em;
+					height:3.2em;
+					background-image:url('/images/nav-icons.png');
+					background-position: -158px -2px;
+					overflow:hidden;
+					input {
+						padding:40px 0 40px 0;
+						opacity:0;
+						cursor:pointer;
+					}
+				}
+				fieldset{
+					padding:0 0 0 4.5em;
 
+				}
+			}
+		}
 
+	}
+}
 
 
 /**
  * settings
  */
 #settings {
-	form {
-		article {
-			fieldset {
-				overflow:hidden;
-				label {
-					float:left;
-				}
-				input {
-					float:left;
-				}
-				input[type="radio"] {
-					margin:0 0 0 3px;
+	.content {
+		form {
+			article {
+				fieldset {
+					overflow:hidden;
+					label {
+						float:left;
+					}
+					input {
+						float:left;
+					}
+					input[type="radio"] {
+						margin:0 0 0 3px;
+					}
 				}
 			}
+			article.saved {
+				margin:10px 0 0 0;
+				color:#999999;
+			}
 		}
-		article.saved {
-			margin:10px 0 0 0;
-			color:#999999;
-		}
-	}	
+	}
+		
 }
