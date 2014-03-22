@@ -72,6 +72,15 @@ OpenPath.Router = {
 			case 'events':
 				this.showEvents();
 			break;
+			case 'nearby-events':
+				this.showEvents();//TODO
+			break;
+			case 'upcoming-events':
+				this.showEvents();//TODO
+			break;
+			case 'add-new-event':
+				this.showEvents();//TODO
+			break;
 			case 'profile':
 				this.showProfile();
 			break;
