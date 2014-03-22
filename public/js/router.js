@@ -26,6 +26,11 @@ OpenPath.Router = {
 			//profile
 		this.myProfile = document.querySelector('#myProfile');
 		this.editProfile = document.querySelector('#editProfile');
+		this.myPath = document.querySelector('#myPath');
+		this.notifications = document.querySelector('#notifications');
+		this.settings = document.querySelector('#settings');
+
+
 
 		console.log(this.pages,this.views)
 
@@ -34,6 +39,12 @@ OpenPath.Router = {
 		//small helper class
 		function route( route ){
 			route.addEventListener('click',function(e){
+				//remove active from btns
+				for(var i=0;i<self.routes.length;i++){
+					self.routes[i].classList.remove('active');
+				}
+				//add active to btn
+				route.classList.add('active');
 				self.checkRoute( route.getAttribute('href') );//not working on first click cuz....
 			},false);
 		}
@@ -67,6 +78,15 @@ OpenPath.Router = {
 			case 'edit-profile':
 				this.showEditProfile();
 			break;
+			case 'myPath':
+				this.showMyPath();
+			break;
+			case 'notifications':
+				this.showNotifications();
+			break;
+			case 'settings':
+				this.showSettings();
+			break;
 			default:
 				this.showVideos();
 			break;
@@ -98,5 +118,17 @@ OpenPath.Router = {
 	showEditProfile : function(){
 		this.profile.style.display = 'block';
 		this.editProfile.style.display = 'block';
+	},
+	showMyPath : function(){
+		this.profile.style.display = 'block';
+		this.myPath.style.display = 'block';
+	},
+	showNotifications : function(){
+		this.profile.style.display = 'block';
+		this.notifications.style.display = 'block';
+	},
+	showSettings : function(){
+		this.profile.style.display = 'block';
+		this.settings.style.display = 'block';
 	}
 };

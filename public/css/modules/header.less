@@ -43,12 +43,8 @@ header {
 							/*hide for now*/
 						}
 					}
-					a:hover {
-						opacity:1;
-					}
-				}
-				li.active {
-					a{
+					a:hover,
+					a.active {
 						opacity:1;
 					}
 				}
@@ -58,6 +54,9 @@ header {
 						height:3.2em;
 						background-position: -78px -2px;
 					}
+					a.active {
+						background-position: -118px -2px;
+					}
 				}
 				li.events {
 					a {
@@ -66,6 +65,9 @@ header {
 						height:3.6em;
 						background-position: -2px -2px;
 					}
+					a.active {
+						background-position: -40px -2px;
+					}
 				}
 				li.profile {
 					a {
@@ -73,20 +75,7 @@ header {
 						height:3.2em;
 						background-position: -158px -2px;
 					}
-				}
-				//active
-				li.active.invite {
-					a {
-						background-position: -118px -2px;
-					}
-				}
-				li.active.events {
-					a {
-						background-position: -40px -2px;
-					}
-				}
-				li.active.profile {
-					a {
+					a.active {
 						background-position: -196px -2px;
 					}
 				}
