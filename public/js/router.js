@@ -29,7 +29,10 @@ OpenPath.Router = {
 		this.myPath = document.querySelector('#myPath');
 		this.notifications = document.querySelector('#notifications');
 		this.settings = document.querySelector('#settings');
-
+			//events
+		this.upcomingEvents = document.querySelector('#upcomingEvents');
+		this.nearbyEvents = document.querySelector('#nearbyEvents');
+		this.addNewEvent = document.querySelector('#addNewEvent');
 
 
 		console.log(this.pages,this.views)
@@ -73,13 +76,10 @@ OpenPath.Router = {
 				this.showEvents();
 			break;
 			case 'nearby-events':
-				this.showEvents();//TODO
-			break;
-			case 'upcoming-events':
-				this.showEvents();//TODO
+				this.showNearbyEvents();
 			break;
 			case 'add-new-event':
-				this.showEvents();//TODO
+				this.showAddNewEvent();
 			break;
 			case 'profile':
 				this.showProfile();
@@ -119,6 +119,15 @@ OpenPath.Router = {
 	},
 	showEvents :  function(){
 		this.events.style.display = 'block';
+		this.upcomingEvents.style.display = 'block';
+	},
+	showNearbyEvents :  function(){
+		this.events.style.display = 'block';
+		this.nearbyEvents.style.display = 'block';
+	},
+	showAddNewEvent :  function(){
+		this.events.style.display = 'block';
+		this.addNewEvent.style.display = 'block';
 	},
 	showProfile : function(){
 		this.profile.style.display = 'block';

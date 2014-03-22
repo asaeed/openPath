@@ -1,0 +1,23 @@
+<section id="nearbyEvents" class="view">
+	<div class="content">
+		{{#each event}}
+			<article>
+				<h3><a href="#" target="_blank">{{ this.name }}</a></h3>
+				<p class="link"><a href="<%= websiteLink %>">{{ this.websiteLink }}</a></p>
+				<p class="date"><%= OpenPath.utils.convertTimeStampToDate(date) %></p>
+				<p class="location"><%= location.formatted_address %></p>
+				<p><%= description %></p>
+				<div class="buttons">
+					<% if(creator === OpenPath.email) { %>
+						<button class="btn" id="edit">Edit</button>
+						<button class="btn btn-primary" id="invite">Invite</button>
+					<% }else{ %>
+					<% } %>
+						<button class="btn btn-primary" id="join">Join</button>
+					
+				</div>
+			</article>
+			<div class="mapWrap"></div>
+		{{/each}}
+	</div>
+</section>

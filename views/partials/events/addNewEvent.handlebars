@@ -1,0 +1,64 @@
+<section id="addNewEvent" class="view">
+	<div class="content">
+		<form action="/events" method="post">
+			<fieldset>
+				<label for="name">Event Name:</label>
+				<input type="text" id="name" name="name" placeholder="Event Name" required />
+			</fieldset>
+			<fieldset>
+				<label for="websiteLink">Website Link:</label>
+				<input type="text" id="websiteLink" name="websiteLink" required />
+			</fieldset>
+			<fieldset>
+				<label for="date">Date:</label>
+				<input type="date" id="date" />
+			</fieldset>
+			<fieldset>
+				<label for="location">Location:</label>
+				<input type="text" id="location" name="location" required />
+			</fieldset>
+			<fieldset id="gradelevel" class="gradelevel">
+				<label for="gradelevel">Grade Level(s)</label>
+				<ul>
+					<li>
+						<label for="preK">Pre-K to Grade 2</label>
+						<input id="preK" type="checkbox" name="gradelevel" value="Pre-K to Grade 2" />
+					</li>
+					<li>
+						<label for="grade3_5">Grade 3-5</label>
+						<input id="grade3_5" type="checkbox" name="gradelevel" value="Grade 3-5" />
+					</li>
+					<li>
+						<label for="grade6_8">Grade 6-8</label>
+						<input id="grade6_8" type="checkbox" name="gradelevel" value="Grade 6-8" />
+					</li>
+					<li>
+						<label for="grade9_12">Grade 9-12</label>
+						<input id="grade9_12" type="checkbox" name="gradelevel" value="Grade 9-12" />
+					</li>
+				</ul>
+				<ul>
+					<li>
+						<label for="postSecondary">Post Secondary</label>
+						<input id="postSecondary" type="checkbox" name="gradelevel" value="Post Secondary" />
+					</li>
+					<li>
+						<label for="adults">Adults</label>
+						<input id="adults" type="checkbox" name="gradelevel" value="Adults" />
+					</li>
+					<li>
+						<label for="families">Families</label>
+						<input id="families" type="checkbox" name="gradelevel" value="Families" />
+					</li>
+				</ul>
+			</fieldset>
+			<fieldset>
+				<label for="description">Description:</label>
+				<textarea id="description" name="description"></textarea>
+			</fieldset>
+			<fieldset>
+				<button type="submit" class="btn btn-primary" id="addEventBtn">Save Event</button>
+			</fieldset>
+		</form>
+	</div>
+</section>
