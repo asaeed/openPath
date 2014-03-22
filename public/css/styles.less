@@ -25,16 +25,25 @@ body {
 		color:@blue;
 		text-decoration: none;
 	}
-
+	a:hover {
+		color:#ccc;
+	}
 	//buttons
 	.btn,
 	button {
-		background:@pink;
+		color:#fff;
+		font-size:1.8em;
+		padding:12px 15px;
+		text-shadow: 1px 1px rgba(0,0,0,0.5);
+		background-color:@blue;
+		.background-image(linear-gradient(to bottom, #5bb0e0 0%,#50a7d8 100%));
+		border:1px solid #6d8391;
+		.box-shadow(0 1px 2px rgba(20,20,20,0.5));
 		border:none;
 		outline:none;
 		cursor:pointer;
 	}
-	.btn,
+	.btn:hover,
 	button:hover {
 		background:#ccc;
 	}

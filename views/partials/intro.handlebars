@@ -1,44 +1,88 @@
 <div id="intro">
-    <h1>Open Path</h1>
+    <section class="main">
+        <div class="content">
+            <h1>Open Path</h1>
 
-    <div class="callout toggle">
-        <h2>What do you want to learrn?</h2>
-        <p>Chart your learning path through exhibits, tours, and special events</p>
-        <button id="loginBtn">login</button>  or 
-        <button id="signupBtn">signup</button>
-    </div> 
+            <div class="callout toggle">
+                <h2>What do you want to learrn?</h2>
+                <p>Chart your learning path through exhibits, tours, and special events</p>
+                <button id="loginBtn">login</button>  
+                <span>or</span>
+                <button id="signupBtn">signup</button>
+            </div> 
 
-    <div class="login toggle">
-        <form action="/login" method="post">
-            <div>
-                <label for="email">Email:</label>
-                <input id="email" type="text" name="email"/>
+            <div class="login toggle">
+                <form action="/login" method="post">
+                    <div>
+                        <label for="email">Email:</label>
+                        <input id="email" type="text" name="email"/>
+                    </div>
+                    <div>
+                        <label>Password:</label>
+                        <input type="password" name="password"/>
+                    </div>
+                    <div>
+                        <input type="submit" value="Log In"/>
+                    </div>
+                </form>
             </div>
-            <div>
-                <label>Password:</label>
-                <input type="password" name="password"/>
-            </div>
-            <div>
-                <input type="submit" value="Log In"/>
-            </div>
-        </form>
-    </div>
 
-    <div class="signup toggle">
-        <form action="/signup" method="post">
-            <div>
-                <label for="email">Email:</label>
-                <input id="email" type="text" name="email"/>
+            <div class="signup toggle">
+                <form action="/signup" method="post">
+                    <div>
+                        <label for="email">Email:</label>
+                        <input id="email" type="text" name="email"/>
+                    </div>
+                    <div>
+                        <label>Password:</label>
+                        <input type="password" name="password"/>
+                    </div>
+                    <div>
+                        <input type="submit" value="Sign Up"/>
+                    </div>
+                </form>
             </div>
-            <div>
-                <label>Password:</label>
-                <input type="password" name="password"/>
+
+
+            <img src="/images/home/monitor.png">
+        </div>
+    </section>
+    <section class="bottomCallouts">
+        <div class="content">
+            <div class="calloutWrap">
+                <article>
+                    <h2>Connect learning everywhere</h2>
+                    <ul>
+                        <li>Go on expert-guided virtual field trips</li>
+                        <li>Facilitate place-based learning remotely</li>
+                    </ul>
+                    <div class="icon">
+                        <img src="/images/home/map.jpg">
+                    </div>
+                </article>
+                <article>
+                    <h2>No downloads, no hassles</h2>
+                    <ul>
+                        <li>Location-based video right in your browser</li>
+                        <li>Stream and share high-quality video, enabled by high-speed networks</li>
+                    </ul>
+                    <div class="icon">
+                        <img src="/images/home/no-downloads.png">
+                    </div>
+                </article>
+                <article>
+                    <h2>Collaborate & build community </h2>
+                    <ul>
+                        <li>Curate experiences, sharing your favorite places
+        </li>
+                        <li>Advocate for local causes, collaborate with people around the world</li>
+                    </ul>
+                    <div class="icon">
+                        <img src="/images/home/learn-together.png">
+                    </div>
+                </article>
             </div>
-            <div>
-                <input type="submit" value="Sign Up"/>
-            </div>
-        </form>
-    </div>
-    
+        </div>
+    </section>
 </div>
 
