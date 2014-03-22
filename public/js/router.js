@@ -9,30 +9,52 @@ OpenPath = window.OpenPath || {};
  */
 OpenPath.Router = {
 	init : function(){
-		//all pages 
+		var self = this;
+
+		//all pages & all views 
 		this.pages = document.querySelectorAll('.page');
 		this.views = document.querySelectorAll('.view');
 
 		//individual pages
 		this.videos = document.querySelector('#videos');
+		this.invite = document.querySelector('#invite');
+		this.events = document.querySelector('#events');
 		this.profile = document.querySelector('#profile');
 
 		//individual views
+
+			//profile
 		this.myProfile = document.querySelector('#myProfile');
+		this.editProfile = document.querySelector('#editProfile');
 
 		console.log(this.pages,this.views)
 
 		//links to checkRoutes on
-		
+		this.routes = document.querySelectorAll('.route');
+		//small helper class
+		function route( route ){
+			route.addEventListener('click',function(e){
+				self.checkRoute( route.getAttribute('href') );//not working on first click cuz....
+			},false);
+		}
+		//make route instances
+		for(var i=0;i<this.routes.length;i++){
+			new route( this.routes[i] );
+		}
 
 	},
-	checkRoute : function(){
+	checkRoute : function( route ){
 		//hide all
 		this.hideAll();
 
-		console.log('router',window.location.hash.split('#/')[1]);
+		console.log(route, 'router', window.location.hash.split('#/')[1]);
 
-		switch(window.location.hash.split('#/')[1]){
+		var route = route ? route.split('#/')[1] : window.location.hash.split('#/')[1];
+
+		switch(route){
+			case 'videos':
+				this.showVideos();
+			break;
 			case 'invite':
 				this.showInvite();
 			break;
@@ -63,11 +85,18 @@ OpenPath.Router = {
 	showVideos : function(){
 		this.videos.style.display = 'block';
 	},
+	showInvite : function(){
+		this.invite.style.display = 'block';
+	},
+	showEvents :  function(){
+		this.events.style.display = 'block';
+	},
 	showProfile : function(){
 		this.profile.style.display = 'block';
 		this.myProfile.style.display = 'block';
 	},
 	showEditProfile : function(){
-		console.log('route  edit profile')
+		this.profile.style.display = 'block';
+		this.editProfile.style.display = 'block';
 	}
 };

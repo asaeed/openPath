@@ -1,138 +1,31 @@
-<div class="page" id="profile">
+<section class="page" id="profile">
+
 	<nav class="subnav">
 		<div class="content">
 
 			{{#if user.firstName }}
 				<h1>{{user.firstName}} {{user.lastName}}</h1>
 			{{else}}
-				<h1>{{user.email}}'s Profile</h1>
+				<h1>{{user.email}}</h1>
 			{{/if}}
 
 
 		    <ul>
-				<li><a href="#/profile">Profile</a></li>
-		        <li><a href="#/mypath">My Path</a></li>
-		        <li><a href="#/notifications">Notifications</a></li>
-		        <li><a href="#/settings">Settings</a></li>
+				<li><a href="#/profile" class="route">Profile</a></li>
+		        <li><a href="#/mypath" class="route">My Path</a></li>
+		        <li><a href="#/notifications" class="route">Notifications</a></li>
+		        <li><a href="#/settings" class="route">Settings</a></li>
 		    </ul>
 		</div>
 	</nav>
 
-	<!--profile-->
-	<div id="myProfile" class="view">
-		<a class="editProfileBtn" href="#/edit-profile">Edit</a>
-		
-		<article class="gradelevel">
-			<h2>Grade Level:</h2>
-			<div class="results"><%= grade %></div>
-		</article>
-		<article class="interests">
-			<h2>Interests:</h2>
-			<div class="results">
-				<% _.each(interests, function(i) { %>  <%= i %> <% }); %>
-				{{#each user.interests}}
+	{{> profile/myProfile }}
+	{{> profile/editProfile }}
+	{{> profile/myPath }}
+	{{> profile/notifications }}
+	{{> profile/settings }}
 
-				{{/each}}
-			</div>
-		</article>
-		<article class="colearners">
-			<h2>List of Co-Learners:</h2>
-			<div class="results"></div>
-		</article>	
-	</div>
+	
 
-	<!--editProfile-->
-	<div id="editProfile" class="view">
-		<a href="/logout">Logout</a>
-
-		<div class="profileIntro">
-			<p><strong>Welcome to Open Path!</strong></p>
-			<p><strong>To get recommendations based on your interests, simply fill in something about yourself:</strong></p>
-			
-			
-		</div>
-		<form action="/profile" method="post">
-
-			<div class="userIcon">
-				<fieldset>
-					<input type="file" name="userIcon" />
-				</fieldset>
-			</div>
-			<fieldset class="name">
-				<input type="text" name="firstName" class="firstName" placeholder="first name"  />
-				<input type="text" name="lastName" class="lastName" placeholder="last name" />
-			</fieldset>
-			<fieldset>
-				<label>Grade Level:</label>
-				<select name="gradelevel" class="gradelevel">
-					<option value="Pre-K to Grade 2">Pre-K to Grade 2</option>
-					<option value="Grade 3-5">Grade 3-5</option>
-					<option value="Grade 9-12">Grade 9-12</option>
-					<option value="Post Secondary">Post Secondary</option>
-					<option value="Adults">Adults</option>
-					<option value="Families">Families</option>
-				</select>
-			</fieldset>
-			<fieldset>
-				<label>Interests:</label>
-				<input type="text" class="interests" name="interests" data-provide="tag" />
-			</fieldset>
-			<fieldset>
-				<label>List of Co-Learners:</label>
-				<input type="text" class="colearners" name="colearners" data-provide="tag" />
-			</fieldset>
-			
-			<p class="required"><small><em>*Required</em></small></p>
-			<fieldset class="done">
-				<button type="submit" class="btn btn-primary">Done</button>
-			</fieldset>
-		</form>
-	</div>
-	<!--myPath-->
-	<div id="myPath" class="view">
-		
-	</div>
-	<!--notifications-->
-	<div id="notifications" class="view">
-		
-	</div>
-	<!--settings-->
-	<div id="settings" class="view">
-		<form action="/profile" method="post">
-			<article>
-				<h2 class="muted">Receive alerts when...</h2>
-				<fieldset>
-					<input type="checkbox" id="alertsColearnerJoin" name="alertsColearnerJoin" />
-					<label class="checkbox" for="alertsColearnerJoin">Co-learner joins event</label>
-				</fieldset>
-				<fieldset>
-					<input type="checkbox" id="alertsNearEvent" name="alertsNearEvent" />
-					<label class="checkbox" for="alertsNearEvent">Near an event you might be interested in</label>
-				</fieldset>
-				<fieldset>
-					<input type="checkbox" id="alertsAllEvents" name="alertsAllEvents" />
-					<label class="checkbox" for="alertsAllEvents">All events you might be interested in</label>
-				</fieldset>
-			</article>
-			<article>
-				<h2 class="muted">Set profile as...</h2>
-				<fieldset>
-					<input type="radio" id="profileAccessPublic" name="profileaccess" value="public" />
-					<label class="checkbox" for="profileAccessPublic">Public</label>
-				</fieldset>
-				<fieldset>
-					<input type="radio" id="profileAccessPrivate" name="profileaccess" value="private" />
-					<label class="checkbox" for="profileAccessPrivate">Private</label>
-				</fieldset>
-			</article>
-			<fieldset>
-				<button type="submit" class="btn btn-primary">Save</button>
-			</fieldset>
-			<article class="saved">
-				<p>Your settings have been saved.</p>
-			</article>
-		</form>		
-	</div>
-
-</div>
+</section>
 

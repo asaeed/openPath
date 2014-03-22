@@ -65,18 +65,27 @@ body {
 			border:1px dotted red;
 		}
 
+		/**
+		 * header
+		 */
 		@import "modules/header.less";
 
 		/**
 		 * page
 		 */
-		.page {
+		section.page {
 			.content {
 				width:94%;
 				margin:0 auto;
 				position:relative;
 			}
 			@import "modules/subnav.less";
+		}
+		/**
+		 * individual 'pages'
+		 */
+		section.profile {
+			@import "modules/profile.less";
 		}
 	}
 

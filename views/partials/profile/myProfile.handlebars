@@ -1,0 +1,21 @@
+<section id="myProfile" class="view">
+	<a href="#/edit-profile" class="route editProfileBtn">Edit</a>
+	
+	<article class="gradelevel">
+		<h2>Grade Level:</h2>
+		<div class="results"><%= grade %></div>
+	</article>
+	<article class="interests">
+		<h2>Interests:</h2>
+		<div class="results">
+			<% _.each(interests, function(i) { %>  <%= i %> <% }); %>
+			{{#each user.interests}}
+
+			{{/each}}
+		</div>
+	</article>
+	<article class="colearners">
+		<h2>List of Co-Learners:</h2>
+		<div class="results"></div>
+	</article>	
+</section>

@@ -19,7 +19,10 @@ UserSchema = mongoose.Schema({
 		name:     String
 	},
 	dateCreated:  Date,
-	dateModified: Date
+	dateModified: Date,
+	gradeLevel : String,
+	interests : [String]
+	//TODO : locations, settings
 });
 
 

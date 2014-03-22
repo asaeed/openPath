@@ -1,0 +1,36 @@
+<section id="settings" class="view">
+	<form action="/profile" method="post">
+		<article>
+			<h2 class="muted">Receive alerts when...</h2>
+			<fieldset>
+				<input type="checkbox" id="alertsColearnerJoin" name="alertsColearnerJoin" />
+				<label class="checkbox" for="alertsColearnerJoin">Co-learner joins event</label>
+			</fieldset>
+			<fieldset>
+				<input type="checkbox" id="alertsNearEvent" name="alertsNearEvent" />
+				<label class="checkbox" for="alertsNearEvent">Near an event you might be interested in</label>
+			</fieldset>
+			<fieldset>
+				<input type="checkbox" id="alertsAllEvents" name="alertsAllEvents" />
+				<label class="checkbox" for="alertsAllEvents">All events you might be interested in</label>
+			</fieldset>
+		</article>
+		<article>
+			<h2 class="muted">Set profile as...</h2>
+			<fieldset>
+				<input type="radio" id="profileAccessPublic" name="profileaccess" value="public" />
+				<label class="checkbox" for="profileAccessPublic">Public</label>
+			</fieldset>
+			<fieldset>
+				<input type="radio" id="profileAccessPrivate" name="profileaccess" value="private" />
+				<label class="checkbox" for="profileAccessPrivate">Private</label>
+			</fieldset>
+		</article>
+		<fieldset>
+			<button type="submit" class="btn btn-primary">Save</button>
+		</fieldset>
+		<article class="saved">
+			<p>Your settings have been saved.</p>
+		</article>
+	</form>		
+</section>
