@@ -65,6 +65,9 @@ OpenPath.Router = {
 
 		var route = route ? route.split('#/')[1] : window.location.hash.split('#/')[1];
 
+		/**
+		 * all our routes switch
+		 */
 		switch(route){
 			case 'videos':
 				this.showVideos();
@@ -128,6 +131,34 @@ OpenPath.Router = {
 	showAddNewEvent :  function(){
 		this.events.style.display = 'block';
 		this.addNewEvent.style.display = 'block';
+
+		/**
+		 * autocompleteLocationInput
+		 */
+		function autocompleteLocationInput(){
+
+			var locationInput = document.getElementById("location");
+			console.log('locationInput',locationInput);
+			var autocomplete = new google.maps.places.Autocomplete(locationInput);
+			
+			google.maps.event.addListener(autocomplete, 'place_changed', function() {
+				//infowindow.close();
+				
+				var place = autocomplete.getPlace();
+				if (!place.geometry) {
+					// Inform the user that a place was not found and return.
+					alert('location not found')
+					return;
+				}else{
+					locationInput.value = place.geometry.location;
+					console.log('location value',place.geometry.location)
+				}
+			});
+		}
+
+		autocompleteLocationInput();
+		
+
 	},
 	showProfile : function(){
 		this.profile.style.display = 'block';
