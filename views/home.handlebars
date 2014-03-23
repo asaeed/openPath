@@ -1,4 +1,5 @@
 {{#if user}}
+	
 	<div id="home">
 
 		{{> header }}
@@ -8,10 +9,35 @@
 		{{> events }}
 		{{> profile }}
 
+	</div>
+		
+	<!--scripts-->
+    <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=true&libraries=places"></script>
+	<script src="/socket.io/socket.io.js"></script>
+	<script src="http://cdn.peerjs.com/0.3/peer.min.js"></script>
+
+	<script src="js/main.js"></script>
+	<script src="js/router.js"></script>
+	<script src="js/utils.js"></script>
+	
+	<script src="js/classes/mvc/super/mvc.js" type="text/javascript" charset="utf-8"></script>
+	<script src="js/classes/mvc/model.js" type="text/javascript" charset="utf-8"></script>
+	<script src="js/classes/mvc/view.js" type="text/javascript" charset="utf-8"></script>
+	<script src="js/classes/mvc/controller.js" type="text/javascript" charset="utf-8"></script>
+	<script src="js/classes/mvc/collection.js" type="text/javascript" charset="utf-8"></script>
+
+
+
+{{else}}
+	
+	<div id="intro">
+
+		{{> intro }}
 		
 	</div>
-{{else}}
 
-	{{> intro }}
+
+	<!--scripts-->
+	<script src="js/intro.js"></script>
 
 {{/if}}
