@@ -1,5 +1,6 @@
 var User = require('../models/user');
 var Room = require('../models/room');
+var Event = require('../models/event');
 var Auth = require('../utils/auth');
 
 
@@ -12,7 +13,6 @@ module.exports = function(app, io, passport){
 		if(req.isAuthenticated()){
 			res.render("home", { user : req.user });
 
-			//var room = Room({creatorID:req.user._id});
 			Room.makeRoom(req.user._id, function(err, room){
 				if(err) throw err;
 				console.log('room=',room);
@@ -100,7 +100,7 @@ module.exports = function(app, io, passport){
 	});
 	//profile
 	app.post("/profile", Auth.userExist, function(req, res, next){
-		console.log(req.user._id,req.body.firstName,req.body.lastName);
+		console.log('update profile',req.user._id,req.body.firstName,req.body.lastName);
 		User.updateProfile(req , function(err,user){
 			if(err) throw err;
 			console.log(user.email + '\'s profile updated');
@@ -123,5 +123,24 @@ module.exports = function(app, io, passport){
 		});
 	});
 
+	/**
+	 * events 
+	 * TODO: check if admin user
+	 */
+	app.get("/events", function (req, res) {
+		Event.find(function (err, items) {
+			if (err) return console.error(err);
+			res.send(items);
+			//res.render("events", { event: items });
+		});
+	});
+
+	app.post("/events", function (req, res) {
+		Event.addEvent(req, function(err, newEvent){
+			if(err) throw err;
+			console.log('newEvent=',newEvent);
+			res.redirect("/#/events");
+		});
+	});
 
 };
