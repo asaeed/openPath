@@ -125,6 +125,17 @@ OpenPath.Router = {
 	showEvents :  function(){
 		this.events.style.display = 'block';
 		this.upcomingEvents.style.display = 'block';
+
+
+		var upcomingEventsView = new OpenPath.View();
+		upcomingEventsView.url = '/events';
+		upcomingEventsView.get();
+
+		var content = upcomingEventsView.querySelector('.content');
+		upcomingEventsView.got = function(data){
+			console.log('upcomingEventsView got', data);
+		};
+
 	},
 	showNearbyEvents :  function(){
 		this.events.style.display = 'block';
@@ -163,7 +174,15 @@ OpenPath.Router = {
 
 		autocompleteLocationInput();
 		
-
+		/**
+		 * grade level //TODO
+		 */
+		var gradelevelsArr = [];
+		/*
+		this.form.find('input:checkbox[name=gradelevel]:checked').each(function(){
+			gradelevelsArr.push( $(this).val() );
+		});
+		*/
 	},
 	showProfile : function(){
 		this.profile.style.display = 'block';
