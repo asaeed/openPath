@@ -124,6 +124,24 @@ module.exports = function(app, io, passport){
 		});
 	});
 
+
+
+	/** TODO move somewhere nice **/
+	//date helper
+	function formatDate( dateString ){
+		var d = dateString ;
+
+		return d.getMonth() +'/'+ d.getDate() +'/'+d.getFullYear();
+	}
+	function formatTime( timeString ){
+		var t = timeString ;
+		var hour = (t.split(':')[0] % 12) == 0 ? 12 : t.split(':')[0] % 12;
+		var mins = t.split(':')[1];
+		var meridiem = t.split(':')[0] > 11 ? 'PM' : 'AM'; 
+		
+		return hour + ':' + mins + ' '+meridiem;
+	}
+
 	/**
 	 * events 
 	 * TODO: check if admin user
@@ -134,7 +152,7 @@ module.exports = function(app, io, passport){
 
 			var publicItems = [];
 			for(var i=0;i<items.length;i++){
-				
+
 				var today = new Date();
 				var yesterday = today.setDate(today.getDate() - 1);
 
@@ -144,13 +162,13 @@ module.exports = function(app, io, passport){
 						name        : items[i].name,
 						link        : items[i].link,
 						description : items[i].description,
-						date        : items[i].date,//format
-						startTime   : items[i].startTime,
-						endTime     : items[i].endTime,
+						date        : formatDate( items[i].date ),
+						startTime   : formatTime( items[i].startTime ),
+						endTime     : formatTime( items[i].endTime ),
 						location    : items[i].location,
 						isMine      : ( items[i].creatorID == req.user._id ) ? true : false
 					};
-					console.log(Date.parse(items[i].date), Date.now())
+					
 
 					publicItems.push( publicItem );
 
