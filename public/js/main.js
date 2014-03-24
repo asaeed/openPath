@@ -64,6 +64,7 @@ OpenPath = {
 		var self = this;
 		var socket = io.connect('http://localhost');
 		socket.on('userConnected', function (data) {
+
 			console.log('userConnected',data.user.email);
 		});
 		socket.on('userDisconnected', function (data) {
@@ -152,6 +153,10 @@ OpenPath = {
 					"Longitude: " + position.coords.longitude );
 
 		//TODO: maps etc
+	},
+	isMe : function(){
+
+		return true;
 	}
 };
 

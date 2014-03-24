@@ -150,9 +150,9 @@ OpenPath.Router = {
 			var events = content.getElementsByClassName('event');
 			for(var i=0; i<events.length; i++){
 				var mapwrap = events[i].getElementsByClassName('mapWrap')[0];
-				OpenPath.Utils.renderMap(mapwrap, mapwrap.dataset.latitude, mapwrap.dataset.longitude, mapwrap.dataset.reference);
+				OpenPath.Utils.renderMap(mapwrap, mapwrap.dataset.latitude, mapwrap.dataset.longitude, reference);
 			}
-
+			
 			
 		};
 

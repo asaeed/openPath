@@ -131,7 +131,27 @@ module.exports = function(app, io, passport){
 	app.get("/events", function (req, res) {
 		Event.find(function (err, items) {
 			if (err) return console.error(err);
-			res.send({ events: items });
+
+			var publicItems = [];
+			for(var i=0;i<items.length;i++){
+				var publicItem = {
+					name        : items[i].name,
+					link        : items[i].link,
+					description : items[i].description,
+					date        : items[i].date,//format
+					startTime   : items[i].startTime,
+					endTime     : items[i].endTime,
+					location    : items[i].location,
+					isMine      : ( items[i].creatorID == req.user._id ) ? true : false
+				};
+				console.log(items[i].creatorID,req.user._id )
+
+				publicItems.push( publicItem );
+			}
+			//TODO: sort publicItems by date
+
+
+			res.send({ events: publicItems }); //TODO : fork for admin res.send({ events: items }); 
 			//res.render("events", { event: items });
 		});
 	});
