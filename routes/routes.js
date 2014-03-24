@@ -134,19 +134,23 @@ module.exports = function(app, io, passport){
 
 			var publicItems = [];
 			for(var i=0;i<items.length;i++){
-				var publicItem = {
-					name        : items[i].name,
-					link        : items[i].link,
-					description : items[i].description,
-					date        : items[i].date,//format
-					startTime   : items[i].startTime,
-					endTime     : items[i].endTime,
-					location    : items[i].location,
-					isMine      : ( items[i].creatorID == req.user._id ) ? true : false
-				};
-				console.log(items[i].creatorID,req.user._id )
+				if( Date.parse(items[i].date) > Date.now() ){//if in future
+	
+					var publicItem = {
+						name        : items[i].name,
+						link        : items[i].link,
+						description : items[i].description,
+						date        : items[i].date,//format
+						startTime   : items[i].startTime,
+						endTime     : items[i].endTime,
+						location    : items[i].location,
+						isMine      : ( items[i].creatorID == req.user._id ) ? true : false
+					};
+					console.log(Date.parse(items[i].date), Date.now())
 
-				publicItems.push( publicItem );
+					publicItems.push( publicItem );
+
+				}
 			}
 			//sort by date descending
 			publicItems.sort(function(a,b){
