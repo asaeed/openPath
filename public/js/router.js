@@ -143,7 +143,6 @@ OpenPath.Router = {
 				longitudeInput = document.getElementById("longitude"),
 				latitudeInput = document.getElementById("latitude");
 
-			console.log('locationInput',locationInput);
 			var autocomplete = new google.maps.places.Autocomplete(locationInput);
 			
 			google.maps.event.addListener(autocomplete, 'place_changed', function() {

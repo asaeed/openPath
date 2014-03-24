@@ -56,10 +56,12 @@ body {
 		input[type=text],
 		input[type=password],
 		input[type=date],
+		input[type=time],
 		textarea {
 			font-size: 1.8em;
 			border:1px solid #dddddd;
 			padding:0.3em 0.5em;
+			width:20em;
 			.border-radius(2px);
 		}
 	}
@@ -118,6 +120,9 @@ body {
 		 */
 		section#profile {
 			@import "modules/profile.less";
+		}
+		section#events {
+			@import "modules/events.less";
 		}
 	}
 }
