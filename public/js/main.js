@@ -153,10 +153,6 @@ OpenPath = {
 					"Longitude: " + position.coords.longitude );
 
 		//TODO: maps etc
-	},
-	isMe : function(){
-
-		return true;
 	}
 };
 

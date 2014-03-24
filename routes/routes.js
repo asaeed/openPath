@@ -148,8 +148,14 @@ module.exports = function(app, io, passport){
 
 				publicItems.push( publicItem );
 			}
-			//TODO: sort publicItems by date
-
+			//sort by date descending
+			publicItems.sort(function(a,b){
+				// Turn your strings into dates, and then subtract them
+				// to get a value that is either negative, positive, or zero.
+				return new Date(b.date) - new Date(a.date);
+			});
+			//ascending
+			publicItems.reverse();
 
 			res.send({ events: publicItems }); //TODO : fork for admin res.send({ events: items }); 
 			//res.render("events", { event: items });
