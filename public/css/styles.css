@@ -1,1 +1,526 @@
-@import url("libraries/reset.css");body{background:#fff;font-family:'Myriad Pro','PT Sans',arial,sans-serif;font-size:10px;-webkit-tap-highlight-color:rgba(255,0,255,0.7)}body a{color:#56acdd;text-decoration:none}body a:hover{color:#ccc}body .btn,body input[type=submit],body button{color:#fff;font-size:1.8em;padding:12px 15px;text-shadow:1px 1px rgba(0,0,0,0.5);background-color:#56acdd;background-image:url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiA/PjxzdmcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiB2aWV3Qm94PSIwIDAgMSAxIiBwcmVzZXJ2ZUFzcGVjdFJhdGlvPSJub25lIj48bGluZWFyR3JhZGllbnQgaWQ9Imxlc3NoYXQtZ2VuZXJhdGVkIiBncmFkaWVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSIgeDE9IjAlIiB5MT0iMCUiIHgyPSIwJSIgeTI9IjEwMCUiPjxzdG9wIG9mZnNldD0iMCUiIHN0b3AtY29sb3I9IiM1YmIwZTAiIHN0b3Atb3BhY2l0eT0iMSIvPjxzdG9wIG9mZnNldD0iMTAwJSIgc3RvcC1jb2xvcj0iIzUwYTdkOCIgc3RvcC1vcGFjaXR5PSIxIi8+PC9saW5lYXJHcmFkaWVudD48cmVjdCB4PSIwIiB5PSIwIiB3aWR0aD0iMSIgaGVpZ2h0PSIxIiBmaWxsPSJ1cmwoI2xlc3NoYXQtZ2VuZXJhdGVkKSIgLz48L3N2Zz4=);background-image:-webkit-linear-gradient(top, #5bb0e0 0%, #50a7d8 100%);background-image:-moz-linear-gradient(top, #5bb0e0 0%, #50a7d8 100%);background-image:-o-linear-gradient(top, #5bb0e0 0%, #50a7d8 100%);background-image:linear-gradient(to bottom, #5bb0e0 0%, #50a7d8 100%);border:1px solid #6d8391;-webkit-box-shadow:0px 1px 2px rgba(20, 20, 20, 0.5);-moz-box-shadow:0px 1px 2px rgba(20, 20, 20, 0.5);box-shadow:0px 1px 2px rgba(20, 20, 20, 0.5);border:none;outline:none;cursor:pointer}body .btn:hover,body button:hover{background:#ccc}body form fieldset{padding:0 0 3em 0}body form input[type=text],body form input[type=password],body form input[type=date],body form input[type=time],body form textarea{font-size:1.8em;border:1px solid #dddddd;padding:0.3em 0.5em;width:20em;-webkit-border-radius:2px;-webkit-background-clip:padding-box;-moz-border-radius:2px;-moz-background-clip:padding;border-radius:2px;background-clip:padding-box}body label,body h3.label{font-size:2em;font-weight:bold;display:block}body .content{width:94%;margin:0 auto;position:relative}body .admin{padding:1em 2em}body .admin table{width:100%;border:1px solid black}body .admin table tr th,body .admin table tr td{border:1px solid #ccc;text-align:center;padding:3px 0 3px 0}body .admin table tr th{font-weight:bold}body #intro section.main{background:#666 url('/images/home/headerbgd.jpg') no-repeat;-webkit-background-size:cover;-moz-background-size:cover;background-size:cover}body #intro section.main .content{overflow:hidden;padding-top:2em}body #intro section.main .content h1{font-size:4em;line-height:1.1em;font-weight:bold;text-shadow:2px 2px rgba(0,0,0,0.5);color:#fff;padding-bottom:2.2em}body #intro section.main .content .toggle{position:relative;width:50%;min-height:28em;z-index:1;display:none}body #intro section.main .content .callout{display:block}body #intro section.main .content .callout h2{font-size:2.6em;font-weight:bold;text-shadow:2px 2px rgba(0,0,0,0.5);color:#fff;padding-bottom:0.6em}body #intro section.main .content .callout p{font-size:2.2em;color:#fff;padding-bottom:1.4em}body #intro section.main .content .callout span{font-size:2em;padding:0 0.5em;color:#fff}body #intro section.main .content img.computer{position:absolute;right:0;bottom:0;z-index:0}body #intro section.main .content .login form label,body #intro section.main .content .signup form label{color:#fff}body #intro section.bottomCallouts .content .calloutWrap{overflow:hidden;width:100%;position:relative}body #intro section.bottomCallouts .content .calloutWrap article{position:absolute;left:50%;margin-left:-21em;width:34.5em;padding:3em 4em 0 4em}body #intro section.bottomCallouts .content .calloutWrap article h2{font-size:2.6em;font-weight:bold;text-align:center}body #intro section.bottomCallouts .content .calloutWrap article ul{list-style-type:disc;padding:2.8em 0 0 3em}body #intro section.bottomCallouts .content .calloutWrap article ul li{font-size:1.8em;padding:0 0 0.5em 0}body #intro section.bottomCallouts .content .calloutWrap article .icon{text-align:center}body #intro section.bottomCallouts .content .calloutWrap article:first-child{position:relative;left:0;float:left;margin-left:0;width:34.3em;padding:3em 0 0 0}body #intro section.bottomCallouts .content .calloutWrap article:first-child .icon{padding:3em 0 0 0}body #intro section.bottomCallouts .content .calloutWrap article:last-child{position:relative;left:0;right:0;float:right;margin-left:0;width:37.3em;padding:3em 0 0 0}body #home video{border:1px dotted red}body #home header.main{background:rgba(0,0,0,0.6);width:100%;padding:1em 0}body #home header.main .content{overflow:hidden}body #home header.main .content a.logo{float:left}body #home header.main .content a.logo span{font-size:4em;line-height:1.1em;font-weight:bold;text-shadow:2px 2px rgba(0,0,0,0.5);color:#fff}body #home header.main .content nav.main{float:right}body #home header.main .content nav.main ul{overflow:hidden;list-style-type:none}body #home header.main .content nav.main ul li{float:left;padding:0 2em 0 0}body #home header.main .content nav.main ul li a{position:relative;top:0.3em;display:block;background-image:url('/images/nav-icons.png');background-repeat:no-repeat;opacity:0.7}body #home header.main .content nav.main ul li a span.badge{position:absolute;padding:0.5em 0.5em 0.2em 0.5em;top:-0.3em;left:-0.2em;color:#fff;font-weight:bold;background:#ff0000;-webkit-border-radius:1em;-webkit-background-clip:padding-box;-moz-border-radius:1em;-moz-background-clip:padding;border-radius:1em;background-clip:padding-box}body #home header.main .content nav.main ul li a:hover,body #home header.main .content nav.main ul li a.active{opacity:1}body #home header.main .content nav.main ul li.invite a{width:3.8em;height:3.2em;background-position:-78px -2px}body #home header.main .content nav.main ul li.invite a.active{background-position:-118px -2px}body #home header.main .content nav.main ul li.events a{top:0;width:3.6em;height:3.6em;background-position:-2px -2px}body #home header.main .content nav.main ul li.events a.active{background-position:-40px -2px}body #home header.main .content nav.main ul li.profile a{width:3.6em;height:3.2em;background-position:-158px -2px}body #home header.main .content nav.main ul li.profile a.active{background-position:-196px -2px}body #home section.page nav.subnav{background:#f6f6f6}body #home section.page nav.subnav .content{overflow:hidden;padding:2em 0}body #home section.page nav.subnav .content h1{float:left;font-size:2em;font-weight:bold}body #home section.page nav.subnav .content ul{float:right}body #home section.page nav.subnav .content ul li{display:inline-block;border-right:0.2em solid #949494;padding:0 1em;text-align:center}body #home section.page nav.subnav .content ul li a{font-weight:bold;color:#949494;font-size:1.8em}body #home section.page nav.subnav .content ul li a.active,body #home section.page nav.subnav .content ul li a:hover{color:#1b1b1b}body #home section.page nav.subnav .content ul li:last-child{border-right:none}body #home section.page .view{background:#eeedeb;padding:2em 0}body #home section#profile #myProfile .content a.editBtn{font-size:1.8em;float:right}body #home section#profile #myProfile .content article{padding:0 0 3em 0}body #home section#profile #editProfile .content .profileIntro{padding:0 0 3em 0}body #home section#profile #editProfile .content .profileIntro p{font-size:2em;line-height:1.3em;font-weight:bold}body #home section#profile #editProfile .content form header.name{position:absolute;background:#f6f6f6;top:-70px}body #home section#profile #editProfile .content form header.name .userIcon{position:absolute;top:2px;z-index:10;width:3.6em;height:3.2em;background-image:url('/images/nav-icons.png');background-position:-158px -2px;overflow:hidden}body #home section#profile #editProfile .content form header.name .userIcon input{padding:40px 0 40px 0;opacity:0;cursor:pointer}body #home section#profile #editProfile .content form header.name fieldset{padding:0 0 0 4.5em}body #home section#profile #settings .content form article fieldset{overflow:hidden}body #home section#profile #settings .content form article fieldset label{float:left}body #home section#profile #settings .content form article fieldset input{float:left}body #home section#profile #settings .content form article fieldset input[type="radio"]{margin:0 0 0 3px}body #home section#profile #settings .content form article.saved{margin:10px 0 0 0;color:#999999}body #home section#events #addNewEvent textarea{height:6em}body #home section#events #addNewEvent fieldset#gradelevel{overflow:hidden}body #home section#events #addNewEvent fieldset#gradelevel ul{list-style-type:none;padding:1em 0 0 0;float:left;width:140px}body #home section#events #addNewEvent fieldset#gradelevel ul li{overflow:hidden}body #home section#events #addNewEvent fieldset#gradelevel ul li label{float:right;width:120px;padding:0.3em 0 0 0;font-size:1.3em;font-weight:normal}body #home section#events #addNewEvent fieldset#gradelevel ul li input{float:left}::selection{background:rgba(255,0,255,0.7)}::-moz-selection{background:rgba(255,0,255,0.7)}
+@import url("libraries/reset.css");
+/**
+ * vars
+ */
+/**
+ * mixins
+ */
+body {
+  background: #fff;
+  font-family: 'Myriad Pro', 'PT Sans', arial, sans-serif;
+  font-size: 10px;
+  /*
+	-webkit-user-select: none;
+	-khtml-user-select: none;
+	-moz-user-select: none;
+	-o-user-select: none;
+	user-select: none;
+	*/
+
+  /*.user-select(none);*/
+
+  -webkit-tap-highlight-color: rgba(255, 0, 255, 0.7);
+  /**
+	 * globals
+	 */
+
+  /* a centering div */
+
+  /**
+	 * admin
+	 */
+
+  /**
+	 * pages
+	 */
+
+}
+body a {
+  color: #56acdd;
+  text-decoration: none;
+}
+body a:hover {
+  color: #ccc;
+}
+body .btn,
+body input[type=submit],
+body button {
+  color: #fff;
+  font-size: 1.8em;
+  padding: 12px 15px;
+  text-shadow: 1px 1px rgba(0, 0, 0, 0.5);
+  background-color: #56acdd;
+  background-image: url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiA/PjxzdmcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiB2aWV3Qm94PSIwIDAgMSAxIiBwcmVzZXJ2ZUFzcGVjdFJhdGlvPSJub25lIj48bGluZWFyR3JhZGllbnQgaWQ9Imxlc3NoYXQtZ2VuZXJhdGVkIiBncmFkaWVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSIgeDE9IjAlIiB5MT0iMCUiIHgyPSIwJSIgeTI9IjEwMCUiPjxzdG9wIG9mZnNldD0iMCUiIHN0b3AtY29sb3I9IiM1YmIwZTAiIHN0b3Atb3BhY2l0eT0iMSIvPjxzdG9wIG9mZnNldD0iMTAwJSIgc3RvcC1jb2xvcj0iIzUwYTdkOCIgc3RvcC1vcGFjaXR5PSIxIi8+PC9saW5lYXJHcmFkaWVudD48cmVjdCB4PSIwIiB5PSIwIiB3aWR0aD0iMSIgaGVpZ2h0PSIxIiBmaWxsPSJ1cmwoI2xlc3NoYXQtZ2VuZXJhdGVkKSIgLz48L3N2Zz4=);
+  background-image: -webkit-linear-gradient(top, #5bb0e0 0%, #50a7d8 100%);
+  background-image: -moz-linear-gradient(top, #5bb0e0 0%, #50a7d8 100%);
+  background-image: -o-linear-gradient(top, #5bb0e0 0%, #50a7d8 100%);
+  background-image: linear-gradient(to bottom, #5bb0e0 0%, #50a7d8 100%);
+  border: 1px solid #6d8391;
+  -webkit-box-shadow: 0px 1px 2px rgba(20, 20, 20, 0.5);
+  -moz-box-shadow: 0px 1px 2px rgba(20, 20, 20, 0.5);
+  box-shadow: 0px 1px 2px rgba(20, 20, 20, 0.5);
+  border: none;
+  outline: none;
+  cursor: pointer;
+}
+body .btn:hover,
+body button:hover {
+  background: #ccc;
+}
+body form fieldset {
+  padding: 0 0 3em 0;
+}
+body form input[type=text],
+body form input[type=password],
+body form input[type=date],
+body form input[type=time],
+body form textarea {
+  font-size: 1.8em;
+  border: 1px solid #dddddd;
+  padding: 0.3em 0.5em;
+  width: 20em;
+  -webkit-border-radius: 2px;
+  -webkit-background-clip: padding-box;
+  -moz-border-radius: 2px;
+  -moz-background-clip: padding;
+  border-radius: 2px;
+  background-clip: padding-box;
+}
+body label,
+body h3.label {
+  font-size: 2em;
+  font-weight: bold;
+  display: block;
+}
+body .content {
+  width: 94%;
+  margin: 0 auto;
+  position: relative;
+}
+body .admin {
+  padding: 1em 2em;
+}
+body .admin table {
+  width: 100%;
+  border: 1px solid black;
+}
+body .admin table tr th,
+body .admin table tr td {
+  border: 1px solid #ccc;
+  text-align: center;
+  padding: 3px 0 3px 0;
+}
+body .admin table tr th {
+  font-weight: bold;
+}
+body #intro section.main {
+  background: #666666 url('/images/home/headerbgd.jpg') no-repeat;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  background-size: cover;
+}
+body #intro section.main .content {
+  overflow: hidden;
+  padding-top: 2em;
+}
+body #intro section.main .content h1 {
+  font-size: 4em;
+  line-height: 1.1em;
+  font-weight: bold;
+  text-shadow: 2px 2px rgba(0, 0, 0, 0.5);
+  color: #fff;
+  padding-bottom: 2.2em;
+}
+body #intro section.main .content .toggle {
+  position: relative;
+  width: 50%;
+  min-height: 28em;
+  z-index: 1;
+  display: none;
+}
+body #intro section.main .content .callout {
+  display: block;
+}
+body #intro section.main .content .callout h2 {
+  font-size: 2.6em;
+  font-weight: bold;
+  text-shadow: 2px 2px rgba(0, 0, 0, 0.5);
+  color: #fff;
+  padding-bottom: 0.6em;
+}
+body #intro section.main .content .callout p {
+  font-size: 2.2em;
+  color: #fff;
+  padding-bottom: 1.4em;
+}
+body #intro section.main .content .callout span {
+  font-size: 2em;
+  padding: 0 0.5em;
+  color: #fff;
+}
+body #intro section.main .content img.computer {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  z-index: 0;
+}
+body #intro section.main .content .login form label,
+body #intro section.main .content .signup form label {
+  color: #fff;
+}
+body #intro section.main .content .login form input[type=text],
+body #intro section.main .content .signup form input[type=text],
+body #intro section.main .content .login form input[type=password],
+body #intro section.main .content .signup form input[type=password] {
+  width: 15em;
+}
+body #intro section.bottomCallouts .content .calloutWrap {
+  overflow: hidden;
+  width: 100%;
+  position: relative;
+}
+body #intro section.bottomCallouts .content .calloutWrap article {
+  position: absolute;
+  left: 50%;
+  margin-left: -21em;
+  width: 34.5em;
+  padding: 3em 4em 0 4em;
+}
+body #intro section.bottomCallouts .content .calloutWrap article h2 {
+  font-size: 2.6em;
+  font-weight: bold;
+  text-align: center;
+}
+body #intro section.bottomCallouts .content .calloutWrap article ul {
+  list-style-type: disc;
+  padding: 2.8em 0 0 3em;
+}
+body #intro section.bottomCallouts .content .calloutWrap article ul li {
+  font-size: 1.8em;
+  padding: 0 0 0.5em 0;
+}
+body #intro section.bottomCallouts .content .calloutWrap article .icon {
+  text-align: center;
+}
+body #intro section.bottomCallouts .content .calloutWrap article:first-child {
+  position: relative;
+  left: 0;
+  float: left;
+  margin-left: 0;
+  width: 34.3em;
+  padding: 3em 0 0 0;
+}
+body #intro section.bottomCallouts .content .calloutWrap article:first-child .icon {
+  padding: 3em 0 0 0;
+}
+body #intro section.bottomCallouts .content .calloutWrap article:last-child {
+  position: relative;
+  left: 0;
+  right: 0;
+  float: right;
+  margin-left: 0;
+  width: 37.3em;
+  padding: 3em 0 0 0;
+}
+body #home {
+  /**
+		 * header
+		 */
+
+  /**
+ * header styles
+ */
+
+  /**
+		 * page
+		 */
+
+  /**
+		 * individual 'pages'
+		 */
+
+}
+body #home video {
+  border: 1px dotted red;
+}
+body #home header.main {
+  background: rgba(0, 0, 0, 0.6);
+  width: 100%;
+  padding: 1em 0;
+}
+body #home header.main .content {
+  overflow: hidden;
+}
+body #home header.main .content a.logo {
+  float: left;
+}
+body #home header.main .content a.logo span {
+  font-size: 4em;
+  line-height: 1.1em;
+  font-weight: bold;
+  text-shadow: 2px 2px rgba(0, 0, 0, 0.5);
+  color: #fff;
+}
+body #home header.main .content nav.main {
+  float: right;
+}
+body #home header.main .content nav.main ul {
+  overflow: hidden;
+  list-style-type: none;
+}
+body #home header.main .content nav.main ul li {
+  float: left;
+  padding: 0 2em 0 0;
+}
+body #home header.main .content nav.main ul li a {
+  position: relative;
+  top: 0.3em;
+  display: block;
+  background-image: url('/images/nav-icons.png');
+  background-repeat: no-repeat;
+  opacity: 0.7;
+}
+body #home header.main .content nav.main ul li a span.badge {
+  position: absolute;
+  padding: 0.5em 0.5em 0.2em 0.5em;
+  top: -0.3em;
+  left: -0.2em;
+  color: #fff;
+  font-weight: bold;
+  background: #ff0000;
+  -webkit-border-radius: 1em;
+  -webkit-background-clip: padding-box;
+  -moz-border-radius: 1em;
+  -moz-background-clip: padding;
+  border-radius: 1em;
+  background-clip: padding-box;
+  /*hide for now*/
+
+}
+body #home header.main .content nav.main ul li a:hover,
+body #home header.main .content nav.main ul li a.active {
+  opacity: 1;
+}
+body #home header.main .content nav.main ul li.invite a {
+  width: 3.8em;
+  height: 3.2em;
+  background-position: -78px -2px;
+}
+body #home header.main .content nav.main ul li.invite a.active {
+  background-position: -118px -2px;
+}
+body #home header.main .content nav.main ul li.events a {
+  top: 0;
+  width: 3.6em;
+  height: 3.6em;
+  background-position: -2px -2px;
+}
+body #home header.main .content nav.main ul li.events a.active {
+  background-position: -40px -2px;
+}
+body #home header.main .content nav.main ul li.profile a {
+  width: 3.6em;
+  height: 3.2em;
+  background-position: -158px -2px;
+}
+body #home header.main .content nav.main ul li.profile a.active {
+  background-position: -196px -2px;
+}
+body #home section.page {
+  /**
+ * subnav
+ */
+
+}
+body #home section.page nav.subnav {
+  background: #f6f6f6;
+}
+body #home section.page nav.subnav .content {
+  overflow: hidden;
+  padding: 2em 0;
+}
+body #home section.page nav.subnav .content h1 {
+  float: left;
+  font-size: 2em;
+  font-weight: bold;
+}
+body #home section.page nav.subnav .content ul {
+  float: right;
+}
+body #home section.page nav.subnav .content ul li {
+  display: inline-block;
+  border-right: 0.2em solid #949494;
+  padding: 0 1em;
+  text-align: center;
+}
+body #home section.page nav.subnav .content ul li a {
+  font-weight: bold;
+  color: #949494;
+  font-size: 1.8em;
+}
+body #home section.page nav.subnav .content ul li a.active,
+body #home section.page nav.subnav .content ul li a:hover {
+  color: #1b1b1b;
+}
+body #home section.page nav.subnav .content ul li:last-child {
+  border-right: none;
+}
+body #home section.page .view {
+  background: #eeedeb;
+  padding: 2em 0;
+}
+body #home section#profile {
+  /**
+ * myProfile
+ */
+
+  /**
+ * editProfile
+ */
+
+  /**
+ * settings
+ */
+
+}
+body #home section#profile #myProfile .content a.editBtn {
+  font-size: 1.8em;
+  float: right;
+}
+body #home section#profile #myProfile .content article {
+  padding: 0 0 3em 0;
+}
+body #home section#profile #editProfile .content .profileIntro {
+  padding: 0 0 3em 0;
+}
+body #home section#profile #editProfile .content .profileIntro p {
+  font-size: 2em;
+  line-height: 1.3em;
+  font-weight: bold;
+}
+body #home section#profile #editProfile .content form header.name {
+  position: absolute;
+  background: #f6f6f6;
+  top: -70px;
+}
+body #home section#profile #editProfile .content form header.name input[type=text] {
+  width: 15em;
+}
+body #home section#profile #editProfile .content form header.name .userIcon {
+  position: absolute;
+  top: 2px;
+  z-index: 10;
+  width: 3.6em;
+  height: 3.2em;
+  background-image: url('/images/nav-icons.png');
+  background-position: -158px -2px;
+  overflow: hidden;
+}
+body #home section#profile #editProfile .content form header.name .userIcon input {
+  padding: 40px 0 40px 0;
+  opacity: 0;
+  cursor: pointer;
+}
+body #home section#profile #editProfile .content form header.name fieldset {
+  padding: 0 0 0 4.5em;
+}
+body #home section#profile #settings .content form article fieldset {
+  overflow: hidden;
+}
+body #home section#profile #settings .content form article fieldset label {
+  float: left;
+}
+body #home section#profile #settings .content form article fieldset input {
+  float: left;
+}
+body #home section#profile #settings .content form article fieldset input[type="radio"] {
+  margin: 0 0 0 3px;
+}
+body #home section#profile #settings .content form article.saved {
+  margin: 10px 0 0 0;
+  color: #999999;
+}
+body #home section#events {
+  /**
+ * eventsList
+ */
+
+  /**
+ * addNewEvent
+ */
+
+}
+body #home section#events ul.eventsList {
+  list-style-type: none;
+}
+body #home section#events ul.eventsList li.event {
+  width: 100%;
+  overflow: hidden;
+  padding-bottom: 2em;
+  border-bottom: 1px solid #c3c3c3;
+}
+body #home section#events ul.eventsList li.event article {
+  float: left;
+  width: 60%;
+  padding: 2em 0 0 0;
+}
+body #home section#events ul.eventsList li.event article h3 {
+  font-size: 2em;
+  font-weight: bold;
+  display: block;
+  padding-bottom: 0.5em;
+}
+body #home section#events ul.eventsList li.event article p {
+  font-size: 1.5em;
+  padding-bottom: 1em;
+}
+body #home section#events ul.eventsList li.event article .buttons {
+  overflow: hidden;
+}
+body #home section#events ul.eventsList li.event article .buttons #invite,
+body #home section#events ul.eventsList li.event article .buttons #edit {
+  float: right;
+  margin: 0 0.5em;
+}
+body #home section#events ul.eventsList li.event .mapWrap {
+  float: right;
+  width: 35%;
+  height: 200px;
+  margin-top: 20px;
+  margin-left: 5%;
+}
+body #home section#events #addNewEvent textarea {
+  height: 6em;
+}
+body #home section#events #addNewEvent fieldset#gradelevel {
+  overflow: hidden;
+}
+body #home section#events #addNewEvent fieldset#gradelevel ul {
+  list-style-type: none;
+  padding: 1em 0 0 0;
+  float: left;
+  width: 140px;
+}
+body #home section#events #addNewEvent fieldset#gradelevel ul li {
+  overflow: hidden;
+}
+body #home section#events #addNewEvent fieldset#gradelevel ul li label {
+  float: right;
+  width: 120px;
+  padding: 0.3em 0 0 0;
+  font-size: 1.3em;
+  font-weight: normal;
+}
+body #home section#events #addNewEvent fieldset#gradelevel ul li input {
+  float: left;
+}
+::selection {
+  background: rgba(255, 0, 255, 0.7);
+  /* Safari & Chrome */
+
+}
+::-moz-selection {
+  background: rgba(255, 0, 255, 0.7);
+  /* Firefox */
+
+}

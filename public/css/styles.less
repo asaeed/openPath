@@ -1,8 +1,25 @@
 @import url("libraries/reset.css");
 @import "libraries/lesshat.less";
 
+/**
+ * vars
+ */
 @pink:rgba(255,0,255,0.7);
 @blue:#56acdd;
+
+/**
+ * mixins
+ */
+.pNormal(){
+	font-size:1.5em;
+}
+.label(){
+	font-size:2em;
+	font-weight:bold;
+	display: block;
+}
+
+
 body {
 	background:#fff;
 	font-family: 'Myriad Pro','PT Sans', arial, sans-serif;
@@ -65,11 +82,12 @@ body {
 			.border-radius(2px);
 		}
 	}
+
+	
+
 	label,
 	h3.label {
-		font-size:2em;
-		font-weight:bold;
-		display: block;
+		.label();
 	}
 
 	/* a centering div */

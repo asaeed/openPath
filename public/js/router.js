@@ -126,14 +126,34 @@ OpenPath.Router = {
 		this.events.style.display = 'block';
 		this.upcomingEvents.style.display = 'block';
 
-
+		//create view instance
 		var upcomingEventsView = new OpenPath.View();
 		upcomingEventsView.url = '/events';
+		//get data
 		upcomingEventsView.get();
 
-		var content = upcomingEventsView.querySelector('.content');
+
+		var content = this.upcomingEvents.getElementsByClassName('content')[0];
+		//compile template
+		var source = document.getElementById('upcomingEventsTemplate').innerHTML;
+		var template = Handlebars.compile(source);
+
+
 		upcomingEventsView.got = function(data){
-			console.log('upcomingEventsView got', data);
+			//console.log('upcomingEventsView got', data );
+			console.log('d',data)
+			
+
+			//add data to template
+			content.innerHTML = template( data );
+
+			var events = content.getElementsByClassName('event');
+			for(var i=0; i<events.length; i++){
+				var mapwrap = events[i].getElementsByClassName('mapWrap')[0];
+				OpenPath.Utils.renderMap(mapwrap, mapwrap.dataset.latitude, mapwrap.dataset.longitude, mapwrap.dataset.reference);
+			}
+
+			
 		};
 
 	},
@@ -152,7 +172,8 @@ OpenPath.Router = {
 
 			var locationInput = document.getElementById("location"),
 				longitudeInput = document.getElementById("longitude"),
-				latitudeInput = document.getElementById("latitude");
+				latitudeInput = document.getElementById("latitude"),
+				referenceInput = document.getElementById("reference");
 
 			var autocomplete = new google.maps.places.Autocomplete(locationInput);
 			
@@ -167,7 +188,8 @@ OpenPath.Router = {
 				}else{
 					longitudeInput.value = place.geometry.location.lng();
 					latitudeInput.value = place.geometry.location.lat();
-					console.log('location value',locationInput.value , longitudeInput.value, latitudeInput.value, place.geometry)
+					referenceInput.value = place.reference;
+					//console.log(place.reference);	
 				}
 			});
 		}

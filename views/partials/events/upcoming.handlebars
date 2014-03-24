@@ -1,23 +1,5 @@
 <section id="upcomingEvents" class="view">
 	<div class="content">
-		{{#each event}}
-			<article>
-				<h3><a href="#" target="_blank">{{ this.name }}</a></h3>
-				<p class="link"><a href="<%= websiteLink %>">{{ this.link }}</a></p>
-				<p class="date">{{ this.date }}</p>
-				<p class="location">{{ this.location.name }}</p>
-				<p>{{ this.date }}</p>
-				<div class="buttons">
-					<% if(creator === OpenPath.email) { %>
-						<button class="btn" id="edit">Edit</button>
-						<button class="btn btn-primary" id="invite">Invite</button>
-					<% }else{ %>
-					<% } %>
-						<button class="btn btn-primary" id="join">Join</button>
-					
-				</div>
-			</article>
-			<div class="mapWrap"></div>
-		{{/each}}
+		
 	</div>
 </section>

@@ -98,7 +98,8 @@ module.exports = function(app, io, passport){
 			res.render("admin/users", { user: items });
 		});
 	});
-	//profile
+
+	//profile post
 	app.post("/profile", Auth.userExist, function(req, res, next){
 		console.log('update profile',req.user._id,req.body.firstName,req.body.lastName);
 		User.updateProfile(req , function(err,user){
@@ -119,7 +120,7 @@ module.exports = function(app, io, passport){
 		Room.find(function (err, items) {
 			if (err) return console.error(err);
 			//res.send(items);
-			res.render("admin/rooms", { user: items });
+			res.render("admin/rooms", { rooms: items });
 		});
 	});
 
@@ -130,11 +131,12 @@ module.exports = function(app, io, passport){
 	app.get("/events", function (req, res) {
 		Event.find(function (err, items) {
 			if (err) return console.error(err);
-			res.send(items);
+			res.send({ events: items });
 			//res.render("events", { event: items });
 		});
 	});
 
+	//events post
 	app.post("/events", function (req, res) {
 		Event.addEvent(req, function(err, newEvent){
 			if(err) throw err;

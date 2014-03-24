@@ -1,0 +1,29 @@
+<!-- events front end template (remember \{{ }} ) -->
+<script id="upcomingEventsTemplate" type="text/x-handlebars-template">
+		<ul class="eventsList">
+			\{{#events}}
+			<li class="event">
+				<article>
+					<h3><a href="javascript:void(0);" target="_blank">\{{ name }}</a></h3>
+					<p class="link"><a href="\{{ link }}">\{{link }}</a></p>
+					<p class="date">\{{ date }}</p>
+					<p class="startTime">\{{ startTime }}</p>
+					<p class="endTime">\{{ endTime }}</p>
+					<p class="location">\{{ location.name }}</p>
+					<p class="location">\{{ description }}</p>
+					<div class="buttons">
+						<!-- TODO: if(creator === OpenPath.email) { -->
+							<button class="btn" id="edit">Edit</button>
+							<button class="btn" id="invite">Invite</button>
+						<!-- }else{ -->
+						<!-- } -->
+							<button class="btn" id="join">Join</button>
+						
+					</div>
+				</article>
+				<div class="mapWrap" data-latitude="\{{ location.latitude }}" data-longitude="\{{ location.longitude }}" data-reference="\{{ location.reference }}"></div>
+			</li>
+			\{{/events}}
+		</ul>
+</script>
+

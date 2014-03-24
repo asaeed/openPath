@@ -155,7 +155,7 @@ OpenPath = {
 	}
 };
 
-
+//try 	document.addEventListener("DOMContentLoaded", function() {
 window.onload = function(){
 	OpenPath.init();
 };
