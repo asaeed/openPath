@@ -134,7 +134,11 @@ module.exports = function(app, io, passport){
 
 			var publicItems = [];
 			for(var i=0;i<items.length;i++){
-				if( Date.parse(items[i].date) > Date.now() ){//if in future
+				
+				var today = new Date();
+				var yesterday = today.setDate(today.getDate() - 1);
+
+				if( Date.parse(items[i].date) > yesterday ){//if today or in future
 	
 					var publicItem = {
 						name        : items[i].name,
