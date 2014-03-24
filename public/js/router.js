@@ -21,8 +21,7 @@ OpenPath.Router = {
 		this.events = document.querySelector('#events');
 		this.profile = document.querySelector('#profile');
 
-		//individual views
-
+		//individual views ( || sub pages )
 			//profile
 		this.myProfile = document.querySelector('#myProfile');
 		this.editProfile = document.querySelector('#editProfile');
@@ -39,7 +38,10 @@ OpenPath.Router = {
 
 		//links to checkRoutes on
 		this.routes = document.querySelectorAll('.route');
-		//small helper class
+		/**
+		 * @class route
+		 * @description small helper class to add event listener
+		 */
 		function route( route ){
 			route.addEventListener('click',function(e){
 				//remove active from btns
@@ -137,7 +139,10 @@ OpenPath.Router = {
 		 */
 		function autocompleteLocationInput(){
 
-			var locationInput = document.getElementById("location");
+			var locationInput = document.getElementById("location"),
+				longitudeInput = document.getElementById("longitude"),
+				latitudeInput = document.getElementById("latitude");
+
 			console.log('locationInput',locationInput);
 			var autocomplete = new google.maps.places.Autocomplete(locationInput);
 			
@@ -150,8 +155,9 @@ OpenPath.Router = {
 					alert('location not found')
 					return;
 				}else{
-					locationInput.value = place.geometry.location;
-					console.log('location value',place.geometry.location)
+					longitudeInput.value = place.geometry.location.lng();
+					latitudeInput.value = place.geometry.location.lat();
+					console.log('location value',locationInput.value , longitudeInput.value, latitudeInput.value, place.geometry)
 				}
 			});
 		}
