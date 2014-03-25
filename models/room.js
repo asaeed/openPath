@@ -3,7 +3,7 @@ var mongoose = require('mongoose');
 
 RoomSchema = mongoose.Schema({
 	creatorID: String,
-	dateCreated:  { type: Date, default: Date.now() },
+	dateCreated:  { type: Date, default: Date.now },
 	dateModified: Date
 });
 

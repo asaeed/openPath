@@ -11,10 +11,10 @@
 					<p class="location">\{{ description }}</p>
 					<div class="buttons">
 						\{{#if  isMine  }}
-							<button class="btn" id="edit">Edit</button>
-							<button class="btn" id="invite">Invite</button>
+							<a href="#/edit-event/\{{ id }}" class="btn route editBtn">Edit</a>
+							<a href="#/invite-to-event/\{{ id }}" class="btn route inviteBtn">Invite</a>
 						\{{/if}}
-							<button class="btn" id="join">Join</button>
+							<a href="#/videos" class="btn route joinBtn">Join</a>
 						
 						
 					</div>

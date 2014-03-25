@@ -159,6 +159,7 @@ module.exports = function(app, io, passport){
 				if( Date.parse(items[i].date) > yesterday ){//if today or in future
 	
 					var publicItem = {
+						id          : items[i]._id,
 						name        : items[i].name,
 						link        : items[i].link,
 						description : items[i].description,
@@ -187,6 +188,31 @@ module.exports = function(app, io, passport){
 			//res.render("events", { event: items });
 		});
 	});
+
+	//get event by id
+	app.get('/events/:id', function(req, res){
+		var id = req.params.id;
+   		console.log('Retrieving event id : ' + id);
+		Event.findOne({ _id: id }, function (err, item) {
+			if (err) return console.error(err);
+			var publicItem = {
+				id          : item._id,
+				name        : item.name,
+				link        : item.link,
+				description : item.description,
+				date        : formatDate( item.date ),
+				startTime   : formatTime( item.startTime ),
+				endTime     : formatTime( item.endTime ),
+				location    : item.location
+			};
+
+
+			res.send(publicItem);
+		});
+	});
+
+
+
 
 	//events post
 	app.post("/events", function (req, res) {

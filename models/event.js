@@ -4,7 +4,7 @@ var mongoose = require('mongoose');
 EventSchema = mongoose.Schema({
 	creatorID: String,
 	roomID : String,
-	dateCreated:  { type: Date, default: Date.now() },
+	dateCreated:  { type: Date, default: Date.now },
 	dateModified: Date,
 	name: String,
 	link: String,

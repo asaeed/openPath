@@ -9,7 +9,6 @@ OpenPath = window.OpenPath || {};
  */
 OpenPath.Router = {
 	init : function(){
-		var self = this;
 
 		//all pages & all views 
 		this.pages = document.querySelectorAll('.page');
@@ -22,6 +21,7 @@ OpenPath.Router = {
 		this.profile = document.querySelector('#profile');
 
 		//individual views ( || sub pages )
+		this.inviteView = document.querySelector('#inviteView');
 			//profile
 		this.myProfile = document.querySelector('#myProfile');
 		this.editProfile = document.querySelector('#editProfile');
@@ -32,12 +32,20 @@ OpenPath.Router = {
 		this.upcomingEvents = document.querySelector('#upcomingEvents');
 		this.nearbyEvents = document.querySelector('#nearbyEvents');
 		this.addNewEvent = document.querySelector('#addNewEvent');
+		this.inviteToEvent = document.querySelector('#inviteToEvent');
 
 
-		console.log(this.pages,this.views)
+		//console.log(this.pages,this.views)
+
+		
+		this.bindRoutes();
+	},
+	bindRoutes : function(){
+		var self = this;
 
 		//links to checkRoutes on
 		this.routes = document.querySelectorAll('.route');
+
 		/**
 		 * @class route
 		 * @description small helper class to add event listener
@@ -57,7 +65,6 @@ OpenPath.Router = {
 		for(var i=0;i<this.routes.length;i++){
 			new route( this.routes[i] );
 		}
-
 	},
 	checkRoute : function( route ){
 		//hide all
@@ -66,6 +73,13 @@ OpenPath.Router = {
 		console.log(route, 'router', window.location.hash.split('#/')[1]);
 
 		var route = route ? route.split('#/')[1] : window.location.hash.split('#/')[1];
+
+		if(route){
+			var id = route.split('/')[1];
+			route = route.split('/')[0];
+		}
+		
+
 
 		/**
 		 * all our routes switch
@@ -85,6 +99,12 @@ OpenPath.Router = {
 			break;
 			case 'add-new-event':
 				this.showAddNewEvent();
+			break;
+			case 'edit-event':
+				this.showEditEvent( id );
+			break;
+			case 'invite-to-event':
+				this.showInviteToEvent( id );
 			break;
 			case 'profile':
 				this.showProfile();
@@ -121,8 +141,10 @@ OpenPath.Router = {
 	},
 	showInvite : function(){
 		this.invite.style.display = 'block';
+		this.inviteView.style.display = 'block';
 	},
 	showEvents :  function(){
+		var self = this;
 		this.events.style.display = 'block';
 		this.upcomingEvents.style.display = 'block';
 
@@ -152,8 +174,10 @@ OpenPath.Router = {
 				var mapwrap = events[i].getElementsByClassName('mapWrap')[0];
 				OpenPath.Utils.renderMap(mapwrap, mapwrap.dataset.latitude, mapwrap.dataset.longitude, reference);
 			}
-			
-			
+
+
+			//rebind routes
+			self.bindRoutes();
 		};
 
 	},
@@ -205,6 +229,38 @@ OpenPath.Router = {
 			gradelevelsArr.push( $(this).val() );
 		});
 		*/
+	},
+	showEditEvent : function(){
+		this.events.style.display = 'block';
+		this.addNewEvent.style.display = 'block';
+	},
+	showInviteToEvent : function( id ){
+		var self = this;
+		this.invite.style.display = 'block';
+		this.inviteView.style.display = 'block';
+
+		//create view instance
+		var inviteToEventView = new OpenPath.View();
+		inviteToEventView.url = '/events/'+id;
+		//get data
+		inviteToEventView.get();
+
+		var inviteMsg = document.getElementById('inviteMsg');
+		//compile template
+		var source = document.getElementById('inviteToEventTemplate').innerHTML;
+		var template = Handlebars.compile(source);
+
+		inviteToEventView.got = function(data){
+			console.log('inviteToEventView got', data );
+
+			inviteMsg.innerHTML = template( data );
+		};
+
+
+
+
+		
+
 	},
 	showProfile : function(){
 		this.profile.style.display = 'block';
