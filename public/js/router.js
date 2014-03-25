@@ -214,9 +214,11 @@ OpenPath.Router = {
 					alert('location not found')
 					return;
 				}else{
+					console.log(place)
 					longitudeInput.value = place.geometry.location.lng();
 					latitudeInput.value = place.geometry.location.lat();
 					referenceInput.value = place.reference;
+					//place.formatted_address;
 					//console.log(place.reference);	
 				}
 			});

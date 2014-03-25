@@ -2,7 +2,7 @@ var User = require('../models/user');
 var Room = require('../models/room');
 var Event = require('../models/event');
 var Auth = require('../utils/auth');
-
+var Utils = require('../utils/utils');
 
 /**
  * routes 
@@ -41,7 +41,7 @@ module.exports = function(app, io, passport){
 			//req.session.email = req.user.email;
 			console.log("REC SESS",req.session)
 			
-			
+
 			//roomHandler(req);
 						/*
 
@@ -168,28 +168,13 @@ module.exports = function(app, io, passport){
 	app.get("/rooms", function (req, res) {
 		Room.find(function (err, items) {
 			if (err) return console.error(err);
-			//res.send(items);
-			res.render("admin/rooms", { rooms: items });
+			res.send(items);
+			//res.render("admin/rooms", { rooms: items });
 		});
 	});
 
 
 
-	/** TODO move somewhere nice **/
-	//date helper
-	function formatDate( dateString ){
-		var d = dateString ;
-
-		return d.getMonth() +'/'+ d.getDate() +'/'+d.getFullYear();
-	}
-	function formatTime( timeString ){
-		var t = timeString ;
-		var hour = (t.split(':')[0] % 12) == 0 ? 12 : t.split(':')[0] % 12;
-		var mins = t.split(':')[1];
-		var meridiem = t.split(':')[0] > 11 ? 'PM' : 'AM'; 
-		
-		return hour + ':' + mins + ' '+meridiem;
-	}
 
 	/**
 	 * events 
@@ -209,12 +194,13 @@ module.exports = function(app, io, passport){
 	
 					var publicItem = {
 						id          : items[i]._id,
+						room        : items[i].roomID,
 						name        : items[i].name,
 						link        : items[i].link,
 						description : items[i].description,
-						date        : formatDate( items[i].date ),
-						startTime   : formatTime( items[i].startTime ),
-						endTime     : formatTime( items[i].endTime ),
+						date        : Utils.formatDate( items[i].date ),
+						startTime   : Utils.formatTime( items[i].startTime ),
+						endTime     : Utils.formatTime( items[i].endTime ),
 						location    : items[i].location,
 						isMine      : ( items[i].creatorID == req.user._id ) ? true : false
 					};
@@ -246,12 +232,13 @@ module.exports = function(app, io, passport){
 			if (err) return console.error(err);
 			var publicItem = {
 				id          : item._id,
+				room        : item.roomID,
 				name        : item.name,
 				link        : item.link,
 				description : item.description,
-				date        : formatDate( item.date ),
-				startTime   : formatTime( item.startTime ),
-				endTime     : formatTime( item.endTime ),
+				date        : Utils.formatDate( item.date ),
+				startTime   : Utils.formatTime( item.startTime ),
+				endTime     : Utils.formatTime( item.endTime ),
 				location    : item.location
 			};
 
