@@ -142,6 +142,13 @@ OpenPath.Router = {
 	showInvite : function(){
 		this.invite.style.display = 'block';
 		this.inviteView.style.display = 'block';
+
+		var inviteMsg = document.getElementById('inviteMsg');
+		//compile template
+		var source = document.getElementById('addParticipantsTemplate').innerHTML;
+		var template = Handlebars.compile(source);
+
+		inviteMsg.innerHTML = template( {id:'TODO butt head'} );
 	},
 	showEvents :  function(){
 		var self = this;
@@ -163,8 +170,6 @@ OpenPath.Router = {
 
 		upcomingEventsView.got = function(data){
 			//console.log('upcomingEventsView got', data );
-			console.log('d',data)
-			
 
 			//add data to template
 			content.innerHTML = template( data );
@@ -255,12 +260,6 @@ OpenPath.Router = {
 
 			inviteMsg.innerHTML = template( data );
 		};
-
-
-
-
-		
-
 	},
 	showProfile : function(){
 		this.profile.style.display = 'block';
