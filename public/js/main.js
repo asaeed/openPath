@@ -150,7 +150,7 @@ OpenPath = {
 	},
 	setUserLocation : function(position){
 		console.log("Latitude: " + position.coords.latitude + 
-					"Longitude: " + position.coords.longitude );
+					" Longitude: " + position.coords.longitude );
 
 		//TODO: maps etc
 	}

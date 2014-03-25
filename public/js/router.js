@@ -148,7 +148,7 @@ OpenPath.Router = {
 		var source = document.getElementById('addParticipantsTemplate').innerHTML;
 		var template = Handlebars.compile(source);
 
-		inviteMsg.innerHTML = template( {id:'TODO butt head'} );
+		inviteMsg.innerHTML = template();
 	},
 	showEvents :  function(){
 		var self = this;

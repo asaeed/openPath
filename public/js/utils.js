@@ -15,7 +15,7 @@ OpenPath.Utils.renderMap = function(ele, lat, lng, reference, formattedAddress )
 		reference : reference,
 		formatted_address : formattedAddress
 	};
-	console.log(request)
+	//console.log(request)
 	
 	var mapOptions = {
 		center: new google.maps.LatLng(lat, lng),

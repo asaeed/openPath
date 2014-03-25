@@ -16,7 +16,7 @@ module.exports.checkForRoom = function( req , done ){
 
 		//if user logged join event
 		if(req.user){
-			this.joinEvent( req );
+			this.joinEvent( req, done );
 		}else{
 			done();
 		}
@@ -33,7 +33,7 @@ module.exports.checkForRoom = function( req , done ){
 
 		//if user logged in join room
 		if(req.user){
-			this.joinRoom( req );
+			this.joinRoom( req, done );
 		}else{
 			done();
 		}

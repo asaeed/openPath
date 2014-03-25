@@ -9,16 +9,16 @@
 		{{> events }}
 		{{> profile }}
 
-
+		<!-- TODO remove -->
 		<div class="output">
 			<p>user id = {{user._id}}</p>
 			<p>event id = {{event._id}}</p>
 			<p>room id = {{room._id}}</p>
 		</div>
 
-		
+
 	</div>
-		
+
 	<!--scripts-->
     <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=true&libraries=places"></script>
 	<script src="/socket.io/socket.io.js"></script>
@@ -46,8 +46,12 @@
 		
 	</div>
 
-
+	
 	<!--scripts-->
 	<script src="js/intro.js"></script>
 
 {{/if}}
+
+<!-- //TODO
+{{> footer }}
+-->
