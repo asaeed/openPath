@@ -23,17 +23,19 @@ EventSchema = mongoose.Schema({
 
 EventSchema.statics.addEvent = function(req, done){
 	var self = this;
-	//make new room
-	Room.makeRoom(req.user._id, function(err, room){
+	/**
+	 * @description create room and attach id to new event
+	 * @param user_id
+	 * @param isEvent Boolean
+	 */
+	Room.createRoom(req.user._id, true, function(err, room){
 		if(err) throw err;
-		//console.log('room=',room);
-
-		//set room for event
+		//set room then create event
 		createEvent( room );
 	});
 
 	function createEvent( room ){
-		console.log('ev req = ', req.body);
+		//console.log('ev req = ', req.body);
 
 		self.create({
 			creatorID : req.user._id,
