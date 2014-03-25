@@ -1,5 +1,5 @@
 var mongoose = require('mongoose');
-
+//var Room
 
 EventSchema = mongoose.Schema({
 	creatorID: String,

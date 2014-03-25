@@ -28,8 +28,9 @@ OpenPath.Utils.renderMap = function(ele, lat, lng, reference ){
 	var marker = new google.maps.Marker({
 		map: map
 	});*/
-	var service = new google.maps.places.PlacesService(map);
+	var service = new google.maps.places.PlacesService( map );
 	
+	//called?
     service.getDetails( request, function(place, status) {
 		if (status == google.maps.places.PlacesServiceStatus.OK) {
 			var marker = new google.maps.Marker({
@@ -44,7 +45,6 @@ OpenPath.Utils.renderMap = function(ele, lat, lng, reference ){
 			
 			// If the place has a geometry, then present it on a map.
 			if (place.geometry.viewport) {
-			//if(1==2){
 				map.fitBounds(place.geometry.viewport);
 			} else {
 				map.setCenter(place.geometry.location);
@@ -53,7 +53,7 @@ OpenPath.Utils.renderMap = function(ele, lat, lng, reference ){
 	
 			marker.setIcon(({
 				//url: place.icon,
-				url: '/images/marker.png',
+				//url: 'images/marker.png',
 				size: new google.maps.Size(71, 71),
 				origin: new google.maps.Point(0, 0),
 				anchor: new google.maps.Point(17, 34),

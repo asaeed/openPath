@@ -184,7 +184,6 @@ OpenPath.Router = {
 			//rebind routes
 			self.bindRoutes();
 		};
-
 	},
 	showNearbyEvents :  function(){
 		this.events.style.display = 'block';

@@ -9,14 +9,61 @@ var Auth = require('../utils/auth');
  */
 module.exports = function(app, io, passport){
 
-	app.get("/", function(req, res){ 
-		if(req.isAuthenticated()){
-			res.render("home", { user : req.user });
+	function roomHandler(req){
+		if(req.query.e){
+			console.log("REC Q E",req.query)
+			//find event
+			req.session.event =  req.query.e;
 
+		} else if(req.query.r){
+			console.log("REC Q R",req.query)
+			//find room
+			req.session.room = req.query.r;
+		}else {
+			/*
+			//make new room
 			Room.makeRoom(req.user._id, function(err, room){
 				if(err) throw err;
 				console.log('room=',room);
+			//req.session.room = req.session.email
 			});
+			*/
+
+			console.log('no room, no event')
+		}
+	}
+	/**
+	 * home
+	 */
+	app.get("/", function(req, res){ 
+		if(req.isAuthenticated()){
+			res.render("home", { user : req.user });
+			//req.session.email = req.user.email;
+			console.log("REC SESS",req.session)
+			
+			
+			//roomHandler(req);
+						/*
+
+			Event.findOne({ _id: req.query.e }, function (err, item) {
+				if (err) return console.error(err);
+				var publicItem = {
+					id          : item._id,
+					name        : item.name,
+					link        : item.link,
+					description : item.description,
+					date        : formatDate( item.date ),
+					startTime   : formatTime( item.startTime ),
+					endTime     : formatTime( item.endTime ),
+					location    : item.location
+				};
+
+
+				res.send(publicItem);
+			});
+			*/
+
+			
 			/**
 			 * socket.io
 			 */
@@ -49,6 +96,8 @@ module.exports = function(app, io, passport){
 			
 
 		}else{
+			roomHandler(req);
+
 			res.render("home", { user : null });
 		}
 	});
