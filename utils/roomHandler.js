@@ -4,9 +4,9 @@ var Room = require('../models/room');
 /**
  * checkForRoom - both logged in and out
  */
-module.exports.checkForRoom = function( req ){
+module.exports.checkForRoom = function( req , done ){
 	/**
-	 * check for Query
+	 * check Query for Event
 	 */
 	if(req.query.e){
 		console.log("REC Q E",req.query);
@@ -15,72 +15,78 @@ module.exports.checkForRoom = function( req ){
 		req.session.event = req.query.e;
 
 		//if user logged join event
-		if(req.user) this.joinEvent( req );
+		if(req.user){
+			this.joinEvent( req );
+		}else{
+			done();
+		}
 
-	} else if(req.query.r){
+	} 
+	/**
+	 * check Query for Room
+	 */
+	else if(req.query.r){
 		console.log("REC Q R",req.query);
 
 		//set session room
 		req.session.room = req.query.r;
 
 		//if user logged in join room
-		if(req.user) this.joinRoom( req );
+		if(req.user){
+			this.joinRoom( req );
+		}else{
+			done();
+		}
 
-	} else {
+	}
+	/**
+	 * check if sessions set (if logged in)
+	 */
+	else {
 
-		console.log('no room query, no event query');
-		
-		//if user logged in check for session
-		if(req.user) this.checkForSession( req );
+		//if user logged in check for already set session
+		if(req.user){
+			/**
+			 * check Sessions for event
+			 */
+			if(req.session.event){
+
+				//join the event
+				this.joinEvent( req , done );
+
+			}
+			/**
+			 * check Sessions for room
+			 */
+			else if(req.session.room){
+
+				//join the room
+				this.joinRoom( req , done );
+
+			}
+			/**
+			 * no room, no event, make room
+			 */
+			else{
+				console.log('no room session, no event session, making room');
+				this.makeNewRoom( req , done );
+			}
+		}else{
+			//no user, send nothing
+			done();
+		}
 	}
 };
 
-/**
- * checkForSession - below logged in ONLY
- */
-module.exports.checkForSession = function( req ){
 
-	console.log('CH SES', req.session.event, req.session.room, req.user._id)
-
-	if(req.session.event){
-
-		//join the event
-		this.joinEvent( req );
-
-	}else if(req.session.room){
-
-		//join the room
-		this.joinRoom( req );
-
-	}else{
-		//if user make room?
-
-		console.log('no room session, no event session');
-		//this.makeNewRoom( req );
-	}
-};
-
-
-module.exports.joinEvent = function( req ){
+module.exports.joinEvent = function( req, done ){
 	var self = this;
 
 	Event.findOne({ _id: req.session.event }, function (err, item) {
 		if (err) return console.error(err);
 
+		//TODO check date -> the event you're trying to join is over
 
-
-		/*
-		var publicItem = {
-			id          : item._id,
-			name        : item.name,
-			link        : item.link,
-			description : item.description,
-			date        : formatDate( item.date ),
-			startTime   : formatTime( item.startTime ),
-			endTime     : formatTime( item.endTime ),
-			location    : item.location
-		};
-		*/
 		if(item){
 			console.log('join event, room id = ',item.roomID );
 
@@ -88,67 +94,50 @@ module.exports.joinEvent = function( req ){
 			req.session.room = item.roomID;
 
 			//join room
-			self.joinRoom( req );
-
-
-		}else{
-			console.log('event doesn\'t exist');
-			//check date -> the event you're trying to join is over
-
-		}
-		
-
-		
-
-
-		//self.joinRoom( req );
-		//res.send(publicItem);
-	});
-
-};
-
-module.exports.makeNewRoom = function( req ){
-	//make new room
-	Room.createRoom(req.user._id, function(err, room){
-		if(err) throw err;
-		console.log('room=',room);
-	//req.session.room = req.session.email
-	});
-
-};
-
-module.exports.joinRoom = function( req ){
-	
-	Room.joinRoom( req.user._id, req.session.room , function(err, item ){
-		if (err) return console.error(err);
-
-		console.log('Joine d User =',item);
-	});
-
-	/*
-	Room.findOne({ _id: req.session.room }, function (err, item) {
-		if (err) return console.error(err);
-
-		console.log('join room, room =',item);
-
-		if(item){
-
-
-			item.update({firstName: req.body.firstName , lastName: req.body.lastName},function(err, numberAffected, raw){
-				if (err) return console.error(err);
-				console.log('The number of updated documents was %d', numberAffected);
-				console.log('The raw response from Mongo was ', raw);
-				done(null, user);
+			self.joinRoom( req , function( placeholder, room ){
+				done( item, room );
 			});
 
 
 		}else{
-			console.log('can\'t join room cuz couldn\'t find it');
-		}
+			console.log('event doesn\'t exist');
+			
 
-		//res.send(publicItem);
+		}
 	});
-	*/
+
+};
+
+module.exports.makeNewRoom = function( req, done ){
+	var self = this;
+	//make new room
+	Room.createRoom(req.user._id, false, function(err, item){
+		if(err) throw err;
+		console.log('makeNewRoom=',item);
+		//set session room using events room
+		req.session.room = item._id;
+
+		//join room
+		self.joinRoom( req , function( placeholder, room ){
+			done( null, room );
+		});
+	});
+
+};
+
+module.exports.joinRoom = function( req, done ){
+	
+	Room.joinRoom( req.user._id, req.session.room , function( err, item ){
+		if (err) return console.error(err);
+
+		console.log('Joine d User =',item);
+
+		//either pass null to 'done' from routes since there is no event
+		//or pass null to 'done' from this.joinEvent which disregards it and fills in own event
+		//or pass null to 'done' from this.makeNewRoom which disregards it and fills in own null
+		done(null, item);
+	});
+
 };
 
 

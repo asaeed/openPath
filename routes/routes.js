@@ -19,9 +19,12 @@ module.exports = function(app, io, passport){
 		if(req.isAuthenticated()){
 
 			//check for sessions
-			RoomHandler.checkForRoom( req );
+			RoomHandler.checkForRoom( req , function( event, room ){
+				console.log('DONE CHECKING FOR ROOM');
+				res.render("home", { user : req.user,  event : event, room : room });
+			});
 
-			res.render("home", { user : req.user });
+			
 			//req.session.email = req.user.email;
 			//console.log("REC SESS",req.session)
 			
@@ -30,7 +33,7 @@ module.exports = function(app, io, passport){
 
 			/**
 			 * socket.io
-			 */
+			 
 			io.sockets.on('connection', function (socket) {
 				socket.emit('userConnected', { user: req.user }); //? just emit
 				console.log("We have a new client: " + socket.id);
@@ -56,13 +59,15 @@ module.exports = function(app, io, passport){
 					console.log("Client has disconnected");
 				});
 			});
-			
+			*/
 		}else{
 
 			//check for query string
-			RoomHandler.checkForRoom( req );
+			RoomHandler.checkForRoom( req , function(){
+				res.render("home", { user : null, event : null, room : null });
+			});
 
-			res.render("home", { user : null });
+			
 		}
 	});
 

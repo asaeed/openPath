@@ -34,9 +34,14 @@ RoomSchema.statics.joinRoom = function(creatorID, roomID, done){
 			if (err) return console.error(err);
 
 			if(room){
+				//TODO : unique users?  or figure out when they leave via socket???
+
+				//pull out joined user array
 				var usersInRoom = room.joinedUsers;
+				//add to it
 				usersInRoom.push(joinedUser);
 
+				//update it
 				room.update({dateModified: Date.now(), joinedUsers : usersInRoom} ,function(err, numberAffected, raw){
 					if (err) return console.error(err);
 					console.log('The number of updated documents was %d', numberAffected);
