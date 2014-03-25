@@ -70,8 +70,10 @@ OpenPath.Router = {
 		//hide all
 		this.hideAll();
 
-		console.log(route, 'router', window.location.hash.split('#/')[1]);
 
+
+		console.log(route, 'router', window.location.hash.split('#/')[1]);
+	
 		var route = route ? route.split('#/')[1] : window.location.hash.split('#/')[1];
 
 		if(route){

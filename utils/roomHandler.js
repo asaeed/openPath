@@ -9,7 +9,7 @@ module.exports.checkForRoom = function( req , done ){
 	 * check Query for Event
 	 */
 	if(req.query.e){
-		console.log("REC Q E",req.query);
+		console.log("REQ ? E",req.query);
 
 		//set session event
 		req.session.event = req.query.e;
@@ -26,7 +26,7 @@ module.exports.checkForRoom = function( req , done ){
 	 * check Query for Room
 	 */
 	else if(req.query.r){
-		console.log("REC Q R",req.query);
+		console.log("REQ ? R",req.query);
 
 		//set session room
 		req.session.room = req.query.r;
@@ -88,7 +88,6 @@ module.exports.joinEvent = function( req, done ){
 		//TODO check date -> the event you're trying to join is over
 
 		if(item){
-			console.log('join event, room id = ',item.roomID );
 
 			//set session room using events room
 			req.session.room = item.roomID;
@@ -100,8 +99,8 @@ module.exports.joinEvent = function( req, done ){
 
 
 		}else{
-			console.log('event doesn\'t exist');
-			
+			console.log('event doesn\'t exist, making room');
+			self.makeNewRoom( req , done );
 
 		}
 	});
@@ -113,7 +112,7 @@ module.exports.makeNewRoom = function( req, done ){
 	//make new room
 	Room.createRoom(req.user._id, false, function(err, item){
 		if(err) throw err;
-		console.log('makeNewRoom=',item);
+		console.log('makeNewRoom=',item._id);
 		//set session room using events room
 		req.session.room = item._id;
 
@@ -129,8 +128,6 @@ module.exports.joinRoom = function( req, done ){
 	
 	Room.joinRoom( req.user._id, req.session.room , function( err, item ){
 		if (err) return console.error(err);
-
-		console.log('Joine d User =',item);
 
 		//either pass null to 'done' from routes since there is no event
 		//or pass null to 'done' from this.joinEvent which disregards it and fills in own event

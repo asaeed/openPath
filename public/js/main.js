@@ -22,16 +22,22 @@ OpenPath = {
 		//count();
 
 		//convert 24 hours //TODO move or send formatted
-		var eventTitle  = document.getElementsByClassName('eventTitle')[0],
-			st = eventTitle.getElementsByClassName('startTime')[0],
-			et = eventTitle.getElementsByClassName('endTime')[0];
+		var eventTitle  = document.getElementsByClassName('eventTitle')[0];
+		if(eventTitle){
+			var st = eventTitle.getElementsByClassName('startTime')[0];
+			var et = eventTitle.getElementsByClassName('endTime')[0];
 
-		st.innerHTML = OpenPath.Utils.formatTime(st.innerHTML);
-		et.innerHTML = OpenPath.Utils.formatTime(et.innerHTML);
+			st.innerHTML = OpenPath.Utils.formatTime(st.innerHTML);
+			et.innerHTML = OpenPath.Utils.formatTime(et.innerHTML);
+		}
+		
 
 
 
-
+		//remove query string
+		if(window.location.search){
+			history.pushState({query:window.location.search}, document.title, '/');
+		}
 
 		this.Router.init();
 		this.Router.checkRoute();

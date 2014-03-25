@@ -21,6 +21,7 @@ module.exports = function(app, io, passport){
 			//check for sessions
 			RoomHandler.checkForRoom( req , function( event, room ){
 				console.log('DONE CHECKING FOR ROOM');
+				
 				res.render("home", { user : req.user,  event : event, room : room });
 
 				
