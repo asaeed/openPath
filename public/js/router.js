@@ -177,7 +177,7 @@ OpenPath.Router = {
 			var events = content.getElementsByClassName('event');
 			for(var i=0; i<events.length; i++){
 				var mapwrap = events[i].getElementsByClassName('mapWrap')[0];
-				OpenPath.Utils.renderMap(mapwrap, mapwrap.dataset.latitude, mapwrap.dataset.longitude, reference);
+				OpenPath.Utils.renderMap(mapwrap, mapwrap.dataset.latitude, mapwrap.dataset.longitude, mapwrap.dataset.reference, mapwrap.dataset.formattedaddress );
 			}
 
 
@@ -201,7 +201,8 @@ OpenPath.Router = {
 			var locationInput = document.getElementById("location"),
 				longitudeInput = document.getElementById("longitude"),
 				latitudeInput = document.getElementById("latitude"),
-				referenceInput = document.getElementById("reference");
+				referenceInput = document.getElementById("reference"),
+				formattedAddressInput = document.getElementById("formattedAddress");
 
 			var autocomplete = new google.maps.places.Autocomplete(locationInput);
 			
@@ -218,8 +219,8 @@ OpenPath.Router = {
 					longitudeInput.value = place.geometry.location.lng();
 					latitudeInput.value = place.geometry.location.lat();
 					referenceInput.value = place.reference;
-					//place.formatted_address;
-					//console.log(place.reference);	
+					formattedAddressInput.value = place.formatted_address;
+					console.log(place.reference);	
 				}
 			});
 		}

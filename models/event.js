@@ -13,7 +13,8 @@ EventSchema = mongoose.Schema({
 		name : String,
 		longitude : Number,
 		latitude : Number,
-		reference : String
+		reference : String,
+		formattedAddress : String
 	}, 
 	grades: [String],
 	date : Date,
@@ -50,7 +51,7 @@ EventSchema.statics.addEvent = function(req, done){
 				longitude : req.body.longitude,
 				latitude : req.body.latitude,
 				reference : req.body.reference,
-				formatted_address : req.body.location
+				formattedAddress : req.body.formattedAddress
 			},
 			date : req.body.date,
 			startTime:  req.body.startTime,

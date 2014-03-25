@@ -8,13 +8,14 @@ OpenPath = window.OpenPath || {};
  */
 OpenPath.Utils = {};
 
-OpenPath.Utils.renderMap = function(ele, lat, lng, reference ){
+OpenPath.Utils.renderMap = function(ele, lat, lng, reference, formattedAddress ){
 	var ele = ele;
 	var request = {
 		location : new google.maps.LatLng(lat, lng),
-		reference : reference
+		reference : reference,
+		formatted_address : formattedAddress
 	};
-	//console.log(location)
+	console.log(request)
 	
 	var mapOptions = {
 		center: new google.maps.LatLng(lat, lng),
@@ -50,10 +51,10 @@ OpenPath.Utils.renderMap = function(ele, lat, lng, reference ){
 				map.setCenter(place.geometry.location);
 				map.setZoom(17);  // Why 17? Because it looks good.
 			}
-	
+			
 			marker.setIcon(({
 				//url: place.icon,
-				//url: 'images/marker.png',
+				url: 'images/marker.png',
 				size: new google.maps.Size(71, 71),
 				origin: new google.maps.Point(0, 0),
 				anchor: new google.maps.Point(17, 34),
@@ -63,5 +64,7 @@ OpenPath.Utils.renderMap = function(ele, lat, lng, reference ){
 			marker.setVisible(true);
 		}
     });
+
+
 };
 
