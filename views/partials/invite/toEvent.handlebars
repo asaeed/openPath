@@ -2,7 +2,7 @@
 <script id="inviteToEventTemplate" type="text/x-handlebars-template">
 Hi there,
 
-USERNAME would like to invite you to a video session on Open Path on \{{ date }} from \{{ startTime }} to \{{ endTime }} called "\{{ name }}".
+{{#if user.firstName }}{{user.firstName}} {{user.lastName}}{{else}}{{user.email}}{{/if}} would like to invite you to a video session on Open Path on \{{ date }} from \{{ startTime }} to \{{ endTime }} called "\{{ name }}".
 
 Click here to join:
 

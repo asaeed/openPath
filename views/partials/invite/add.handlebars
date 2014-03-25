@@ -2,9 +2,9 @@
 <script id="addParticipantsTemplate" type="text/x-handlebars-template">
 Hi,
 
-USERNAME would like to invite you to a video session on Open Path. Click here to join:
+{{#if user.firstName }}{{user.firstName}} {{user.lastName}}{{else}}{{user.email}}{{/if}} would like to invite you to a video session on Open Path. Click here to join:
 
-http://www.openpath.me/?r=\{{ id }}
+http://www.openpath.me/?r={{room._id}}
 
 Let's learn together!
 
