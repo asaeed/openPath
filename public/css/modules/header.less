@@ -9,13 +9,51 @@ header.main {
 		overflow:hidden;
 		a.logo {
 			float:left;
-			span{
-				font-size:4em;
-				line-height:1.1em;
-				font-weight: bold;
-				text-shadow: 2px 2px rgba(0,0,0,0.5);
-				color:#fff;
+			overflow: hidden;
+
+			.marker {
+				float:left;
+				width: 4em;
+				height:4em;
+				background-image: url('/images/marker.png');
+				background-repeat: no-repeat;
+				background-size: contain;
+				margin-right: 0.5em;
 			}
+			
+
+			.title {
+				float:left;
+				h1 {
+					font-size:3.8em;
+					line-height:1.1em;
+					font-weight: bold;
+					text-shadow: 2px 2px rgba(0,0,0,0.5);
+					color:#fff;
+				}
+				h2 {
+					color:#fff;
+					font-size:2em;
+					font-weight: bold;
+					line-height:1.5em;
+					text-transform: capitalize;
+				}
+				h3 {
+					color:#fff;
+					font-size:1.5em;
+					font-weight: bold;
+					span {
+						font-size: 0.8em;
+						font-weight: normal;
+					}
+				}
+			}
+			.eventTitle {
+				h1 {
+					display: none;
+				}
+			}
+			
 		}
 		nav.main {
 			float:right; 

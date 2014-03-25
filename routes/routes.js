@@ -4,7 +4,7 @@ var Event = require('../models/event');
 var Auth = require('../utils/auth');
 var Utils = require('../utils/utils');
 var RoomHandler = require('../utils/roomHandler');
-
+var SocketHandler = require('../utils/socketHandler');
 
 
 /**
@@ -22,6 +22,8 @@ module.exports = function(app, io, passport){
 			RoomHandler.checkForRoom( req , function( event, room ){
 				console.log('DONE CHECKING FOR ROOM');
 				res.render("home", { user : req.user,  event : event, room : room });
+
+				
 			});
 
 			
@@ -31,35 +33,7 @@ module.exports = function(app, io, passport){
 			
 
 
-			/**
-			 * socket.io
-			 
-			io.sockets.on('connection', function (socket) {
-				socket.emit('userConnected', { user: req.user }); //? just emit
-				console.log("We have a new client: " + socket.id);
-		
-				socket.on('peer_id', function(data) {
-					console.log("Received: 'peer_id' " + data);
 
-					// We can save this in the socket object if we like
-					socket.peer_id = data;
-					console.log("Saved: " + socket.peer_id);
-
-					// We can loop through these if we like
-					for (var i  = 0; i < io.sockets.clients().length; i++) {
-						console.log("loop: " + i + " " + io.sockets.clients()[i].peer_id);
-					}
-					
-					// Tell everyone my peer_id
-					socket.broadcast.emit('peer_id',data);
-				});
-				
-				
-				socket.on('disconnect', function() {
-					console.log("Client has disconnected");
-				});
-			});
-			*/
 		}else{
 
 			//check for query string
@@ -137,8 +111,8 @@ module.exports = function(app, io, passport){
 	app.get("/rooms", function (req, res) {
 		Room.find(function (err, items) {
 			if (err) return console.error(err);
-			res.send(items);
-			//res.render("admin/rooms", { rooms: items });
+			//res.send(items);
+			res.render("admin/rooms", { rooms: items });
 		});
 	});
 

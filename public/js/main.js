@@ -21,6 +21,17 @@ OpenPath = {
 		}
 		//count();
 
+		//convert 24 hours //TODO move or send formatted
+		var eventTitle  = document.getElementsByClassName('eventTitle')[0],
+			st = eventTitle.getElementsByClassName('startTime')[0],
+			et = eventTitle.getElementsByClassName('endTime')[0];
+
+		st.innerHTML = OpenPath.Utils.formatTime(st.innerHTML);
+		et.innerHTML = OpenPath.Utils.formatTime(et.innerHTML);
+
+
+
+
 
 		this.Router.init();
 		this.Router.checkRoute();
