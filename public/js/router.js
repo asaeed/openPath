@@ -10,6 +10,9 @@ OpenPath = window.OpenPath || {};
 OpenPath.Router = {
 	init : function(){
 
+		//header
+		this.header = document.querySelector('#mainHeader');
+
 		//all pages & all views 
 		this.pages = document.querySelectorAll('.page');
 		this.views = document.querySelectorAll('.view');
@@ -68,8 +71,8 @@ OpenPath.Router = {
 		}
 	},
 	checkRoute : function( route ){
-		//hide all
-		this.hideAll();
+		//reset a.k.a. hide all
+		this.reset();
 
 		console.log(route, 'router', window.location.hash.split('#/')[1]);
 	
@@ -125,13 +128,16 @@ OpenPath.Router = {
 			break;
 		}
 	},
-	hideAll : function(){
-		//pages
+	reset : function(){
+		//reset header
+		this.header.style.width = 100+'%';
+
+		//hide pages
 		for(var i=0;i<this.pages.length;i++){
 			this.pages[i].style.display = 'none';
 			this.pages[i].style.opacity = 0;
 		}
-		//views
+		//hide views
 		for(var j=0;j<this.views.length;j++){
 			this.views[j].style.display = 'none';
 			this.views[j].style.opacity = 0;
@@ -145,6 +151,7 @@ OpenPath.Router = {
 		this.show(this.videos);
 		this.show(this.videosView);
 
+		this.header.style.width = 75+'%';
 		//handle video views in main
 	},
 	showInvite : function(){
