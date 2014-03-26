@@ -1,27 +1,27 @@
 <!-- events front end template (remember \{{ }} ) -->
 <script id="upcomingEventsTemplate" type="text/x-handlebars-template">
-		<ul class="eventsList">
-			\{{#events}}
-			<li class="event">
-				<article>
-					<h3><a href="javascript:void(0);" target="_blank">\{{ name }}</a></h3>
-					<p class="link"><a href="\{{ link }}">\{{ link }}</a></p>
-					<p class="date">\{{ date }} <span class="startTime">\{{ startTime }}</span> - <span class="endTime">\{{ endTime }}</span></p>
-					<p class="location">\{{ location.name }}</p>
-					<p class="location">\{{ description }}</p>
-					<div class="buttons">
-						\{{#if  isMine  }}
-							<a href="#/edit-event/\{{ id }}" class="btn route editBtn">Edit</a>
-							<a href="#/invite-to-event/\{{ id }}" class="btn route inviteBtn">Invite</a>
-						\{{/if}}
-							<a href="?e=\{{ id }}" class="btn route joinBtn">Join</a>
-						
-						
-					</div>
-				</article>
-				<div class="mapWrap" data-latitude="\{{ location.latitude }}" data-longitude="\{{ location.longitude }}" data-reference="\{{ location.reference }}" data-formattedaddress="\{{ location.formattedAddress }}" ></div>
-			</li>
-			\{{/events}}
-		</ul>
+	<ul class="eventsList">
+		\{{#events}}
+		<li class="event">
+			<article>
+				<h3><a href="javascript:void(0);" target="_blank">\{{ name }}</a></h3>
+				<p class="link"><a href="\{{ link }}">\{{ link }}</a></p>
+				<p class="date">\{{ date }} <span class="startTime">\{{ startTime }}</span> - <span class="endTime">\{{ endTime }}</span></p>
+				<p class="location">\{{ location.name }}</p>
+				<p class="location">\{{ description }}</p>
+				<div class="buttons">
+					\{{#if  isMine  }}
+						<a href="#/edit-event/\{{ id }}" class="btn route editBtn">Edit</a>
+						<a href="#/invite-to-event/\{{ id }}" class="btn route inviteBtn">Invite</a>
+					\{{/if}}
+						<a href="?e=\{{ id }}" class="btn route joinBtn">Join</a>
+					
+					
+				</div>
+			</article>
+			<div class="mapWrap" data-latitude="\{{ location.latitude }}" data-longitude="\{{ location.longitude }}" data-reference="\{{ location.reference }}" data-formattedaddress="\{{ location.formattedAddress }}" ></div>
+		</li>
+		\{{/events}}
+	</ul>
 </script>
 

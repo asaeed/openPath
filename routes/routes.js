@@ -16,23 +16,17 @@ module.exports = function(app, io, passport){
 	 * home
 	 */
 	app.get("/", function(req, res){ 
+		//if logged in
 		if(req.isAuthenticated()){
 
 			//check for sessions
 			RoomHandler.checkForRoom( req , function( event, room ){
 				console.log('DONE CHECKING FOR ROOM');
-				
+
 				res.render("home", { user : req.user,  event : event, room : room });
 
-				
+				SocketHandler.init( io, req.user, room );
 			});
-
-			
-			//req.session.email = req.user.email;
-			//console.log("REC SESS",req.session)
-			
-			
-
 
 
 		}else{
@@ -42,7 +36,6 @@ module.exports = function(app, io, passport){
 				res.render("home", { user : null, event : null, room : null });
 			});
 
-			
 		}
 	});
 

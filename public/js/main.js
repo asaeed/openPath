@@ -10,7 +10,7 @@ OpenPath = {
 	init : function(){
 		console.log('OpenPath init');
 
-		//count to check for reloads - delete
+		//count to check for reload testing - delete
 		var c = 0;
 		function count(){
 			c++;
@@ -20,30 +20,18 @@ OpenPath = {
 			},1000)
 		}
 		//count();
-
-		//convert 24 hours //TODO move or send formatted
-		var eventTitle  = document.getElementsByClassName('eventTitle')[0];
-		if(eventTitle){
-			var st = eventTitle.getElementsByClassName('startTime')[0];
-			var et = eventTitle.getElementsByClassName('endTime')[0];
-
-			st.innerHTML = OpenPath.Utils.formatTime(st.innerHTML);
-			et.innerHTML = OpenPath.Utils.formatTime(et.innerHTML);
-		}
 		
+		//init ui 
+		this.Ui.init();
 
-
-
-		//remove query string
-		if(window.location.search){
-			history.pushState({query:window.location.search}, document.title, '/');
-		}
-
+		//hanlder routes
 		this.Router.init();
 		this.Router.checkRoute();
 		
-		this.peerHandler();		
+		//connect to peer, socket, get usermedia, get location
+		this.peerHandler();	
 	},
+	//loop : function(){},// on node side!!
 	peerHandler : function(){
 		var self = this;
 
@@ -80,8 +68,9 @@ OpenPath = {
 	socketHandler : function(){
 		var self = this;
 		var socket = io.connect('http://localhost');
-		socket.on('userConnected', function (data) {
 
+
+		socket.on('userConnected', function (data) {
 			console.log('userConnected',data.user.email);
 		});
 		socket.on('userDisconnected', function (data) {
@@ -106,7 +95,6 @@ OpenPath = {
 		socket.on('peer_id', function (data) {
 			console.log("Got a new peer: " + data);
 
-			
 			// Call them with our stream, my_stream
 			console.log("Calling peer: " + data);						
 			var call = self.peer.call(data, self.my_stream);
@@ -129,10 +117,10 @@ OpenPath = {
 			navigator.getUserMedia(
 				{video: true, audio: true},
 				function(stream) {
-						self.my_stream = stream;
-						var videoElement = document.getElementById('myvideo');
-						videoElement.src = window.URL.createObjectURL(stream) || stream;
-						videoElement.play();
+					self.my_stream = stream;
+					var videoElement = document.getElementById('myvideo');
+					videoElement.src = window.URL.createObjectURL(stream) || stream;
+					videoElement.play();
 				},
 				function(err) {
 						console.log('Failed to get local stream' ,err);

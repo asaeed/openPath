@@ -1,5 +1,19 @@
 <!-- add participant front end template (remember \{{ }} ) -->
 <script id="addParticipantsTemplate" type="text/x-handlebars-template">
+{{#if event}}
+Hi there,
+
+{{#if user.firstName }}{{user.firstName}} {{user.lastName}}{{else}}{{user.email}}{{/if}} would like to invite you to a video session on Open Path on {{ event.date }} from {{ event.startTime }} to {{ event.endTime }} called "{{ event.name }}".
+
+Click here to join:
+
+http://www.openpath.me/?e={{ event._id }}
+
+Let&apos;s learn together!
+
+Regards,
+Open Path Team
+{{else}}
 Hi,
 
 {{#if user.firstName }}{{user.firstName}} {{user.lastName}}{{else}}{{user.email}}{{/if}} would like to invite you to a video session on Open Path. Click here to join:
@@ -10,6 +24,6 @@ Let's learn together!
 
 Regards,
 Open Path Team
-
+{{/if}}
 
 </script>

@@ -33,10 +33,6 @@ OpenPath = {
 };
 
 window.onload = function(){
-	//remove query string
-	if(window.location.search){
-		history.pushState({query:window.location.search}, document.title, '/');
-	}
-	
+	OpenPath.Ui.convertEventTimeInTitle();
 	OpenPath.intro();
 };

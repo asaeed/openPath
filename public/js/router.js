@@ -21,6 +21,7 @@ OpenPath.Router = {
 		this.profile = document.querySelector('#profile');
 
 		//individual views ( || sub pages )
+		this.videosView = document.querySelector('#videosView');
 		this.inviteView = document.querySelector('#inviteView');
 			//profile
 		this.myProfile = document.querySelector('#myProfile');
@@ -58,7 +59,7 @@ OpenPath.Router = {
 				}
 				//add active to btn
 				route.classList.add('active');
-				self.checkRoute( route.getAttribute('href') );//not working on first click cuz....
+				self.checkRoute( route.getAttribute('href') );
 			},false);
 		}
 		//make route instances
@@ -70,8 +71,6 @@ OpenPath.Router = {
 		//hide all
 		this.hideAll();
 
-
-
 		console.log(route, 'router', window.location.hash.split('#/')[1]);
 	
 		var route = route ? route.split('#/')[1] : window.location.hash.split('#/')[1];
@@ -81,8 +80,6 @@ OpenPath.Router = {
 			route = route.split('/')[0];
 		}
 		
-
-
 		/**
 		 * all our routes switch
 		 */
@@ -132,18 +129,29 @@ OpenPath.Router = {
 		//pages
 		for(var i=0;i<this.pages.length;i++){
 			this.pages[i].style.display = 'none';
+			this.pages[i].style.opacity = 0;
 		}
 		//views
 		for(var j=0;j<this.views.length;j++){
 			this.views[j].style.display = 'none';
+			this.views[j].style.opacity = 0;
 		}
 	},
+	show : function(ele){
+		ele.style.display = 'block';
+		ele.style.opacity = 1;
+	},
 	showVideos : function(){
-		this.videos.style.display = 'block';
+		this.show(this.videos);
+		this.show(this.videosView);
+
+		//handle in main
+
+
 	},
 	showInvite : function(){
-		this.invite.style.display = 'block';
-		this.inviteView.style.display = 'block';
+		this.show(this.invite);
+		this.show(this.inviteView);
 
 		var inviteMsg = document.getElementById('inviteMsg');
 		//compile template
@@ -154,8 +162,8 @@ OpenPath.Router = {
 	},
 	showEvents :  function(){
 		var self = this;
-		this.events.style.display = 'block';
-		this.upcomingEvents.style.display = 'block';
+		this.show(this.events);
+		this.show(this.upcomingEvents);
 
 		//create view instance
 		var upcomingEventsView = new OpenPath.View();
@@ -179,7 +187,7 @@ OpenPath.Router = {
 			var events = content.getElementsByClassName('event');
 			for(var i=0; i<events.length; i++){
 				var mapwrap = events[i].getElementsByClassName('mapWrap')[0];
-				OpenPath.Utils.renderMap(mapwrap, mapwrap.dataset.latitude, mapwrap.dataset.longitude, mapwrap.dataset.reference, mapwrap.dataset.formattedaddress );
+				OpenPath.Ui.renderMap(mapwrap, mapwrap.dataset.latitude, mapwrap.dataset.longitude, mapwrap.dataset.reference, mapwrap.dataset.formattedaddress );
 			}
 
 
@@ -188,12 +196,12 @@ OpenPath.Router = {
 		};
 	},
 	showNearbyEvents :  function(){
-		this.events.style.display = 'block';
-		this.nearbyEvents.style.display = 'block';
+		this.show(this.events);
+		this.show(this.nearbyEvents);
 	},
 	showAddNewEvent :  function(){
-		this.events.style.display = 'block';
-		this.addNewEvent.style.display = 'block';
+		this.show(this.events);
+		this.show(this.addNewEvent);
 
 		/**
 		 * autocompleteLocationInput
@@ -240,13 +248,13 @@ OpenPath.Router = {
 		*/
 	},
 	showEditEvent : function(){
-		this.events.style.display = 'block';
-		this.addNewEvent.style.display = 'block';
+		this.show(this.events);
+		this.show(this.addNewEvent);
 	},
 	showInviteToEvent : function( id ){
 		var self = this;
-		this.invite.style.display = 'block';
-		this.inviteView.style.display = 'block';
+		this.show(this.invite);
+		this.show(this.inviteView);
 
 		//create view instance
 		var inviteToEventView = new OpenPath.View();
@@ -266,23 +274,23 @@ OpenPath.Router = {
 		};
 	},
 	showProfile : function(){
-		this.profile.style.display = 'block';
-		this.myProfile.style.display = 'block';
+		this.show(this.profile);
+		this.show(this.myProfile);
 	},
 	showEditProfile : function(){
-		this.profile.style.display = 'block';
-		this.editProfile.style.display = 'block';
+		this.show(this.profile);
+		this.show(this.editProfile);
 	},
 	showMyPath : function(){
-		this.profile.style.display = 'block';
-		this.myPath.style.display = 'block';
+		this.show(this.profile);
+		this.show(this.myPath);
 	},
 	showNotifications : function(){
-		this.profile.style.display = 'block';
-		this.notifications.style.display = 'block';
+		this.show(this.profile);
+		this.show(this.notifications);
 	},
 	showSettings : function(){
-		this.profile.style.display = 'block';
-		this.settings.style.display = 'block';
+		this.show(this.profile);
+		this.show(this.settings);
 	}
 };

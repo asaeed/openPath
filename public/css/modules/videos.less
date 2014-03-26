@@ -1,0 +1,35 @@
+#videosView {
+	width: 100%;
+	padding: 0;
+	background:#000;
+	overflow: hidden;
+	position: absolute;
+	top:0;
+	left:0;
+	right:0;
+	bottom: 0;
+	z-index: 0;
+
+	.presenter,
+	aside {
+		float: left;
+		border: 1px solid red;
+		.box-sizing(border-box);
+	}
+	.mainVideo {
+		width:75%;
+	}
+	aside {
+		width:25%;
+
+		ul.videoList {
+
+		}
+	}
+
+	video {
+		width:100%;
+		height:100%;
+	}
+
+}

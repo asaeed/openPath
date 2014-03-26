@@ -19,7 +19,11 @@
 	font-weight:bold;
 	display: block;
 }
-
+.fade(@time){
+	opacity: 0;
+	.transition(opacity @time linear, color .4s .2s ease);
+	//.transition-delay(@time );
+}
 
 body {
 	background:#fff;
@@ -114,9 +118,6 @@ body {
 		@import "modules/intro.less";
 	}
 	#home {
-		video {
-			border:1px dotted red;
-		}
 
 		/**
 		 * header
@@ -127,10 +128,11 @@ body {
 		 * page
 		 */
 		section.page {
-
+			.fade(0.5s);
 			@import "modules/subnav.less";
 
 			.view {
+				.fade(0.2s);
 				background:#eeedeb;
 				padding:2em 0;
 			}
@@ -138,6 +140,9 @@ body {
 		/**
 		 * individual 'pages'
 		 */
+		section#videos {
+			@import "modules/videos.less";
+		}
 		section#invite {
 			@import "modules/invite.less";
 		}
