@@ -11,7 +11,7 @@
 	z-index: 0;
 
 	/**
-	 * video mixin
+	 * video mixins
 	 */
 	.video(){
 		border: 1px solid red;
@@ -25,97 +25,94 @@
 		.video{
 			position: relative;
 			width:100%;
-			.usermeta {
-				position: absolute;
-				width:90%;
-				height:90%;
-				border:1px dotted blue;
-				top:5%;
-				left:5%;
-				z-index:1;
-				background:@blackTransulcent;
-				.fade(0.5s);
-
-				header{
-					overflow: hidden;
-					padding:0.4em 1em;
-					background:@blackTransulcent;
-					position: relative;
-					top:0;
-					left:0;
-					z-index:1;
-
-					border:1px solid blue;
-
-					.closeBtn {
-						float:right;
-						background-image: url('/images/close-icon.png');
-						background-repeat: no-repeat;
-						width:10px;
-						height:11px;
-						position: relative;
-						top:3px;
-						font-size: 1.3em;
-						font-weight: bold;
-						cursor: pointer;
-						.fade(0.5s);
-						opacity:0.7;
-						display: none;
-					}
-					.closeBtn:hover {
-						opacity: 1;
-					}
-					.mapBtn {
-						float:right;
-						background-image: url('/images/map-icon.png');
-						background-repeat: no-repeat;
-						width:12px;
-						height:17px;
-						cursor: pointer;
-						.fade(0.5s);
-						opacity:0.7;
-					}
-					.mapBtn:hover {
-						opacity: 1;
-					}
-					.username {
-						color:#fff;
-						float:left;
-						font-size: 1.8em;
-						font-weight: bold;
-					}
-				}
-				.mapWrap {
-					.fade(0.5s);
-					padding:0.4em 1em;
-					border:1px solid red;
-					height:75%;
-					position: relative;
-					
-
-					z-index:0;
-					.locactionName {
-						color:#fff;
-						float:left;
-						font-size: 1.2em;
-					}
-					.map {
-						position: absolute;
-						top:0;
-						left:0;
-						bottom:0;
-						right:0;
-					}
-				}
-			}
-			
 			video {
 				width:100%;
 				height:100%;
 			}
 		}
 	}
+	/**
+	 * usermeta
+	 */
+	.usermeta {
+		position: absolute;
+		width:90%;
+		height:90%;
+		top:5%;
+		left:5%;
+		z-index:1;
+		background:@blackTransulcent;
+		.fade(0.5s);
 
+		header{
+			overflow: hidden;
+			padding:0.6em 1em 0.4em 1em;
+			background:@blackTransulcent;
+			position: relative;
+			top:0;
+			left:0;
+			z-index:1;
+
+			.closeBtn {
+				float:right;
+				background-image: url('/images/close-icon.png');
+				background-repeat: no-repeat;
+				width:10px;
+				height:11px;
+				position: relative;
+				top:3px;
+				font-size: 1.3em;
+				font-weight: bold;
+				cursor: pointer;
+				.fade(0.5s);
+				opacity:0.7;
+				display: none;
+			}
+			.closeBtn:hover {
+				opacity: 1;
+			}
+			.mapBtn {
+				float:right;
+				background-image: url('/images/map-icon.png');
+				background-repeat: no-repeat;
+				width:12px;
+				height:17px;
+				cursor: pointer;
+				.fade(0.5s);
+				opacity:0.7;
+			}
+			.mapBtn:hover {
+				opacity: 1;
+			}
+			.username {
+				color:#fff;
+				float:left;
+				font-size: 1.8em;
+				font-weight: bold;
+			}
+		}
+		.mapWrap {
+			.fade(0.5s);
+			padding:0.4em 1em;
+			height:75%;
+			position: relative;
+			z-index:0;
+
+
+			.locactionName {
+				color:#fff;
+				float:left;
+				font-size: 1.2em;
+			}
+			.map {
+				position: absolute;
+				top:0;
+				left:0;
+				bottom:0;
+				right:0;
+			}
+		}
+	}
 	#presenter,
 	aside {
 		float: left;
@@ -124,6 +121,11 @@
 	#presenter {
 		width:75%;
 		.video();
+		.usermeta {
+			top:100px;
+			width:25%;
+			height:40%;
+		}
 	}
 	aside {
 		width:25%;

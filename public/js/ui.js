@@ -123,40 +123,54 @@ OpenPath.Ui = {
 		var marker = new google.maps.Marker({
 			map: map
 		});*/
-		var service = new google.maps.places.PlacesService( map );
-		
-		//called?
-	    service.getDetails( request, function(place, status) {
-			if (status == google.maps.places.PlacesServiceStatus.OK) {
-				var marker = new google.maps.Marker({
-					map: map,
-					position: place.geometry.location
-				});
-				
-				google.maps.event.addListener(marker, 'click', function() {
-					infowindow.setContent(place.name);
-					infowindow.open(map, this);
-				});
-				
-				// If the place has a geometry, then present it on a map.
-				if (place.geometry.viewport) {
-					map.fitBounds(place.geometry.viewport);
-				} else {
-					map.setCenter(place.geometry.location);
-					map.setZoom(17);  // Why 17? Because it looks good.
+		if(reference){
+			var service = new google.maps.places.PlacesService( map );
+		    service.getDetails( request, function(place, status) {
+				if (status == google.maps.places.PlacesServiceStatus.OK) {
+					var marker = new google.maps.Marker({
+						map: map,
+						position: place.geometry.location
+					});
+					
+					google.maps.event.addListener(marker, 'click', function() {
+						infowindow.setContent(place.name);
+						infowindow.open(map, this);
+					});
+					
+					// If the place has a geometry, then present it on a map.
+					if (place.geometry.viewport) {
+						map.fitBounds(place.geometry.viewport);
+					} else {
+						map.setCenter(place.geometry.location);
+						map.setZoom(17);  // Why 17? Because it looks good.
+					}
+					
+					marker.setIcon(({
+						//url: place.icon,
+						url: 'images/marker.png',
+						size: new google.maps.Size(71, 71),
+						origin: new google.maps.Point(0, 0),
+						anchor: new google.maps.Point(17, 34),
+						scaledSize: new google.maps.Size(35, 35)
+					}));
+					marker.setPosition(place.geometry.location);
+					marker.setVisible(true);
 				}
-				
-				marker.setIcon(({
-					//url: place.icon,
-					url: 'images/marker.png',
-					size: new google.maps.Size(71, 71),
-					origin: new google.maps.Point(0, 0),
-					anchor: new google.maps.Point(17, 34),
-					scaledSize: new google.maps.Size(35, 35)
-				}));
-				marker.setPosition(place.geometry.location);
-				marker.setVisible(true);
-			}
-	    });
+		    });
+		}else{
+			var marker = new google.maps.Marker({
+				map: map,
+				position: mapOptions.center
+			});
+			marker.setIcon(({
+				url: 'images/marker.png',
+				size: new google.maps.Size(71, 71),
+				origin: new google.maps.Point(0, 0),
+				anchor: new google.maps.Point(17, 34),
+				scaledSize: new google.maps.Size(35, 35)
+			}));
+			marker.setPosition(mapOptions.center);
+			marker.setVisible(true);
+		}
 	}
 };

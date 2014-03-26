@@ -40,7 +40,7 @@ OpenPath.Video.prototype.render = function(){
 	
 
 	//render map
-	OpenPath.Ui.renderMap(this.map, this.latitude, this.longitude)
+	OpenPath.Ui.renderMap(this.map, 40.7636152, -73.99543109999999,'');
 };
 
 
@@ -69,6 +69,7 @@ OpenPath.Video.prototype.events = function(){
 	//keep over as true if over meta
 	this.usermeta.addEventListener('mouseover',function(e){
 		over = true;
+		self.usermeta.style.opacity = 1;
 	},false);
 	this.usermeta.addEventListener('mouseout',function(e){
 		setTimeout(function(){
@@ -83,6 +84,7 @@ OpenPath.Video.prototype.events = function(){
 	this.mapBtn.addEventListener('click',function(e){
 		self.mapBtn.style.display = 'none';
 		self.closeBtn.style.display = 'block';
+		
 		self.mapWrap.style.opacity = 1;
 	},false);
 
@@ -90,6 +92,7 @@ OpenPath.Video.prototype.events = function(){
 	this.closeBtn.addEventListener('click',function(e){
 		self.closeBtn.style.display = 'none';
 		self.mapBtn.style.display = 'block';
+		
 		self.mapWrap.style.opacity = 0;
 	},false);
 };

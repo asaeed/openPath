@@ -32,7 +32,7 @@ module.exports = function(app, io, passport){
 			//logged out, render intro
 			//check for query string & sessions
 			RoomHandler.checkForRoom( req , function(){
-				res.render("home", { user : null, event : null, room : null });
+				res.render("intro");
 			});
 
 		}

@@ -1,60 +1,39 @@
-{{#if user}}
-	
-	<div id="home">
+<div id="home">
 
-		{{> header }}
+	{{> header }}
 
-		{{> videos }}
-		{{> invite }}
-		{{> events }}
-		{{> profile }}
+	{{> videos }}
+	{{> invite }}
+	{{> events }}
+	{{> profile }}
 
-		<!-- TODO remove -->
-		<div class="output">
-			<p>user id = {{user._id}}</p>
-			<p>event id = {{event._id}}</p>
-			<p>room id = {{room._id}}</p>
-		</div>
-
-
+	<!-- TODO remove -->
+	<div class="output">
+		<p>user id = {{user._id}}</p>
+		<p>event id = {{event._id}}</p>
+		<p>room id = {{room._id}}</p>
 	</div>
 
-	<!--scripts-->
-    <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=true&libraries=places"></script>
-	<script src="/socket.io/socket.io.js"></script>
-	<script src="http://cdn.peerjs.com/0.3/peer.min.js"></script>
 
-	<script src="js/libraries/handlebars-v1.3.0.js"></script>
+</div>
 
-	<script src="js/main.js"></script>
-	<script src="js/ui.js"></script>
-	<script src="js/video.js"></script>
-	<script src="js/router.js"></script>
-	<script src="js/utils.js"></script>
-	
+<!--scripts-->
+<script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=true&libraries=places"></script>
+<script src="/socket.io/socket.io.js"></script>
+<script src="http://cdn.peerjs.com/0.3/peer.min.js"></script>
 
+<script src="js/libraries/handlebars-v1.3.0.js"></script>
 
-	<script src="js/classes/mvc/super/mvc.js" type="text/javascript" charset="utf-8"></script>
-	<script src="js/classes/mvc/model.js" type="text/javascript" charset="utf-8"></script>
-	<script src="js/classes/mvc/view.js" type="text/javascript" charset="utf-8"></script>
-	<script src="js/classes/mvc/controller.js" type="text/javascript" charset="utf-8"></script>
-	<script src="js/classes/mvc/collection.js" type="text/javascript" charset="utf-8"></script>
+<script src="js/main.js"></script>
+<script src="js/ui.js"></script>
+<script src="js/video.js"></script>
+<script src="js/router.js"></script>
+<script src="js/utils.js"></script>
 
 
 
-{{else}}
-	
-	<div id="intro">
-
-		{{> intro }}
-		
-	</div>
-
-	<!--scripts-->
-	<script src="js/intro.js"></script>
-	<script src="js/ui.js"></script>
-{{/if}}
-
-<!-- //TODO
-{{> footer }}
--->
+<script src="js/classes/mvc/super/mvc.js" type="text/javascript" charset="utf-8"></script>
+<script src="js/classes/mvc/model.js" type="text/javascript" charset="utf-8"></script>
+<script src="js/classes/mvc/view.js" type="text/javascript" charset="utf-8"></script>
+<script src="js/classes/mvc/controller.js" type="text/javascript" charset="utf-8"></script>
+<script src="js/classes/mvc/collection.js" type="text/javascript" charset="utf-8"></script>
