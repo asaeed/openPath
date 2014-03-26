@@ -86,7 +86,7 @@ OpenPath = {
 
 		/**/
 		socket.on('userConnected', function (data) {
-			console.log('userConnected',data.user.email);
+			console.log('userConnected',data); //seems to return a list of all users
 		});
 		
 		socket.on('userDisconnected', function (data) {
@@ -114,7 +114,9 @@ OpenPath = {
 			// Call them with our stream, my_stream
 			console.log("Calling peer: " + data);						
 			var call = self.peer.call(data, self.my_stream);
-			
+			console.log(call,self.peer)
+			//if allowed ... else call undefined
+
 			// After they answer, we'll get a 'stream' event with their stream	
 			call.on('stream', function(remoteStream) {
 				console.log("Got remote stream");

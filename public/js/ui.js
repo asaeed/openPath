@@ -10,6 +10,7 @@ OpenPath.Ui = {
 	init : function(){
 		this.videosView = document.getElementById('videosView');
 
+		//call onload ui methods
 		this.events();
 		this.tooltips();
 		this.removeQueryStringFromUrl();
@@ -82,7 +83,7 @@ OpenPath.Ui = {
 		}
 	},
 	/**
-	 * remove query string for URL
+	 * remove query string for URL (called from intro as well)
 	 */
 	removeQueryStringFromUrl : function(){
 		if(window.location.search){
@@ -102,6 +103,9 @@ OpenPath.Ui = {
 			et.innerHTML = OpenPath.Utils.formatTime(et.innerHTML);
 		}
 	},
+	/**
+	 * renders google map (called from video class, router.showEvents)
+	 */
 	renderMap : function(ele, lat, lng, reference, formattedAddress ){
 		var ele = ele;
 		var request = {

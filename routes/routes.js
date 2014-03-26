@@ -5,7 +5,8 @@ var Auth = require('../utils/auth');
 var Utils = require('../utils/utils');
 var RoomHandler = require('../utils/roomHandler');
 var SocketHandler = require('../utils/socketHandler');
-
+var EmailConfig = require('../../config');
+var Email  = require("emailjs/email");
 
 /**
  * routes 
@@ -22,7 +23,14 @@ module.exports = function(app, io, passport){
 			RoomHandler.checkForRoom( req , function( event, room ){
 				console.log('DONE CHECKING FOR ROOM',req.user);
 
-				res.render("home", { user : req.user,  event : event, room : room });
+				var safeUser = {
+					firstName : req.user.firstName,
+					lastName : req.user.lastName,
+					email : req.user.email
+					//TODO rest of modal
+				}
+
+				res.render("home", { user : safeUser,  event : event, room : room });
 
 				SocketHandler.start( io, req.user, event, room );
 			});
@@ -77,6 +85,32 @@ module.exports = function(app, io, passport){
 		res.redirect('/');
 	});
 
+
+	/**
+	 * email
+	 */
+	var emailServer = Email.server.connect({
+		user:     EmailConfig.email.user, 
+		password: EmailConfig.email.password, 
+		host:     EmailConfig.email.host, 
+		ssl:      true
+	});
+	
+	app.post('/email', function(req, res){
+		console.log('about to send an email...');
+
+		var message = {
+			text : req.body.inviteMsg,
+			from : "openPath <openpathme@gmail.com>", 
+			to : req.body.to,
+			cc : "",
+			subject : req.body.subject
+		}
+		emailServer.send(message, function(err, message) { 
+			console.log(err || message); 
+			
+		});
+	});	
 
 
 

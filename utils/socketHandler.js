@@ -11,6 +11,7 @@ module.exports.start = function( io, user, event, room ){
 	 * socket.io
 	 */
 	io.sockets.on('connection', function (socket) {
+
 		socket.emit('userConnected', { user: user.email, room : room }); //? just emit
 		console.log("We have a new socket client: " + socket.id);
 
@@ -27,7 +28,8 @@ module.exports.start = function( io, user, event, room ){
 
 			// We can loop through these if we like
 			for (var i  = 0; i < io.sockets.clients().length; i++) {
-				console.log("loop: " + i + " " + io.sockets.clients()[i].peer_id);
+				//console.log("loop: " + i + " " +io.sockets.clients()[i].peer_id);
+				
 			}
 			
 			// Tell everyone my peer_id
