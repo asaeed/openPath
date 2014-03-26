@@ -11,6 +11,7 @@ OpenPath.Ui = {
 		this.videosView = document.getElementById('videosView');
 
 		this.events();
+		this.tooltips();
 		this.removeQueryStringFromUrl();
 		this.convertEventTimeInTitle();
 	},
@@ -31,9 +32,56 @@ OpenPath.Ui = {
 	/**
 	 * remove query string for URL
 	 */
-	removeQueryStringFromUrl : function(){
-		if(window.location.search){
-			history.pushState({query:window.location.search}, document.title, '/');
+	tooltips : function(){
+		var toolTips = document.getElementsByClassName('tooltip');
+		/**
+		 * @class tooltip
+		 * @description small helper class to add event listeners
+		 */
+		function tooltip( btn ){
+			var self = this;
+			var over = false;
+			var mousePos={};
+			var delay = 800;
+
+			console.log(btn.offsetLeft,btn.offsetTop)
+
+			//make tip
+			var tip = document.createElement('div');
+			tip.classList.add('tip');
+			tip.innerHTML = btn.getAttribute('title');
+			tip.style.top = btn.offsetTop + btn.offsetHeight + 20 + 'px';
+			tip.style.left = btn.offsetLeft  + 'px';
+
+			document.body.appendChild(tip);
+
+			btn.addEventListener('mouseover',function(e){
+				over = true;
+				mousePos = {
+		            x: e.clientX,
+		            y: e.clientY
+		        };
+				setTimeout(show, delay);
+			},false);
+			btn.addEventListener('mouseout',function(e){
+				over = false;
+				tip.style.display = 'none';
+				tip.style.opacity = 0;
+			},false);
+
+			function show(){
+				if(over){
+					console.log('show');
+					tip.style.display = 'block';
+					tip.style.opacity = 1;
+					tip.style.left = mousePos.x - (tip.offsetWidth/2)  + 'px';
+				}
+			}
+		}
+
+		//loop and make tip instances
+		for(var i=0;i<toolTips.length;i++){
+			new tooltip(toolTips[i]);
 		}
 	},
 	/**

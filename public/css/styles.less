@@ -24,7 +24,20 @@
 	.transition(opacity @time linear, color .4s .2s ease);
 	//.transition-delay(@time );
 }
-
+.toolTip(){
+	.fade(0.5s);
+	position: absolute;
+	z-index:5;
+	top:0;
+	left:0;
+	color:#fff;
+	font-size:1.1em;
+	font-weight: bold;
+	border:1px solid rgba(255,255,255,0.1);
+	.border-radius(3px);
+	background:rgba(0,0,0,0.8);
+	padding:0.5em 0.5em 0.4em 0.5em;
+}
 body {
 	background:#fff;
 	font-family: 'Myriad Pro','PT Sans', arial, sans-serif;
@@ -88,7 +101,9 @@ body {
 			.border-radius(2px);
 		}
 	}
-
+	.tip{
+		.toolTip();
+	}
 	
 
 	label,

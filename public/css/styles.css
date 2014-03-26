@@ -87,6 +87,29 @@ body form textarea {
   border-radius: 2px;
   background-clip: padding-box;
 }
+body .tip {
+  opacity: 0;
+  -webkit-transition: opacity 0.5s linear, color 0.4s 0.2s ease;
+  -moz-transition: opacity 0.5s linear, color 0.4s 0.2s ease;
+  -o-transition: opacity 0.5s linear, color 0.4s 0.2s ease;
+  transition: opacity 0.5s linear, color 0.4s 0.2s ease;
+  position: absolute;
+  z-index: 5;
+  top: 0;
+  left: 0;
+  color: #fff;
+  font-size: 1.1em;
+  font-weight: bold;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  -webkit-border-radius: 3px;
+  -webkit-background-clip: padding-box;
+  -moz-border-radius: 3px;
+  -moz-background-clip: padding;
+  border-radius: 3px;
+  background-clip: padding-box;
+  background: rgba(0, 0, 0, 0.8);
+  padding: 0.5em 0.5em 0.4em 0.5em;
+}
 body label,
 body h3.label {
   font-size: 2em;
