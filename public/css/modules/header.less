@@ -4,7 +4,7 @@
 header.main {
 	position: relative;
 	z-index: 1;
-	background: rgba(0,0,0,0.6);
+	background:@blackTransulcent;
 	width:100%;
 	padding:1em 0;
 	.content {
@@ -72,6 +72,7 @@ header.main {
 						display:block;
 						background-image:url('/images/nav-icons.png');
 						background-repeat: no-repeat;
+						.fade(1s);
 						opacity: 0.7;
 						span.badge {
 							position:absolute;

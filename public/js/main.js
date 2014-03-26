@@ -193,6 +193,8 @@ OpenPath = {
 		}
 	},
 	setUserLocation : function(position){
+		this.latitude = position.coords.latitude;
+		this.longitude = position.coords.longitude;
 		console.log("Latitude: " + position.coords.latitude + 
 					" Longitude: " + position.coords.longitude );
 

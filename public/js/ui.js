@@ -44,8 +44,6 @@ OpenPath.Ui = {
 			var mousePos={};
 			var delay = 800;
 
-			console.log(btn.offsetLeft,btn.offsetTop)
-
 			//make tip
 			var tip = document.createElement('div');
 			tip.classList.add('tip');
@@ -160,7 +158,5 @@ OpenPath.Ui = {
 				marker.setVisible(true);
 			}
 	    });
-
-
 	}
 };
