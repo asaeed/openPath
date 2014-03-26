@@ -23,7 +23,7 @@ OpenPath = {
 		
 		//video holder elements
 		this.presenter = document.getElementById('presenter');
-		this.videoList = document.getElementById('videoList');
+		this.peersList = document.getElementById('peersList');
 
 		//init ui 
 		this.Ui.init();
@@ -36,6 +36,9 @@ OpenPath = {
 		this.peerHandler();
 
 		this.setPresenter();
+		for(var i=4;i>0;i--){
+			this.setPeer();
+		}
 	},
 	//loop : function(){},// on node side!!
 	peerHandler : function(){
@@ -75,8 +78,7 @@ OpenPath = {
 
 
 			});
-		});	
-			
+		});		
 	},
 	socketHandler : function(){
 		var self = this;
@@ -154,9 +156,16 @@ OpenPath = {
 		}
 	},
 	setPresenter : function(){
-		
+
 		new OpenPath.Video( this.presenter );
 
+	},
+	setPeer : function(){
+		var li = document.createElement('li');
+
+		new OpenPath.Video( li );
+
+		this.peersList.appendChild(li);
 	},
 	getUserLocation : function(){
 		//location error

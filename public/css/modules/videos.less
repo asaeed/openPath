@@ -14,9 +14,12 @@
 	 * video mixin
 	 */
 	.video(){
+		border: 1px solid red;
+		.box-sizing(border-box);
 
 		background-image: url('/images/poster.png');
 		background-repeat: no-repeat;
+		background-position: center;
 		background-size: contain;
 
 		.video{
@@ -31,8 +34,6 @@
 	aside {
 		float: left;
 		height: 100%;
-		border: 1px solid red;
-		.box-sizing(border-box);
 	}
 	#presenter {
 		width:75%;
@@ -41,10 +42,11 @@
 	aside {
 		width:25%;
 
-		ul.videoList {
+		ul#peersList {
 			height: 100%;
 			li {
 				.video();
+				height:25%;
 			}
 		}
 	}

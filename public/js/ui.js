@@ -37,6 +37,14 @@ OpenPath.Ui = {
 		}
 	},
 	/**
+	 * tooltips
+	 */
+	removeQueryStringFromUrl : function(){
+		if(window.location.search){
+			history.pushState({query:window.location.search}, document.title, '/');
+		}
+	},
+	/**
 	 * convert event title time from 24 hour to 12 hour clock
 	 */
 	convertEventTimeInTitle : function(){
