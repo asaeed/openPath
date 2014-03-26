@@ -16,22 +16,21 @@ module.exports = function(app, io, passport){
 	 * home
 	 */
 	app.get("/", function(req, res){ 
-		//if logged in
 		if(req.isAuthenticated()){
-
-			//check for sessions
+			//logged in
+			//check for query string & sessions
 			RoomHandler.checkForRoom( req , function( event, room ){
-				console.log('DONE CHECKING FOR ROOM');
+				console.log('DONE CHECKING FOR ROOM',req.user);
 
 				res.render("home", { user : req.user,  event : event, room : room });
 
-				SocketHandler.init( io, req.user, room );
+				SocketHandler.start( io, req.user, event, room );
 			});
 
 
 		}else{
-
-			//check for query string
+			//logged out, render intro
+			//check for query string & sessions
 			RoomHandler.checkForRoom( req , function(){
 				res.render("home", { user : null, event : null, room : null });
 			});
@@ -40,7 +39,7 @@ module.exports = function(app, io, passport){
 	});
 
 	/**
-	 * login, signup, logout
+	 * login
 	 */
 	app.get("/login", function(req, res){ 
 		res.render("login");
@@ -53,6 +52,9 @@ module.exports = function(app, io, passport){
 		})
 	);
 
+	/**
+	 * signup
+	 */
 	app.get("/signup", function (req, res) {
 		res.render("signup");
 	});
@@ -67,10 +69,15 @@ module.exports = function(app, io, passport){
 		});
 	});
 
+	/**
+	 * logout
+	 */
 	app.get('/logout', function(req, res){
 		req.logout();
 		res.redirect('/');
 	});
+
+
 
 
 	/**

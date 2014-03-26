@@ -4,15 +4,21 @@
 /**
  * init socketHandler
  */
-module.exports.init = function( io, user, room ){
+module.exports.start = function( io, user, event, room ){
 	var self = this;
+
+
 	/**
 	 * socket.io
 	 */
 	io.sockets.on('connection', function (socket) {
-		//socket.emit('userConnected', { user: req.user }); //? just emit
-		console.log("We have a new client: " + socket.id);
+		socket.emit('userConnected', { user: user }); //? just emit
+		console.log("We have a new socket client: " + socket.id);
 
+
+		/**
+		 * on peer_id
+		 */
 		socket.on('peer_id', function(data) {
 			console.log("Received: 'peer_id' " + data);
 
@@ -29,10 +35,15 @@ module.exports.init = function( io, user, room ){
 			socket.broadcast.emit('peer_id',data);
 		});
 		
-		
+
+		/**
+		 * on disconnect
+		 */
 		socket.on('disconnect', function() {
 			console.log("Client has disconnected");
 		});
+
+
 	});
 };
 

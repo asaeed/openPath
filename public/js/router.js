@@ -145,9 +145,7 @@ OpenPath.Router = {
 		this.show(this.videos);
 		this.show(this.videosView);
 
-		//handle in main
-
-
+		//handle video views in main
 	},
 	showInvite : function(){
 		this.show(this.invite);

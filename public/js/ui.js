@@ -8,6 +8,8 @@ OpenPath = window.OpenPath || {};
  */
 OpenPath.Ui = {
 	init : function(){
+		this.videosView = document.getElementById('videosView');
+
 		this.events();
 		this.removeQueryStringFromUrl();
 		this.convertEventTimeInTitle();
@@ -23,7 +25,8 @@ OpenPath.Ui = {
 		this.w = window.innerWidth;
 		this.h = window.innerHeight;
 
-		
+		//set videos height
+		this.videosView.style.height = this.h + 'px';
 	},
 	/**
 	 * remove query string for URL

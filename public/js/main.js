@@ -21,6 +21,10 @@ OpenPath = {
 		}
 		//count();
 		
+		//video holder elements
+		this.presenter = document.getElementById('presenter');
+		this.videoList = document.getElementById('videoList');
+
 		//init ui 
 		this.Ui.init();
 
@@ -29,7 +33,9 @@ OpenPath = {
 		this.Router.checkRoute();
 		
 		//connect to peer, socket, get usermedia, get location
-		this.peerHandler();	
+		this.peerHandler();
+
+		this.setPresenter();
 	},
 	//loop : function(){},// on node side!!
 	peerHandler : function(){
@@ -53,6 +59,7 @@ OpenPath = {
 
 		});
 
+		//bind call event, called in socket on peer ide
 		this.peer.on('call', function( incoming_call ) {
 			console.log("Got a call!");
 			incoming_call.answer(self.my_stream); // Answer the call with our stream from getUserMedia
@@ -61,6 +68,12 @@ OpenPath = {
 				var ovideoElement = document.getElementById('othervideo');
 				ovideoElement.src = window.URL.createObjectURL(remoteStream) || remoteStream;
 				ovideoElement.play();
+
+				//TODO
+				//add new video instances to list
+				//mute or unmute depending on room
+
+
 			});
 		});	
 			
@@ -69,10 +82,11 @@ OpenPath = {
 		var self = this;
 		var socket = io.connect('http://localhost');
 
-
+		/**/
 		socket.on('userConnected', function (data) {
 			console.log('userConnected',data.user.email);
 		});
+		
 		socket.on('userDisconnected', function (data) {
 			console.log('userDisconnected',data.user.email);
 		});
@@ -118,15 +132,31 @@ OpenPath = {
 				{video: true, audio: true},
 				function(stream) {
 					self.my_stream = stream;
+
+					/*
 					var videoElement = document.getElementById('myvideo');
 					videoElement.src = window.URL.createObjectURL(stream) || stream;
 					videoElement.play();
+					*/
+
+					//TODO
+					//new video
+					//if presenter of event
+					//if room creator -> start on main -> on other join go to small
+					//mute if not
+					
+
 				},
 				function(err) {
 						console.log('Failed to get local stream' ,err);
 				}
 			);
 		}
+	},
+	setPresenter : function(){
+		
+		new OpenPath.Video( this.presenter );
+
 	},
 	getUserLocation : function(){
 		//location error
