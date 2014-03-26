@@ -7,12 +7,11 @@
 module.exports.start = function( io, user, event, room ){
 	var self = this;
 
-
 	/**
 	 * socket.io
 	 */
 	io.sockets.on('connection', function (socket) {
-		socket.emit('userConnected', { user: user }); //? just emit
+		socket.emit('userConnected', { user: user.email, room : room }); //? just emit
 		console.log("We have a new socket client: " + socket.id);
 
 
@@ -32,7 +31,7 @@ module.exports.start = function( io, user, event, room ){
 			}
 			
 			// Tell everyone my peer_id
-			socket.broadcast.emit('peer_id',data);
+			socket.broadcast.emit('peer_id', data );
 		});
 		
 

@@ -30,7 +30,7 @@ OpenPath.Ui = {
 		this.videosView.style.height = this.h + 'px';
 	},
 	/**
-	 * remove query string for URL
+	 * tool tips
 	 */
 	tooltips : function(){
 		var toolTips = document.getElementsByClassName('tooltip');
@@ -49,7 +49,7 @@ OpenPath.Ui = {
 			//make tip
 			var tip = document.createElement('div');
 			tip.classList.add('tip');
-			tip.innerHTML = btn.getAttribute('title');
+			tip.innerHTML = btn.dataset.title;
 			tip.style.top = btn.offsetTop + btn.offsetHeight + 20 + 'px';
 			tip.style.left = btn.offsetLeft  + 'px';
 
@@ -71,7 +71,6 @@ OpenPath.Ui = {
 
 			function show(){
 				if(over){
-					console.log('show');
 					tip.style.display = 'block';
 					tip.style.opacity = 1;
 					tip.style.left = mousePos.x - (tip.offsetWidth/2)  + 'px';
@@ -85,7 +84,7 @@ OpenPath.Ui = {
 		}
 	},
 	/**
-	 * tooltips
+	 * remove query string for URL
 	 */
 	removeQueryStringFromUrl : function(){
 		if(window.location.search){
