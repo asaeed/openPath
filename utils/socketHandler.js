@@ -19,6 +19,9 @@ module.exports.start = function( io, user, event, room ){
 		socket.on('adduser', function(user) {
 			console.log("Received: 'peer_id' " + user.email, user.peer_id);
 
+			//TOdO if(socket.user)
+
+			
 			//save user & room to socket session
 			socket.user = user;
 			socket.room = room._id;

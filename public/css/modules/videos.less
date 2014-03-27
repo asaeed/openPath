@@ -139,6 +139,74 @@
 		}
 	}
 
-	
+	/*#chat*/
+	#chat {
+		position:absolute;
+		width:75%;
+		bottom:-225px;
+		z-index:11;
+		background:@blackTransulcent;
+		.transition(~"bottom 1s ease-in-out"); 
+		header {
+			overflow:hidden;
+			padding:0.8em 1em;
+			p.msg {
+				float:left;
+				color:#d6d6d6;
+				font-size:1.8em;
+				padding:0 0 0 10px;
+				margin:0;
+			}
+			a.toggler {
+				background: url('/images/sprite-chat-icon.png') no-repeat scroll 0 -12px;
+				width: 12px;
+				height: 12px;
+				float:right;
+				text-indent:-9999px;
+			}
+		}
+		#chatwindow{
+			/*height:42.96875%; max-width:240px;*/ 
+			height:130px; 
+			overflow:auto; 
+			padding:0 10px 0 20px; 
+			/*background:#ebeae7;*/
+			strong{
+				font-weight:normal;
+			}
+			ol{
+				margin:0;
+				padding:0;
+				li{
+					display:block;
+					list-style:none;
+					padding:7px 0;
+					font-size:1.3em;
+					color:#fff;
+					span {
+						font-weight:bold;
+					}
+				}
+			}
+		}
+		input.commentfield{
+			width:90%;
+			padding:10px;
+			/*max-width:215px; */
+			margin:25px 10px 35px 20px;
+		}
+		.user1 span{color:#3e9ed5;}
+		.user2 span{color:#747474;}
+	}
+	/*chat open*/
+	#chat.open {
+		bottom:0;
+		header {
+			a.toggler {
+				background-position: 0 0;
+			}
+		}
+	}
+
 
 }
