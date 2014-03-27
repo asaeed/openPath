@@ -95,7 +95,7 @@ module.exports = function(app, io, passport){
 		host:     EmailConfig.email.host, 
 		ssl:      true
 	});
-	
+
 	app.post('/email', function(req, res){
 		console.log('about to send an email...');
 
@@ -225,9 +225,6 @@ module.exports = function(app, io, passport){
 		});
 	});
 
-
-
-
 	//events post
 	app.post("/events", function (req, res) {
 		Event.addEvent(req, function(err, newEvent){
@@ -237,4 +234,27 @@ module.exports = function(app, io, passport){
 		});
 	});
 
+	/**
+	 * check if presenter 
+	 */
+	app.get('/presenter/:id/:email', function(req, res){
+		var id = req.params.id;
+		var email = req.params.email;
+   		console.log('Retrieving presenter : ' + id+' '+email);
+		Room.findOne({ _id: id }, function (err, room) {
+			if (err) return console.error(err);
+
+			//check users for room creator
+			User.findOne({ _id: room.creatorID }, function (err, user) {
+				if (err) return console.error(err);
+
+				if(user.email == email){
+					res.send(true);
+				}else{
+					res.send(false);
+				}
+			});
+		});
+
+	});
 };

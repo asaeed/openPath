@@ -10,17 +10,16 @@ OpenPath = {
 	init : function(){
 		console.log('OpenPath init');
 
-		//count to check for reload testing - delete
-		var c = 0;
-		function count(){
-			c++;
-			console.log(c);
-			setTimeout(function(){
-				count();
-			},1000)
-		}
-		//count();
+		//configs
+		this.peerKey = 'w8hlftc242jzto6r';
+		this.socketConnection = 'http://localhost';
+
+		//you :)
+		this.user = {};
 		
+		//set peers array (other's videos)
+		this.peers = [];
+
 		//video holder elements
 		this.presenter = document.getElementById('presenter');
 		this.peersList = document.getElementById('peersList');
@@ -32,45 +31,88 @@ OpenPath = {
 		this.Router.init();
 		this.Router.checkRoute();
 		
-		//connect to peer, socket, get usermedia, get location
-		this.peerHandler();
 
-		this.setPresenter();
+		//connect to peer, socket
+		this.connect();
+
+		//get usermedia, get location
+		//this.getUserMedia();
+		//this.getUserLocation();
+
+
+		//stubs
+		//this.setPresenter();
 		for(var i=4;i>0;i--){
-			this.setPeer();
+			//this.setPeer();
 		}
 	},
-	//loop : function(){},// on node side!!
-	peerHandler : function(){
-		var self = this;
+	connect : function(){
+		var self = this,
+			peer = new Peer({key: this.peerKey }), //TODO: out own peer server? //OpenPath.rtc.server= "ws://www.openpath.me:8001/";
+			socket = io.connect(this.socketConnection);
+		/**
+		 * user obj to send to others
+		 */
+		this.user = {
+			name :  document.getElementById('userName').value,
+			email :  document.getElementById('email').value,
+			room_id : document.getElementById('roomId').value,
+			event_id : document.getElementById('eventId').value,
+			peer_id : null,
+			stream :  null,
+			location : {
+				coords: {
+					latitude : null,
+					longitude : null
+				}
+			}
+		};
 
-		this.peer = new Peer({key: 'w8hlftc242jzto6r'}); //TODO: out own peer server? //OpenPath.rtc.server= "ws://www.openpath.me:8001/";
-		this.peer_id = null;
+		/**
+		 * socket connect
+		 */
+		socket.on('connect', function() {
+			console.log("connected to socket");
+			//socket.emit("connected", self.user );
+		});
 
+		/**
+		 * socket sending 
+		 */
 
-		// Get an ID from the PeerJS server		
-		this.peer.on('open', function(id) {
-		  console.log('My peer ID is: ' + id);
-		  self.peer_id = id;
+		/**
+		 * Get an ID from the PeerJS server		
+		 */
+		peer.on('open', function(id) {
+		  self.user.peer_id = id;
 
+		  //send peer id
+		  socket.emit("peer_id", self.user );
 
-		  //next
-		  self.socketHandler();
-		  self.getUserMedia();
-		  self.getUserLocation();
+		  self.checkIfPresenter( self.user );
 
+		  console.log('sending peer_id',self.user);
 
 		});
 
-		//bind call event, called in socket on peer ide
-		this.peer.on('call', function( incoming_call ) {
+		/**
+		 * bind call event, called in socket on peer id
+		 */
+		peer.on('call', function( incoming_call ) {
 			console.log("Got a call!");
-			incoming_call.answer(self.my_stream); // Answer the call with our stream from getUserMedia
+
+			if(self.user.stream)
+			incoming_call.answer(self.user.stream); // Answer the call with our stream from getUserMedia
+			//TODO else - you're in view only mode modal
+
 			incoming_call.on('stream', function(remoteStream) {  // we receive a getUserMedia stream from the remote caller
+
+				//check if presenter
+
 				// And attach it to a video object
-				var ovideoElement = document.getElementById('othervideo');
-				ovideoElement.src = window.URL.createObjectURL(remoteStream) || remoteStream;
-				ovideoElement.play();
+				//var ovideoElement = document.getElementById('othervideo');
+				//ovideoElement.src = window.URL.createObjectURL(remoteStream) || remoteStream;
+				//ovideoElement.play();
 
 				//TODO
 				//add new video instances to list
@@ -78,100 +120,68 @@ OpenPath = {
 
 
 			});
-		});		
-	},
-	socketHandler : function(){
-		var self = this;
-		var socket = io.connect('http://localhost');
-
-		/**/
-		socket.on('userConnected', function (data) {
-			console.log('userConnected',data); //seems to return a list of all users
-		});
-		
-		socket.on('userDisconnected', function (data) {
-			console.log('userDisconnected',data.user.email);
 		});
 
-
-
-
-		// When we connect, assuming we have a peer_id, send it out
-		socket.on('connect', function() {
-			console.log("Connected");
-
-			// When we connect, if we have a peer_id, send it out	
-			if (self.peer_id != null) {
-				console.log("peer id is not null, sending it");
-				socket.emit("peer_id",self.peer_id);
-			}
-		});
-
-		// Receive other folks peer_ids
-		socket.on('peer_id', function (data) {
-			console.log("Got a new peer: " + data);
-
-			// Call them with our stream, my_stream
-			console.log("Calling peer: " + data);						
-			var call = self.peer.call(data, self.my_stream);
-			console.log(call,self.peer)
-			//if allowed ... else call undefined
-
-			// After they answer, we'll get a 'stream' event with their stream	
-			call.on('stream', function(remoteStream) {
-				console.log("Got remote stream");
-				document.getElementById('othervideo').src = window.URL.createObjectURL(remoteStream) || remoteStream;
-			});
-		});		
-
-	},
-	getUserMedia : function(){
-		var self = this;
-		this.my_stream = null;
-
+		/**
+		 * getUserMedia
+		 */
 		window.URL = window.URL || window.webkitURL || window.mozURL || window.msURL;
 		navigator.getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia;
-		if (navigator.getUserMedia) {
-			navigator.getUserMedia(
-				{video: true, audio: true},
-				function(stream) {
-					self.my_stream = stream;
+		if(navigator.getUserMedia) {
+			navigator.getUserMedia( {video: true, audio: true}, function(stream) {
 
-					/*
-					var videoElement = document.getElementById('myvideo');
-					videoElement.src = window.URL.createObjectURL(stream) || stream;
-					videoElement.play();
-					*/
+				console.log('sending stream', stream)
+				//set user stream
+				self.user.stream = stream;
 
-					//TODO
-					//new video
-					//if presenter of event
-					//if room creator -> start on main -> on other join go to small
-					//mute if not
-					
+				//send stream
+		  		socket.emit("stream", self.user);
 
-				},
-				function(err) {
-						console.log('Failed to get local stream' ,err);
-				}
-			);
+		  		/**
+		  		 * now that we have your video
+		  		 */
+		  		
+				/*
+				var videoElement = document.getElementById('myvideo');
+				videoElement.src = window.URL.createObjectURL(stream) || stream;
+				videoElement.play();
+				*/
+
+				//TODO
+				//new video
+				//if presenter of event
+				//if room creator -> start on main -> on other join go to small
+				//mute if not
+				
+				//hide not yet created modal about clicking allow
+
+			},
+			function(err) {
+				console.log('Failed to get local stream' ,err);
+			});
+		}		 
+
+		/**
+		 * get user location
+		 */
+		function setLocation(position){
+			self.user.location.coords.latitude = position.coords.latitude;
+			self.user.location.coords.longitude  = position.coords.longitude;
+
+			console.log("Latitude: " + position.coords.latitude + 
+						" Longitude: " + position.coords.longitude );
+
+			//TODO: maps etc
+			//save to db
+
+			//send location
+		 	socket.emit("location", self.user );
+		 	console.log('sending location',self.user);
+
+		 	self.renderMyMap();
 		}
-	},
-	setPresenter : function(){
-
-		new OpenPath.Video( this.presenter );
-
-	},
-	setPeer : function(){
-		var li = document.createElement('li');
-
-		new OpenPath.Video( li );
-
-		this.peersList.appendChild(li);
-	},
-	getUserLocation : function(){
 		//location error
-		function showError(error){
+		function showLocationError(error){
 			switch(error.code){
 				case error.PERMISSION_DENIED:
 					console.log("User denied the request for Geolocation.");
@@ -189,22 +199,108 @@ OpenPath = {
 		}
 		//get location
 		if(navigator.geolocation){
-			navigator.geolocation.getCurrentPosition( this.setUserLocation, showError );
+			navigator.geolocation.getCurrentPosition( setLocation, showLocationError );
 		}else{
 			console.log("Geolocation is not supported by this browser.");
 		}
-	},
-	setUserLocation : function(position){
-		this.latitude = position.coords.latitude;
-		this.longitude = position.coords.longitude;
-		console.log("Latitude: " + position.coords.latitude + 
-					" Longitude: " + position.coords.longitude );
 
-		//TODO: maps etc
+
+		/**
+		 * socket receiving
+		 */
+
+
+		//Receive other folks peer_ids
+		socket.on('peer_id', function (data) {
+			console.log("Got a new peer: " + data);
+
+			/*
+			// Call them with our stream, my_stream
+			console.log("Calling peer: " + data);		
+
+			if(self.user.stream)				
+			var call = self.peer.call(data, self.user.stream);
+			console.log(call, peer)
+			//if allowed ... else call undefined
+
+			// After they answer, we'll get a 'stream' event with their stream	
+			call.on('stream', function(remoteStream) {
+				console.log("Got remote stream");
+				document.getElementById('othervideo').src = window.URL.createObjectURL(remoteStream) || remoteStream;
+			});
+			*/
+
+		});		
+
+		socket.on('location', function (data) {
+			console.log('got a new location',data);
+		});
+
+		socket.on('stream', function (data) {
+			console.log('got a new stream',data);
+		});
+		
+
+
+		/*
+		socket.on('userConnected', function (data) {
+			console.log('userConnected',data); //seems to return a list of all users ever connected
+		});
+		
+		socket.on('userDisconnected', function (data) {
+			console.log('userDisconnected',data.self.user.email);
+		});
+		*/
+
+
+	},
+	checkIfPresenter : function( presenter ){
+
+		//create modal instance
+		var presenterMondal = new OpenPath.Model();
+		presenterMondal.url = '/presenter/'+this.user.room_id+'/'+presenter.email;
+		//get data
+		presenterMondal.get();
+		presenterMondal.got = function(data){
+			console.log('eventsModal got',data)
+		};
+
+
+	},
+	setPresenter : function(){
+
+		new OpenPath.Video( this.presenter );
+
+	},
+	setPeer : function(){
+		var li = document.createElement('li');
+
+		new OpenPath.Video( li );
+
+		this.peersList.appendChild(li);
+	},
+	renderMyMap : function(){
+		console.log('render my map')
 	}
 };
 
 //try 	document.addEventListener("DOMContentLoaded", function() {
 window.onload = function(){
+
+	/*
+
+	//count to check for reload testing - delete
+	var c = 0;
+	function count(){
+		c++;
+		console.log(c);
+		setTimeout(function(){
+			count();
+		},1000)
+	}
+	count();
+
+	*/
+
 	OpenPath.init();
 };

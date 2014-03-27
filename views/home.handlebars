@@ -7,15 +7,25 @@
 	{{> events }}
 	{{> profile }}
 
+
+
+
 	<!-- TODO remove -->
 	<div class="output">
-		<p>user id = {{user.email}}</p>
+		
+		<p>user = {{user.email}}</p>
 		<p>event id = {{event._id}}</p>
 		<p>room id = {{room._id}}</p>
 	</div>
 
 
 </div>
+
+<input type="hidden" name="userName" id="userName" value="{{#if user.firstName }}{{user.firstName}} {{user.lastName}}{{else}}{{user.email}}{{/if}}" />
+<input type="hidden" name="email" id="email" value="{{user.email}}" />
+<input type="hidden" name="eventId" id="eventId" value="{{event._id}}" />
+<input type="hidden" name="roomId" id="roomId" value="{{room._id}}" />
+
 
 <!--scripts-->
 <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=true&libraries=places"></script>
