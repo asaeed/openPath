@@ -68,6 +68,19 @@ OpenPath = {
 			}
 		};
 
+
+		self.checkIfPresenter( self.user , function( isPresenter ){
+			if(isPresenter){
+				console.log('am presenter')
+			}else{
+				console.log('am not presenter')
+			}
+		});
+
+
+
+
+
 		/**
 		 * socket connect
 		 */
@@ -88,9 +101,6 @@ OpenPath = {
 
 		  //send peer id
 		  socket.emit("peer_id", self.user );
-
-		  self.checkIfPresenter( self.user );
-
 		  console.log('sending peer_id',self.user);
 
 		});
@@ -178,7 +188,7 @@ OpenPath = {
 		 	socket.emit("location", self.user );
 		 	console.log('sending location',self.user);
 
-		 	self.renderMyMap();
+		 	//self.renderMyMap();
 		}
 		//location error
 		function showLocationError(error){
@@ -254,7 +264,7 @@ OpenPath = {
 
 
 	},
-	checkIfPresenter : function( presenter ){
+	checkIfPresenter : function( presenter, done ){
 
 		//create modal instance
 		var presenterMondal = new OpenPath.Model();
@@ -263,6 +273,7 @@ OpenPath = {
 		presenterMondal.get();
 		presenterMondal.got = function(data){
 			console.log('eventsModal got',data)
+			done(data);
 		};
 
 
