@@ -14,7 +14,7 @@ OpenPath.SuperMVC.prototype.init = function(){
 	console.log('new mvc', this.name);
 };
 OpenPath.SuperMVC.prototype.get = function(){
-	console.log('mvc get', this.name,this.url);
+	//console.log('mvc get', this.name,this.url);
 	
 	var self = this;
 	

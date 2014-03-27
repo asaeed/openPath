@@ -5,18 +5,24 @@ OpenPath = window.OpenPath || {};
 /**
  * @class View
  */
-OpenPath.Video = function( element ){
-	this.element = element;
-	//this.render();
+OpenPath.Video = function(){
+	console.log('new video');
 };
 //inherits View & SuperMVC
 //OpenPath.Video.prototype = new OpenPath.View();
 //OpenPath.Video.prototype.constructor = OpenPath.Video;
 
-
-
-OpenPath.Video.prototype.render = function( user ){
-	console.log('render vid',user)
+/**
+ * init, sets element
+ */
+OpenPath.Video.prototype.init = function( element ){
+	this.element = element;
+};
+/**
+ * called everytime we get a new piece of data
+ */
+OpenPath.Video.prototype.render = function( whatToRender, user ){
+	console.log('render', whatToRender);
 
 	//compile template
 	this.source = document.getElementById('videoTemplate').innerHTML;
@@ -37,10 +43,33 @@ OpenPath.Video.prototype.render = function( user ){
 
 	//now that in dom, bind events
 	this.events();
-	
 
-	//render map
-	OpenPath.Ui.renderMap(this.map, 40.7636152, -73.99543109999999,'');
+
+	/**
+	 * peer_id
+	 */
+	if(user.peer_id){
+		this.peer_id = user.peer_id;
+	}
+	/**
+	 * render map
+	 */
+	if(user.location.coords.latitude && user.location.coords.longitude){
+		
+		OpenPath.Ui.renderMap(this.map, user.location.coords.latitude, user.location.coords.longitude);
+	}
+	/**
+	 * render video
+	 */
+	if(user.stream){
+		/**
+  		 * now that we have your video
+  		 */
+		this.video.src = window.URL.createObjectURL(user.stream) || user.stream
+		this.video.play();
+	}		
+	//TODO
+	//mute if not
 };
 
 

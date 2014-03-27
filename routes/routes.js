@@ -21,7 +21,7 @@ module.exports = function(app, io, passport){
 			//logged in
 			//check for query string & sessions
 			RoomHandler.checkForRoom( req , function( event, room ){
-				console.log('DONE CHECKING FOR ROOM',req.user);
+				//console.log('DONE CHECKING FOR ROOM',req.user);
 
 				var safeUser = {
 					firstName : req.user.firstName,

@@ -15,3 +15,15 @@ module.exports.formatTime = function( timeString ){
 	
 	return hour + ':' + mins + ' '+meridiem;
 };
+
+module.exports.uniqueArray = function( arr ){
+   var u = {}, a = [];
+   for(var i = 0, l = arr.length; i < l; ++i){
+      if(u.hasOwnProperty(arr[i])) {
+         continue;
+      }
+      a.push(arr[i]);
+      u[arr[i]] = 1;
+   }
+   return a;
+};
