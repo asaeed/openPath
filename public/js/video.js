@@ -7,7 +7,7 @@ OpenPath = window.OpenPath || {};
  */
 OpenPath.Video = function( element ){
 	this.element = element;
-	this.render();
+	//this.render();
 };
 //inherits View & SuperMVC
 //OpenPath.Video.prototype = new OpenPath.View();
@@ -15,15 +15,15 @@ OpenPath.Video = function( element ){
 
 
 
-OpenPath.Video.prototype.render = function(){
-
+OpenPath.Video.prototype.render = function( user ){
+	console.log('render vid',user)
 
 	//compile template
 	this.source = document.getElementById('videoTemplate').innerHTML;
 	this.template = Handlebars.compile(this.source);
 
 	//add data to template
-	this.element.innerHTML = this.template( {name:'butt head', mute : 'false'} );
+	this.element.innerHTML = this.template( {name: user.name, mute : 'false'} );
 
 
 	//define elements now in dom
@@ -92,7 +92,7 @@ OpenPath.Video.prototype.events = function(){
 	this.closeBtn.addEventListener('click',function(e){
 		self.closeBtn.style.display = 'none';
 		self.mapBtn.style.display = 'block';
-		
+
 		self.mapWrap.style.opacity = 0;
 	},false);
 };

@@ -17,13 +17,6 @@ OpenPath = {
 		//you :)
 		this.user = {};
 		
-		//set peers array (other's videos)
-		this.peers = [];
-
-		//video holder elements
-		this.presenter = document.getElementById('presenter');
-		this.peersList = document.getElementById('peersList');
-
 		//init ui 
 		this.Ui.init();
 
@@ -32,19 +25,30 @@ OpenPath = {
 		this.Router.checkRoute();
 		
 
-		//connect to peer, socket
+		/**
+		 * init videos
+		 */
+		this.userVideo = null; //your video :)
+		this.peerVideos = []; //set peers array (other's videos)
+		this.presenter =  new OpenPath.Video( document.getElementById('presenter') );
+		this.peersList = document.getElementById('peersList');
+
+		//make side videos, start with 4 (¿ add more later ?)
+		for(var i=4;i>0;i--){
+			var li = document.createElement('li');
+			//add to array
+			this.peerVideos.push( new OpenPath.Video( li ) );
+			//append to list
+			this.peersList.appendChild(li);
+		}
+
+
+		/**
+		 * connect to peer, socket, get usermedia, get location
+		 * communicate with socket
+		 */
 		this.connect();
 
-		//get usermedia, get location
-		//this.getUserMedia();
-		//this.getUserLocation();
-
-
-		//stubs
-		//this.setPresenter();
-		for(var i=4;i>0;i--){
-			//this.setPeer();
-		}
 	},
 	connect : function(){
 		var self = this,
@@ -71,10 +75,17 @@ OpenPath = {
 
 		self.checkIfPresenter( self.user , function( isPresenter ){
 			if(isPresenter){
-				console.log('am presenter')
+				console.log('am presenter');
+				//set userVideo to presenter
+				self.userVideo = self.presenter;
 			}else{
-				console.log('am not presenter')
+				console.log('am not presenter');
+				//set user video to #0 of peers
+				self.userVideo = self.peerVideos[0];
 			}
+		
+			//render user video
+			self.userVideo.render( self.user );
 		});
 
 
@@ -272,23 +283,11 @@ OpenPath = {
 		//get data
 		presenterMondal.get();
 		presenterMondal.got = function(data){
-			console.log('eventsModal got',data)
+			console.log('presenterMondal got',data)
 			done(data);
 		};
 
 
-	},
-	setPresenter : function(){
-
-		new OpenPath.Video( this.presenter );
-
-	},
-	setPeer : function(){
-		var li = document.createElement('li');
-
-		new OpenPath.Video( li );
-
-		this.peersList.appendChild(li);
 	},
 	renderMyMap : function(){
 		console.log('render my map')
