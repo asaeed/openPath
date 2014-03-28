@@ -73,41 +73,41 @@ module.exports.start = function( io ){
 		
 		/**
 		 * on location
-		 
+		 */
 		socket.on('location', function(user) {
 			console.log("Received: 'location' " + user.email, user.location);
 
 			// We can save this in the socket object if we like
-			socket.user = user;
-			console.log("Socket Saved: " , socket.user);
+			//socket.user = user;
+			//console.log("Socket Saved: " , socket.user);
 			
 			// Tell everyone my peer_id
 			//if(room._id == user.room_id) socket.broadcast.emit('location', user );
 
 
 			// we tell the client to execute 'location' with 1 parameter
-			io.sockets.in(socket.room).emit('location', socket.user );
+			io.sockets.in( user.room_id ).emit('location', user );
 			//socket.broadcast.to(room._id).emit('location', socket.user );
 		});
-		*/
+		
 		/**
 		 * on stream
-		
+		 */
 		socket.on('stream', function(user) {
 			console.log("Received: 'stream' " + user.email, user.stream);
 
 			// We can save this in the socket object if we like
-			socket.user = user;
-			console.log("Socket Saved: " , socket.user);
+			//socket.user = user;
+			//console.log("Socket Saved: " , socket.user);
 
 			// Tell everyone my peer_id
 			//if(room._id == user.room_id) socket.broadcast.emit('stream', user );
 
 			// we tell the client to execute 'stream' with 1 parameter
-			io.sockets.in(socket.room).emit('stream', socket.user );
+			io.sockets.in( user.room_id ).emit('stream', user );
 			//socket.broadcast.to(room._id).emit('stream', socket.user );
 		});
-		 */
+		
 
 		/**
 		 * on disconnect
