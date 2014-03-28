@@ -494,6 +494,7 @@ body #home section#videos #videosView .usermeta header .closeBtn {
   background-repeat: no-repeat;
   width: 10px;
   height: 11px;
+  padding-bottom: 6px;
   position: relative;
   top: 3px;
   font-size: 1.3em;
@@ -581,7 +582,7 @@ body #home section#videos #videosView #presenter .video video {
 }
 body #home section#videos #videosView #presenter .usermeta {
   top: 100px;
-  width: 25%;
+  width: 45%;
   height: 40%;
 }
 body #home section#videos #videosView aside {
