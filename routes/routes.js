@@ -21,8 +21,8 @@ module.exports = function(app, io, passport){
 	 * home
 	 */
 	app.get("/", function(req, res){
-		User.deleteAll();
-		
+		Event.deleteAll();
+
 		if(req.isAuthenticated()){
 			//logged in
 			//check for query string & sessions
