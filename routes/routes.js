@@ -212,8 +212,8 @@ module.exports = function(app, io, passport){
 			//ascending
 			publicItems.reverse();
 
-			//res.send({ events: publicItems }); //TODO : fork for admin res.send({ events: items }); 
-			res.send("events", { event: items });
+			res.send({ events: publicItems }); //TODO : fork for admin res.send({ events: items }); 
+			//res.send("events", { event: items });
 		});
 	});
 
