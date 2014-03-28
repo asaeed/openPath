@@ -9,14 +9,12 @@ var OpenPath = window.OpenPath || {};
 OpenPath = {
 	init : function(){
 		console.log('OpenPath init');
+		var self = this;
 
 		//configs
 		this.peerKey = 'w8hlftc242jzto6r';
-		this.socketConnection = 'http://localhost';
+		this.socketConnection = 'http://localhost:3000'; //http://openpath.me/
 
-		//you :)
-		this.user = {};
-		
 		//init ui 
 		this.Ui.init();
 
@@ -24,15 +22,55 @@ OpenPath = {
 		this.Router.init();
 		this.Router.checkRoute();
 		
+		/**
+		 * dom elemets
+		 */
+		this.presenterElement = document.getElementById('presenter')
+		this.peersList = document.getElementById('peersList');
+		this.chat = document.getElementById("chat");
+		this.chatInput = document.getElementById("chatinput");
+		this.chatmsg = document.getElementById("chatmsg");
+		this.chatToggler = document.getElementById("chatToggler");
+
+		/*chat toggle event*/
+		this.chatToggler.addEventListener('click',function(){
+			if(self.chat.classList.contains('open')){
+				self.chat.classList.remove('open');
+			}else{
+				self.chat.classList.add('open');
+				self.chatmsg.innerHTML = 'Chat';
+			}
+		});
+		//input text
+		this.chatInput.addEventListener('keydown', function(event) {
+			if(self.chatInput.value != ''){
+				var key = event.which || event.keyCode;
+				if (key === 13) {
+					console.log('msg',self.chatInput.value)
+					/*
+					var message = OpenPath.username + ": " + self.chatInput.value; 
+					//rtc 
+					rtc._socket.send(
+						JSON.stringify({
+							"eventName": "chat_msg",
+							"data": {
+								"messages": message,
+								"room": OpenPath.room
+							}
+						})
+					);
+					self.addToChat(OpenPath.username, input.value, 'to');
+					input.value = "";
+					*/
+				}
+			}
+		}, false);
 
 		/**
-		 * init videos
+		 * init 2 videos
 		 */
-		this.userVideo = null; //your video :)
-		this.peers = []; //set peers array (other's videos)
 		this.presenter =  new OpenPath.Video();
-		this.presenter.init( document.getElementById('presenter') );
-		this.peersList = document.getElementById('peersList');
+		this.presenter.init( this.presenterElement );
 
 		//create top spot for either you or other peer
 		var li = document.createElement('li');
@@ -42,19 +80,7 @@ OpenPath = {
 
 
 		/**
-		 * connect to peer, socket, get usermedia, get location
-		 * communicate with socket
-		 */
-		this.connect();
-
-	},
-	connect : function(){
-		var self = this,
-			peer = new Peer({key: this.peerKey }), //TODO: out own peer server? //OpenPath.rtc.server= "ws://www.openpath.me:8001/";
-			socket = io.connect(this.socketConnection);
-
-		/**
-		 * user obj to send to others
+		 * user obj to send to others - you :)
 		 */
 		this.user = {
 			name :  document.getElementById('userName').value,
@@ -70,17 +96,23 @@ OpenPath = {
 				}
 			}
 		};
+		this.userVideo = null; //your video :)
+		//array of other's videos
+		this.peers = [];
 
 		/**
 		 * check if this.user is presenter
 		 */
-		self.checkIfPresenter( self.user , function( isPresenter ){
+		this.checkIfPresenter( this.user , function( isPresenter ){
 			if(isPresenter){
 				console.log('I\'m presenter');
 				//set userVideo to presenter
 				self.userVideo = self.presenter;
 
 				//¿ remove topSpot ?
+
+				//add top spot to first peers
+				self.peers.push(self.topSpot)
 			}else{
 				console.log('I\'m not presenter');
 				//set user video to topSpot
@@ -88,67 +120,49 @@ OpenPath = {
 			}
 
 			//render user video
-			self.userVideo.render( 'peer_id', self.user );
+			//self.userVideo.render( 'peer_id', self.user );
+
+			/**
+			 * connect to peer, socket, get usermedia, get location
+			 * communicate with socket
+			 */
+			//self.connect();
 		});
 
 
 
-		/**
-		 * socket sending 
-		 */
-
-		/**
-		 * socket connect
-		 */
-		socket.on('connect', function() {
-			console.log("connected to socket");
-			socket.emit('adduser',  self.user );
-		});
-
-		/**
-		 * Get an ID from the PeerJS server		
-		 */
-		peer.on('open', function(id) {
-			self.user.peer_id = id;
-
-			
-			
-			//send peer id
-			socket.emit("peer_id", self.user );
-			console.log('sending my ('+self.user.email+') peer_id',self.user.peer_id);
-
-			getUserMedia();
-			getUserLocation();
-		});
+	},
+	connect : function(){
+		var self = this,
+			peer = new Peer({key: this.peerKey }), //TODO: out own peer server? //OpenPath.rtc.server= "ws://www.openpath.me:8001/";
+			socket = io.connect(this.socketConnection);
 
 		/**
 		 * getUserMedia
 		 */
 		function getUserMedia(){
-			
 			window.URL = window.URL || window.webkitURL || window.mozURL || window.msURL;
 			navigator.getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia;
 			if(navigator.getUserMedia) {
 				navigator.getUserMedia( {video: true, audio: true}, function(stream) {
 
-					console.log('sending my stream')
+					console.log('got my stream')
 					//set user stream
 					self.user.stream = stream;
 
 					//send stream
-			  		socket.emit("stream", self.user);
+			  		//socket.emit("stream", self.user);
 
-			  		//re-render user video
+			  		//render user video
 					self.userVideo.render( 'stream', self.user );
 
 				},
 				function(err) {
 					console.log('Failed to get local stream' ,err);
 				});
-			}	
+			}
 		}
-	 
-
+		getUserMedia();
 		/**
 		 * get user location
 		 */
@@ -157,11 +171,11 @@ OpenPath = {
 				self.user.location.coords.latitude = position.coords.latitude;
 				self.user.location.coords.longitude  = position.coords.longitude;
 
-				console.log("got location - Latitude: " + position.coords.latitude + 
+				console.log("got my location - Latitude: " + position.coords.latitude + 
 							" Longitude: " + position.coords.longitude );
 
 				//send location
-			 	socket.emit("location", self.user );
+			 	//socket.emit("location", self.user );
 			 	console.log('sending my location');
 
 			 	//re-render user video
@@ -174,6 +188,7 @@ OpenPath = {
 					case error.PERMISSION_DENIED:
 						console.log("User denied the request for Geolocation.");
 					break;
+					
 					case error.POSITION_UNAVAILABLE:
 						console.log("Location information is unavailable.");
 					break;
@@ -192,13 +207,90 @@ OpenPath = {
 				console.log("Geolocation is not supported by this browser.");
 			}
 		}
+		getUserLocation();
+
+		/**
+		 * Get an ID from the PeerJS server		
+		 */
+		peer.on('open', function(id) {
+			self.user.peer_id = id;
+			console.log('got my peerID', id);
+			//send peer id
+			//socket.emit("peer_id", self.user );
+			//console.log('sending my ('+self.user.email+') peer_id',self.user.peer_id);
+		});
+
+		/**
+		 * INCOMING CALL
+		 * bind call event, called in socket on peer id
+		 */
+		peer.on('call', function( incoming_call ) {
+			console.log("Got a call!", incoming_call);
+				console.log("Got a call!");
+			incoming_call.answer(my_stream); // Answer the call with our stream from getUserMedia
+			incoming_call.on('stream', function(remoteStream) {  // we receive a getUserMedia stream from the remote caller
+				// And attach it to a video object
+
+				var peerShell = {
+					peer_id:remoteStream.peer,
+					stream:remoteStream
+				}
+
+				//render other vid
+			  	self.peers[0].render('stream', peerShell );
+			});
+			/*
+			if(self.user.stream){
+				incoming_call.answer(self.user.stream); // Answer the call with our stream from getUserMedia
+				//TODO else - you're in view only mode modal
+
+				incoming_call.on('stream', function(remoteStream) {  // we receive a getUserMedia stream from the remote caller
+
+					console.log('remoteStream',remoteStream)
+					
+					var peer = self.findPeer( peerShell );
+
+					//set stream
+					if(peer){
+						peer.stream = remoteStream;
+						peer.render('stream',peer);
+					}
+					
 
 
+					//check if presenter
+
+					// And attach it to a video object
+					//var ovideoElement = document.getElementById('othervideo');
+					//ovideoElement.src = window.URL.createObjectURL(remoteStream) || remoteStream;
+					//ovideoElement.play();
+
+					//TODO
+					//add new video instances to list
+					//mute or unmute depending on room
+
+
+				});
+			}
+			*/
+		});
+
+		/**
+		 * socket sending 
+		 */
+
+		/**
+		 * socket connect
+		 */
+		socket.on('connect', function() {
+			console.log("connected to socket");
+			socket.emit('adduser',  self.user );
+		});
 
 		/**
 		 * socket receiving
 		 */
-		socket.on('updateconnection', function (username, data, users) {
+		socket.on('updatechat', function (username, data, users) {
 			console.log(username + ': ' + data + '',users);
 			for(var i=0;i<users.length;i++){
 
@@ -297,49 +389,7 @@ OpenPath = {
 			}
 		}
 
-		/**
-		 * INCOMING CALL
-		 * bind call event, called in socket on peer id
-		 */
-		peer.on('call', function( incoming_call ) {
-			console.log("Got a call!", incoming_call);
 
-			if(self.user.stream){
-				incoming_call.answer(self.user.stream); // Answer the call with our stream from getUserMedia
-				//TODO else - you're in view only mode modal
-
-				incoming_call.on('stream', function(remoteStream) {  // we receive a getUserMedia stream from the remote caller
-
-					console.log('remoteStream',remoteStream)
-					var peerShell = {
-						peer_id:remoteStream.peer
-					}
-					var peer = self.findPeer( peerShell );
-
-					//set stream
-					if(peer){
-						peer.stream = remoteStream;
-						peer.render('stream',peer);
-					}
-					
-
-
-					//check if presenter
-
-					// And attach it to a video object
-					//var ovideoElement = document.getElementById('othervideo');
-					//ovideoElement.src = window.URL.createObjectURL(remoteStream) || remoteStream;
-					//ovideoElement.play();
-
-					//TODO
-					//add new video instances to list
-					//mute or unmute depending on room
-
-
-				});
-			}
-
-		});
 
 		/**
 		 * receive location of others

@@ -17,6 +17,8 @@ OpenPath.Video = function(){
  */
 OpenPath.Video.prototype.init = function( element ){
 	this.element = element;
+	this.streamRendered = false;
+	this.mapRendered = false;
 };
 /**
  * called everytime we get a new piece of data
@@ -54,19 +56,22 @@ OpenPath.Video.prototype.render = function( whatToRender, user ){
 	/**
 	 * render map
 	 */
-	if(user.location.coords.latitude && user.location.coords.longitude){
+	if(user.location.coords.latitude && user.location.coords.longitude && !this.mapRendered){
 		
 		OpenPath.Ui.renderMap(this.map, user.location.coords.latitude, user.location.coords.longitude);
+		this.mapRendered = true;
 	}
 	/**
 	 * render video
 	 */
-	if(user.stream){
+	if(user.stream && !this.streamRendered){
 		/**
   		 * now that we have your video
   		 */
 		this.video.src = window.URL.createObjectURL(user.stream) || user.stream
 		this.video.play();
+
+		this.streamRendered = true;
 	}		
 	//TODO
 	//mute if not

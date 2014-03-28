@@ -7,7 +7,7 @@ var Utils = require('../utils/utils');
  */
 module.exports.start = function( io, user, event, room ){
 	var self = this;
-	var users = [];
+	var usernames = [];
 	/**
 	 * socket.io
 	 */
@@ -23,44 +23,51 @@ module.exports.start = function( io, user, event, room ){
 
 			
 			//save user & room to socket session
-			socket.user = user;
+			socket.username = user.email;
 			socket.room = room._id;
 
 
 			//add user to global user list
-			users.push(user);
+			//users.push(user);
+			usernames[user.email] = user.email;
 
 			//uniquify users
-			users = Utils.uniqueArray(users)
+			//users = Utils.uniqueArray(users)
 
 
 			//join room
 			socket.join(room._id);
 			// echo to client they've connected
-			socket.emit('updateconnection', 'SERVER', 'you have connected to room # '+room._id, users);
+			socket.emit('updatechat', 'SERVER', 'you have connected to room # '+room._id, usernames);
 
 			// echo to room that a person has connected to their room
-			socket.broadcast.to(room._id).emit('updateconnection', 'SERVER', user.email + ' has connected to this room', users);
+			socket.broadcast.to(room._id).emit('updatechat', 'SERVER', user.email + ' has connected to this room', users);
 
+		});
+
+		// when the client emits 'sendchat', this listens and executes
+		socket.on('sendchat', function (data) {
+			// we tell the client to execute 'updatechat' with 2 parameters
+			io.sockets.in(socket.room).emit('updatechat', socket.username, data);
 		});
 
 
 		/**
 		 * on peer_id
 		 * @description : the start of the video program
-		 */
+		
 		socket.on('peer_id', function(user) {
 			console.log("Received: 'peer_id' " + user.email, user.peer_id);
 			socket.user = user;
 			console.log("Socket Saved: " , socket.user);
 
-			/*
-			console.log("Saved: " + socket.user);
-			// We can loop through these if we like
-			for (var i  = 0; i < io.sockets.clients().length; i++) {
-				console.log("loop: " + i + " " +io.sockets.clients()[i]);
-			}
-			*/
+			
+			//console.log("Saved: " + socket.user);
+			//// We can loop through these if we like
+			//for (var i  = 0; i < io.sockets.clients().length; i++) {
+			//	console.log("loop: " + i + " " +io.sockets.clients()[i]);
+			//}
+			
 			//if in the same room //!! not sure if this check works but should check on front end as well ( for now )
 			// Tell everyone my peer_id
 			//if(room._id == user.room_id) socket.broadcast.emit('peer_id', user );
@@ -69,10 +76,10 @@ module.exports.start = function( io, user, event, room ){
 			io.sockets.in(socket.room).emit('peer_id', socket.user );
 			//socket.broadcast.to(room._id).emit('peer_id', socket.user );
 		});
-		
+		 */
 		/**
 		 * on location
-		 */
+		 
 		socket.on('location', function(user) {
 			console.log("Received: 'location' " + user.email, user.location);
 
@@ -88,10 +95,10 @@ module.exports.start = function( io, user, event, room ){
 			io.sockets.in(socket.room).emit('location', socket.user );
 			//socket.broadcast.to(room._id).emit('location', socket.user );
 		});
-
+		*/
 		/**
 		 * on stream
-		 */
+		
 		socket.on('stream', function(user) {
 			console.log("Received: 'stream' " + user.email, user.stream);
 
@@ -106,7 +113,7 @@ module.exports.start = function( io, user, event, room ){
 			io.sockets.in(socket.room).emit('stream', socket.user );
 			//socket.broadcast.to(room._id).emit('stream', socket.user );
 		});
-
+		 */
 
 		/**
 		 * on disconnect
@@ -114,14 +121,18 @@ module.exports.start = function( io, user, event, room ){
 		socket.on('disconnect', function() {
 			console.log("Client has disconnected");
 			// remove the username from global usernames list
-			//delete users[socket.user];
-			var user_index = users.indexOf(socket.user);
-			if (user_index > -1) {
-   				users.splice(user_index, 1);
-			}
+			delete users[socket.usernames];
+			
+			//var user_index = users.indexOf(socket.user);
+			//if (user_index > -1) {
+   			//	users.splice(user_index, 1);
+			//}
+
+			// update list of users in chat, client-side
+			io.sockets.emit('updateusers', usernames);
 
 			// echo globally that this client has left
-			socket.broadcast.emit('updateconnection', 'SERVER', socket.user.email + ' has disconnected',users);
+			socket.broadcast.emit('updateconnection', 'SERVER', socket.user.email + ' has disconnected',usernames);
 			socket.leave(socket.room);
 		});
 		
