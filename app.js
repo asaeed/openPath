@@ -51,7 +51,7 @@ require('./utils/passport')(passport, config)
  * Config
  */
 app.configure(function(){
-  app.set('port', process.env.PORT || 3000);
+  app.set('port', process.env.PORT || 8080);
   app.engine('handlebars', exphbs({defaultLayout: 'main'}));
   app.set('views', __dirname + '/views');
   app.set('view engine', 'handlebars');
