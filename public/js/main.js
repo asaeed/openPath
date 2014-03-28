@@ -258,7 +258,6 @@ OpenPath = {
 		 */
 		socket.on('updatechat', function (user, data, users) {
 			var from = user === 'SERVER' ? user : user.email;
-
 			//console.log(from+ ': ' + data + '',users);
 
 			for(var key in users){
@@ -269,7 +268,20 @@ OpenPath = {
 			self.chatmsg.innerHTML = 'New Message';
 			self.chatmsg.classList.add('blink');
 
-			var msg = '<li class="user1"><span>'+ from +'</span>: ' + data + '</li>';
+			//set color of user
+			var className;
+			if(from === 'SERVER'){
+				className = 'server';
+			}else if(from === self.user.email){
+				className = 'me';
+				from = user.name ? user.name: user.email;
+				console.log('from', from, user.firstName )
+			}else{
+				className = 'other';
+				from = user.name ? user.name: user.email;
+			}
+
+			var msg = '<li class="'+className+'"><span>'+ from +'</span>: ' + data + '</li>';
 			self.chatmessages.innerHTML += msg;
 			self.chatwindow.scrollTop = chatwindow.scrollHeight;
 		});

@@ -32,10 +32,10 @@ module.exports.start = function( io ){
 			//join room
 			socket.join(user.room_id);
 			// echo to client they've connected
-			socket.emit('updatechat', 'SERVER', 'you have connected to room # '+user.room_id, connected_users);
+			socket.emit('updatechat', 'SERVER', 'you have connected to room #'+user.room_id, connected_users);
 
 			// echo to room that a person has connected to their room
-			socket.broadcast.to(user.room_id).emit('updatechat', 'SERVER','broadcast: '+ user.email + 'broadcast has connected to room # '+user.room_id, connected_users);
+			socket.broadcast.to(user.room_id).emit('updatechat', 'SERVER', user.name ? user.name : user.email + ' has connected to this room.', connected_users);
 
 		});
 

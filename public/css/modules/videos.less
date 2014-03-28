@@ -156,6 +156,27 @@
 				padding:0 0 0 10px;
 				margin:0;
 			}
+			p.blink {
+				//-webkit-animation-name: blink;
+				//-webkit-animation-duration:20s;
+				//-webkit-animation-iteration-count: 1;
+				//-webkit-animation-timing-function: ease-out;  
+				//-webkit-animation-fill-mode: forwards;
+				-webkit-animation: blink 2s infinite;
+			}
+			@-webkit-keyframes blink {
+				0% {
+					opacity:1;
+				}
+				
+				50% {
+					opacity:0.3;
+				}
+				
+				100% {
+					opacity:1;
+				}
+			}
 			a.toggler {
 				background: url('/images/sprite-chat-icon.png') no-repeat scroll 0 -12px;
 				width: 12px;
@@ -186,6 +207,14 @@
 						font-weight:bold;
 					}
 				}
+				li.me span {color:#3e9ed5;}
+				li.other span {color:#d53e5e;}
+				li.server {
+					color:#777;
+					span {
+						color:#747474;
+					}
+				}
 			}
 		}
 		input.commentfield{
@@ -194,8 +223,7 @@
 			/*max-width:215px; */
 			margin:25px 10px 35px 20px;
 		}
-		.user1 span{color:#3e9ed5;}
-		.user2 span{color:#747474;}
+
 	}
 	/*chat open*/
 	#chat.open {

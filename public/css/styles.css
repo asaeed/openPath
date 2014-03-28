@@ -630,6 +630,20 @@ body #home section#videos #videosView #chat header p.msg {
   padding: 0 0 0 10px;
   margin: 0;
 }
+body #home section#videos #videosView #chat header p.blink {
+  -webkit-animation: blink 2s infinite;
+}
+@-webkit-keyframes blink {
+  0% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.3;
+  }
+  100% {
+    opacity: 1;
+  }
+}
 body #home section#videos #videosView #chat header a.toggler {
   background: url('/images/sprite-chat-icon.png') no-repeat scroll 0 -12px;
   width: 12px;
@@ -662,18 +676,24 @@ body #home section#videos #videosView #chat #chatwindow ol li {
 body #home section#videos #videosView #chat #chatwindow ol li span {
   font-weight: bold;
 }
+body #home section#videos #videosView #chat #chatwindow ol li.me span {
+  color: #3e9ed5;
+}
+body #home section#videos #videosView #chat #chatwindow ol li.other span {
+  color: #d53e5e;
+}
+body #home section#videos #videosView #chat #chatwindow ol li.server {
+  color: #777;
+}
+body #home section#videos #videosView #chat #chatwindow ol li.server span {
+  color: #747474;
+}
 body #home section#videos #videosView #chat input.commentfield {
   width: 90%;
   padding: 10px;
   /*max-width:215px; */
 
   margin: 25px 10px 35px 20px;
-}
-body #home section#videos #videosView #chat .user1 span {
-  color: #3e9ed5;
-}
-body #home section#videos #videosView #chat .user2 span {
-  color: #747474;
 }
 body #home section#videos #videosView #chat.open {
   bottom: 0;
