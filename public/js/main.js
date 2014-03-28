@@ -13,7 +13,7 @@ OpenPath = {
 
 		//configs
 		this.peerKey = 'w8hlftc242jzto6r';
-		this.socketConnection = 'http://localhost:3000'; //http://openpath.me/
+		this.socketConnection = 'http://openpath.me/'; //'http://localhost:3000'; //
 
 		//init ui 
 		this.Ui.init();
