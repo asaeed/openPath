@@ -20,7 +20,9 @@ module.exports = function(app, io, passport){
 	/**
 	 * home
 	 */
-	app.get("/", function(req, res){ 
+	app.get("/", function(req, res){
+		User.deleteAll();
+		
 		if(req.isAuthenticated()){
 			//logged in
 			//check for query string & sessions
@@ -39,7 +41,7 @@ module.exports = function(app, io, passport){
 				
 			});
 
-			User.deleteAll();
+			
 
 		}else{
 			//logged out, render intro
@@ -207,7 +209,7 @@ module.exports = function(app, io, passport){
 			publicItems.reverse();
 
 			//res.send({ events: publicItems }); //TODO : fork for admin res.send({ events: items }); 
-			res.render("events", { event: items });
+			res.send("events", { event: items });
 		});
 	});
 
