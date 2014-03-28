@@ -259,10 +259,10 @@ OpenPath = {
 		socket.on('updatechat', function (user, data, users) {
 			var from = user === 'SERVER' ? user : user.email;
 
-			console.log(from+ ': ' + data + '',users);
+			//console.log(from+ ': ' + data + '',users);
 
 			for(var key in users){
-				console.log('users',key,users[key].email)		
+				//console.log('users',key,users[key].email)		
 			}
 			data = data.replace(/</g, '&lt;');
 
