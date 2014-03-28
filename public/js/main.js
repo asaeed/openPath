@@ -30,6 +30,8 @@ OpenPath = {
 		this.chat = document.getElementById("chat");
 		this.chatInput = document.getElementById("chatinput");
 		this.chatmsg = document.getElementById("chatmsg");
+		this.chatwindow = document.getElementById("chatwindow");
+		this.chatmessages = document.getElementById("chatmessages");
 		this.chatToggler = document.getElementById("chatToggler");
 
 		/*chat toggle event*/
@@ -41,30 +43,6 @@ OpenPath = {
 				self.chatmsg.innerHTML = 'Chat';
 			}
 		});
-		//input text
-		this.chatInput.addEventListener('keydown', function(event) {
-			if(self.chatInput.value != ''){
-				var key = event.which || event.keyCode;
-				if (key === 13) {
-					console.log('msg',self.chatInput.value)
-					/*
-					var message = OpenPath.username + ": " + self.chatInput.value; 
-					//rtc 
-					rtc._socket.send(
-						JSON.stringify({
-							"eventName": "chat_msg",
-							"data": {
-								"messages": message,
-								"room": OpenPath.room
-							}
-						})
-					);
-					self.addToChat(OpenPath.username, input.value, 'to');
-					input.value = "";
-					*/
-				}
-			}
-		}, false);
 
 		/**
 		 * init 2 videos
@@ -126,7 +104,7 @@ OpenPath = {
 			 * connect to peer, socket, get usermedia, get location
 			 * communicate with socket
 			 */
-			//self.connect();
+			self.connect();
 		});
 
 
@@ -275,9 +253,6 @@ OpenPath = {
 			*/
 		});
 
-		/**
-		 * socket sending 
-		 */
 
 		/**
 		 * socket connect
@@ -292,145 +267,34 @@ OpenPath = {
 		 */
 		socket.on('updatechat', function (username, data, users) {
 			console.log(username + ': ' + data + '',users);
-			for(var i=0;i<users.length;i++){
-
-				console.log('users',i,users[i].email)		
+			for(key in users){
+				console.log('users',key,users[key])		
 			}
+			data = data.replace(/</g, '&lt;');
+			
+			var msg = '<li class="user1"><span>'+ username +'</span>: ' + data + '</li>';
+			self.chatmessages.innerHTML += msg;
+			self.chatwindow.scrollTop = chatwindow.scrollHeight;
 		});
 
 		/**
-		 * receive peer_ids of others THEN CALL them
+		 * socket sending chat
 		 */
-		socket.on('peer_id', function (aPeer) {
-			//if me
-			if(aPeer.email == self.user.email) return;
-			//console.log("Got a new peer: " , aPeer.email);
-
-			/**
-			 * check if aPeer is in same room 
-			 * not in same room, no call //TODO: figure out socket way on backend
-			 */
-			if(aPeer.room_id != self.user.room_id)  return;
-			console.log("Got a new peer in my room" , aPeer.room_id, aPeer.peer_id);
-
-			/**
-			 * check if we already have your peer
-			 */
-			if( self.findPeer( aPeer ) ) return;
-
-			/**
-			 * check if aPeer is presenter, then call them
-			 */
-			self.checkIfPresenter( aPeer , function( isPresenter ){
-
-				if(isPresenter){
-					//set peer to presenter
-					//render presenter
-					if( self.findPeer( aPeer ) ) return;
-
-					console.log('aPeer is presenter, adding peer');
-					
-					self.presenter.render( 'peer_id', aPeer );
-					//add presenter to peers array
-					self.peers.push( self.presenter );
-					
-
-				}else{
-					if( self.findPeer( aPeer ) ) return;
-
-					console.log('aPeer is not presenter, adding peer');
-
-					//create a peer
-					var li = document.createElement('li');
-					var peerVideo = new OpenPath.Video();
-					peerVideo.init(li);
-					peerVideo.render( 'peer_id', aPeer );
-					//add to array
-					self.peers.push( peer );	
-					//append to list
-					self.peersList.appendChild(li);
+		self.chatInput.addEventListener('keydown', function(event) {
+			if(self.chatInput.value != ''){
+				var key = event.which || event.keyCode;
+				if (key === 13) {
+					var message = self.chatInput.value;
+					self.chatInput.value = '';
+					console.log('send chat msg',self.chatInput.value)
+					socket.emit('sendchat', message);
 				}
-
-				//call them
-				callPeer( aPeer );
-			});			
-		});
-
-		/**
-		 * callPeer
-		 */
-		function callPeer( aPeer ){
-			var call = null;
-
-			if(self.user.stream){
-				// Call them with our stream, my_stream
-				console.log("Calling peer: " , aPeer.peer_id);	
-
-				//now that we have your peer_id, we're calling you with our stream
-				call = peer.call( aPeer.peer_id, self.user.stream );
-
-
-				// After they answer, we'll get a 'stream' event with their stream	
-				call.on('stream', function(remoteStream) {
-					console.log("Got remote stream", remoteStream, aPeer.stream);
-
-					var peervid = self.findPeer( aPeer );
-					if( peervid ){
-						peervid.render('stream', aPeer );
-					}
-
-				});
-
-			}else{
-				console.log('no call, call='+call+ ' you need to allow vid to make a call');
-
-				
-				//TODO:hide not yet created modal about clicking allow
 			}
-		}
+		}, false);
 
 
 
-		/**
-		 * receive location of others
-		 */
-		socket.on('location', function (aPeer) {
-			/**
-			 * check if aPeer is in same room 
-			 */
-			if(aPeer.room_id != self.user.room_id)  return;
 
-			console.log('got a new location', aPeer.email, 'peer', self.findPeer( aPeer ));
-
-			var peervid = self.findPeer( aPeer );
-			if( peervid ){
-				peervid.render('location', aPeer );
-			}
-		});
-
-		/**
-		 * receive stream of others
-		 */
-		socket.on('stream', function (aPeer) {
-			/**
-			 * check if aPeer is in same room 
-			 */
-			if(aPeer.room_id != self.user.room_id)  return;
-
-			console.log('got a new stream',aPeer.email,'peer', self.findPeer( aPeer ));
-			var peervid = self.findPeer( aPeer );
-			if( peervid ){
-				peervid.render('stream', aPeer );
-			}
-		});
-		
-
-
-		/*
-		socket.on('userConnected', function (data) {
-			console.log('userConnected',data); //seems to return a list of all users ever connected
-		});
-		*/
 		socket.on('userDisconnected', function (data) {
 			console.log('userDisconnected',data.self.user.email);
 		});
@@ -474,21 +338,5 @@ OpenPath = {
 
 //try 	document.addEventListener("DOMContentLoaded", function() {
 window.onload = function(){
-
-	/*
-
-	//count to check for reload testing - delete
-	var c = 0;
-	function count(){
-		c++;
-		console.log(c);
-		setTimeout(function(){
-			count();
-		},1000)
-	}
-	count();
-
-	*/
-
 	OpenPath.init();
 };
