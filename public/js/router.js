@@ -22,6 +22,8 @@ OpenPath.Router = {
 		this.invite = document.querySelector('#invite');
 		this.events = document.querySelector('#events');
 		this.profile = document.querySelector('#profile');
+		this.err = document.querySelector('#error');
+
 
 		//individual views ( || sub pages )
 		this.videosView = document.querySelector('#videosView');
@@ -93,6 +95,9 @@ OpenPath.Router = {
 			case 'invite':
 				this.showInvite();
 			break;
+			case 'invited':
+				this.showInvited();
+			break;
 			case 'events':
 				this.showEvents();
 			break;
@@ -122,6 +127,9 @@ OpenPath.Router = {
 			break;
 			case 'settings':
 				this.showSettings();
+			break;
+			case 'error':
+				this.showError();
 			break;
 			default:
 				this.showVideos();
@@ -164,6 +172,20 @@ OpenPath.Router = {
 		var template = Handlebars.compile(source);
 
 		inviteMsg.innerHTML = template();
+	},
+	showInvited : function(){
+		this.show(this.invite);
+		this.show(this.inviteView);
+
+		var inviteMsg = document.getElementById('inviteMsg');
+		//compile template
+		var source = document.getElementById('addParticipantsTemplate').innerHTML;
+		var template = Handlebars.compile(source);
+
+		inviteMsg.innerHTML = template();
+
+		//TODO: modal
+		alert('Your email has been sent.')
 	},
 	showEvents :  function(){
 		var self = this;
@@ -297,5 +319,8 @@ OpenPath.Router = {
 	showSettings : function(){
 		this.show(this.profile);
 		this.show(this.settings);
+	},
+	showError : function(){
+		this.show(this.err);
 	}
 };

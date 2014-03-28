@@ -6,7 +6,8 @@
 	{{> invite }}
 	{{> events }}
 	{{> profile }}
-
+	{{> error }}
+	
 </div>
 
 <input type="hidden" name="userName" id="userName" value="{{#if user.firstName }}{{user.firstName}} {{user.lastName}}{{else}}{{user.email}}{{/if}}" />
