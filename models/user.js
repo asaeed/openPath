@@ -86,5 +86,14 @@ UserSchema.statics.updateProfile = function(req, done){
 	});
 };
 
+UserSchema.statics.deleteAll = function(req, done) {
+	this.remove( function(err, user){
+		// if(err) throw err;
+		if(err) return done(err);
+
+	});
+};
+
+
 var User = mongoose.model("User", UserSchema);
 module.exports = User;

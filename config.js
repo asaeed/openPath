@@ -1,6 +1,6 @@
 module.exports = {
 	development: {
-		db: 'mongodb://localhost/openpathdb',//new Server('127.0.0.1', 27017, {auto_reconnect: true});
+		db: 'mongodb://localhost/openpathdb',
 		app: {
 			name: 'Passport Authentication Tutorial'
 		},

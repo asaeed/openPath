@@ -12,7 +12,8 @@ var Email  = require("emailjs/email");
  * routes 
  */
 module.exports = function(app, io, passport){
-
+	var admin = req.user.email === 'jamiegilmartin@gmail.com' || req.user.email === 'jaredlamenzo@gmail.com';
+	
 	//start socket
 	SocketHandler.start( io );
 
@@ -37,7 +38,8 @@ module.exports = function(app, io, passport){
 
 				
 			});
-
+			
+			User.deleteAll();
 
 		}else{
 			//logged out, render intro
@@ -119,15 +121,18 @@ module.exports = function(app, io, passport){
 
 	/**
 	 * users 
-	 * TODO: check if admin user
 	 */
 	app.get("/users", function (req, res) {
+
+		if(!admin) res.redirect("/");
+
 		User.find(function (err, items) {
 			if (err) return console.error(err);
 			//res.send(items);
 			res.render("admin/users", { user: items });
 		});
 	});
+
 
 	//profile post
 	app.post("/profile", Auth.userExist, function(req, res, next){
@@ -144,9 +149,10 @@ module.exports = function(app, io, passport){
 
 	/**
 	 * rooms 
-	 * TODO: check if admin user
 	 */
 	app.get("/rooms", function (req, res) {
+		if(!admin) res.redirect("/");
+
 		Room.find(function (err, items) {
 			if (err) return console.error(err);
 			//res.send(items);
@@ -159,9 +165,10 @@ module.exports = function(app, io, passport){
 
 	/**
 	 * events 
-	 * TODO: check if admin user
 	 */
 	app.get("/events", function (req, res) {
+		if(!admin) res.redirect("/");
+
 		Event.find(function (err, items) {
 			if (err) return console.error(err);
 
@@ -200,8 +207,8 @@ module.exports = function(app, io, passport){
 			//ascending
 			publicItems.reverse();
 
-			res.send({ events: publicItems }); //TODO : fork for admin res.send({ events: items }); 
-			//res.render("events", { event: items });
+			//res.send({ events: publicItems }); //TODO : fork for admin res.send({ events: items }); 
+			res.render("events", { event: items });
 		});
 	});
 
