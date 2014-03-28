@@ -13,7 +13,7 @@ OpenPath = {
 
 		//configs
 		this.peerKey = 'w8hlftc242jzto6r';
-		this.socketConnection = 'http://localhost:8080'; //'http://openpath.me/'; //
+		this.socketConnection = 'http://openpath.me/'; //'http://localhost:8080'; //
 
 		//init ui 
 		this.Ui.init();
@@ -39,6 +39,7 @@ OpenPath = {
 			if(self.chat.classList.contains('open')){
 				self.chat.classList.remove('open');
 			}else{
+				self.chatmsg.classList.remove('blink');
 				self.chat.classList.add('open');
 				self.chatmsg.innerHTML = 'Chat';
 			}
@@ -265,7 +266,8 @@ OpenPath = {
 			}
 			data = data.replace(/</g, '&lt;');
 
-
+			self.chatmsg.innerHTML = 'New Message';
+			self.chatmsg.classList.add('blink');
 
 			var msg = '<li class="user1"><span>'+ from +'</span>: ' + data + '</li>';
 			self.chatmessages.innerHTML += msg;
