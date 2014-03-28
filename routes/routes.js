@@ -13,6 +13,9 @@ var Email  = require("emailjs/email");
  */
 module.exports = function(app, io, passport){
 
+	//start socket
+	SocketHandler.start( io );
+
 	/**
 	 * home
 	 */
@@ -32,7 +35,7 @@ module.exports = function(app, io, passport){
 
 				res.render("home", { user : safeUser,  event : event, room : room });
 
-				SocketHandler.start( io, req.user, event, room );
+				
 			});
 
 

@@ -188,14 +188,21 @@ OpenPath = {
 		getUserLocation();
 
 		/**
+		 * socket connect
+		 */
+		socket.on('connect', function() {
+			console.log("connected to socket");
+			socket.emit('adduser',  self.user );
+		});
+
+
+		/**
 		 * Get an ID from the PeerJS server		
 		 */
 		peer.on('open', function(id) {
 			self.user.peer_id = id;
-			console.log('got my peerID', id);
-			//send peer id
-			//socket.emit("peer_id", self.user );
-			//console.log('sending my ('+self.user.email+') peer_id',self.user.peer_id);
+			console.log('got my peerID,sending it', id);
+			//socket.emit("peer_id",self.user);
 		});
 
 		/**
@@ -212,7 +219,7 @@ OpenPath = {
 				var peerShell = {
 					peer_id:remoteStream.peer,
 					stream:remoteStream
-				}
+				};
 
 				//render other vid
 			  	self.peers[0].render('stream', peerShell );
@@ -254,27 +261,46 @@ OpenPath = {
 		});
 
 
-		/**
-		 * socket connect
-		 */
-		socket.on('connect', function() {
-			console.log("connected to socket");
-			socket.emit('adduser',  self.user );
-		});
 
 		/**
 		 * socket receiving
 		 */
-		socket.on('updatechat', function (username, data, users) {
-			console.log(username + ': ' + data + '',users);
-			for(key in users){
-				console.log('users',key,users[key])		
+		socket.on('updatechat', function (user, data, users) {
+			var from = user === 'SERVER' ? user : user.email;
+
+			console.log(from+ ': ' + data + '',users);
+
+			for(var key in users){
+				console.log('users',key,users[key].email)		
 			}
 			data = data.replace(/</g, '&lt;');
-			
-			var msg = '<li class="user1"><span>'+ username +'</span>: ' + data + '</li>';
+
+
+
+			var msg = '<li class="user1"><span>'+ from +'</span>: ' + data + '</li>';
 			self.chatmessages.innerHTML += msg;
 			self.chatwindow.scrollTop = chatwindow.scrollHeight;
+		});
+
+		// Receive other folks peer_ids
+		socket.on('peer_id', function (user) {
+			console.log("Got a new peer: " + user.email);
+
+			
+			// Call them with our stream, my_stream
+			console.log("Calling peer: " + user.email);						
+			var call = peer.call(user.peer_id, self.user.stream);
+			if(call)
+			// After they answer, we'll get a 'stream' event with their stream	
+			call.on('stream', function(remoteStream) {
+				console.log("Got remote stream");
+				//document.getElementById('othervideo').src = window.URL.createObjectURL(remoteStream) || remoteStream;
+				var peerShell = {
+					peer_id:remoteStream.peer,
+					stream:remoteStream
+				};
+				self.peers[0].render('stream', peerShell );
+			});
 		});
 
 		/**
@@ -287,20 +313,10 @@ OpenPath = {
 					var message = self.chatInput.value;
 					self.chatInput.value = '';
 					console.log('send chat msg',self.chatInput.value)
-					socket.emit('sendchat', message);
+					socket.emit('sendchat', self.user, message);
 				}
 			}
 		}, false);
-
-
-
-
-		socket.on('userDisconnected', function (data) {
-			console.log('userDisconnected',data.self.user.email);
-		});
-		
-
-
 	},
 	checkIfPresenter : function( presenter, done ){
 		//create modal instance
