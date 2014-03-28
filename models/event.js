@@ -67,6 +67,7 @@ EventSchema.statics.addEvent = function(req, done){
 	
 };
 
+/*
 EventSchema.statics.deleteAll = function(req, done) {
 	this.remove( function(err, user){
 		// if(err) throw err;
@@ -74,6 +75,7 @@ EventSchema.statics.deleteAll = function(req, done) {
 
 	});
 };
+*/
 
 
 var Event = mongoose.model("Event", EventSchema);
