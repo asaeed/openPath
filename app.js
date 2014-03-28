@@ -67,6 +67,11 @@ app.configure(function(){
   app.use(passport.initialize());
   app.use(passport.session());
   app.use(app.router);
+  app.use(function(err, req, res, next){
+    console.error(err.stack);
+    //res.send(500, 'Something broke!');
+    res.render("error", {type:500});
+  });
 });
 
 app.configure('development', function(){

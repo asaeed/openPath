@@ -169,21 +169,33 @@ body {
 			@import "modules/events.less";
 		}
 		section#error {
-			padding:8em 0;
-			width:50%;
-			margin:0 auto;
-			h1 {
-				font-size:3em;
-				font-weight: bold;
-				padding-bottom:1em;
-			}
-			h2{
-				font-size:2em;
-				font-style: italic;
-				padding-bottom:2em;
-			}
-			a {
-				font-size:1.6em;
+			@import "modules/error.less";
+		}
+	}
+	#errorPage {
+		background:#000 url('/images/home/headerbgd.jpg') no-repeat;
+		.background-size(cover);
+		position: absolute;
+		top:0;
+		left:0;
+		right:0;
+		bottom:0;
+		h1 {
+			position: relative;
+			top:2em;
+			left:2em;
+		}
+		.content {
+			section.page {
+				@import "modules/error.less";
+				h1,h2 {
+					color:#fff;
+				}
+				h1 {
+					position: relative;
+					top:0;
+					left:0;
+				}
 			}
 		}
 	}

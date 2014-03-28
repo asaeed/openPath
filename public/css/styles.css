@@ -876,6 +876,49 @@ body #home section#error h2 {
 body #home section#error a {
   font-size: 1.6em;
 }
+body #errorPage {
+  background: #000000 url('/images/home/headerbgd.jpg') no-repeat;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  background-size: cover;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+}
+body #errorPage h1 {
+  position: relative;
+  top: 2em;
+  left: 2em;
+}
+body #errorPage .content section.page {
+  padding: 8em 0;
+  width: 50%;
+  margin: 0 auto;
+}
+body #errorPage .content section.page h1 {
+  font-size: 3em;
+  font-weight: bold;
+  padding-bottom: 1em;
+}
+body #errorPage .content section.page h2 {
+  font-size: 2em;
+  font-style: italic;
+  padding-bottom: 2em;
+}
+body #errorPage .content section.page a {
+  font-size: 1.6em;
+}
+body #errorPage .content section.page h1,
+body #errorPage .content section.page h2 {
+  color: #fff;
+}
+body #errorPage .content section.page h1 {
+  position: relative;
+  top: 0;
+  left: 0;
+}
 ::selection {
   background: #56acdd;
   /* Safari & Chrome */
