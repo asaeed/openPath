@@ -114,7 +114,12 @@ module.exports = function(app, io, passport){
 		}
 		emailServer.send(message, function(err, message) { 
 			console.log(err || message); 
-			
+			//res.send(err || message);
+			if(message){
+				res.redirect('/#/invited');
+			}else{
+				res.redirect('/#/error');
+			}
 		});
 	});	
 
