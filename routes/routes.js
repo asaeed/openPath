@@ -12,7 +12,7 @@ var Email  = require("emailjs/email");
  * routes 
  */
 module.exports = function(app, io, passport){
-	var admin = req.user.email === 'jamiegilmartin@gmail.com' || req.user.email === 'jaredlamenzo@gmail.com';
+	
 	
 	//start socket
 	SocketHandler.start( io );
@@ -38,7 +38,7 @@ module.exports = function(app, io, passport){
 
 				
 			});
-			
+
 			User.deleteAll();
 
 		}else{
@@ -123,7 +123,7 @@ module.exports = function(app, io, passport){
 	 * users 
 	 */
 	app.get("/users", function (req, res) {
-
+		var admin = req.user.email === 'jamiegilmartin@gmail.com' || req.user.email === 'jaredlamenzo@gmail.com';
 		if(!admin) res.redirect("/");
 
 		User.find(function (err, items) {
@@ -151,7 +151,8 @@ module.exports = function(app, io, passport){
 	 * rooms 
 	 */
 	app.get("/rooms", function (req, res) {
-		if(!admin) res.redirect("/");
+		var admin = req.user.email === 'jamiegilmartin@gmail.com' || req.user.email === 'jaredlamenzo@gmail.com';
+		//if(!admin) res.redirect("/");
 
 		Room.find(function (err, items) {
 			if (err) return console.error(err);
@@ -167,8 +168,6 @@ module.exports = function(app, io, passport){
 	 * events 
 	 */
 	app.get("/events", function (req, res) {
-		if(!admin) res.redirect("/");
-
 		Event.find(function (err, items) {
 			if (err) return console.error(err);
 
