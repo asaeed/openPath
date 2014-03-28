@@ -293,6 +293,9 @@ OpenPath = {
 			 */
 			if( self.findPeer( aPeer ) ) return;
 
+			//send my stuff
+			//socket.emit("peer_id",self.user);
+
 			/**
 			 * check if aPeer is presenter, then call them
 			 */
@@ -327,7 +330,8 @@ OpenPath = {
 				}
 
 				//call them
-				callPeer( aPeer );
+				callPeer( aPeer )
+
 			});			
 		});
 		/**
@@ -343,7 +347,7 @@ OpenPath = {
 				//now that we have your peer_id, we're calling you with our stream
 				call = peer.call( aPeer.peer_id, self.user.stream );
 
-				if(call)
+				
 				// After they answer, we'll get a 'stream' event with their stream	
 				call.on('stream', function(remoteStream) {
 					console.log("Got remote stream", remoteStream, aPeer.stream);
@@ -365,6 +369,9 @@ OpenPath = {
 		 * receive location of others
 		 */
 		socket.on('location', function (aPeer) {
+			//if me
+			if(aPeer.email == self.user.email) return;
+
 			/**
 			 * check if aPeer is in same room 
 			 */
@@ -382,12 +389,15 @@ OpenPath = {
 		 * receive stream of others
 		 */
 		socket.on('stream', function (aPeer) {
+			//if me
+			if(aPeer.email == self.user.email) return;
+
 			/**
 			 * check if aPeer is in same room 
 			 */
 			if(aPeer.room_id != self.user.room_id)  return;
 
-			console.log('got a new stream',aPeer.email,'peer', self.findPeer( aPeer ));
+			console.log('got a new stream',aPeer.email,'peer', aPeer, self.findPeer( aPeer ));
 			var peervid = self.findPeer( aPeer );
 			if( peervid ){
 				peervid.render('stream', aPeer );
@@ -431,7 +441,7 @@ OpenPath = {
 		if(this.peers.length !== 0){
 			//find peer in list of peers videos
 			for(var i=0;i<this.peers.length;i++){
-				if(this.peers[i].peer_id == aPeer.peer_id){
+				if(this.peers[i].email == aPeer.email){
 					//matched a peer
 					return this.peers[i];
 				}else{
