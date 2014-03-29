@@ -6,7 +6,7 @@ OpenPath = window.OpenPath || {};
  * @class View
  */
 OpenPath.Video = function(){
-	console.log('new video');
+	//console.log('new video');
 };
 //inherits View & SuperMVC
 //OpenPath.Video.prototype = new OpenPath.View();
@@ -23,7 +23,9 @@ OpenPath.Video.prototype.init = function( element ){
  */
 OpenPath.Video.prototype.render = function( whatToRender, user ){
 	console.log('render', whatToRender, user.email);
-
+	this.email = user.email;
+	this.user = user;
+	
 	//compile template
 	this.source = document.getElementById('videoTemplate').innerHTML;
 	this.template = Handlebars.compile(this.source);
