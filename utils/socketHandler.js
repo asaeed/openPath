@@ -28,6 +28,14 @@ module.exports.start = function( io ){
 			//connected_users = Utils.uniqueArray(connected_users);
 			console.log('connected_users',connected_users);
 
+			//var users_in_room = [];
+			//for(var i=0;i<connected_users.length;i++){
+			//	if(connected_users[i].room_id == user.room_id){
+			//		users_in_room.push( connected_users[i] );
+			//	}
+			//}
+
+
 			//var users = [];
 			//for (var i  = 0; i < io.sockets.clients().length; i++) {
 			//	console.log("loop: " + i, io.sockets.clients()[i].user);
@@ -58,6 +66,15 @@ module.exports.start = function( io ){
 		 */
 		socket.on('peer_id', function(user) {
 			console.log("Received: 'peer_id' " + user.email, user.peer_id);
+
+			//update connected users
+			for(var i=0;i<connected_users.length;i++){
+				if(connected_users[i].email == user.email){
+					//update user with new data from front end
+					connected_users[i] = user;
+				}
+			}
+			console.log('C U',connected_users)
 
 			// we tell the client to execute 'peer_id' with 1 parameter
 			io.sockets.in( user.room_id ).emit('peer_id', user );

@@ -2,6 +2,11 @@
 
 var OpenPath = window.OpenPath || {};
 
+//vars for peers
+window.URL = window.URL || window.webkitURL || window.mozURL || window.msURL;
+navigator.getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia;
+
+
 /**
  * OpenPath
  * @author jamiegilmartin@gmail.com
@@ -93,6 +98,8 @@ OpenPath = {
 				//remove topSpot
 				self.peersList.innerHTML = '';
 				self.topSpot = null;
+
+				//self.peers[0] = self.topSpot;
 				
 			}else{
 				console.log('I\'m not presenter');
@@ -118,14 +125,13 @@ OpenPath = {
 		 * getMyMedia
 		 */
 		function getMyMedia(){
-			window.URL = window.URL || window.webkitURL || window.mozURL || window.msURL;
-			navigator.getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia;
+			
 			if(navigator.getUserMedia) {
 				navigator.getUserMedia( {video: true, audio: true}, function(stream) {
 
-					console.log('got my stream')
+					//console.log('got my stream')
 					//set user stream
-					self.user.stream = stream;
+					self.user.stream =  window.URL.createObjectURL(stream) || stream;
 
 					//send stream
 			  		socket.emit("stream", self.user);
@@ -211,7 +217,7 @@ OpenPath = {
 				var sameRoom = self.user.room_id == users[key].room_id;
 				//console.log('updatechat users',key,users[key].email,'sameRoom',sameRoom);
 				if(sameRoom){
-					self.users_in_room.push(users[key]);
+					self.users_in_room.push(users[key]); //todo backend
 				}
 			}
 
@@ -220,14 +226,14 @@ OpenPath = {
 			//create spots for each user in room
 			for(var i=0;i<self.users_in_room.length;i++){
 				//if not me
-				if(self.users_in_room[i].email !== self.user.email ) console.log(self.users_in_room[i].email);
+				if(self.users_in_room[i].email !== self.user.email ) console.log('users in room',self.users_in_room[i].email);
 
 				//check if we have u as peer and not me
-				//if( !self.findPeer( self.users_in_room[i] )  && self.users_in_room[i].email !== self.user.email  ){
+				if( !self.findPeer( self.users_in_room[i] )  && self.users_in_room[i].email !== self.user.email  ){
 					//console.log('add peer form chat update', users_in_room[i] );
 					//add peer
-					//self.addAPeer( self.users_in_room[i] );
-				//}
+					self.addAPeer( self.users_in_room[i] );
+				}
 			}
 
 			//format data string
@@ -264,11 +270,16 @@ OpenPath = {
 			console.log('got my peerID,sending it', id);
 			socket.emit("peer_id",self.user);
 		});
+		peer.on('connection', function(dataConnection) {
+			console.log('on peer connection', dataConnection)
+		});
 
 		/**
 		 * receive peer_ids of others THEN CALL them
 		 */
 		socket.on('peer_id', function (aPeer) {
+			console.log('on peer id', aPeer)
+
 			//if me
 			if(aPeer.email == self.user.email) return;
 
@@ -282,45 +293,51 @@ OpenPath = {
 			//make sure we already have your peer from socket connection
 			//var peerVideo = self.findPeer( aPeer );
 			//if( peerVideo ) 
+			//send peer id to new peer
 
-			callPeer( aPeer  );
+			
+			if(self.user.stream){
+				callPeer( aPeer  );
+			}else{
+
+			}
 
 		});
 		
 		/**
+		 * OUTGOING CALL
 		 * callPeer
 		 */
 		function callPeer( aPeer ){
 			var call = null;
-			if(self.user.stream){
-				// Call them with our stream, my_stream
-				console.log("Calling peer: " , aPeer.peer_id );	
+			// Call them with our stream, my_stream
+			console.log("Calling peer: " , aPeer.peer_id );	
 
-				//now that we have your peer_id, we're calling you with our stream
-				call = peer.call( aPeer.peer_id, self.user.stream );
+			//now that we have your peer_id, we're calling you with our stream
+			call = peer.call( aPeer.peer_id, self.user.stream );
+			console.log('call',call)
 
-				if(call)
-				// After they answer, we'll get a 'stream' event with their stream	
-				call.on('stream', function(remoteStream) {
-					console.log("Got remote stream", remoteStream, aPeer.stream);
-
-					var peervid = self.findPeer( aPeer );
-					if( peervid ){
-						peerVideo.render('stream', aPeer );
-					}
-					//TODO
-					//document.getElementById('othervideo').src = window.URL.createObjectURL(remoteStream) || remoteStream;
+			if(call)
+			// After they answer, we'll get a 'stream' event with their stream	
+			call.on('stream', function(remoteStream) {
+				console.log("Got remote stream", remoteStream, aPeer.stream);
 				
-					//self.peers[0].render('stream', aPeer );
-				
-					peerVideo.render('stream', aPeer );
-				});
-
-				
-			}else{
-				//console.log('no call, call='+call+ ' you need to allow vid to make a call');
-				//TODO:hide not yet created modal about clicking allow
-			}
+				/**/
+				var peervid = self.findPeer( aPeer );
+				if( peervid ){
+					console.log('called now rending stram ',aPeer.email)
+					peervid.render('stream', aPeer );
+				}else{
+					console.log('no peer vid, make one')
+					self.addAPeer(aPeer);
+				}
+				//TODO
+				//document.getElementById('othervideo').src = window.URL.createObjectURL(remoteStream) || remoteStream;
+			
+				//self.peers[0].render('stream', aPeer );
+			
+				//peervid.render('stream', aPeer );
+			});
 		}
 
 		/**
@@ -329,6 +346,8 @@ OpenPath = {
 		 */
 		peer.on('call', function( incoming_call ) {
 			console.log('INCOMING CaLL',incoming_call)
+			//if me
+			if(incoming_call.peer == self.user.peer_id) return;
 
 			//grab peer id from incoming_call and make new peer obj
 			var aPeer = {
@@ -342,11 +361,11 @@ OpenPath = {
 			incoming_call.answer(self.user.stream); // Answer the call with our an A/V stream from getMyMedia
 			//TODO else - you're in view only mode modal
 			incoming_call.on('stream', function(remoteStream) {  // we receive a getUserMedia stream from the remote caller
-				console.log('call successful, remoteStream = ',remoteStream)
+				console.log('call answered successfully, remoteStream = ',remoteStream)
 
 				//***1st
 				//append stream to new peer
-				aPeer.stream = remoteStream;
+				aPeer.stream = window.URL.createObjectURL(remoteStream) || remoteStream;
 				//add a peer!
 				var peerVideo = self.addPeerListItem( aPeer );
 				//add to peers arr
@@ -354,13 +373,15 @@ OpenPath = {
 				//render
 				peerVideo.render( 'adding', aPeer );
 
+				//call back?
+				//socket.emit("call_answered",self.user);
 			});
 		});
 
 
 		/**
 		 * receive location of others
-		 
+		 */
 		socket.on('location', function (aPeer) {
 			//if me
 			if(aPeer.email == self.user.email) return;
@@ -375,10 +396,10 @@ OpenPath = {
 				peervid.render('location', aPeer );
 			}
 		});
-	*/
+	
 		/**
 		 * receive stream of others
-		
+		 */
 		socket.on('stream', function (aPeer) {
 			//if me
 			if(aPeer.email == self.user.email) return;
@@ -390,9 +411,12 @@ OpenPath = {
 			var peervid = self.findPeer( aPeer );
 			if( peervid ){
 				peervid.render('stream', aPeer );
+			}else{
+				//if we don't have you, call you
+				callPeer(aPeer);
 			}
 		});
-*/
+
 		/**
 		 * socket sending chat
 		 */
@@ -466,14 +490,13 @@ OpenPath = {
 		if(aPeer.email == this.user.email) return false; 
 
 
-		console.log('find a peer', aPeer)
-
 		//if no peers
 		if(this.peers.length !== 0){
 			//find peer in list of peers videos
 			for(var i=0;i<this.peers.length;i++){
 				//search by email
 				if(aPeer.email){
+					console.log('find a peer by email', aPeer)
 					if(this.peers[i].email == aPeer.email){
 						//matched a peer
 						return this.peers[i];
@@ -482,6 +505,7 @@ OpenPath = {
 						return false;
 					}
 				}else if(aPeer.peer_id){
+					console.log('find a peer by peer_id', aPeer)
 					//search by peer_id
 					if(this.peers[i].peer_id == aPeer.peer_id){
 						//matched a peer
@@ -490,6 +514,8 @@ OpenPath = {
 						//no match
 						return false;
 					}
+				}else{
+					return false;
 				}
 				
 			}

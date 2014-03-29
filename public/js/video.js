@@ -22,10 +22,11 @@ OpenPath.Video.prototype.init = function( element ){
  * called everytime we get a new piece of data
  */
 OpenPath.Video.prototype.render = function( whatToRender, user ){
+
 	console.log('render', whatToRender, user.email);
 	this.email = user.email;
 	this.user = user;
-	
+
 	//compile template
 	this.source = document.getElementById('videoTemplate').innerHTML;
 	this.template = Handlebars.compile(this.source);
@@ -70,7 +71,7 @@ OpenPath.Video.prototype.render = function( whatToRender, user ){
 		/**
   		 * now that we have your video
   		 */
-		this.video.src = window.URL.createObjectURL(user.stream) || user.stream
+		this.video.src = user.stream
 		this.video.play();
 		console.log('stream playing');
 	}		
