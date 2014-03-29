@@ -206,12 +206,11 @@ OpenPath = {
 			//console.log(from+ ': ' + data + '',users);
 
 			for(var key in users){
-				//console.log('users',key,users[key].email)		
+				console.log('updatechat users',key,users[key].email)		
 			}
 			data = data.replace(/</g, '&lt;');
 
-			self.chatmsg.innerHTML = 'New Message';
-			self.chatmsg.classList.add('blink');
+
 
 			//set color of user
 			var className;
@@ -223,6 +222,12 @@ OpenPath = {
 			}else{
 				className = 'other';
 				from = user.name ? user.name: user.email;
+			}
+
+			//if chat closed show 'new message' blink
+			if( !self.chat.classList.contains('open') ){ //&& from != 'SERVER'
+				self.chatmsg.innerHTML = 'New Message from ' + from;
+				self.chatmsg.classList.add('blink');	
 			}
 
 			var msg = '<li class="'+className+'"><span>'+ from +'</span>: ' + data + '</li>';
@@ -310,6 +315,7 @@ OpenPath = {
 
 			//todo: find peer? OR ask server for peer info
 			//if peer use him else new peer
+			console.log('icoming peer?',self.findPeer( peer ))
 			peer = self.findPeer( peer ) ? self.findPeer( peer ) : peer;
 
 			incoming_call.answer(self.user.stream); // Answer the call with our an A/V stream from getMyMedia

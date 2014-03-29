@@ -16,26 +16,32 @@ module.exports.start = function( io ){
 
 		socket.on('adduser', function(user) {
 			//TOdO if(socket.user)
-
 			
 			//save user & room to socket session
 			socket.user = user;
 			socket.room = user.room_id;
 
 			//add user to global user list
-			connected_users.push(socket.user);
+			connected_users.push(user);
 
 			//uniquify users
-			connected_users = Utils.uniqueArray(connected_users);
+			//connected_users = Utils.uniqueArray(connected_users);
+			console.log('connected_users',connected_users);
 
+			//var users = [];
+			//for (var i  = 0; i < io.sockets.clients().length; i++) {
+			//	console.log("loop: " + i, io.sockets.clients()[i].user);
+			//	users.push(io.sockets.clients()[i].user)
+			//}
 
 			//join room
 			socket.join(user.room_id);
 			// echo to client they've connected
 			socket.emit('updatechat', 'SERVER', 'you have connected to room #'+user.room_id, connected_users);
 
+			var name = user.name ? user.name : user.email;
 			// echo to room that a person has connected to their room
-			socket.broadcast.to(user.room_id).emit('updatechat', 'SERVER', user.name ? user.name : user.email + ' has connected to this room.', connected_users);
+			socket.broadcast.to(user.room_id).emit('updatechat', 'SERVER', name + ' has connected to this room.', connected_users);
 
 		});
 
@@ -52,23 +58,9 @@ module.exports.start = function( io ){
 		 */
 		socket.on('peer_id', function(user) {
 			console.log("Received: 'peer_id' " + user.email, user.peer_id);
-			//socket.user = user;
-			//console.log("Socket Saved: " , socket.user);
-
-			
-			//console.log("Saved: " + socket.user);
-			//// We can loop through these if we like
-			//for (var i  = 0; i < io.sockets.clients().length; i++) {
-			//	console.log("loop: " + i + " " +io.sockets.clients()[i]);
-			//}
-			
-			//if in the same room //!! not sure if this check works but should check on front end as well ( for now )
-			// Tell everyone my peer_id
-			//if(room._id == user.room_id) socket.broadcast.emit('peer_id', user );
 
 			// we tell the client to execute 'peer_id' with 1 parameter
 			io.sockets.in( user.room_id ).emit('peer_id', user );
-			//socket.broadcast.to(room._id).emit('peer_id', socket.user );
 		});
 		
 		/**
@@ -77,17 +69,8 @@ module.exports.start = function( io ){
 		socket.on('location', function(user) {
 			console.log("Received: 'location' " + user.email, user.location);
 
-			// We can save this in the socket object if we like
-			//socket.user = user;
-			//console.log("Socket Saved: " , socket.user);
-			
-			// Tell everyone my peer_id
-			//if(room._id == user.room_id) socket.broadcast.emit('location', user );
-
-
 			// we tell the client to execute 'location' with 1 parameter
 			io.sockets.in( user.room_id ).emit('location', user );
-			//socket.broadcast.to(room._id).emit('location', socket.user );
 		});
 		
 		/**
@@ -96,16 +79,8 @@ module.exports.start = function( io ){
 		socket.on('stream', function(user) {
 			console.log("Received: 'stream' " + user.email, user.stream);
 
-			// We can save this in the socket object if we like
-			//socket.user = user;
-			//console.log("Socket Saved: " , socket.user);
-
-			// Tell everyone my peer_id
-			//if(room._id == user.room_id) socket.broadcast.emit('stream', user );
-
 			// we tell the client to execute 'stream' with 1 parameter
 			io.sockets.in( user.room_id ).emit('stream', user );
-			//socket.broadcast.to(room._id).emit('stream', socket.user );
 		});
 		
 
@@ -119,7 +94,9 @@ module.exports.start = function( io ){
 
 			var user_index = connected_users.indexOf(socket.user);
 			if (user_index > -1) {
+				console.log('removing user', socket.user);
    				connected_users.splice(user_index, 1);
+   				console.log(connected_users)
 			}
 
 			// update list of users in chat, client-side
