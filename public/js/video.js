@@ -22,7 +22,7 @@ OpenPath.Video.prototype.init = function( element ){
  * called everytime we get a new piece of data
  */
 OpenPath.Video.prototype.render = function( whatToRender, user ){
-	console.log('render', whatToRender, user);
+	console.log('render', whatToRender, user.email);
 
 	//compile template
 	this.source = document.getElementById('videoTemplate').innerHTML;

@@ -260,7 +260,7 @@ OpenPath = {
 
 			console.log("Got a new peer in my room" , aPeer.email, aPeer.peer_id);
 
-			callPeer( aPeer )
+			callPeer( aPeer );
 
 		});
 		/**
@@ -268,8 +268,7 @@ OpenPath = {
 		 */
 		function callPeer( aPeer ){
 			var call = null;
-
-			
+			if(self.user.stream){
 				// Call them with our stream, my_stream
 				console.log("Calling peer: " , aPeer.peer_id );	
 
@@ -291,7 +290,7 @@ OpenPath = {
 					self.peers[0].render('stream', aPeer );
 				});
 
-			if(self.user.stream){	
+				
 			}else{
 				//console.log('no call, call='+call+ ' you need to allow vid to make a call');
 				//TODO:hide not yet created modal about clicking allow
@@ -304,29 +303,32 @@ OpenPath = {
 		peer.on('call', function( incoming_call ) {
 			console.log('INCOMING CaLL',incoming_call)
 
+			//grab peer id from incoming_call
+			var peer = {
+				peer_id : incoming_call.peer
+			};
+
+			//todo: find peer? OR ask server for peer info
+			//if peer use him else new peer
+			peer = self.findPeer( peer ) ? self.findPeer( peer ) : peer;
+
 			incoming_call.answer(self.user.stream); // Answer the call with our an A/V stream from getMyMedia
 			//TODO else - you're in view only mode modal
 			incoming_call.on('stream', function(remoteStream) {  // we receive a getUserMedia stream from the remote caller
-				console.log('remoteStream',remoteStream)
+				console.log('call successful, remoteStream = ',remoteStream)
 
-				// And attach it to a video object
-				//var ovideoElement = document.getElementById('othervideo');
-				//ovideoElement.src = window.URL.createObjectURL(remoteStream) || remoteStream;
-				//ovideoElement.play();
+				peer.stream = remoteStream;
+				//add a peer!
+				self.addAPeer( peer );
 
-				//TODO
-				//add new video instances to list
-				//mute or unmute depending on room
-				self.addAPeer( remoteStream );
 
-			
 			});
 		});
 
 
 		/**
 		 * receive location of others
-		
+		 */
 		socket.on('location', function (aPeer) {
 			//if me
 			if(aPeer.email == self.user.email) return;
@@ -344,7 +346,7 @@ OpenPath = {
 
 		/**
 		 * receive stream of others
-		 
+		 */
 		socket.on('stream', function (aPeer) {
 			//if me
 			if(aPeer.email == self.user.email) return;
@@ -358,7 +360,7 @@ OpenPath = {
 				peervid.render('stream', aPeer );
 			}
 		});
-*/
+
 		/**
 		 * socket sending chat
 		 */
@@ -377,12 +379,7 @@ OpenPath = {
 
 
 	},
-	addAPeer : function( stream ){
-
-		//make new peer
-		var peer = {
-			stream : stream
-		};
+	addAPeer : function( peer ){
 		//create a peer
 		var li = document.createElement('li');
 		var peerVideo = new OpenPath.Video();
@@ -390,7 +387,7 @@ OpenPath = {
 		peerVideo.render( 'stream', peer );
 		//add to array
 		this.peers.push( peer );
-		console.log('added peer', this.peers)
+		console.log('added peer',this.peers.length, this.peers)
 		//append to list
 		this.peersList.appendChild(li);
 
@@ -414,13 +411,26 @@ OpenPath = {
 		if(this.peers.length !== 0){
 			//find peer in list of peers videos
 			for(var i=0;i<this.peers.length;i++){
-				if(this.peers[i].email == aPeer.email){
-					//matched a peer
-					return this.peers[i];
-				}else{
-					//no match
-					return false;
+				//search by email
+				if(aPeer.email){
+					if(this.peers[i].email == aPeer.email){
+						//matched a peer
+						return this.peers[i];
+					}else{
+						//no match
+						return false;
+					}
+				}else if(aPeer.peer_id){
+					//search by peer_id
+					if(this.peers[i].peer_id == aPeer.peer_id){
+						//matched a peer
+						return this.peers[i];
+					}else{
+						//no match
+						return false;
+					}
 				}
+				
 			}
 		}else{
 			//we don't have any peers
