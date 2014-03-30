@@ -287,14 +287,20 @@ OpenPath = {
 				peer_id : incoming_call.peer
 			};
 			console.log('peer shell', self.findAndUpdateUser( aPeerShell ) );
+
+
 			//WHAT TODO WITH INCOMING CALL USER....
-			
+
 			incoming_call.answer(self.user.stream); // Answer the call with our stream from getUserMedia
 			incoming_call.on('stream', function(remoteStream) {  // we receive a getUserMedia stream from the remote caller
 				// And attach it to a video object
-				var ovideoElement = document.getElementById('othervideo');
-				ovideoElement.src = window.URL.createObjectURL(remoteStream) || remoteStream;
-				ovideoElement.play();
+				//var ovideoElement = document.getElementById('othervideo');
+				//ovideoElement.src = window.URL.createObjectURL(remoteStream) || remoteStream;
+				//ovideoElement.play();
+				
+				aPeerShell.stream = remoteStream;
+				self.users_in_room.push( aPeerShell );
+				self.addVideo( aPeerShell );
 			});
 
 		});
@@ -320,8 +326,6 @@ OpenPath = {
 		//check if aPeer is in same room 
 		if(aPeer.room_id !== this.user.room_id)  return;
 
-		
-
 		console.log('receivedPeerData', aPeer );
 
 		var peer = this.findAndUpdateUser(aPeer);
@@ -330,8 +334,6 @@ OpenPath = {
 		}else{
 			this.users_in_room.push( aPeer );
 		}
-
-		
 	},
 	checkIfPresenter : function( presenter, done ){
 		//create modal instance
