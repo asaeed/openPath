@@ -19,6 +19,10 @@ OpenPath = {
 		this.peerKey = 'w8hlftc242jzto6r';
 		this.socketConnection = 'http://localhost:8080'; //'http://openpath.me/'; //
 
+
+		this.peer = new Peer({key: this.peerKey }), //TODO: out own peer server? //OpenPath.rtc.server= "ws://www.openpath.me:8001/";
+		this.socket = io.connect(this.socketConnection);
+
 		//init ui 
 		this.Ui.init();
 
@@ -58,7 +62,7 @@ OpenPath = {
 		//create top spot for either you or other peer
 		var li = document.createElement('li');
 		this.topSpot = new OpenPath.Video();
-		this.topSpot.init( li );
+		this.topSpot.init( li );	
 		this.peersList.appendChild(li);
 
 
@@ -82,7 +86,7 @@ OpenPath = {
 		this.userVideo = null; //your video :)
 		//array of users in room - get all connected users in my room
 		this.users_in_room = [];
-		//array of peers
+		//array of peers videos
 		this.peers = [];
 
 		/**
@@ -111,9 +115,6 @@ OpenPath = {
 			self.getMyLocation();
 			self.connect();
 		});
-
-
-
 	},
 	/**
 	 * getMyMedia
@@ -129,7 +130,7 @@ OpenPath = {
 				self.user.stream =  window.URL.createObjectURL(stream) || stream;
 
 				//send stream
-		  		//socket.emit("stream", self.user);
+		  		self.socket.emit("stream", self.user);
 
 		  		//render user video
 				self.userVideo.render( self.user );
@@ -153,7 +154,7 @@ OpenPath = {
 			//console.log("got my location - Latitude: " + position.coords.latitude + " Longitude: " + position.coords.longitude );
 
 			//send location
-		 	//socket.emit("location", self.user );
+		 	self.socket.emit("location", self.user );
 
 		 	//re-render user video
 			self.userVideo.render( self.user );
@@ -185,32 +186,45 @@ OpenPath = {
 		}
 	},
 	connect : function(){
-		var self = this,
-			peer = new Peer({key: this.peerKey }), //TODO: out own peer server? //OpenPath.rtc.server= "ws://www.openpath.me:8001/";
-			socket = io.connect(this.socketConnection);
+		var self = this;
 		/**
 		 * socket connect
 		 */
-		socket.on('connect', function() {
+		self.socket.on('connect', function() {
 			console.log("connected to socket");
-			socket.emit('adduser',  self.user );
+			self.socket.emit('adduser',  self.user );
 			// When we connect, if we have a peer_id, send it out	
 			if (self.user.peer_id != null) {
 				console.log("peer id is not null, sending it");
-				socket.emit("peer_id",self.user);
+				self.socket.emit("peer_id",self.user);
 			}
 		});
 
 		/**
 		 * peer open
-		 * get id from PeerJS server
+		 * get id from PeerJS server and send it to socket
 		 */
-		peer.on('open', function(id) {
+		self.peer.on('open', function(id) {
 			console.log('got my peerID,sending it', id);
 			//update this.user
 			self.user.peer_id = id;
-			socket.emit("peer_id", self.user);
+			self.socket.emit("peer_id", self.user);
 		});
+
+		/**
+		 * socket sending chat
+		 */
+		self.chatInput.addEventListener('keydown', function(event) {
+			if(self.chatInput.value != ''){
+				var key = event.which || event.keyCode;
+				if (key === 13) {
+					var message = self.chatInput.value;
+					self.chatInput.value = '';
+					console.log('send chat msg',self.chatInput.value)
+					self.socket.emit('sendchat', self.user, message);
+				}
+			}
+		}, false);
 
 
 		/**
@@ -221,10 +235,18 @@ OpenPath = {
 		 * update chat 
 		 */
 		//todo : save room chats on server, send up on first connection
-		socket.on('updatechat', function (user, data, users) {
+		self.socket.on('updatechat', function (user, data, users) {
 			var from = user === 'SERVER' ? user : user.email;
 			console.log(from+ ': ' + data + '',users);
 
+			//set this.users_in_room to the same as backend array of connected users
+			for(var i=0;i<users.length;i++){
+				//if not me && in same room
+				if(users[i].email !== self.user.email && users[i].room_id === self.user.room_id ){
+					self.users_in_room.push(users[i]);	
+				} 
+			}
+			console.log(self.users_in_room)
 			//format data string
 			data = data.replace(/</g, '&lt;');
 
@@ -254,57 +276,44 @@ OpenPath = {
 		/**
 		 * receive peer_ids of others
 		 */
-		socket.on('peer_id', function (aPeer) {
-			//if me
-			if(aPeer.email == self.user.email) return;
-
-			//check if aPeer is in same room
-			if(aPeer.room_id != self.user.room_id) return;
-
-			//make sure new
-			//if( self.findPeer( aPeer ) ) return;
-			console.log("Got a new peer in my room" , aPeer.email, aPeer.peer_id);
-
-
+		self.socket.on('peer_id', function (aPeer) {
+			self.receivedPeerData( aPeer );
 		});
-
-
-	},
-	addAPeer : function( aPeer ){
-		var self = this;
-
-		//check if presenter
-		this.checkIfPresenter( aPeer , function( isPresenter ){
-			if(isPresenter){
-				console.log('peer is presenter');
-				
-				//add to peers arr
-				//self.peers.push( self.presenter );
-
-				//set peer to presenter
-				self.presenter.render( aPeer );
-			}else{
-				console.log('peer is not presenter');
-
-				//set peerVideo as list item
-				var peerVideo = self.makePeerVideo( aPeer );
-
-				//add to peers arr
-				//self.peers.push( peerVideo );
-				//render
-				peerVideo.render(  aPeer );
-			}
-			console.log('added peer',aPeer,self.peers)
+		/**
+		 * INCOMING CALL
+		 */
+		self.peer.on('call', function( incoming_call ) {
+			console.log('INCOMING CaLL',incoming_call);
+			//since incoming_call only reference to user is peer id, make peer shell
+			//which we'll match below
+			var aPeerShell = {
+				email : null,
+				peer_id : incoming_call.peer
+			};
+			self.receivedPeerData( aPeerShell );
+		});
+		/**
+		 * receive location of others
+		 */
+		self.socket.on('location', function (aPeer) {
+			self.receivedPeerData( aPeer );
+		});
+		/**
+		 * receive stream of others
+		 */
+		self.socket.on('stream', function (aPeer) {
+			self.receivedPeerData( aPeer );
 		});
 	},
-	makePeerVideo : function(aPeer){
-		//create a peer video instance
-		var li = document.createElement('li');
-		var peerVideo = new OpenPath.Video();
-		peerVideo.init(li);
-		//append to dom
-		self.peersList.appendChild(li);
-		return peerVideo;
+	receivedPeerData : function( aPeer ){
+		//if me
+		if(aPeer.email == this.user.email) return;
+
+		//check if aPeer is in same room 
+		if(aPeer.room_id !== this.user.room_id)  return;
+
+		console.log('receivedPeerData', aPeer );
+
 	},
 	checkIfPresenter : function( presenter, done ){
 		//create modal instance
@@ -315,46 +324,6 @@ OpenPath = {
 		presenterMondal.got = function(data){
 			done(data);
 		};
-	},
-	findPeer : function( aPeer ){
-		var self = this;
-		//if me check again
-		if(aPeer.email == this.user.email) return false; 
-
-
-		//if no peers
-		if(this.peers.length !== 0){
-			//find peer in list of peers videos
-			for(var i=0;i<this.peers.length;i++){
-				//search by email
-				if(aPeer.email){
-					console.log('find a peer by email', aPeer)
-					if(this.peers[i].email == aPeer.email){
-						//matched a peer
-						return this.peers[i];
-					}else{
-						//no match
-						return false;
-					}
-				}else if(aPeer.peer_id){
-					console.log('find a peer by peer_id', aPeer)
-					//search by peer_id
-					if(this.peers[i].peer_id == aPeer.peer_id){
-						//matched a peer
-						return this.peers[i];
-					}else{
-						//no match
-						return false;
-					}
-				}else{
-					return false;
-				}
-				
-			}
-		}else{
-			//we don't have any peers
-			return false;
-		}
 	}
 };
 
