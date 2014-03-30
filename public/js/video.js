@@ -62,7 +62,7 @@ OpenPath.Video.prototype.render = function( user ){
 	if(user.location.coords.latitude && user.location.coords.longitude){// && !this.mapRendered
 		
 		OpenPath.Ui.renderMap(this.map, user.location.coords.latitude, user.location.coords.longitude);
-		console.log('location rendered')
+		//console.log('location rendered')
 	}
 	/**
 	 * render video

@@ -324,7 +324,7 @@ OpenPath = {
 		};
 	},
 	updateUsersInRoom : function( users ){
-		console.log('connected users', users)
+		//console.log('connected users', users)
 		//update users_in_room array
 		for(var i=0;i<users.length;i++){
 			//if not me && in same room
@@ -335,27 +335,35 @@ OpenPath = {
 					//add 1st new user
 					this.users_in_room.push(users[i]);
 				}else{
-					console.log('check if already in users_in_room');
 					//check if already in users_in_room
-					for(var j=0;j<this.users_in_room.length;j++){
-						var matchEmail = users[i].email === this.users_in_room[j].email;
-						var matchPeerId = users[i].peer_id === this.users_in_room[j].peer_id;
-						if(matchEmail || matchPeerId){
-							//update user with new data
-							console.log('there\'s a match updating',users[i].email);
-							this.users_in_room[j] = users[i];
-						}else{
-							this.users_in_room.push(users[i]);
-						}
+					if( !this.findAndUpdateUser( users[i] ) ){
+						//add new user
+						this.users_in_room.push( user );
 					}
 				}
 			} 
 		}
 		console.log('users_in_room',this.users_in_room);
+	},
+	findAndUpdateUser : function( user ){
+		for(var i=0;i<this.users_in_room.length;i++){
+			var matchEmail = user.email === this.users_in_room[i].email;
+			var matchPeerId = user.peer_id === this.users_in_room[i].peer_id;
+			if(matchEmail || matchPeerId){
+				//update user with new data
+				console.log('there\'s a match updating',user.email);
+				this.users_in_room[i] = user;
+				return user;
+			}else{
+				//no match
+				return false;
+			}
+		}		
 	}
 };
 
-//try 	document.addEventListener("DOMContentLoaded", function() {
+//try 	
+//document.addEventListener("DOMContentLoaded", function() {
 window.onload = function(){
 	OpenPath.init();
 };
