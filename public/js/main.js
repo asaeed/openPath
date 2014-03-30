@@ -127,7 +127,7 @@ OpenPath = {
 
 				//console.log('got my stream')
 				//set user stream
-				self.user.stream =  window.URL.createObjectURL(stream) || stream;
+				self.user.stream = stream;
 
 				//send stream
 		  		self.socket.emit("stream", self.user);
@@ -419,7 +419,7 @@ OpenPath = {
 		var call = null,
 			self = this;
 		// Call them with our stream, my_stream
-		console.log("Calling peer: " , aPeer.peer_id );	
+		console.log("Calling peer: " , aPeer.peer_id,  this.user.stream  );	
 
 		//now that we have your peer_id, we're calling you with our stream
 		call = this.peer.call( aPeer.peer_id, this.user.stream );
@@ -428,9 +428,9 @@ OpenPath = {
 		// After they answer, we'll get a 'stream' event with their stream	
 		call.on('stream', function(remoteStream) {
 			console.log("Got remote stream", remoteStream, aPeer.stream);
-			//aPeer.stream = window.URL.createObjectURL(remoteStream) || remoteStream;
+			aPeer.stream = remoteStream;
 			//attach to vid src
-			//self.addVideo( aPeer );
+			self.addVideo( aPeer );
 
 		});		
 	}

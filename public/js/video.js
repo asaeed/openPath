@@ -71,7 +71,7 @@ OpenPath.Video.prototype.render = function( user ){
 		/**
   		 * now that we have your video
   		 */
-		this.video.src = user.stream
+		this.video.src =  window.URL.createObjectURL(user.stream) || user.stream
 		this.video.play();
 		console.log('stream playing');
 	}		
