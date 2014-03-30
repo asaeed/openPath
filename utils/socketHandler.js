@@ -77,7 +77,7 @@ module.exports.start = function( io ){
 			console.log('peer_id update CU',connected_users);
 
 			// we tell the client to execute 'peer_id' with 1 parameter
-			io.sockets.in( user.room_id ).emit('peer_id', user );
+			io.sockets.in( user.room_id ).emit('peer_id', user, connected_users );
 		});
 		
 		/**
@@ -96,7 +96,7 @@ module.exports.start = function( io ){
 			console.log('location update CU',connected_users);
 
 			// we tell the client to execute 'location' with 1 parameter
-			io.sockets.in( user.room_id ).emit('location', user );
+			io.sockets.in( user.room_id ).emit('location', user , connected_users);
 		});
 		
 		/**
@@ -115,7 +115,7 @@ module.exports.start = function( io ){
 			console.log('stream update CU',connected_users);
 			
 			// we tell the client to execute 'stream' with 1 parameter
-			io.sockets.in( user.room_id ).emit('stream', user );
+			io.sockets.in( user.room_id ).emit('stream', user , connected_users);
 		});
 		
 
@@ -124,6 +124,9 @@ module.exports.start = function( io ){
 		 */
 		socket.on('disconnect', function() {
 			console.log("Client has disconnected",socket.user,connected_users);
+
+			if(!socket.user) return;
+
 			var user = socket.user;
 			var email = socket.user.email;
 			var room = socket.user.room_id;//save for later

@@ -237,16 +237,11 @@ OpenPath = {
 		//todo : save room chats on server, send up on first connection
 		self.socket.on('updatechat', function (user, data, users) {
 			var from = user === 'SERVER' ? user : user.email;
-			console.log(from+ ': ' + data + '',users);
+			console.log(from+ ': ' + data );
 
-			//set this.users_in_room to the same as backend array of connected users
-			for(var i=0;i<users.length;i++){
-				//if not me && in same room
-				if(users[i].email !== self.user.email && users[i].room_id === self.user.room_id ){
-					self.users_in_room.push(users[i]);	
-				} 
-			}
-			console.log(self.users_in_room)
+			//update users in room
+			self.updateUsersInRoom( users );
+
 			//format data string
 			data = data.replace(/</g, '&lt;');
 
@@ -276,7 +271,8 @@ OpenPath = {
 		/**
 		 * receive peer_ids of others
 		 */
-		self.socket.on('peer_id', function (aPeer) {
+		self.socket.on('peer_id', function (aPeer, users) {
+			self.updateUsersInRoom( users );
 			self.receivedPeerData( aPeer );
 		});
 		/**
@@ -295,13 +291,15 @@ OpenPath = {
 		/**
 		 * receive location of others
 		 */
-		self.socket.on('location', function (aPeer) {
+		self.socket.on('location', function (aPeer, users) {
+			self.updateUsersInRoom( users );
 			self.receivedPeerData( aPeer );
 		});
 		/**
 		 * receive stream of others
 		 */
-		self.socket.on('stream', function (aPeer) {
+		self.socket.on('stream', function (aPeer, users) {
+			self.updateUsersInRoom( users );
 			self.receivedPeerData( aPeer );
 		});
 	},
@@ -313,7 +311,7 @@ OpenPath = {
 		if(aPeer.room_id !== this.user.room_id)  return;
 
 		console.log('receivedPeerData', aPeer );
-
+		console.log('users_in_room',this.users_in_room);
 	},
 	checkIfPresenter : function( presenter, done ){
 		//create modal instance
@@ -324,6 +322,36 @@ OpenPath = {
 		presenterMondal.got = function(data){
 			done(data);
 		};
+	},
+	updateUsersInRoom : function( users ){
+		console.log('connected users', users)
+		//update users_in_room array
+		for(var i=0;i<users.length;i++){
+			//if not me && in same room
+			var notMe = users[i].email !== this.user.email;
+			var sameRoom = users[i].room_id === this.user.room_id;
+			if( notMe && sameRoom ){
+				if(this.users_in_room.length === 0){
+					//add 1st new user
+					this.users_in_room.push(users[i]);
+				}else{
+					console.log('check if already in users_in_room');
+					//check if already in users_in_room
+					for(var j=0;j<this.users_in_room.length;j++){
+						var matchEmail = users[i].email === this.users_in_room[j].email;
+						var matchPeerId = users[i].peer_id === this.users_in_room[j].peer_id;
+						if(matchEmail || matchPeerId){
+							//update user with new data
+							console.log('there\'s a match updating',users[i].email);
+							this.users_in_room[j] = users[i];
+						}else{
+							this.users_in_room.push(users[i]);
+						}
+					}
+				}
+			} 
+		}
+		console.log('users_in_room',this.users_in_room);
 	}
 };
 
