@@ -87,7 +87,7 @@ OpenPath = {
 		//array of users in room - get all connected users in my room
 		this.users_in_room = [];
 		//array of peers videos
-		this.peers = [];
+		this.peerVideos = [];
 
 		/**
 		 * check if this.user is presenter
@@ -237,7 +237,7 @@ OpenPath = {
 		//todo : save room chats on server, send up on first connection
 		self.socket.on('updatechat', function (user, data, users) {
 			var from = user === 'SERVER' ? user : user.email;
-			console.log(from+ ': ' + data );
+			console.log(from+ ': ' + data, users );
 
 			//update users in room
 			self.updateUsersInRoom( users );
@@ -293,12 +293,12 @@ OpenPath = {
 		 */
 		self.socket.on('location', function (aPeer, users) {
 			self.updateUsersInRoom( users );
-			self.receivedPeerData( aPeer );
+			self.receivedPeerData( aPeer);
 		});
 		/**
 		 * receive stream of others
 		 */
-		self.socket.on('stream', function (aPeer, users) {
+		self.socket.on('stream', function (aPeer, users ) {
 			self.updateUsersInRoom( users );
 			self.receivedPeerData( aPeer );
 		});
@@ -310,8 +310,18 @@ OpenPath = {
 		//check if aPeer is in same room 
 		if(aPeer.room_id !== this.user.room_id)  return;
 
+		
+
 		console.log('receivedPeerData', aPeer );
-		console.log('users_in_room',this.users_in_room);
+
+		var peer = this.findAndUpdateUser(aPeer);
+		if(peer){
+			if( peer.stream !== null) this.callPeer( peer );
+		}else{
+			this.users_in_room.push( aPeer );
+		}
+
+		
 	},
 	checkIfPresenter : function( presenter, done ){
 		//create modal instance
@@ -324,41 +334,105 @@ OpenPath = {
 		};
 	},
 	updateUsersInRoom : function( users ){
-		//console.log('connected users', users)
+		console.log('connected users', users)
 		//update users_in_room array
 		for(var i=0;i<users.length;i++){
 			//if not me && in same room
 			var notMe = users[i].email !== this.user.email;
 			var sameRoom = users[i].room_id === this.user.room_id;
 			if( notMe && sameRoom ){
-				if(this.users_in_room.length === 0){
+				if(this.users_in_room.length == 0){
 					//add 1st new user
 					this.users_in_room.push(users[i]);
+					//if stream, add vid
+					if(users[i].stream !== null)
+					this.callPeer(users[i]);
 				}else{
 					//check if already in users_in_room
 					if( !this.findAndUpdateUser( users[i] ) ){
 						//add new user
-						this.users_in_room.push( user );
+						this.users_in_room.push( users[i] );
+						//if stream, add vid
+						if(users[i].stream !== null)
+						this.callPeer(users[i]);
 					}
 				}
 			} 
 		}
 		console.log('users_in_room',this.users_in_room);
 	},
-	findAndUpdateUser : function( user ){
-		for(var i=0;i<this.users_in_room.length;i++){
-			var matchEmail = user.email === this.users_in_room[i].email;
-			var matchPeerId = user.peer_id === this.users_in_room[i].peer_id;
-			if(matchEmail || matchPeerId){
-				//update user with new data
-				console.log('there\'s a match updating',user.email);
-				this.users_in_room[i] = user;
-				return user;
-			}else{
-				//no match
-				return false;
+	findAndUpdateUser : function( aPeer ){
+		if(this.users_in_room.length == 0){
+			return false;
+		}else{
+			for(var i=0;i<this.users_in_room.length;i++){
+				var matchEmail = aPeer.email === this.users_in_room[i].email;
+				var matchPeerId = aPeer.peer_id === this.users_in_room[i].peer_id;
+				if(matchEmail || matchPeerId){
+					//update user with new data
+					console.log('there\'s a match updating',aPeer.email);
+					this.users_in_room[i] = aPeer;
+					return aPeer;
+				}else{
+					//no match
+					return false;
+				}
 			}
-		}		
+		}			
+	},
+	addVideo : function( aPeer ){
+		var self = this;
+		//check if presenter
+		this.checkIfPresenter( aPeer , function( isPresenter ){
+			if(isPresenter){
+				console.log('peer is presenter');
+				
+				//add to peers arr
+				self.peerVideos.push( self.presenter );
+
+				//set peer to presenter
+				self.presenter.render( aPeer );
+			}else{
+				console.log('peer is not presenter');
+
+				//set peerVideo as list item
+				var peerVideo = self.addPeerListItem( aPeer );
+
+				//add to peers arr
+				self.peerVideos.push( peerVideo );
+				//render
+				peerVideo.render( aPeer );
+			}
+			console.log('added peer',aPeer,self.peerVideos)
+		});
+	},
+	addPeerListItem : function(aPeer){
+		//create a peer
+		var li = document.createElement('li');
+		var peerVideo = new OpenPath.Video();
+		peerVideo.init(li);
+		//append to dom
+		self.peersList.appendChild(li);
+		return peerVideo;
+	},
+	callPeer : function( aPeer ){
+		var call = null,
+			self = this;
+		// Call them with our stream, my_stream
+		console.log("Calling peer: " , aPeer.peer_id );	
+
+		//now that we have your peer_id, we're calling you with our stream
+		call = this.peer.call( aPeer.peer_id, this.user.stream );
+
+		if(call)
+		// After they answer, we'll get a 'stream' event with their stream	
+		call.on('stream', function(remoteStream) {
+			console.log("Got remote stream", remoteStream, aPeer.stream);
+			//aPeer.stream = window.URL.createObjectURL(remoteStream) || remoteStream;
+			//attach to vid src
+			//self.addVideo( aPeer );
+
+		});		
 	}
 };
 
