@@ -21,9 +21,9 @@ OpenPath.Video.prototype.init = function( element ){
 /**
  * called everytime we get a new piece of data
  */
-OpenPath.Video.prototype.render = function( whatToRender, user ){
+OpenPath.Video.prototype.render = function( user ){
 
-	console.log('render', whatToRender, user.email);
+	console.log('render', user.email);
 	this.email = user.email;
 	this.user = user;
 

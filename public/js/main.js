@@ -2,10 +2,9 @@
 
 var OpenPath = window.OpenPath || {};
 
-//vars for peers
+//shims for peer
 window.URL = window.URL || window.webkitURL || window.mozURL || window.msURL;
 navigator.getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia;
-
 
 /**
  * OpenPath
@@ -83,7 +82,7 @@ OpenPath = {
 		this.userVideo = null; //your video :)
 		//array of users in room - get all connected users in my room
 		this.users_in_room = [];
-		//array of other's videos
+		//array of peers
 		this.peers = [];
 
 		/**
@@ -99,8 +98,6 @@ OpenPath = {
 				self.peersList.innerHTML = '';
 				self.topSpot = null;
 
-				//self.peers[0] = self.topSpot;
-				
 			}else{
 				console.log('I\'m not presenter');
 				//set user video to topSpot
@@ -110,95 +107,93 @@ OpenPath = {
 			 * connect to peer, socket, get usermedia, get location
 			 * communicate with socket
 			 */
+			self.getMyMedia();
+			self.getMyLocation();
 			self.connect();
 		});
 
 
 
 	},
+	/**
+	 * getMyMedia
+	 */
+	getMyMedia : function(){
+		var self = this;
+
+		if(navigator.getUserMedia) {
+			navigator.getUserMedia( {video: true, audio: true}, function(stream) {
+
+				//console.log('got my stream')
+				//set user stream
+				self.user.stream =  window.URL.createObjectURL(stream) || stream;
+
+				//send stream
+		  		//socket.emit("stream", self.user);
+
+		  		//render user video
+				self.userVideo.render( self.user );
+
+			},
+			function(err) {
+				console.log('Failed to get local stream' ,err);
+			});
+		}
+	},
+	/**
+	 * getMyLocation
+	 */
+	getMyLocation : function(){
+		var self = this;
+
+		function setLocation(position){
+			self.user.location.coords.latitude = position.coords.latitude;
+			self.user.location.coords.longitude  = position.coords.longitude;
+
+			//console.log("got my location - Latitude: " + position.coords.latitude + " Longitude: " + position.coords.longitude );
+
+			//send location
+		 	//socket.emit("location", self.user );
+
+		 	//re-render user video
+			self.userVideo.render( self.user );
+		 	
+		}
+		//location error
+		function showLocationError(error){
+			switch(error.code){
+				case error.PERMISSION_DENIED:
+					console.log("User denied the request for Geolocation.");
+				break;
+				
+				case error.POSITION_UNAVAILABLE:
+					console.log("Location information is unavailable.");
+				break;
+				case error.TIMEOUT:
+					console.log("The request to get user location timed out.");
+				break;
+				case error.UNKNOWN_ERROR:
+					console.log("An unknown error occurred.");
+				break;
+			}
+		}
+		//get location
+		if(navigator.geolocation){
+			navigator.geolocation.getCurrentPosition( setLocation, showLocationError );
+		}else{
+			console.log("Geolocation is not supported by this browser.");
+		}
+	},
 	connect : function(){
 		var self = this,
 			peer = new Peer({key: this.peerKey }), //TODO: out own peer server? //OpenPath.rtc.server= "ws://www.openpath.me:8001/";
 			socket = io.connect(this.socketConnection);
-
-		/**
-		 * getMyMedia
-		 */
-		function getMyMedia(){
-			
-			if(navigator.getUserMedia) {
-				navigator.getUserMedia( {video: true, audio: true}, function(stream) {
-
-					//console.log('got my stream')
-					//set user stream
-					self.user.stream =  window.URL.createObjectURL(stream) || stream;
-
-					//send stream
-			  		socket.emit("stream", self.user);
-
-			  		//render user video
-					self.userVideo.render( 'stream', self.user );
-
-				},
-				function(err) {
-					console.log('Failed to get local stream' ,err);
-				});
-			}
-		}
-		getMyMedia();
-		/**
-		 * getMyLocation
-		 */
-		function getMyLocation(){
-			function setLocation(position){
-				self.user.location.coords.latitude = position.coords.latitude;
-				self.user.location.coords.longitude  = position.coords.longitude;
-
-				console.log("got my location - Latitude: " + position.coords.latitude + 
-							" Longitude: " + position.coords.longitude );
-
-				//send location
-			 	socket.emit("location", self.user );
-			 	console.log('sending my location');
-
-			 	//re-render user video
-				self.userVideo.render( 'location', self.user );
-			 	
-			}
-			//location error
-			function showLocationError(error){
-				switch(error.code){
-					case error.PERMISSION_DENIED:
-						console.log("User denied the request for Geolocation.");
-					break;
-					
-					case error.POSITION_UNAVAILABLE:
-						console.log("Location information is unavailable.");
-					break;
-					case error.TIMEOUT:
-						console.log("The request to get user location timed out.");
-					break;
-					case error.UNKNOWN_ERROR:
-						console.log("An unknown error occurred.");
-					break;
-				}
-			}
-			//get location
-			if(navigator.geolocation){
-				navigator.geolocation.getCurrentPosition( setLocation, showLocationError );
-			}else{
-				console.log("Geolocation is not supported by this browser.");
-			}
-		}
-		getMyLocation();
-
 		/**
 		 * socket connect
 		 */
 		socket.on('connect', function() {
 			console.log("connected to socket");
 			socket.emit('adduser',  self.user );
-
 			// When we connect, if we have a peer_id, send it out	
 			if (self.user.peer_id != null) {
 				console.log("peer id is not null, sending it");
@@ -207,34 +202,28 @@ OpenPath = {
 		});
 
 		/**
-		 * socket receiving updatechat
+		 * peer open
+		 * get id from PeerJS server
 		 */
+		peer.on('open', function(id) {
+			console.log('got my peerID,sending it', id);
+			//update this.user
+			self.user.peer_id = id;
+			socket.emit("peer_id", self.user);
+		});
+
+
+		/**
+		 * socket receiving
+		 */
+
+		/**
+		 * update chat 
+		 */
+		//todo : save room chats on server, send up on first connection
 		socket.on('updatechat', function (user, data, users) {
 			var from = user === 'SERVER' ? user : user.email;
-			//console.log(from+ ': ' + data + '',users);
-
-			for(var key in users){
-				var sameRoom = self.user.room_id == users[key].room_id;
-				//console.log('updatechat users',key,users[key].email,'sameRoom',sameRoom);
-				if(sameRoom){
-					self.users_in_room.push(users[key]); //todo backend
-				}
-			}
-
-
-			//ADD A PEER
-			//create spots for each user in room
-			for(var i=0;i<self.users_in_room.length;i++){
-				//if not me
-				if(self.users_in_room[i].email !== self.user.email ) console.log('users in room',self.users_in_room[i].email);
-
-				//check if we have u as peer and not me
-				if( !self.findPeer( self.users_in_room[i] )  && self.users_in_room[i].email !== self.user.email  ){
-					//console.log('add peer form chat update', users_in_room[i] );
-					//add peer
-					self.addAPeer( self.users_in_room[i] );
-				}
-			}
+			console.log(from+ ': ' + data + '',users);
 
 			//format data string
 			data = data.replace(/</g, '&lt;');
@@ -263,23 +252,9 @@ OpenPath = {
 		});
 
 		/**
-		 * Get an ID from the PeerJS server		
-		 */
-		peer.on('open', function(id) {
-			self.user.peer_id = id;
-			console.log('got my peerID,sending it', id);
-			socket.emit("peer_id",self.user);
-		});
-		peer.on('connection', function(dataConnection) {
-			console.log('on peer connection', dataConnection)
-		});
-
-		/**
-		 * receive peer_ids of others THEN CALL them
+		 * receive peer_ids of others
 		 */
 		socket.on('peer_id', function (aPeer) {
-			console.log('on peer id', aPeer)
-
 			//if me
 			if(aPeer.email == self.user.email) return;
 
@@ -290,156 +265,13 @@ OpenPath = {
 			//if( self.findPeer( aPeer ) ) return;
 			console.log("Got a new peer in my room" , aPeer.email, aPeer.peer_id);
 
-			//make sure we already have your peer from socket connection
-			//var peerVideo = self.findPeer( aPeer );
-			//if( peerVideo ) 
-			//send peer id to new peer
-
-			
-			if(self.user.stream){
-				callPeer( aPeer  );
-			}else{
-
-			}
 
 		});
-		
-		/**
-		 * OUTGOING CALL
-		 * callPeer
-		 */
-		function callPeer( aPeer ){
-			var call = null;
-			// Call them with our stream, my_stream
-			console.log("Calling peer: " , aPeer.peer_id );	
-
-			//now that we have your peer_id, we're calling you with our stream
-			call = peer.call( aPeer.peer_id, self.user.stream );
-			console.log('call',call)
-
-			if(call)
-			// After they answer, we'll get a 'stream' event with their stream	
-			call.on('stream', function(remoteStream) {
-				console.log("Got remote stream", remoteStream, aPeer.stream);
-				
-				/**/
-				var peervid = self.findPeer( aPeer );
-				if( peervid ){
-					console.log('called now rending stram ',aPeer.email)
-					peervid.render('stream', aPeer );
-				}else{
-					console.log('no peer vid, make one')
-					self.addAPeer(aPeer);
-				}
-				//TODO
-				//document.getElementById('othervideo').src = window.URL.createObjectURL(remoteStream) || remoteStream;
-			
-				//self.peers[0].render('stream', aPeer );
-			
-				//peervid.render('stream', aPeer );
-			});
-		}
-
-		/**
-		 * INCOMING CALL
-		 * bind call event, called in socket on peer id
-		 */
-		peer.on('call', function( incoming_call ) {
-			console.log('INCOMING CaLL',incoming_call)
-			//if me
-			if(incoming_call.peer == self.user.peer_id) return;
-
-			//grab peer id from incoming_call and make new peer obj
-			var aPeer = {
-				peer_id : incoming_call.peer
-			};
-
-			console.log('incoming find peer',self.findPeer( aPeer )); //can't find peer cuz id is new && || not attached
-
-			//todo: find peer? OR ask server for peer info
-
-			incoming_call.answer(self.user.stream); // Answer the call with our an A/V stream from getMyMedia
-			//TODO else - you're in view only mode modal
-			incoming_call.on('stream', function(remoteStream) {  // we receive a getUserMedia stream from the remote caller
-				console.log('call answered successfully, remoteStream = ',remoteStream)
-
-				//***1st
-				//append stream to new peer
-				aPeer.stream = window.URL.createObjectURL(remoteStream) || remoteStream;
-				//add a peer!
-				var peerVideo = self.addPeerListItem( aPeer );
-				//add to peers arr
-				self.peers.push( peerVideo );
-				//render
-				peerVideo.render( 'adding', aPeer );
-
-				//call back?
-				//socket.emit("call_answered",self.user);
-			});
-		});
-
-
-		/**
-		 * receive location of others
-		 */
-		socket.on('location', function (aPeer) {
-			//if me
-			if(aPeer.email == self.user.email) return;
-
-			//check if aPeer is in same room 
-			if(aPeer.room_id != self.user.room_id)  return;
-
-			console.log('got a new location', aPeer.email, 'peer', self.findPeer( aPeer ));
-
-			var peervid = self.findPeer( aPeer );
-			if( peervid ){
-				peervid.render('location', aPeer );
-			}
-		});
-	
-		/**
-		 * receive stream of others
-		 */
-		socket.on('stream', function (aPeer) {
-			//if me
-			if(aPeer.email == self.user.email) return;
-
-			//check if aPeer is in same room 
-			if(aPeer.room_id != self.user.room_id)  return;
-
-			console.log('got a new stream',aPeer.email,'peer', aPeer, self.findPeer( aPeer ));
-			var peervid = self.findPeer( aPeer );
-			if( peervid ){
-				peervid.render('stream', aPeer );
-			}else{
-				//if we don't have you, call you
-				callPeer(aPeer);
-			}
-		});
-
-		/**
-		 * socket sending chat
-		 */
-		self.chatInput.addEventListener('keydown', function(event) {
-			if(self.chatInput.value != ''){
-				var key = event.which || event.keyCode;
-				if (key === 13) {
-					var message = self.chatInput.value;
-					self.chatInput.value = '';
-					console.log('send chat msg',self.chatInput.value)
-					socket.emit('sendchat', self.user, message);
-				}
-			}
-		}, false);
-
 
 
 	},
 	addAPeer : function( aPeer ){
 		var self = this;
-
-		//if me
-		if(aPeer.email == self.user.email) return;
 
 		//check if presenter
 		this.checkIfPresenter( aPeer , function( isPresenter ){
@@ -447,26 +279,26 @@ OpenPath = {
 				console.log('peer is presenter');
 				
 				//add to peers arr
-				self.peers.push( self.presenter );
+				//self.peers.push( self.presenter );
 
 				//set peer to presenter
-				self.presenter.render('adding', aPeer );
+				self.presenter.render( aPeer );
 			}else{
 				console.log('peer is not presenter');
 
 				//set peerVideo as list item
-				var peerVideo = self.addPeerListItem( aPeer );
+				var peerVideo = self.makePeerVideo( aPeer );
 
 				//add to peers arr
-				self.peers.push( peerVideo );
+				//self.peers.push( peerVideo );
 				//render
-				peerVideo.render( 'adding', aPeer );
+				peerVideo.render(  aPeer );
 			}
 			console.log('added peer',aPeer,self.peers)
 		});
 	},
-	addPeerListItem : function(aPeer){
-		//create a peer
+	makePeerVideo : function(aPeer){
+		//create a peer video instance
 		var li = document.createElement('li');
 		var peerVideo = new OpenPath.Video();
 		peerVideo.init(li);

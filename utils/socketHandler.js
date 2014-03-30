@@ -74,7 +74,7 @@ module.exports.start = function( io ){
 					connected_users[i] = user;
 				}
 			}
-			console.log('C U',connected_users)
+			console.log('peer_id update CU',connected_users);
 
 			// we tell the client to execute 'peer_id' with 1 parameter
 			io.sockets.in( user.room_id ).emit('peer_id', user );
@@ -86,6 +86,15 @@ module.exports.start = function( io ){
 		socket.on('location', function(user) {
 			console.log("Received: 'location' " + user.email, user.location);
 
+			//update connected users
+			for(var i=0;i<connected_users.length;i++){
+				if(connected_users[i].email == user.email){
+					//update user with new data from front end
+					connected_users[i] = user;
+				}
+			}
+			console.log('location update CU',connected_users);
+
 			// we tell the client to execute 'location' with 1 parameter
 			io.sockets.in( user.room_id ).emit('location', user );
 		});
@@ -96,6 +105,15 @@ module.exports.start = function( io ){
 		socket.on('stream', function(user) {
 			console.log("Received: 'stream' " + user.email, user.stream);
 
+			//update connected users
+			for(var i=0;i<connected_users.length;i++){
+				if(connected_users[i].email == user.email){
+					//update user with new data from front end
+					connected_users[i] = user;
+				}
+			}
+			console.log('stream update CU',connected_users);
+			
 			// we tell the client to execute 'stream' with 1 parameter
 			io.sockets.in( user.room_id ).emit('stream', user );
 		});
@@ -105,27 +123,30 @@ module.exports.start = function( io ){
 		 * on disconnect
 		 */
 		socket.on('disconnect', function() {
-			console.log("Client has disconnected");
+			console.log("Client has disconnected",socket.user,connected_users);
+			var user = socket.user;
+			var email = socket.user.email;
+			var room = socket.user.room_id;//save for later
+			var user_index;
 			// remove the username from global usernames list
-			//delete usernames[socket.username];
-
-			var user_index = connected_users.indexOf(socket.user);
-			if (user_index > -1) {
-				console.log('removing user', socket.user);
-   				connected_users.splice(user_index, 1);
-   				console.log(connected_users)
+			for(var i=0;i<connected_users.length;i++){
+				if(connected_users[i].email === socket.user.email){
+					user_index = i;
+				}
 			}
+   			connected_users.splice(user_index, 1);
+   			console.log('after disconnect users:',connected_users)
 
 			// update list of users in chat, client-side
 			//io.sockets.emit('updateusers', usernames);
 
 			// echo globally that this client has left
 			//socket.broadcast.emit('updatechat', 'SERVER', socket.user.email + ' has disconnected',connected_users);
-			
-			var msg = socket.user.email + ' has disconnected from room # ' +  socket.user.room_id;
+			console.log('disconnected',socket.user)
+			var msg = email+ ' has disconnected from room # ' +  room;
 
-			io.sockets.in( socket.user.room_id ).emit('updatechat', socket.user, msg, connected_users);
-			socket.leave( socket.user.room_id );
+			io.sockets.in(room ).emit('updatechat', user, msg, connected_users);
+			socket.leave( room );
 		});
 		
 
