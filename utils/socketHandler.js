@@ -32,18 +32,19 @@ module.exports.start = function( io ){
 			//join room
 			socket.join(user.room_id);
 			// echo to client they've connected
-			socket.emit('updatechat', 'SERVER', 'you have connected to room #'+user.room_id, connected_users);
+			socket.emit('updatechat', 'SERVER', 'you have connected to room #'+user.room_id );
 
 			var name = user.name ? user.name : user.email;
 			// echo to room that a person has connected to their room
-			socket.broadcast.to(user.room_id).emit('updatechat', 'SERVER', name + ' has connected to this room.', connected_users);
-			socket.broadcast.to(user.room_id).emit('connected', user, connected_users);
+			socket.broadcast.to(user.room_id).emit('updatechat', 'SERVER', name + ' has connected to this room.' );
+			//socket.broadcast.to(user.room_id).emit('connected', user, connected_users); //doesn't include you
+			io.sockets.in( user.room_id ).emit('connected', user, connected_users ); //includes you
 		});
 
 		// when the client emits 'sendchat', this listens and executes
 		socket.on('sendchat', function (user, msg) {
 			// we tell the client to execute 'updatechat' with 2 parameters
-			io.sockets.in( user.room_id ).emit('updatechat', socket.user, msg, connected_users);
+			io.sockets.in( user.room_id ).emit('updatechat', socket.user, msg );
 		});
 
 
@@ -64,7 +65,7 @@ module.exports.start = function( io ){
 
 			// we tell the client to execute 'peer_id' with 1 parameter
 			//io.sockets.in( user.room_id ).emit('peer_id', user, connected_users ); //includes you
-			socket.broadcast.to( user.room_id ).emit('peer_id', user, connected_users); //doesn't include you
+			socket.broadcast.to( user.room_id ).emit('peer_id', user ); //doesn't include you
 		});
 		
 		/**
@@ -83,7 +84,7 @@ module.exports.start = function( io ){
 
 			// we tell the client to execute 'location' with 1 parameter
 			//io.sockets.in( user.room_id ).emit('location', user , connected_users);
-			socket.broadcast.to( user.room_id ).emit('location', user, connected_users); //doesn't include you
+			socket.broadcast.to( user.room_id ).emit('location', user ); //doesn't include you
 		});
 		
 		/**
@@ -102,7 +103,7 @@ module.exports.start = function( io ){
 			
 			// we tell the client to execute 'stream' with 1 parameter
 			//io.sockets.in( user.room_id ).emit('stream', user , connected_users);
-			socket.broadcast.to( user.room_id ).emit('stream', user, connected_users); //doesn't include you
+			socket.broadcast.to( user.room_id ).emit('stream', user ); //doesn't include you
 		});
 		
 
@@ -128,13 +129,15 @@ module.exports.start = function( io ){
    			console.log('after disconnecting user, c-u:',connected_users)
 
 			// update list of users in chat, client-side
-			//io.sockets.emit('updateusers', usernames);
+			//io.sockets.emit('updateusers', usernames); //-> something to think about
 
+
+			var name = user.name ? user.name : email;
 			// echo globally that this client has left
 			//socket.broadcast.emit('updatechat', 'SERVER', socket.user.email + ' has disconnected',connected_users);
 			console.log('disconnected',socket.user)
-			var msg = email+ ' has disconnected from room # ' +  room;
-			io.sockets.in( room ).emit('updatechat', 'SERVER', msg, connected_users);
+			var msg = name+ ' has disconnected from room # ' +  room;
+			io.sockets.in( room ).emit('updatechat', 'SERVER', msg );
 			io.sockets.in( room ).emit('disconnect', user, connected_users);
 			socket.leave( room );
 		});

@@ -55,7 +55,6 @@ OpenPath = {
 			}
 		});
 
-
 		/**
 		 * user obj to send to others - you :)
 		 */
@@ -75,7 +74,9 @@ OpenPath = {
 		});
 
 		//array of users in room - get all connected users in my room - excluding me
-		this.other_users_in_room = [];
+		this.others_in_room = [];
+		//array of other user instances, in room of course
+		this.peers = [];
 
 		/**
 		 * check if this.user is presenter
@@ -87,7 +88,10 @@ OpenPath = {
 				self.presenterElement.appendChild(self.user.video.element);
 			}else{
 				console.log('I\'m not presenter');
-				//set user video to topSpot
+				//add to peer list
+				var li = document.createElement('li');
+				li.appendChild(self.user.video.element);
+				self.peersList.appendChild(li);
 			}
 
 			self.user.connect();
@@ -117,8 +121,7 @@ OpenPath = {
 					self.socket.emit('sendchat', self.user.obj, message);
 				}
 			}
-		}, false);
-		 
+		}, false); 
 	},
 	connect : function(){
 		var self = this;
@@ -158,11 +161,9 @@ OpenPath = {
 		 * update chat 
 		 */
 		//todo : save room chats on server, send up on first connection
-		this.socket.on('updatechat', function (user, data, connected_users) {
-			console.log('received updatechat',user+ ': ' + data, connected_users );
+		this.socket.on('updatechat', function (user, data) {
+			console.log('received updatechat',user+ ': ' + data );
 
-			self.findUsersInRoom( connected_users );
-			
 			//update chat
 			self.updateChat( user, data );
 		});
@@ -216,12 +217,42 @@ OpenPath = {
 		 */
 		this.socket.on('connected', function (aPeer, connected_users) {
 			console.log('received connected', aPeer.email, connected_users )
-			self.findUsersInRoom( connected_users );
+			self.findOthersInRoom( connected_users );
+
+			var msgForChat = 'other people in this room include: ';
+			//after we get others_in_room, create them if no user instance
+			for(var j=0;j<self.others_in_room.length;j++){
+				var other = self.others_in_room[j];
+
+				var name = other.name ? other.name : other.email;
+				msgForChat += name + ', '
+
+				//check for already created user instance
+				var user = self.findUserInstance( other );
+				if(!user){
+					self.createUser( other );
+				}
+			}
+
+			//update chat with a list of other users in room
+			if(self.others_in_room.length > 0){
+				msgForChat = msgForChat.substring(0, msgForChat.length - 2);
+				self.updateChat('SERVER',msgForChat+'.');
+			}else{
+				self.updateChat('SERVER', 'you\'re the only person in this room, invite people from the menu above.');
+			}
+			
+
+
+			for(var k=0;k<self.peers.length;k++){
+				console.log('peers',self.peers[k].obj.email,self.peers[k].obj.peer_id)
+			}
+			
 		});
 		/**
 		 * receive peer_ids of others
 		 */
-		this.socket.on('peer_id', function (aPeer, connected_users) {
+		this.socket.on('peer_id', function ( aPeer ) {
 			console.log('received peer_id', aPeer.email )
 			//self.updateUsersInRoom( users );
 			//self.receivedPeerData( aPeer );
@@ -241,24 +272,25 @@ OpenPath = {
 		/**
 		 * receive location of others
 		 */
-		this.socket.on('location', function (aPeer, connected_users) {
+		this.socket.on('location', function ( aPeer ) {
 			console.log('received location', aPeer.email )
-			//self.updateUsersInRoom( users );
-			//self.receivedPeerData( aPeer);
+
 		});
 		/**
 		 * receive stream of others
 		 */
-		this.socket.on('stream', function (aPeer, connected_users ) {
+		this.socket.on('stream', function ( aPeer ) {
 			console.log('received stream', aPeer.email )
-			self.findUsersInRoom( connected_users );
-			//self.receivedPeerData( aPeer );
+
 		});
 		/**
 		 * receive disconnect
 		 */
-		this.socket.on('disconnect', function (aPeer, connected_users ) {
-			console.log('received disconnect', aPeer.email );
+		this.socket.on('disconnect', function ( aPeer, connected_users ) {
+			console.log('received disconnect', aPeer.email, connected_users );
+			self.findOthersInRoom( connected_users );
+
+			//delete aPeer user instance
 		});
 	},
 	updateChat : function( user, msg ){
@@ -280,7 +312,8 @@ OpenPath = {
 		}
 
 		//if chat closed show 'new message' blink
-		if( !this.chat.classList.contains('open') && from !== 'SERVER' ){ 
+		//TODO if you want to hide server messages add ' && from !== 'SERVER' ' to if statement
+		if( !this.chat.classList.contains('open') ){ //&& from !== 'SERVER
 			this.chatmsg.innerHTML = 'New Message from ' + from;
 			this.chatmsg.classList.add('blink');	
 		}
@@ -289,7 +322,7 @@ OpenPath = {
 		this.chatmessages.innerHTML += message;
 		this.chatwindow.scrollTop = this.chatwindow.scrollHeight;
 	},
-	findUsersInRoom : function( connected_users ){
+	findOthersInRoom : function( connected_users , done ){
 		var others = [];
 		for(var i=0;i<connected_users.length;i++){
 
@@ -302,10 +335,33 @@ OpenPath = {
 				others.push( connected_users[i] );
 			}
 		}
-		//set this.other_users_in_room
-		this.other_users_in_room = others;
+		//set this.others_in_room
+		this.others_in_room = others;
 
-		console.log(this.other_users_in_room)
+		console.log('others in room', this.others_in_room);
+	},
+	findUserInstance : function( userObj ){
+		if(this.peers.length == 0){
+			return false;
+		}else{
+			for(var i=0;i<this.peers.length;i++){
+				var matchEmail = userObj.email === this.peers[i].obj.email  && userObj.email !== null;
+				var matchPeerId = userObj.peer_id === this.peers[i].obj.peer_id && userObj.peer_id !== null;
+				if(matchEmail || matchPeerId){
+					//return user instance
+					console.log('there\'s a match', matchEmail , matchPeerId, this.peers[i].obj.email,this.peers[i].obj.peer_id);
+					return this.peers[i];
+				}else{
+					//no match
+					return false;
+				}
+			}
+		}
+	},
+	createUser : function( userObj ){
+		console.log('create', userObj)
+
+		this.peers.push( new OpenPath.User(userObj) );
 	}
 	//TODO : on disconnecet, remove / destroy peer
 };
