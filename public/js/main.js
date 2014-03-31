@@ -17,7 +17,7 @@ OpenPath = {
 
 		//configs
 		this.peerKey = 'w8hlftc242jzto6r';
-		this.socketConnection = 'http://localhost:8080'; //'http://openpath.me/'; //
+		this.socketConnection = 'http://10.0.1.15:8080'//'http://localhost:8080'; //'http://openpath.me/'; //
 
 
 		this.peer = new Peer({key: this.peerKey }), //TODO: out own peer server? //OpenPath.rtc.server= "ws://www.openpath.me:8001/";
@@ -286,21 +286,20 @@ OpenPath = {
 				email : null,
 				peer_id : incoming_call.peer
 			};
-			console.log('peer shell', self.findAndUpdateUser( aPeerShell ) );
+			console.log('peer shell', self.findAndUpdateUser( aPeerShell ) ,self.users_in_room);
 
+			if( self.findAndUpdateUser( aPeerShell ) ) alert('have u');
 
 			//WHAT TODO WITH INCOMING CALL USER....
-
 			incoming_call.answer(self.user.stream); // Answer the call with our stream from getUserMedia
 			incoming_call.on('stream', function(remoteStream) {  // we receive a getUserMedia stream from the remote caller
 				// And attach it to a video object
-				//var ovideoElement = document.getElementById('othervideo');
-				//ovideoElement.src = window.URL.createObjectURL(remoteStream) || remoteStream;
-				//ovideoElement.play();
-				
+
 				aPeerShell.stream = remoteStream;
 				self.users_in_room.push( aPeerShell );
 				self.addVideo( aPeerShell );
+
+				self.socket.emit("answered_call",self.user);
 			});
 
 		});
@@ -383,14 +382,27 @@ OpenPath = {
 				if(matchEmail || matchPeerId){
 					//update user with new data
 					console.log('there\'s a match updating',aPeer.email);
-					this.users_in_room[i] = aPeer;
-					return aPeer;
+					var updateUser = this.updateUser( this.users_in_room[i], aPeer );
+					this.users_in_room[i] = updateUser;
+					return updateUser;
 				}else{
 					//no match
 					return false;
 				}
 			}
 		}			
+	},
+	updateUser : function( oldUser , newUser ){
+		if( oldUser == newUser ) return oldUser;
+		console.log('before',oldUser, newUser)
+		for( var key in oldUser ){
+			if(oldUser[key] == null && newUser[key] !== null){
+				oldUser[key] = newUser[key];
+				console.log('up key:',key,oldUser[key] )
+			}
+		}
+		console.log('up',oldUser, newUser)
+		return oldUser;
 	},
 	addVideo : function( aPeer ){
 		var self = this;
@@ -446,6 +458,8 @@ OpenPath = {
 
 		});		
 	}
+
+	//TODO : on disconnecet, remove / destroy peer
 };
 
 //try 	
