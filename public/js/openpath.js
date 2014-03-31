@@ -153,20 +153,7 @@ OpenPath = {
 		*/
 
 
-		/**
-		 * socket receiving
-		 */
 
-		/**
-		 * update chat 
-		 */
-		//todo : save room chats on server, send up on first connection
-		this.socket.on('updatechat', function (user, data) {
-			console.log('received updatechat',user+ ': ' + data );
-
-			//update chat
-			self.updateChat( user, data );
-		});
 
 		/**
 		 * Incoming PEER Connection
@@ -211,7 +198,21 @@ OpenPath = {
 
 
 
+		/**
+		 * socket receiving
+		 */
 
+
+		/**
+		 * update chat 
+		 */
+		//todo : save room chats on server, send up on first connection
+		this.socket.on('updatechat', function (user, data) {
+			console.log('received updatechat',user+ ': ' + data );
+
+			//update chat
+			self.updateChat( user, data );
+		});
 		/**
 		 * receive connected of others (not yourself on this on)
 		 */
@@ -228,8 +229,22 @@ OpenPath = {
 				msgForChat += name + ', '
 
 				//check for already created user instance
-				var user = self.findUserInstance( other );
-				if(!user){
+				if(self.peers.length > 0){
+
+					for(var i=0;i<self.peers.length;i++){
+						var matchEmail = other.email === self.peers[i].obj.email && other.email !== null;
+						var matchPeerId = other.peer_id === self.peers[i].obj.peer_id && other.peer_id !== null;
+
+						if(matchEmail || matchPeerId){							
+							console.log('there\'s a match', matchEmail , matchPeerId, self.peers[i].obj.email,self.peers[i].obj.peer_id);
+							//return self.peers[i];
+						}else{
+							//no match, create user
+							self.createUser( other );
+						}
+					}
+				}else{
+					//no users, create user
 					self.createUser( other );
 				}
 			}
@@ -275,12 +290,21 @@ OpenPath = {
 		this.socket.on('location', function ( aPeer ) {
 			console.log('received location', aPeer.email )
 
+			//check for instance
+			for(var i=0;i<self.peers.length;i++){
+				var matchEmail = aPeer.email === self.peers[i].obj.email  && aPeer.email !== null;
+				var matchPeerId = aPeer.peer_id === self.peers[i].obj.peer_id && aPeer.peer_id !== null;
+
+				if(matchEmail || matchPeerId){
+					console.log('have you, update your location')	
+				}
+			}
 		});
 		/**
 		 * receive stream of others
 		 */
 		this.socket.on('stream', function ( aPeer ) {
-			console.log('received stream', aPeer.email )
+			console.log('received stream', aPeer.email, self.findUserInstance(aPeer) )
 
 		});
 		/**
@@ -300,6 +324,7 @@ OpenPath = {
 					//set index to splice
 					user_index = i;
 					//set instance to null
+					self.peers[i].video = null;
 					self.peers[i] = null;
 				}
 			}
@@ -355,32 +380,13 @@ OpenPath = {
 		}
 		//set this.others_in_room
 		this.others_in_room = others;
-
-		console.log('others in room', this.others_in_room);
-	},
-	findUserInstance : function( userObj ){
-		if(this.peers.length === 0){
-			return false;
-		}else{
-			for(var i=0;i<this.peers.length;i++){
-				var matchEmail = userObj.email === this.peers[i].obj.email  && userObj.email !== null;
-				var matchPeerId = userObj.peer_id === this.peers[i].obj.peer_id && userObj.peer_id !== null;
-
-				if(matchEmail || matchPeerId){
-					//return user instance
-					//console.log('there\'s a match', matchEmail , matchPeerId, this.peers[i].obj.email,this.peers[i].obj.peer_id);
-					return this.peers[i];
-				}else{
-					//no match
-					return false;
-				}
-			}
-		}
 	},
 	createUser : function( userObj ){
 		console.log('create', userObj)
 
 		this.peers.push( new OpenPath.User(userObj) );
+
+		console.log(this.peers[0].obj)
 	}
 	//TODO : on disconnecet, remove / destroy peer
 };
