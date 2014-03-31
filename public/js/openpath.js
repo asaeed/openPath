@@ -245,7 +245,7 @@ OpenPath = {
 
 
 			for(var k=0;k<self.peers.length;k++){
-				console.log('peers',self.peers[k].obj.email,self.peers[k].obj.peer_id)
+				console.log('peer',self.peers[k].obj.email,self.peers[k].obj.peer_id)
 			}
 			
 		});
@@ -288,9 +288,27 @@ OpenPath = {
 		 */
 		this.socket.on('disconnect', function ( aPeer, connected_users ) {
 			console.log('received disconnect', aPeer.email, connected_users );
-			self.findOthersInRoom( connected_users );
 
 			//delete aPeer user instance
+			//update this.peers array
+			var user_index = null;
+			for(var i=0;i<self.peers.length;i++){
+				var matchEmail = aPeer.email === self.peers[i].obj.email  && aPeer.email !== null;
+				var matchPeerId = aPeer.peer_id === self.peers[i].obj.peer_id && aPeer.peer_id !== null;
+
+				if(matchEmail || matchPeerId){
+					//set index to splice
+					user_index = i;
+					//set instance to null
+					self.peers[i] = null;
+				}
+			}
+			if(user_index) self.peers.splice(user_index, 1);
+
+			//log peers
+			for(var k=0;k<self.peers.length;k++){
+				console.log('peer',self.peers[k].obj.email,self.peers[k].obj.peer_id)
+			}
 		});
 	},
 	updateChat : function( user, msg ){
@@ -347,6 +365,7 @@ OpenPath = {
 			for(var i=0;i<this.peers.length;i++){
 				var matchEmail = userObj.email === this.peers[i].obj.email  && userObj.email !== null;
 				var matchPeerId = userObj.peer_id === this.peers[i].obj.peer_id && userObj.peer_id !== null;
+
 				if(matchEmail || matchPeerId){
 					//return user instance
 					console.log('there\'s a match', matchEmail , matchPeerId, this.peers[i].obj.email,this.peers[i].obj.peer_id);
