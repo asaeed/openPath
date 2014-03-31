@@ -184,7 +184,7 @@ module.exports = function(app, io, passport){
 				var yesterday = today.setDate(today.getDate() - 1);
 
 				if( Date.parse(items[i].date) > yesterday ){//if today or in future
-	
+					var mine = req.user ? ( items[i].creatorID == req.user._id ) : false;
 					var publicItem = {
 						id          : items[i]._id,
 						room        : items[i].roomID,
@@ -195,7 +195,7 @@ module.exports = function(app, io, passport){
 						startTime   : Utils.formatTime( items[i].startTime ),
 						endTime     : Utils.formatTime( items[i].endTime ),
 						location    : items[i].location,
-						isMine      : ( items[i].creatorID == req.user._id ) ? true : false
+						isMine      : mine ? true : false
 					};
 					
 

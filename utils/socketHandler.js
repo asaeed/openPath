@@ -6,7 +6,6 @@ var Utils = require('../utils/utils');
  * @see http://psitsmike.com/2011/10/node-js-and-socket-io-multiroom-chat-tutorial/
  */
 module.exports.start = function( io ){
-	var self = this;
 	var connected_users = [];
 	/**
 	 * socket.io
@@ -148,11 +147,9 @@ module.exports.start = function( io ){
 			console.log('disconnected',socket.user)
 			var msg = email+ ' has disconnected from room # ' +  room;
 
-			io.sockets.in(room ).emit('updatechat', user, msg, connected_users);
+			io.sockets.in( room ).emit('updatechat', user, msg, connected_users);
 			socket.leave( room );
 		});
-		
-
 	});
 };
 

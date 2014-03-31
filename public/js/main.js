@@ -19,9 +19,11 @@ OpenPath = {
 		this.peerKey = 'w8hlftc242jzto6r';
 		this.socketConnection = 'http://10.0.1.15:8080'//'http://localhost:8080'; //'http://openpath.me/'; //
 
-
+		//peer & socket
 		this.peer = new Peer({key: this.peerKey }), //TODO: out own peer server? //OpenPath.rtc.server= "ws://www.openpath.me:8001/";
 		this.socket = io.connect(this.socketConnection);
+		this.peer_connection = null;
+
 
 		//init ui 
 		this.Ui.init();
@@ -212,6 +214,7 @@ OpenPath = {
 		});
 
 		/**
+		 * chat input
 		 * socket sending chat
 		 */
 		self.chatInput.addEventListener('keydown', function(event) {
@@ -240,7 +243,7 @@ OpenPath = {
 			console.log(from+ ': ' + data, users );
 
 			//update users in room
-			self.updateUsersInRoom( users );
+			//self.updateUsersInRoom( users );
 
 			//format data string
 			data = data.replace(/</g, '&lt;');
@@ -269,12 +272,15 @@ OpenPath = {
 		});
 
 		/**
-		 * receive peer_ids of others
-		 */
-		self.socket.on('peer_id', function (aPeer, users) {
-			self.updateUsersInRoom( users );
-			self.receivedPeerData( aPeer );
+		 * Incoming PEER Connection
+		 
+		self.peer.on('connection', function(connection) {
+
+			console.log('peer connection', connection)
+
 		});
+		*/
+
 		/**
 		 * INCOMING CALL
 		 */
@@ -302,6 +308,25 @@ OpenPath = {
 				self.socket.emit("answered_call",self.user);
 			});
 
+		});
+		/**
+		 * receive peer_ids of others
+		 */
+		self.socket.on('peer_id', function (aPeer, users) {
+			//self.updateUsersInRoom( users );
+			//self.receivedPeerData( aPeer );
+			/*
+			self.peer_connection = self.peer.connect( aPeer.peer_id );
+			self.peer_connection.on('open', function() {
+				// Receive messages
+				self.peer_connection.on('data', function(data) {
+					console.log('Received', data);
+				});
+
+				// Send messages
+				self.peer_connection.send('Hello! from',self.user.email);
+			});
+			*/
 		});
 		/**
 		 * receive location of others
@@ -393,15 +418,16 @@ OpenPath = {
 		}			
 	},
 	updateUser : function( oldUser , newUser ){
-		if( oldUser == newUser ) return oldUser;
-		console.log('before',oldUser, newUser)
+		if( oldUser === newUser ) return oldUser;
+		
 		for( var key in oldUser ){
-			if(oldUser[key] == null && newUser[key] !== null){
+			var notSet = oldUser[key] === null || oldUser[key] === 'null';
+			var set = newUser[key] !== null && newUser[key] !== 'null';
+			if( notSet && set){
 				oldUser[key] = newUser[key];
 				console.log('up key:',key,oldUser[key] )
 			}
 		}
-		console.log('up',oldUser, newUser)
 		return oldUser;
 	},
 	addVideo : function( aPeer ){
@@ -446,9 +472,12 @@ OpenPath = {
 		console.log("Calling peer: " , aPeer.peer_id,  this.user.stream  );	
 
 		//now that we have your peer_id, we're calling you with our stream
-		call = this.peer.call( aPeer.peer_id, this.user.stream );
+		if(this.user.stream ){
+			call = this.peer.call( aPeer.peer_id, this.user.stream );
+		}else{
+			call = this.peer.call( aPeer.peer_id ); //one way mode, call without stream
+		}
 
-		if(call)
 		// After they answer, we'll get a 'stream' event with their stream	
 		call.on('stream', function(remoteStream) {
 			console.log("Got remote stream", remoteStream, aPeer.stream);
