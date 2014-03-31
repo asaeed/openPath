@@ -5,27 +5,22 @@ OpenPath = window.OpenPath || {};
 /**
  * @class View
  */
-OpenPath.Video = function(){
+OpenPath.Video = function(user){
+	this.user = user;
 	//console.log('new video');
+	this.element = document.createElement('div');
+	this.element.classList.add('video-element');
 };
 //inherits View & SuperMVC
 //OpenPath.Video.prototype = new OpenPath.View();
 //OpenPath.Video.prototype.constructor = OpenPath.Video;
 
 /**
- * init, sets element
- */
-OpenPath.Video.prototype.init = function( element ){
-	this.element = element;
-};
-/**
  * called everytime we get a new piece of data
  */
-OpenPath.Video.prototype.render = function( user ){
+OpenPath.Video.prototype.render = function(){
+	var user = this.user.obj; //gets update user obj
 
-	console.log('render', user.email);
-	this.email = user.email;
-	this.user = user;
 
 	//compile template
 	this.source = document.getElementById('videoTemplate').innerHTML;

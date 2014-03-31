@@ -26,7 +26,7 @@ var env = process.env.NODE_ENV || 'development',
 
 //create server
 var http = http.createServer(app),
-    io = require('socket.io').listen(http);
+    io = require('socket.io').listen(http, { log: false });
 
 //connect to mongo
 mongoose.connect( config.db );
