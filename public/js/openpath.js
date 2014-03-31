@@ -283,6 +283,16 @@ OpenPath = {
 				self.peer_connection.send('Hello! from',self.user.email);
 			});
 			*/
+			
+			//check for instance
+			for(var i=0;i<self.peers.length;i++){
+				var matchEmail = aPeer.email === self.peers[i].obj.email  && aPeer.email !== null;
+				var matchPeerId = aPeer.peer_id === self.peers[i].obj.peer_id && aPeer.peer_id !== null;
+
+				if(matchEmail || matchPeerId){
+					console.log('have you, update your peer')	
+				}
+			}
 		});
 		/**
 		 * receive location of others
@@ -304,11 +314,20 @@ OpenPath = {
 		 * receive stream of others
 		 */
 		this.socket.on('stream', function ( aPeer ) {
-			console.log('received stream', aPeer.email, self.findUserInstance(aPeer) )
+			console.log('received stream', aPeer.email )
+			//check for instance
+			for(var i=0;i<self.peers.length;i++){
+				var matchEmail = aPeer.email === self.peers[i].obj.email  && aPeer.email !== null;
+				var matchPeerId = aPeer.peer_id === self.peers[i].obj.peer_id && aPeer.peer_id !== null;
 
+				if(matchEmail || matchPeerId){
+					console.log('have you, update your stream')	
+				}
+			}
 		});
 		/**
 		 * receive disconnect
+		 * find user instance and destroy it!!
 		 */
 		this.socket.on('disconnect', function ( aPeer, connected_users ) {
 			console.log('received disconnect', aPeer.email, connected_users );
@@ -323,7 +342,7 @@ OpenPath = {
 				if(matchEmail || matchPeerId){
 					//set index to splice
 					user_index = i;
-					//set instance to null
+					//set user instance and video instance to null
 					self.peers[i].video = null;
 					self.peers[i] = null;
 				}
@@ -383,12 +402,8 @@ OpenPath = {
 	},
 	createUser : function( userObj ){
 		console.log('create', userObj)
-
 		this.peers.push( new OpenPath.User(userObj) );
-
-		console.log(this.peers[0].obj)
 	}
-	//TODO : on disconnecet, remove / destroy peer
 };
 
 //try 	
