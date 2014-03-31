@@ -321,7 +321,7 @@ OpenPath = {
 		var className;
 		if(from === 'SERVER'){
 			className = 'server';
-		}else if(from === self.user.email){
+		}else if(from === this.user.obj.email){
 			className = 'me';
 			from = user.name ? user.name: user.email;
 		}else{
@@ -359,7 +359,7 @@ OpenPath = {
 		console.log('others in room', this.others_in_room);
 	},
 	findUserInstance : function( userObj ){
-		if(this.peers.length == 0){
+		if(this.peers.length === 0){
 			return false;
 		}else{
 			for(var i=0;i<this.peers.length;i++){
@@ -368,7 +368,7 @@ OpenPath = {
 
 				if(matchEmail || matchPeerId){
 					//return user instance
-					console.log('there\'s a match', matchEmail , matchPeerId, this.peers[i].obj.email,this.peers[i].obj.peer_id);
+					//console.log('there\'s a match', matchEmail , matchPeerId, this.peers[i].obj.email,this.peers[i].obj.peer_id);
 					return this.peers[i];
 				}else{
 					//no match
