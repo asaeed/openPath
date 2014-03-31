@@ -3,7 +3,7 @@
 OpenPath = window.OpenPath || {};
 
 /**
- * @class User, you :)
+ * @class User, you :) or your friends :|
  */
 OpenPath.User = function( obj ){
 	//console.log('new User');
@@ -97,4 +97,22 @@ OpenPath.User.prototype.checkIfPresenter = function( done ){
 		self.isPresenter = isPresenter;
 		done(isPresenter);
 	};
+};
+/**
+ * update peer_id (for incoming users that are not me)
+ */
+OpenPath.User.prototype.updatePeerId = function(){
+
+};
+/**
+ * update location (for incoming users that are not me)
+ */
+OpenPath.User.prototype.updateLocation = function(){
+
+};
+/**
+ * update stream (for incoming users that are not me)
+ */
+OpenPath.User.prototype.updateStream = function(){
+
 };

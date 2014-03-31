@@ -37,7 +37,7 @@ module.exports.start = function( io ){
 			var name = user.name ? user.name : user.email;
 			// echo to room that a person has connected to their room
 			socket.broadcast.to(user.room_id).emit('updatechat', 'SERVER', name + ' has connected to this room.', connected_users);
-
+			socket.broadcast.to(user.room_id).emit('connected', user, connected_users);
 		});
 
 		// when the client emits 'sendchat', this listens and executes
@@ -63,7 +63,8 @@ module.exports.start = function( io ){
 			console.log('c-u:', connected_users );
 
 			// we tell the client to execute 'peer_id' with 1 parameter
-			io.sockets.in( user.room_id ).emit('peer_id', user, connected_users );
+			//io.sockets.in( user.room_id ).emit('peer_id', user, connected_users ); //includes you
+			socket.broadcast.to( user.room_id ).emit('peer_id', user, connected_users); //doesn't include you
 		});
 		
 		/**
@@ -81,7 +82,8 @@ module.exports.start = function( io ){
 			console.log('c-u:', connected_users );
 
 			// we tell the client to execute 'location' with 1 parameter
-			io.sockets.in( user.room_id ).emit('location', user , connected_users);
+			//io.sockets.in( user.room_id ).emit('location', user , connected_users);
+			socket.broadcast.to( user.room_id ).emit('location', user, connected_users); //doesn't include you
 		});
 		
 		/**
@@ -99,7 +101,8 @@ module.exports.start = function( io ){
 			console.log('c-u:', connected_users );
 			
 			// we tell the client to execute 'stream' with 1 parameter
-			io.sockets.in( user.room_id ).emit('stream', user , connected_users);
+			//io.sockets.in( user.room_id ).emit('stream', user , connected_users);
+			socket.broadcast.to( user.room_id ).emit('stream', user, connected_users); //doesn't include you
 		});
 		
 
