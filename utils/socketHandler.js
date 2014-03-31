@@ -25,21 +25,9 @@ module.exports.start = function( io ){
 
 			//uniquify users
 			//connected_users = Utils.uniqueArray(connected_users);
-			console.log('connected_users',connected_users);
 
-			//var users_in_room = [];
-			//for(var i=0;i<connected_users.length;i++){
-			//	if(connected_users[i].room_id == user.room_id){
-			//		users_in_room.push( connected_users[i] );
-			//	}
-			//}
-
-
-			//var users = [];
-			//for (var i  = 0; i < io.sockets.clients().length; i++) {
-			//	console.log("loop: " + i, io.sockets.clients()[i].user);
-			//	users.push(io.sockets.clients()[i].user)
-			//}
+			console.log('added user', user.email );
+			console.log('c-u:', connected_users );
 
 			//join room
 			socket.join(user.room_id);
@@ -63,17 +51,16 @@ module.exports.start = function( io ){
 		 * on peer_id
 		 * @description : the start of the video program
 		 */
-		socket.on('peer_id', function(user) {
-			console.log("Received: 'peer_id' " + user.email, user.peer_id);
-
+		socket.on('peer_id', function( user ) {
 			//update connected users
 			for(var i=0;i<connected_users.length;i++){
 				if(connected_users[i].email == user.email){
 					//update user with new data from front end
-					connected_users[i] = user;
+					connected_users[i].peer_id = user.peer_id;
 				}
 			}
-			console.log('peer_id update CU',connected_users);
+			console.log('got peer_id of', user.email );
+			console.log('c-u:', connected_users );
 
 			// we tell the client to execute 'peer_id' with 1 parameter
 			io.sockets.in( user.room_id ).emit('peer_id', user, connected_users );
@@ -82,17 +69,16 @@ module.exports.start = function( io ){
 		/**
 		 * on location
 		 */
-		socket.on('location', function(user) {
-			console.log("Received: 'location' " + user.email, user.location);
-
+		socket.on('location', function( user ) {
 			//update connected users
 			for(var i=0;i<connected_users.length;i++){
 				if(connected_users[i].email == user.email){
 					//update user with new data from front end
-					connected_users[i] = user;
+					connected_users[i].location = user.location;
 				}
 			}
-			console.log('location update CU',connected_users);
+			console.log('got location of', user.email );
+			console.log('c-u:', connected_users );
 
 			// we tell the client to execute 'location' with 1 parameter
 			io.sockets.in( user.room_id ).emit('location', user , connected_users);
@@ -101,17 +87,16 @@ module.exports.start = function( io ){
 		/**
 		 * on stream
 		 */
-		socket.on('stream', function(user) {
-			console.log("Received: 'stream' " + user.email, user.stream);
-
+		socket.on('stream', function( user ) {
 			//update connected users
 			for(var i=0;i<connected_users.length;i++){
 				if(connected_users[i].email == user.email){
 					//update user with new data from front end
-					connected_users[i] = user;
+					connected_users[i].stream = user.stream;
 				}
 			}
-			console.log('stream update CU',connected_users);
+			console.log('got stream of', user.email );
+			console.log('c-u:', connected_users );
 			
 			// we tell the client to execute 'stream' with 1 parameter
 			io.sockets.in( user.room_id ).emit('stream', user , connected_users);
@@ -137,7 +122,7 @@ module.exports.start = function( io ){
 				}
 			}
    			connected_users.splice(user_index, 1);
-   			console.log('after disconnect users:',connected_users)
+   			console.log('after disconnecting user, c-u:',connected_users)
 
 			// update list of users in chat, client-side
 			//io.sockets.emit('updateusers', usernames);
@@ -146,8 +131,8 @@ module.exports.start = function( io ){
 			//socket.broadcast.emit('updatechat', 'SERVER', socket.user.email + ' has disconnected',connected_users);
 			console.log('disconnected',socket.user)
 			var msg = email+ ' has disconnected from room # ' +  room;
-
-			io.sockets.in( room ).emit('updatechat', user, msg, connected_users);
+			io.sockets.in( room ).emit('updatechat', 'SERVER', msg, connected_users);
+			io.sockets.in( room ).emit('disconnect', user, connected_users);
 			socket.leave( room );
 		});
 	});

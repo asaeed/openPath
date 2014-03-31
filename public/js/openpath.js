@@ -17,17 +17,13 @@ OpenPath = {
 
 		//configs
 		this.peerKey = 'w8hlftc242jzto6r';
-		this.socketConnection = 'http://10.0.1.15:8080'//'http://localhost:8080'; //'http://openpath.me/'; //
+		this.socketConnection = 'http://localhost:8080';//'http://10.0.1.15:8080'// //'http://openpath.me/'; //
 
 		//peer & socket
 		this.peer = new Peer({key: this.peerKey }), //TODO: out own peer server? //OpenPath.rtc.server= "ws://www.openpath.me:8001/";
 		this.socket = io.connect(this.socketConnection);
 		this.peer_connection = null;
-		/**
-		 * connect to peer, socket
-		 * communicate with socket
-		 */
-		this.connect();
+
 
 		//init ui 
 		this.Ui.init();
@@ -58,7 +54,6 @@ OpenPath = {
 				self.chatmsg.innerHTML = 'Chat';
 			}
 		});
-
 
 
 		/**
@@ -97,6 +92,12 @@ OpenPath = {
 
 			self.user.connect();
 		});
+
+		/**
+		 * connect to peer, socket
+		 * communicate with socket
+		 */
+		this.connect();
 	},
 	connect : function(){
 		var self = this;
@@ -105,7 +106,7 @@ OpenPath = {
 		 */
 		this.socket.on('connect', function() {
 			console.log("connected to socket");
-			self.socket.emit('adduser',  self.user );
+			self.socket.emit('adduser',  self.user.obj );
 			// When we connect, if we have a peer_id, send it out	
 			if (self.user.obj.peer_id != null) {
 				console.log("peer id is not null, sending it");
@@ -127,7 +128,7 @@ OpenPath = {
 		/**
 		 * chat input
 		 * socket sending chat
-		
+		 */
 		this.chatInput.addEventListener('keydown', function(event) {
 			if(self.chatInput.value != ''){
 				var key = event.which || event.keyCode;
@@ -139,7 +140,7 @@ OpenPath = {
 				}
 			}
 		}, false);
-		 */
+		 
 
 		/**
 		 * socket receiving
@@ -147,7 +148,7 @@ OpenPath = {
 
 		/**
 		 * update chat 
-		 
+		 */
 		//todo : save room chats on server, send up on first connection
 		this.socket.on('updatechat', function (user, data, users) {
 			var from = user === 'SERVER' ? user : user.email;
@@ -181,7 +182,7 @@ OpenPath = {
 			self.chatmessages.innerHTML += msg;
 			self.chatwindow.scrollTop = chatwindow.scrollHeight;
 		});
-*/
+
 		/**
 		 * Incoming PEER Connection
 		 
@@ -225,6 +226,7 @@ OpenPath = {
 		 * receive peer_ids of others
 		 */
 		this.socket.on('peer_id', function (aPeer, users) {
+			console.log('received peer_id', aPeer.email )
 			//self.updateUsersInRoom( users );
 			//self.receivedPeerData( aPeer );
 			/*
@@ -244,15 +246,25 @@ OpenPath = {
 		 * receive location of others
 		 */
 		this.socket.on('location', function (aPeer, users) {
-			self.updateUsersInRoom( users );
-			self.receivedPeerData( aPeer);
+			console.log('received location', aPeer.email )
+			//self.updateUsersInRoom( users );
+			//self.receivedPeerData( aPeer);
 		});
 		/**
 		 * receive stream of others
 		 */
 		this.socket.on('stream', function (aPeer, users ) {
-			self.updateUsersInRoom( users );
-			self.receivedPeerData( aPeer );
+			console.log('received stream', aPeer.email )
+			//self.updateUsersInRoom( users );
+			//self.receivedPeerData( aPeer );
+		});
+		/**
+		 * receive disconnect
+		 */
+		this.socket.on('disconnect', function (aPeer, users ) {
+			console.log('received disconnect', aPeer.email )
+			//self.updateUsersInRoom( users );
+			//self.receivedPeerData( aPeer );
 		});
 	},
 	receivedPeerData : function( aPeer ){
