@@ -101,18 +101,22 @@ OpenPath.User.prototype.checkIfPresenter = function( done ){
 /**
  * update peer_id (for incoming users that are not me)
  */
-OpenPath.User.prototype.updatePeerId = function(){
-
+OpenPath.User.prototype.updatePeerId = function(id){
+	this.obj.peer_id = id;
 };
 /**
  * update location (for incoming users that are not me)
  */
-OpenPath.User.prototype.updateLocation = function(){
-
+OpenPath.User.prototype.updateLocation = function(obj){
+ 	this.obj.location = obj.location;
+ 	//re-render video
+	this.video.render();
 };
 /**
  * update stream (for incoming users that are not me)
  */
-OpenPath.User.prototype.updateStream = function(){
-
+OpenPath.User.prototype.updateStream = function(obj){
+	this.obj.stream = obj.stream;
+ 	//re-render video
+	this.video.render();		
 };

@@ -143,31 +143,37 @@ OpenPath = {
 		/**
 		 * peer open
 		 * get id from PeerJS server and send it to socket
-		 
+		 */
 		this.peer.on('open', function(id) {
 			console.log('got my peerID,sending it', id);
 			//update this.user
-			self.user.obj.peer_id = id;
+			self.user.updatePeerId(id);
+			//send id so if anyone is in room, they'll give you a call 
+			//after their socket recieves your peer id (below)
 			self.socket.emit("peer_id", self.user.obj);
 		});
-		*/
-
-
-
 
 		/**
-		 * Incoming PEER Connection
-		 
+		 * INCOMING PEER Connection
+		 */
 		this.peer.on('connection', function(connection) {
 
-			console.log('peer connection', connection)
+			console.log('on peer connection', connection)
+			self.peer_connection = connection;
 
+			// Receive messages
+			//after sending your peer id, if other user is in the room,
+			//they open a peer connection and send you data
+			//after their socket recieved your peer id (below)
+			self.peer_connection.on('data', function(data) {
+				console.log('Received Peer data', data);
+			});
+			
 		});
-		*/
-
+		
 		/**
 		 * INCOMING CALL
-		
+		 */
 		this.peer.on('call', function( incoming_call ) {
 			console.log('INCOMING CaLL',incoming_call);
 			//since incoming_call only reference to user is peer id, make peer shell
@@ -193,7 +199,7 @@ OpenPath = {
 			});
 
 		});
-		 */
+		 
 
 
 
@@ -201,7 +207,6 @@ OpenPath = {
 		/**
 		 * socket receiving
 		 */
-
 
 		/**
 		 * update chat 
@@ -217,11 +222,12 @@ OpenPath = {
 		 * receive connected of others (not yourself on this on)
 		 */
 		this.socket.on('connected', function (aPeer, connected_users) {
-			console.log('received connected', aPeer.email, connected_users )
+			//console.log('received connected', aPeer.email, connected_users )
 			self.findOthersInRoom( connected_users );
 
-			var msgForChat = 'other people in this room include: ';
 			//after we get others_in_room, create them if no user instance
+			//also send message to chat to tell user who is in the room
+			var msgForChat = 'other people in this room include: ';
 			for(var j=0;j<self.others_in_room.length;j++){
 				var other = self.others_in_room[j];
 
@@ -232,15 +238,17 @@ OpenPath = {
 				if(self.peers.length > 0){
 
 					for(var i=0;i<self.peers.length;i++){
-						var matchEmail = other.email === self.peers[i].obj.email && other.email !== null;
-						var matchPeerId = other.peer_id === self.peers[i].obj.peer_id && other.peer_id !== null;
+						if(self.peers[i]){
+							var matchEmail = other.email === self.peers[i].obj.email && other.email !== null;
+							var matchPeerId = other.peer_id === self.peers[i].obj.peer_id && other.peer_id !== null;
 
-						if(matchEmail || matchPeerId){							
-							console.log('there\'s a match', matchEmail , matchPeerId, self.peers[i].obj.email,self.peers[i].obj.peer_id);
-							//return self.peers[i];
-						}else{
-							//no match, create user
-							self.createUser( other );
+							if(matchEmail || matchPeerId){							
+								console.log('there\'s a match', matchEmail , matchPeerId, self.peers[i].obj.email,self.peers[i].obj.peer_id);
+								//return self.peers[i];
+							}else{
+								//no match, create user
+								self.createUser( other );
+							}
 						}
 					}
 				}else{
@@ -260,37 +268,37 @@ OpenPath = {
 
 
 			for(var k=0;k<self.peers.length;k++){
+				if(self.peers[k])
 				console.log('peer',self.peers[k].obj.email,self.peers[k].obj.peer_id)
 			}
-			
 		});
 		/**
 		 * receive peer_ids of others
+		 * open peer connection
 		 */
 		this.socket.on('peer_id', function ( aPeer ) {
 			console.log('received peer_id', aPeer.email )
 			//self.updateUsersInRoom( users );
 			//self.receivedPeerData( aPeer );
-			/*
-			self.peer_connection = self.peer.connect( aPeer.peer_id );
-			self.peer_connection.on('open', function() {
-				// Receive messages
-				self.peer_connection.on('data', function(data) {
-					console.log('Received', data);
-				});
-
+			/**/
+			var connection = self.peer.connect( aPeer.peer_id );
+			connection.on('open', function() {
+				console.log('peer connection open')
 				// Send messages
-				self.peer_connection.send('Hello! from',self.user.email);
+				connection.send('HEYYYYY! from '+ self.user.obj.email );
 			});
-			*/
 			
+
 			//check for instance
 			for(var i=0;i<self.peers.length;i++){
-				var matchEmail = aPeer.email === self.peers[i].obj.email  && aPeer.email !== null;
-				var matchPeerId = aPeer.peer_id === self.peers[i].obj.peer_id && aPeer.peer_id !== null;
+				if(self.peers[i]){
+					var matchEmail = aPeer.email === self.peers[i].obj.email  && aPeer.email !== null;
+					var matchPeerId = aPeer.peer_id === self.peers[i].obj.peer_id && aPeer.peer_id !== null;
 
-				if(matchEmail || matchPeerId){
-					console.log('have you, update your peer')	
+					if(matchEmail || matchPeerId){
+						console.log('have you, update your peer');
+						self.peers[i].updatePeerId(aPeer);	
+					}
 				}
 			}
 		});
@@ -302,11 +310,14 @@ OpenPath = {
 
 			//check for instance
 			for(var i=0;i<self.peers.length;i++){
-				var matchEmail = aPeer.email === self.peers[i].obj.email  && aPeer.email !== null;
-				var matchPeerId = aPeer.peer_id === self.peers[i].obj.peer_id && aPeer.peer_id !== null;
+				if(self.peers[i]){
+					var matchEmail = aPeer.email === self.peers[i].obj.email  && aPeer.email !== null;
+					var matchPeerId = aPeer.peer_id === self.peers[i].obj.peer_id && aPeer.peer_id !== null;
 
-				if(matchEmail || matchPeerId){
-					console.log('have you, update your location')	
+					if(matchEmail || matchPeerId){
+						console.log('have you, update your location');
+						self.peers[i].updateLocation(aPeer);
+					}
 				}
 			}
 		});
@@ -317,11 +328,16 @@ OpenPath = {
 			console.log('received stream', aPeer.email )
 			//check for instance
 			for(var i=0;i<self.peers.length;i++){
-				var matchEmail = aPeer.email === self.peers[i].obj.email  && aPeer.email !== null;
-				var matchPeerId = aPeer.peer_id === self.peers[i].obj.peer_id && aPeer.peer_id !== null;
+				if(self.peers[i]){
+					var matchEmail = aPeer.email === self.peers[i].obj.email  && aPeer.email !== null;
+					var matchPeerId = aPeer.peer_id === self.peers[i].obj.peer_id && aPeer.peer_id !== null;
 
-				if(matchEmail || matchPeerId){
-					console.log('have you, update your stream')	
+					if(matchEmail || matchPeerId){
+						console.log('have you, update your stream');
+						//self.peers[i].updateStream(aPeer);	
+
+						//not the right stream
+					}
 				}
 			}
 		});
@@ -351,6 +367,7 @@ OpenPath = {
 
 			//log peers
 			for(var k=0;k<self.peers.length;k++){
+				if(self.peers[k])
 				console.log('peer',self.peers[k].obj.email,self.peers[k].obj.peer_id)
 			}
 		});
@@ -393,7 +410,7 @@ OpenPath = {
 			var sameRoom = connected_users[i].room_id === this.user.obj.room_id;
 
 			if( notMe && sameRoom ){
-				console.log('other users in room', connected_users[i].email,connected_users[i].stream)
+				console.log('other users in room', connected_users[i].email )
 				others.push( connected_users[i] );
 			}
 		}
@@ -401,8 +418,33 @@ OpenPath = {
 		this.others_in_room = others;
 	},
 	createUser : function( userObj ){
-		console.log('create', userObj)
-		this.peers.push( new OpenPath.User(userObj) );
+		console.log('create', userObj.email);
+
+		var self = this;
+		var newPeer = new OpenPath.User(userObj)
+		this.peers.push( newPeer );
+
+		if(1==2)
+		//check if peer is presenter
+		newPeer.checkIfPresenter(function( isPresenter ){
+			if(isPresenter){
+				console.log('peer checkIfPresenter presenter');
+				//set newPeer to presenter
+				self.presenterElement.appendChild(newPeer.video.element);
+
+				//render video
+				newPeer.video.render();
+			}else{
+				console.log('peer is not presenter');
+				//add to peer list
+				var li = document.createElement('li');
+				li.appendChild(newPeer.video.element);
+				self.peersList.appendChild(li);
+
+				//render video
+				newPeer.video.render();
+			}
+		});
 	}
 };
 
