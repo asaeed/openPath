@@ -17,9 +17,11 @@ OpenPath = {
 
 		//configs
 		this.peerKey = 'w8hlftc242jzto6r';
-		this.socketConnection = 'http://localhost:8080';//'http://10.0.1.15:8080'// //'http://openpath.me/'; //
+		this.socketConnection = 'http://openpath.me/' ;
+		//http://localhost:8080';//'http://10.0.1.15:8080'// //'http://openpath.me/'; //
 
 		//peer & socket
+		this.call = null;
 		this.peer = new Peer({key: this.peerKey }), //TODO: out own peer server? //OpenPath.rtc.server= "ws://www.openpath.me:8001/";
 		this.socket = io.connect(this.socketConnection);
 		this.peer_connection = null;
@@ -159,7 +161,7 @@ OpenPath = {
 
 		/**
 		 * INCOMING PEER Connection
-		 */
+		
 		this.peer.on('connection', function(connection) {
 
 			console.log('on peer connection', connection)
@@ -198,7 +200,7 @@ OpenPath = {
 			});
 			
 		});
-		
+		 */
 		/**
 		 * INCOMING CALL
 		 */
@@ -337,7 +339,7 @@ OpenPath = {
 		 */
 		this.socket.on('peer_id', function ( aPeer ) {
 			console.log('received peer_id', aPeer.email );
-			var peerInstance;
+			var peerInstance = null;
 			//check for instance
 			for(var i=0;i<self.peers.length;i++){
 				if(self.peers[i]){
@@ -349,16 +351,23 @@ OpenPath = {
 						peerInstance = self.peers[i];
 						peerInstance.updatePeerId(aPeer);
 					}
+				}else{
+					console.log('dont have you , calling  you anyway',aPeer);
+					peerInstance = null;
 				}
 			}
+
+			//no users, create user
+			if(peerInstance === null) self.createUser( aPeer );	
+			peerInstance =self.peers[self.peers.length-1];
 
 			/**
 			CALL
 			*/
-			console.log('calling peer')
+			console.log('calling peer',peerInstance)
 			self.callPeer(aPeer,peerInstance);
 			
-
+			/*
 			//open peer connection to peer id and call
 			var connection = self.peer.connect( aPeer.peer_id );
 			connection.on('open', function() {
@@ -367,12 +376,10 @@ OpenPath = {
 				connection.send('HEY! from '+ self.user.obj.email +'. Just got your peer id. Sending stuff. Then calling...' );
 				//send obj just to be sure
 				connection.send( self.user.obj );
-				/**
-				CALL
-				*/
+				//call
 				//self.callPeer(aPeer,peerInstance);
 			});
-			
+			*/
 
 
 		});
@@ -399,7 +406,9 @@ OpenPath = {
 		 * receive stream of others
 		 */
 		this.socket.on('stream', function ( aPeer ) {
-			console.log('received stream', aPeer.email )
+			console.log('received stream, calling peer', aPeer.email,self.peers );
+			//self.callPeer(aPeer,null);
+			/**
 			//check for instance
 			for(var i=0;i<self.peers.length;i++){
 				if(self.peers[i]){
@@ -407,14 +416,46 @@ OpenPath = {
 					var matchPeerId = aPeer.peer_id === self.peers[i].obj.peer_id && aPeer.peer_id !== null;
 
 					if(matchEmail || matchPeerId){
-						console.log('have you, update your stream');
+						console.log('have you, calling again',aPeer.email);
 						//self.peers[i].updateStream(aPeer);	
 
 						//not the right stream
+						
 					}
 				}
+			}**/
+
+			var peerInstance = null;
+			//check for instance
+			for(var i=0;i<self.peers.length;i++){
+				if(self.peers[i]){
+					var matchEmail = aPeer.email === self.peers[i].obj.email  && aPeer.email !== null;
+					var matchPeerId = aPeer.peer_id === self.peers[i].obj.peer_id && aPeer.peer_id !== null;
+
+					if(matchEmail || matchPeerId){
+						console.log('have you, update your peer id');
+						peerInstance = self.peers[i];
+						peerInstance.updatePeerId(aPeer);
+					}
+				}else{
+					console.log('dont have you , calling  you anyway',aPeer);
+					peerInstance = null;
+				}
 			}
+
+			//no users, create user
+			if(peerInstance === null) self.createUser( aPeer );	
+			peerInstance =self.peers[self.peers.length-1];
+
+			/**
+			CALL
+			*/
+			console.log('calling peer',peerInstance)
+			self.callPeer(aPeer,peerInstance);
 		});
+		
+
+
 		/**
 		 * receive disconnect
 		 * find user instance and destroy it!!
@@ -426,15 +467,17 @@ OpenPath = {
 			//update this.peers array
 			var user_index = null;
 			for(var i=0;i<self.peers.length;i++){
-				var matchEmail = aPeer.email === self.peers[i].obj.email  && aPeer.email !== null;
-				var matchPeerId = aPeer.peer_id === self.peers[i].obj.peer_id && aPeer.peer_id !== null;
+				if(self.peers[i]){
+					var matchEmail = aPeer.email === self.peers[i].obj.email  && aPeer.email !== null;
+					var matchPeerId = aPeer.peer_id === self.peers[i].obj.peer_id && aPeer.peer_id !== null;
 
-				if(matchEmail || matchPeerId){
-					//set index to splice
-					user_index = i;
-					//set user instance and video instance to null
-					self.peers[i].video = null;
-					self.peers[i] = null;
+					if(matchEmail || matchPeerId){
+						//set index to splice
+						user_index = i;
+						//set user instance and video instance to null
+						self.peers[i].video = null;
+						self.peers[i] = null;
+					}
 				}
 			}
 			if(user_index) self.peers.splice(user_index, 1);
@@ -451,19 +494,51 @@ OpenPath = {
 	 * make the call
 	 */
 	callPeer : function(aPeer,peerInstance){		
-		console.log('stream', this.user.obj.stream)
+		//console.log('my stream', this.user.obj.stream)
 		if(this.user.obj.stream){
-			var call = this.peer.call( aPeer.peer_id, this.user.obj.stream );
+			this.call = this.peer.call( aPeer.peer_id, this.user.obj.stream );
 			// After they answer, we'll get a 'stream' event with their stream	
-			call.on('stream', function(remoteStream) {
+			this.call.on('stream', function(remoteStream) {
 				console.log("Got remote stream", remoteStream, aPeer.stream);
-				//update aPeer stream
-				//aPeer.stream = remoteStream;
-				//update user instance
-				//peerInstance.updateStream(aPeer);
+
+				//check if peer is presenter
+				peerInstance.checkIfPresenter(function( isPresenter ){
+					if(isPresenter){
+						console.log('peer checkIfPresenter presenter');
+						//set newPeer to presenter
+						self.presenterElement.appendChild(peerInstance.video.element);
+						// And attach it to a user instance 
+						peerInstance.updateStream(remoteStream);
+						//render video
+						peerInstance.video.render();
+					}else{
+						console.log('peer is not presenter');
+						//add to peer list
+						var li = document.createElement('li');
+						li.appendChild(peerInstance.video.element);
+						self.peersList.appendChild(li);
+
+						// And attach it to a user instance 
+						peerInstance.updateStream(remoteStream);
+
+						//render video
+						peerInstance.video.render();
+					}
+				});	
 			});
 		}else{
 			this.peers_to_call_when_stream_allowed.push(peerInstance)
+		}
+	},
+	OnMyStreamAllowed : function(){
+		//console.log(this.peers_to_call_when_stream_allowed);
+
+		//call all 	peers
+		for(var i=0;i<this.peers.length;i++){
+			if(this.peers[i]){
+				console.log('peers i',this.peers[i].obj.email,this.peers[i])
+				//this.callPeer(this.peers[i].obj,this.peers[i]);
+			}
 		}
 	},
 	updateChat : function( user, msg ){

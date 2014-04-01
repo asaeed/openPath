@@ -28,6 +28,8 @@ OpenPath.User.prototype.getMyMedia = function(){
 			//set user stream
 			self.obj.stream = stream;
 
+			OpenPath.OnMyStreamAllowed();
+
 			//send stream
 	  		OpenPath.socket.emit("stream", self.obj);
 
