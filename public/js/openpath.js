@@ -77,6 +77,10 @@ OpenPath = {
 		this.others_in_room = [];
 		//array of other user instances, in room of course
 		this.peers = [];
+		//users_to_call_when_stream_allowed
+		this.users_to_call_when_stream_allowed = [];
+
+
 
 		/**
 		 * check if this.user is presenter
@@ -167,6 +171,35 @@ OpenPath = {
 			//after their socket recieved your peer id (below)
 			self.peer_connection.on('data', function(data) {
 				console.log('Received Peer data', data);
+				if(typeof data === 'object'){
+					//check for instance
+					/**/
+					var aPeer = data;
+					for(var i=0;i<self.peers.length;i++){
+						if(self.peers[i]){
+							var matchEmail = aPeer.email === self.peers[i].obj.email  && aPeer.email !== null;
+							var matchPeerId = aPeer.peer_id === self.peers[i].obj.peer_id && aPeer.peer_id !== null;
+
+							if(matchEmail || matchPeerId){
+								console.log('have you, wait wait waiting for you to call...');
+								self.peers[i].updatePeerId(aPeer);
+								self.peers[i].updateLocation(aPeer);
+
+								//can't call here on load to room, 
+								//won't have allowed (for now anyway... https, no reload on join...)
+								var call;
+								if(self.user.obj.stream){
+									//call = this.peer.call( aPeer.peer_id, self.user.obj.stream );
+									//self.peers[i].call(aPeer.peer_id, this.user.stream );
+								}
+								
+
+
+
+							}
+						}
+					}
+				}
 			});
 			
 		});
@@ -277,18 +310,8 @@ OpenPath = {
 		 * open peer connection
 		 */
 		this.socket.on('peer_id', function ( aPeer ) {
-			console.log('received peer_id', aPeer.email )
-			//self.updateUsersInRoom( users );
-			//self.receivedPeerData( aPeer );
-			/**/
-			var connection = self.peer.connect( aPeer.peer_id );
-			connection.on('open', function() {
-				console.log('peer connection open')
-				// Send messages
-				connection.send('HEYYYYY! from '+ self.user.obj.email );
-			});
-			
-
+			console.log('received peer_id', aPeer.email );
+			var peerInstance;
 			//check for instance
 			for(var i=0;i<self.peers.length;i++){
 				if(self.peers[i]){
@@ -296,11 +319,45 @@ OpenPath = {
 					var matchPeerId = aPeer.peer_id === self.peers[i].obj.peer_id && aPeer.peer_id !== null;
 
 					if(matchEmail || matchPeerId){
-						console.log('have you, update your peer');
-						self.peers[i].updatePeerId(aPeer);	
+						console.log('have you, update your peer id');
+						peerInstance = self.peers[i];
+						peerInstance.updatePeerId(aPeer);
+						//if(users[i].stream !== null)
+						//this.callPeer(users[i]);
 					}
 				}
 			}
+
+
+			/**/
+			var connection = self.peer.connect( aPeer.peer_id );
+			connection.on('open', function() {
+				console.log('peer connection open')
+				// Send messages
+				connection.send('HEY! from '+ self.user.obj.email +'. Just got your peer id. Sending stuff. Then calling...' );
+				//send obj just to be sure
+				connection.send( self.user.obj );
+
+				/**
+				 * CALL
+				 * make the call
+				 */
+				if(self.user.obj.stream){
+					var call = self.peer.call( aPeer.peer_id, self.user.obj.stream );
+					// After they answer, we'll get a 'stream' event with their stream	
+					call.on('stream', function(remoteStream) {
+						console.log("Got remote stream", remoteStream, aPeer.stream);
+						aPeer.stream = remoteStream;
+
+
+					});
+				}else{
+					self.users_to_call_when_stream_allowed.push(aPeer)
+				}
+			});
+			
+
+
 		});
 		/**
 		 * receive location of others
