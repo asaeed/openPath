@@ -77,8 +77,8 @@ OpenPath = {
 		this.others_in_room = [];
 		//array of other user instances, in room of course
 		this.peers = [];
-		//users_to_call_when_stream_allowed
-		this.users_to_call_when_stream_allowed = [];
+		//peers_to_call_when_stream_allowed
+		this.peers_to_call_when_stream_allowed = [];
 
 
 
@@ -173,7 +173,6 @@ OpenPath = {
 				console.log('Received Peer data', data);
 				if(typeof data === 'object'){
 					//check for instance
-					/**/
 					var aPeer = data;
 					for(var i=0;i<self.peers.length;i++){
 						if(self.peers[i]){
@@ -192,10 +191,6 @@ OpenPath = {
 									//call = this.peer.call( aPeer.peer_id, self.user.obj.stream );
 									//self.peers[i].call(aPeer.peer_id, this.user.stream );
 								}
-								
-
-
-
 							}
 						}
 					}
@@ -211,26 +206,57 @@ OpenPath = {
 			console.log('INCOMING CaLL',incoming_call);
 			//since incoming_call only reference to user is peer id, make peer shell
 			//which we'll match below
-			var aPeerShell = {
+			var aPeer = {
 				email : null,
 				peer_id : incoming_call.peer
 			};
-			console.log('peer shell', self.findAndUpdateUser( aPeerShell ) ,self.users_in_room);
+			var peerInstance;
+			//check for instance
+			for(var i=0;i<self.peers.length;i++){
+				if(self.peers[i]){
+					var matchEmail = aPeer.email === self.peers[i].obj.email  && aPeer.email !== null;
+					var matchPeerId = aPeer.peer_id === self.peers[i].obj.peer_id && aPeer.peer_id !== null;
 
-			if( self.findAndUpdateUser( aPeerShell ) ) alert('have u');
+					if(matchEmail || matchPeerId){
+						console.log('have you from incoming_call');
+						peerInstance = self.peers[i];
 
-			//WHAT TODO WITH INCOMING CALL USER....
-			incoming_call.answer(self.user.stream); // Answer the call with our stream from getUserMedia
-			incoming_call.on('stream', function(remoteStream) {  // we receive a getUserMedia stream from the remote caller
-				// And attach it to a video object
+						//WHAT TODO WITH INCOMING CALL USER....
+						incoming_call.answer(self.user.obj.stream); // Answer the call with our stream from getUserMedia
+						incoming_call.on('stream', function(remoteStream) {  // we receive a getUserMedia stream from the remote caller
+							
 
-				aPeerShell.stream = remoteStream;
-				self.users_in_room.push( aPeerShell );
-				self.addVideo( aPeerShell );
+							//check if peer is presenter
+							peerInstance.checkIfPresenter(function( isPresenter ){
+								if(isPresenter){
+									console.log('peer checkIfPresenter presenter');
+									//set newPeer to presenter
+									self.presenterElement.appendChild(peerInstance.video.element);
+									// And attach it to a user instance 
+									peerInstance.updateStream(remoteStream);
+									//render video
+									peerInstance.video.render();
+								}else{
+									console.log('peer is not presenter');
+									//add to peer list
+									var li = document.createElement('li');
+									li.appendChild(peerInstance.video.element);
+									self.peersList.appendChild(li);
 
-				self.socket.emit("answered_call",self.user);
-			});
+									// And attach it to a user instance 
+									peerInstance.updateStream(remoteStream);
 
+									//render video
+									peerInstance.video.render();
+								}
+							});	
+							//self.socket.emit("answered_call",self.user);
+						});
+
+
+					}
+				}
+			}
 		});
 		 
 
@@ -322,14 +348,18 @@ OpenPath = {
 						console.log('have you, update your peer id');
 						peerInstance = self.peers[i];
 						peerInstance.updatePeerId(aPeer);
-						//if(users[i].stream !== null)
-						//this.callPeer(users[i]);
 					}
 				}
 			}
 
+			/**
+			CALL
+			*/
+			console.log('calling peer')
+			self.callPeer(aPeer,peerInstance);
+			
 
-			/**/
+			//open peer connection to peer id and call
 			var connection = self.peer.connect( aPeer.peer_id );
 			connection.on('open', function() {
 				console.log('peer connection open')
@@ -337,23 +367,10 @@ OpenPath = {
 				connection.send('HEY! from '+ self.user.obj.email +'. Just got your peer id. Sending stuff. Then calling...' );
 				//send obj just to be sure
 				connection.send( self.user.obj );
-
 				/**
-				 * CALL
-				 * make the call
-				 */
-				if(self.user.obj.stream){
-					var call = self.peer.call( aPeer.peer_id, self.user.obj.stream );
-					// After they answer, we'll get a 'stream' event with their stream	
-					call.on('stream', function(remoteStream) {
-						console.log("Got remote stream", remoteStream, aPeer.stream);
-						aPeer.stream = remoteStream;
-
-
-					});
-				}else{
-					self.users_to_call_when_stream_allowed.push(aPeer)
-				}
+				CALL
+				*/
+				//self.callPeer(aPeer,peerInstance);
 			});
 			
 
@@ -429,6 +446,26 @@ OpenPath = {
 			}
 		});
 	},
+	/**
+	 * CALL
+	 * make the call
+	 */
+	callPeer : function(aPeer,peerInstance){		
+		console.log('stream', this.user.obj.stream)
+		if(this.user.obj.stream){
+			var call = this.peer.call( aPeer.peer_id, this.user.obj.stream );
+			// After they answer, we'll get a 'stream' event with their stream	
+			call.on('stream', function(remoteStream) {
+				console.log("Got remote stream", remoteStream, aPeer.stream);
+				//update aPeer stream
+				//aPeer.stream = remoteStream;
+				//update user instance
+				//peerInstance.updateStream(aPeer);
+			});
+		}else{
+			this.peers_to_call_when_stream_allowed.push(peerInstance)
+		}
+	},
 	updateChat : function( user, msg ){
 		var from = user === 'SERVER' ? user : user.email;
 
@@ -480,28 +517,6 @@ OpenPath = {
 		var self = this;
 		var newPeer = new OpenPath.User(userObj)
 		this.peers.push( newPeer );
-
-		if(1==2)
-		//check if peer is presenter
-		newPeer.checkIfPresenter(function( isPresenter ){
-			if(isPresenter){
-				console.log('peer checkIfPresenter presenter');
-				//set newPeer to presenter
-				self.presenterElement.appendChild(newPeer.video.element);
-
-				//render video
-				newPeer.video.render();
-			}else{
-				console.log('peer is not presenter');
-				//add to peer list
-				var li = document.createElement('li');
-				li.appendChild(newPeer.video.element);
-				self.peersList.appendChild(li);
-
-				//render video
-				newPeer.video.render();
-			}
-		});
 	}
 };
 

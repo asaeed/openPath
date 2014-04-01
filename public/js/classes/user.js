@@ -115,8 +115,8 @@ OpenPath.User.prototype.updateLocation = function(obj){
 /**
  * update stream (for incoming users that are not me)
  */
-OpenPath.User.prototype.updateStream = function(obj){
-	this.obj.stream = obj.stream;
+OpenPath.User.prototype.updateStream = function(stream){
+	this.obj.stream = stream;
  	//re-render video
 	this.video.render();		
 };
