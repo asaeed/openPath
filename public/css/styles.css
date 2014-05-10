@@ -615,14 +615,15 @@ body #home section#videos #videosView #chat {
   bottom: -225px;
   z-index: 11;
   background: rgba(0, 0, 0, 0.7);
-  -webkit-transition: bottom 1s ease-in-out;
-  -moz-transition: bottom 1s ease-in-out;
-  -o-transition: bottom 1s ease-in-out;
-  transition: bottom 1s ease-in-out;
+  -webkit-transition: bottom 0.3s ease-in-out;
+  -moz-transition: bottom 0.3s ease-in-out;
+  -o-transition: bottom 0.3s ease-in-out;
+  transition: bottom 0.3s ease-in-out;
 }
 body #home section#videos #videosView #chat header {
   overflow: hidden;
   padding: 0.8em 1em;
+  cursor: pointer;
 }
 body #home section#videos #videosView #chat header p.msg {
   float: left;

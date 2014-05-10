@@ -44,18 +44,10 @@ OpenPath = {
 		this.chatmsg = document.getElementById("chatmsg");
 		this.chatwindow = document.getElementById("chatwindow");
 		this.chatmessages = document.getElementById("chatmessages");
+		this.chatheader = chat.getElementsByTagName("header")[0];
 		this.chatToggler = document.getElementById("chatToggler");
 
-		/*chat toggle event*/
-		this.chatToggler.addEventListener('click',function(){
-			if(self.chat.classList.contains('open')){
-				self.chat.classList.remove('open');
-			}else{
-				self.chatmsg.classList.remove('blink');
-				self.chat.classList.add('open');
-				self.chatmsg.innerHTML = 'Chat';
-			}
-		});
+		
 
 		/**
 		 * user obj to send to others - you :)
@@ -112,7 +104,16 @@ OpenPath = {
 	},
 	events : function(){
 		var self = this;
-
+		/*chat toggle event*/
+		this.chatheader.addEventListener('click',function(){
+			if(self.chat.classList.contains('open')){
+				self.chat.classList.remove('open');
+			}else{
+				self.chatmsg.classList.remove('blink');
+				self.chat.classList.add('open');
+				self.chatmsg.innerHTML = 'Chat';
+			}
+		});
 		/**
 		 * chat input
 		 * socket sending chat

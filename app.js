@@ -45,7 +45,7 @@ fs.readdirSync(models_dir).forEach(function (file) {
 
 
 //require passport
-require('./utils/passport')(passport, config)
+require('./utils/passport')(passport, config);
 
 /**
  * Config
