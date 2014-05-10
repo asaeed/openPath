@@ -2,21 +2,22 @@
 	<div class="content">
 		<ul>
 			<li>
-				<a id="tosLink" data-toggle="modal" data-target="#metamodal-tos" href="/terms-of-service">Terms of Service</a>
+				<a id="tosLink" href="/terms-of-service">Terms of Service</a>
 			</li>
 			<li>
-				<a id="privacyPolicyLink" data-target="#metamodal-pp" data-toggle="modal" href="/privacy-policy">Privacy Policy</a>
+				<a id="privacyPolicyLink" href="/privacy-policy">Privacy Policy</a>
 			</li>
 			<li>
-				<a id="aboutLink" data-toggle="modal" data-target="#metamodal-about" href="/about">About</a>
+				<a id="aboutLink" href="/about">About</a>
 			</li>
 		</ul>
 	</div>
 </footer>
-<div class="modal-wrap">
-	<a href="javascript:void(0)" class="closeBtn">close</a>
-	{{> modals/terms }}
-	{{> modals/privacy }}
-	{{> modals/about }}
-	
+<div class="modalWrap" id="modalWrap">
+	<div class="modalContent">
+		<a href="/" class="closeBtn">close</a>
+		{{> modals/terms }}
+		{{> modals/privacy }}
+		{{> modals/about }}
+	</div>
 </div>

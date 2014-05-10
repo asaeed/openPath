@@ -22,6 +22,28 @@ OpenPath.Ui = {
 		window.addEventListener('resize',function(){
 			self.windowResize();
 		}, false);
+
+		//footer link modals
+		var tosLink = document.getElementById('tosLink'),
+			privacyPolicyLink = document.getElementById('privacyPolicyLink'),
+			aboutLink = document.getElementById('aboutLink'),
+			tos = document.getElementById('tos'),
+			privacyPolicy = document.getElementById('privacyPolicy'),
+			about = document.getElementById('about');
+
+		tosLink.addEventListener('click',function(e){
+			e.preventDefault();
+			self.modal(tos);
+		},false);
+		privacyPolicyLink.addEventListener('click',function(e){
+			e.preventDefault();
+			self.modal(privacyPolicy);
+		},false);
+		aboutLink.addEventListener('click',function(e){
+			e.preventDefault();
+			self.modal(about);
+		},false);
+
 	},
 	windowResize : function(){
 		this.w = window.innerWidth;
@@ -176,5 +198,31 @@ OpenPath.Ui = {
 			marker.setPosition(mapOptions.center);
 			marker.setVisible(true);
 		}
+	},
+	modal : function( modal ){
+		var modalWrap = document.getElementById('modalWrap');
+		var modals = document.getElementsByClassName('modal');
+		var closeBtn = modalWrap.getElementsByClassName('closeBtn')[0];
+
+		window.scrollTo(0,0);
+		
+		modalWrap.style.display = 'block';
+		modalWrap.style.height = document.body.offsetHeight + 'px';
+
+		for(var i=0;i<modals.length;i++){
+			if(modals[i] === modal){
+				modals[i].style.display = 'block';
+			}else{
+				modals[i].style.display = 'none';
+			}
+		}
+		
+		closeBtn.addEventListener('click',function(e){
+			e.preventDefault();
+			modalWrap.style.display = 'none';
+			for(var i=0;i<modals.length;i++){
+				modals[i].style.display = 'none';
+			}
+		},false);
 	}
 };

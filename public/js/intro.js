@@ -33,6 +33,6 @@ OpenPath = {
 };
 
 window.onload = function(){
-	OpenPath.Ui.convertEventTimeInTitle();
+	OpenPath.Ui.init();
 	OpenPath.intro();
 };
