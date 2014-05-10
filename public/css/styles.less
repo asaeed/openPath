@@ -7,6 +7,9 @@
 @pink:rgba(255,0,255,0.7);
 @blue:#56acdd;
 @blackTransulcent:rgba(0,0,0,0.7);
+@grey:rgba(192,194,196,1);
+
+
 /**
  * mixins
  */
@@ -38,6 +41,9 @@
 	background:rgba(0,0,0,0.8);
 	padding:0.5em 0.5em 0.4em 0.5em;
 	
+}
+a.closeBtn {
+	background-image:url('/images/btn-close.png') no-repeat;
 }
 body {
 	background:#fff;
@@ -132,6 +138,8 @@ body {
 	 */
 	#intro {
 		@import "modules/intro.less";
+		@import "modules/footer.less";
+		@import "modules/modal.less";
 	}
 	#home {
 

@@ -1,0 +1,41 @@
+.modal-wrap {
+	position: absolute;
+	top:0;
+	bottom:0;
+	left:0;
+	right:0;
+	background:rgba(0,0,0,0.7);
+	z-index:10;
+	a.closeBtn {
+
+	}
+	section.modal {
+		background:#fff;
+		position: absolute;
+		width:100em;
+		top:5em;
+		left:50%;
+		margin-left: -50em;
+		.box-sizing(border-box);
+		.border-radius(1em);
+		padding:4em;
+		h1 {
+			font-size:3em;
+			color:@grey;
+			padding-bottom: 1rem;
+		}
+		p {
+			.pNormal();
+			padding-bottom: 1em;
+		}
+		ul,
+		ol {
+			padding:0 0 1em 3em;
+			list-style-type: disc;
+			li {
+				.pNormal();
+				padding-bottom: 1em
+			}
+		}
+	}
+}

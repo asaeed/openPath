@@ -5,6 +5,9 @@
 /**
  * mixins
  */
+a.closeBtn {
+  background-image: url('/images/btn-close.png') no-repeat;
+}
 body {
   background: #fff;
   font-family: 'Myriad Pro', 'PT Sans', arial, sans-serif;
@@ -247,6 +250,65 @@ body #intro section.bottomCallouts .content .calloutWrap article:last-child {
   margin-left: 0;
   width: 37.3em;
   padding: 3em 0 0 0;
+}
+body #intro footer ul {
+  text-align: center;
+}
+body #intro footer ul li {
+  display: inline;
+  padding: 0 10px 0 10px;
+}
+body #intro footer ul li a {
+  font-size: 1.3em;
+  display: inline;
+}
+body #intro .modal-wrap {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: rgba(0, 0, 0, 0.7);
+  z-index: 10;
+}
+body #intro .modal-wrap section.modal {
+  background: #fff;
+  position: absolute;
+  width: 100em;
+  top: 5em;
+  left: 50%;
+  margin-left: -50em;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  -webkit-border-radius: 1em;
+  -webkit-background-clip: padding-box;
+  -moz-border-radius: 1em;
+  -moz-background-clip: padding;
+  border-radius: 1em;
+  background-clip: padding-box;
+  padding: 4em;
+}
+body #intro .modal-wrap section.modal h1 {
+  font-size: 3em;
+  color: #c0c2c4;
+  padding-bottom: 1rem;
+}
+body #intro .modal-wrap section.modal p {
+  font-size: 1.5em;
+  line-height: 1.3em;
+  padding-bottom: 1em;
+}
+body #intro .modal-wrap section.modal ul,
+body #intro .modal-wrap section.modal ol {
+  padding: 0 0 1em 3em;
+  list-style-type: disc;
+}
+body #intro .modal-wrap section.modal ul li,
+body #intro .modal-wrap section.modal ol li {
+  font-size: 1.5em;
+  line-height: 1.3em;
+  padding-bottom: 1em;
 }
 body #home {
   /**
