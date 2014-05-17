@@ -200,7 +200,6 @@ OpenPath.Router = {
 		//get data
 		upcomingEventsView.get();
 
-
 		var content = this.upcomingEvents.getElementsByClassName('content')[0];
 		//compile template
 		var source = document.getElementById('upcomingEventsTemplate').innerHTML;
@@ -214,9 +213,21 @@ OpenPath.Router = {
 			content.innerHTML = template( data );
 
 			var events = content.getElementsByClassName('event');
+
+			//actions on all events
 			for(var i=0; i<events.length; i++){
-				var mapwrap = events[i].getElementsByClassName('mapWrap')[0];
+				var eventView = new OpenPath.View();
+
+				var mapwrap = events[i].getElementsByClassName('mapWrap')[0],
+					joinBtn = events[i].getElementsByClassName('joinBtn')[0];
 				OpenPath.Ui.renderMap(mapwrap, mapwrap.dataset.latitude, mapwrap.dataset.longitude, mapwrap.dataset.reference, mapwrap.dataset.formattedaddress );
+			
+				eventView.eventHandler(joinBtn,'click',function(e){
+					
+					e.preventDefault();
+					console.log('join',joinBtn.getAttribute('href'));
+				});
+				
 			}
 
 
