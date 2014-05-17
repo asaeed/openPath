@@ -12,7 +12,7 @@ OpenPath.Router = {
 
 		//header
 		this.header = document.querySelector('#mainHeader');
-
+		this.footer = document.querySelector('#mainFooter');
 		//all pages & all views 
 		this.pages = document.querySelectorAll('.page');
 		this.views = document.querySelectorAll('.view');
@@ -139,6 +139,7 @@ OpenPath.Router = {
 	reset : function(){
 		//reset header
 		this.header.style.width = 100+'%';
+		this.footer.style.display = 'block';
 
 		//hide pages
 		for(var i=0;i<this.pages.length;i++){
@@ -160,6 +161,7 @@ OpenPath.Router = {
 		this.show(this.videosView);
 
 		this.header.style.width = 75+'%';
+		this.footer.style.display = 'none';
 		//handle video views in main
 	},
 	showInvite : function(){
