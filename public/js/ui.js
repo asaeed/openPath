@@ -207,7 +207,7 @@ OpenPath.Ui = {
 		window.scrollTo(0,0);
 		
 		modalWrap.style.display = 'block';
-		modalWrap.style.height = document.body.offsetHeight + 'px';
+		modalWrap.style.height = document.body.offsetHeight +200 + 'px'; //shameless hack to make about fit
 
 		for(var i=0;i<modals.length;i++){
 			if(modals[i] === modal){
