@@ -208,7 +208,7 @@ OpenPath.Router = {
 
 
 		upcomingEventsView.got = function(data){
-			//console.log('upcomingEventsView got', data );
+			console.log('upcomingEventsView got', data );
 
 			//add data to template
 			content.innerHTML = template( data );
