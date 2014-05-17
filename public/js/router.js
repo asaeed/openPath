@@ -52,12 +52,14 @@ OpenPath.Router = {
 		//links to checkRoutes on
 		this.routes = document.querySelectorAll('.route');
 
+
 		/**
 		 * @class route
 		 * @description small helper class to add event listener
 		 */
 		function route( route ){
-			route.addEventListener('click',function(e){
+			//event function to remove later
+			function routeEvent(e){
 				//remove active from btns
 				for(var i=0;i<self.routes.length;i++){
 					self.routes[i].classList.remove('active');
@@ -65,7 +67,11 @@ OpenPath.Router = {
 				//add active to btn
 				route.classList.add('active');
 				self.checkRoute( route.getAttribute('href') );
-			},false);
+			}
+			if(route._hasEventListener) return;
+			//remove event first
+			route.addEventListener('click',routeEvent,false);
+			route._hasEventListener = true;
 		}
 		//make route instances
 		for(var i=0;i<this.routes.length;i++){
@@ -137,6 +143,7 @@ OpenPath.Router = {
 		}
 	},
 	reset : function(){
+		console.log('reset');
 		//reset header
 		this.header.style.width = 100+'%';
 		this.footer.style.display = 'block';
@@ -221,11 +228,13 @@ OpenPath.Router = {
 				var mapwrap = events[i].getElementsByClassName('mapWrap')[0],
 					joinBtn = events[i].getElementsByClassName('joinBtn')[0];
 				OpenPath.Ui.renderMap(mapwrap, mapwrap.dataset.latitude, mapwrap.dataset.longitude, mapwrap.dataset.reference, mapwrap.dataset.formattedaddress );
-			
+				
+				//join btn handler
 				eventView.eventHandler(joinBtn,'click',function(e){
-					
+
 					e.preventDefault();
 					console.log('join',joinBtn.getAttribute('href'));
+					alert(joinBtn.getAttribute('href'))
 				});
 				
 			}
