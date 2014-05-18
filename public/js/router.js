@@ -248,17 +248,13 @@ OpenPath.Router = {
 			eventView.prototype.posted = function(data){
 				console.log('ddddd',data)
 				if(data){
-					document.getElementById('roomId').value = data.roomID;
-					document.getElementById('eventId').value = data.eventID;
-
 					
+					//update hidden inputs
+					document.getElementById('roomId').value = data.room._id;
+					document.getElementById('eventId').value = data.event._id;
+
+					OpenPath.Ui.updateHeader(data.event);
 					/*
-					name :  document.getElementById('userName').value,
-					email :  document.getElementById('email').value,
-					room_id : document.getElementById('roomId').value,
-					event_id : document.getElementById('eventId').value,
-					
-
 					//TODO
 					udapte user,
 					re render event header 

@@ -396,7 +396,8 @@ body #home header#mainHeader .content a.logo .title h3 {
   font-size: 1.5em;
   font-weight: bold;
 }
-body #home header#mainHeader .content a.logo .title h3 span {
+body #home header#mainHeader .content a.logo .title h3 span.startTime,
+body #home header#mainHeader .content a.logo .title h3 span.endTime {
   font-size: 0.8em;
   font-weight: normal;
 }
@@ -992,9 +993,15 @@ body #home section#events ul.eventsList li.event article p {
   line-height: 1.3em;
   padding-bottom: 1em;
 }
+body #home section#events ul.eventsList li.event article p.date {
+  font-weight: bold;
+}
 body #home section#events ul.eventsList li.event article p.date span {
-  font-size: 0.9em;
+  font-size: 0.8em;
   color: #666;
+}
+body #home section#events ul.eventsList li.event article p.location {
+  font-weight: bold;
 }
 body #home section#events ul.eventsList li.event article .buttons {
   overflow: hidden;
