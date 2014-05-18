@@ -255,17 +255,13 @@ module.exports = function(app, io, passport){
 	app.post("/gotoevent/", function (req, res) {
 
 		console.log('gotoevent',req.query)
-		RoomHandler.checkForRoom( req , function(){
-
-			console.log('found room , joining?');
-			res.send(true);
+		RoomHandler.checkForRoom( req , function( event, room ){
+			res.send({
+				room : room,
+				event : event
+			});
 
 		});
-		// Event.goToEvent(req, function(err, newEvent){
-		// 	if(err) throw err;
-		// 	console.log('newEvent=',newEvent);
-		// 	res.redirect("/#/events");
-		// });
 	});
 	/**
 	 * check if presenter 

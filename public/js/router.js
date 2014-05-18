@@ -212,7 +212,7 @@ OpenPath.Router = {
 		var source = document.getElementById('upcomingEventsTemplate').innerHTML;
 		var template = Handlebars.compile(source);
 
-
+		//get all events
 		upcomingEventsView.got = function(data){
 			console.log('upcomingEventsView got', data );
 
@@ -223,14 +223,18 @@ OpenPath.Router = {
 
 			/**
 			 * Event helper class
+			 * individual event instance
 			 */
-			function eventView(joinBtn){
+			function eventView(element){
 				var me = this;
-				this.eventHandler(joinBtn,'click',function(e){
+				this.element = element;
+				this.joinBtn = this.element.getElementsByClassName('joinBtn')[0]
+
+				this.eventHandler(this.joinBtn,'click',function(e){
 					e.preventDefault();
-					console.log('join',joinBtn.getAttribute('href'));
+					console.log('join',me.joinBtn.getAttribute('href'));
 					//set url and post
-					me.url = "/gotoevent/"+ joinBtn.getAttribute('href');
+					me.url = "/gotoevent/"+ me.joinBtn.getAttribute('href');
 					me.post({"data":null});
 
 
@@ -241,8 +245,13 @@ OpenPath.Router = {
 			eventView.prototype.constructor = eventView;
 			
 			//when posted, join event
-			eventView.prototype.posted = function(bool){
-				if(bool){
+			eventView.prototype.posted = function(data){
+				console.log('ddddd',data)
+				if(data){
+					document.getElementById('roomId').value = data.roomID;
+					document.getElementById('eventId').value = data.eventID;
+
+					
 					/*
 					name :  document.getElementById('userName').value,
 					email :  document.getElementById('email').value,
@@ -258,23 +267,23 @@ OpenPath.Router = {
 					re init openPath obj 
 					*/
 
+
 				}
 			};
 
 
-			//events loop
+			/**
+			 * events loop
+			 */
 			for(var i=0; i<events.length; i++){
 
-				/**
-				 * individual event
-				 */
-				var mapwrap = events[i].getElementsByClassName('mapWrap')[0],
-					joinBtn = events[i].getElementsByClassName('joinBtn')[0];
+				
+				var mapwrap = events[i].getElementsByClassName('mapWrap')[0];
 				//render map
 				OpenPath.Ui.renderMap(mapwrap, mapwrap.dataset.latitude, mapwrap.dataset.longitude, mapwrap.dataset.reference, mapwrap.dataset.formattedaddress );
 
 
-				new eventView(joinBtn);
+				new eventView(events[i]);
 			}
 
 
