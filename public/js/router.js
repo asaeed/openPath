@@ -221,28 +221,39 @@ OpenPath.Router = {
 
 			var events = content.getElementsByClassName('event');
 
+			/**
+			 * Event helper class
+			 */
+			function eventView(joinBtn){
+				var me = this;
+				this.eventHandler(joinBtn,'click',function(e){
+					e.preventDefault();
+					console.log('join',joinBtn.getAttribute('href'));
+					//set url and post
+					me.url = "/gotoevent/"+ joinBtn.getAttribute('href');
+					me.post({"data":null});
+				});
+			}
+			//inherits OpenPath.View
+			eventView.prototype = new OpenPath.View();
+			eventView.prototype.constructor = eventView;
+			//join btn handler
+			
+
+
 			//events loop
 			for(var i=0; i<events.length; i++){
 
 				/**
 				 * individual event
 				 */
-				var eventView = new OpenPath.View();
-
 				var mapwrap = events[i].getElementsByClassName('mapWrap')[0],
 					joinBtn = events[i].getElementsByClassName('joinBtn')[0];
 				//render map
 				OpenPath.Ui.renderMap(mapwrap, mapwrap.dataset.latitude, mapwrap.dataset.longitude, mapwrap.dataset.reference, mapwrap.dataset.formattedaddress );
-				
-				//join btn handler
-				eventView.eventHandler(joinBtn,'click',function(e){
-					e.preventDefault();
-					console.log('join',joinBtn.getAttribute('href'));
-					//set url and post
-					eventView.url = "/gotoevent/"+ joinBtn.getAttribute('href');
-					eventView.post({"data":null});
-				});
-				
+
+
+				new eventView(joinBtn);
 			}
 
 
