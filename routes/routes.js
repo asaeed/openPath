@@ -250,6 +250,23 @@ module.exports = function(app, io, passport){
 	});
 
 	/**
+	 * go to event
+	 */
+	app.post("/gotoevent/", function (req, res) {
+
+		console.log('gotoevent',req.query)
+		RoomHandler.checkForRoom( req , function(){
+
+			console.log('found room , joining?')
+
+		});
+		// Event.goToEvent(req, function(err, newEvent){
+		// 	if(err) throw err;
+		// 	console.log('newEvent=',newEvent);
+		// 	res.redirect("/#/events");
+		// });
+	});
+	/**
 	 * check if presenter 
 	 */
 	app.get('/presenter/:id/:email', function(req, res){

@@ -16,7 +16,7 @@ var express = require('express'),
     mongoose = require('mongoose'),
     passport = require("passport"),
     flash = require("connect-flash"),
-    lessMiddleware = require('less-middleware'),
+    less = require('less'),
     app = express();
 
 
@@ -62,7 +62,8 @@ app.configure(function(){
   //app.use(express.methodOverride());//?
   app.use(express.cookieParser());
   app.use(express.session({secret : 'jadePlant' }));
-  app.use(lessMiddleware({ src: __dirname + '/public', compress: true }));
+  //app.use(less({ src: __dirname + '/public', compress: true }));
+  //app.use(express.compiler({ src : __dirname + '/public', enable: ['less']}));
   app.use(express.static(__dirname + '/public'));
   app.use(passport.initialize());
   app.use(passport.session());

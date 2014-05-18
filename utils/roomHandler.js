@@ -16,6 +16,7 @@ module.exports.checkForRoom = function( req , done ){
 
 		//if user logged join event
 		if(req.user){
+			console.log('joined')
 			this.joinEvent( req, done );
 		}else{
 			done();

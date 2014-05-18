@@ -50,7 +50,7 @@ OpenPath.Ui = {
 		this.h = window.innerHeight;
 
 		//set videos height
-		this.videosView.style.height = this.h + 'px';
+		if(this.videos) this.videosView.style.height = this.h + 'px';
 	},
 	/**
 	 * tool tips

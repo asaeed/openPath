@@ -54,7 +54,7 @@ OpenPath.SuperMVC.prototype.post = function(data){
 		  // Success!
 		  var data = JSON.parse(xhr.responseText);
 		  self.posted(data);
-		  //console.log('post: on load', xhr.responseText);
+		  console.log('post: on load', xhr.responseText);
 	  } else {
 		  // We reached our target server, but it returned an error
 		  
@@ -62,11 +62,11 @@ OpenPath.SuperMVC.prototype.post = function(data){
 	};
 	xhr.onloadend = function () {
 		// done
-		//console.log('post: on load end');
+		console.log('post: on load end');
 	};
 	xhr.onerror = function() {
 		// There was a connection error of some sort
-		//console.log('post: on error', xhr.responseText );
+		console.log('post: on error', xhr.responseText );
 	};
 };
 
