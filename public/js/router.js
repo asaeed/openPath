@@ -232,13 +232,34 @@ OpenPath.Router = {
 					//set url and post
 					me.url = "/gotoevent/"+ joinBtn.getAttribute('href');
 					me.post({"data":null});
+
+
 				});
 			}
 			//inherits OpenPath.View
 			eventView.prototype = new OpenPath.View();
 			eventView.prototype.constructor = eventView;
-			//join btn handler
 			
+			//when posted, join event
+			eventView.prototype.posted = function(bool){
+				if(bool){
+					/*
+					name :  document.getElementById('userName').value,
+					email :  document.getElementById('email').value,
+					room_id : document.getElementById('roomId').value,
+					event_id : document.getElementById('eventId').value,
+					
+
+					//TODO
+					udapte user,
+					re render event header 
+					update inputs above
+					tell socket
+					re init openPath obj 
+					*/
+
+				}
+			};
 
 
 			//events loop

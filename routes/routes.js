@@ -257,7 +257,8 @@ module.exports = function(app, io, passport){
 		console.log('gotoevent',req.query)
 		RoomHandler.checkForRoom( req , function(){
 
-			console.log('found room , joining?')
+			console.log('found room , joining?');
+			res.send(true);
 
 		});
 		// Event.goToEvent(req, function(err, newEvent){
