@@ -292,6 +292,10 @@ OpenPath.Router = {
 		this.show(this.events);
 		this.show(this.addNewEvent);
 
+		var date = document.getElementById("date");
+		date.addEventListener('change',function(e){
+			console.log('change',date.value)
+		},false);
 		/**
 		 * autocompleteLocationInput
 		 */

@@ -183,6 +183,8 @@ module.exports = function(app, io, passport){
 				var today = new Date();
 				var yesterday = today.setDate(today.getDate() - 1);
 
+				console.log('date',yesterday,today)
+
 				if( Date.parse(items[i].date) > yesterday ){//if today or in future
 					var mine = req.user ? ( items[i].creatorID == req.user._id ) : false;
 					var publicItem = {
