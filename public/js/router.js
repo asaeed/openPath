@@ -246,9 +246,7 @@ OpenPath.Router = {
 			
 			//when posted, join event
 			eventView.prototype.posted = function(data){
-				console.log('ddddd',data)
 				if(data){
-					
 					//update hidden inputs
 					document.getElementById('roomId').value = data.room._id;
 					document.getElementById('eventId').value = data.event._id;
@@ -257,13 +255,12 @@ OpenPath.Router = {
 					/*
 					//TODO
 					udapte user,
-					re render event header 
-					update inputs above
+					//re render event header 
+					//update inputs above
 					tell socket
 					re init openPath obj 
 					*/
-
-
+					OpenPath.start();
 				}
 			};
 
@@ -317,7 +314,7 @@ OpenPath.Router = {
 					alert('location not found')
 					return;
 				}else{
-					console.log(place)
+					console.log('adding',place)
 					longitudeInput.value = place.geometry.location.lng();
 					latitudeInput.value = place.geometry.location.lat();
 					referenceInput.value = place.reference;

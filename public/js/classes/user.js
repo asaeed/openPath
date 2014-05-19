@@ -12,15 +12,14 @@ OpenPath.User = function( obj ){
 
 };
 OpenPath.User.prototype.connect = function(){
-	this.getMyMedia();
-	this.getMyLocation();
+	if(!this.obj.stream) this.getMyMedia();
+	if(!this.obj.location) this.getMyLocation();
 };
 /**
  * getMyMedia, send to socket
  */
 OpenPath.User.prototype.getMyMedia = function(){
 	var self = this;
-
 	if(navigator.getUserMedia) {
 		navigator.getUserMedia( {video: true, audio: true}, function(stream) {
 

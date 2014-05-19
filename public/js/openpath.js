@@ -13,8 +13,7 @@ navigator.getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia 
 OpenPath = {
 	init : function(){
 		console.log('OpenPath init');
-		var self = this;
-
+		
 		//configs
 		this.peerKey = 'w8hlftc242jzto6r';
 		this.socketConnection = 'http://openpath.me/' ;
@@ -48,7 +47,6 @@ OpenPath = {
 		this.chatToggler = document.getElementById("chatToggler");
 
 		
-
 		/**
 		 * user obj to send to others - you :)
 		 */
@@ -67,40 +65,13 @@ OpenPath = {
 			}
 		});
 
-		//array of users in room - get all connected users in my room - excluding me
-		this.others_in_room = [];
-		//array of other user instances, in room of course
-		this.peers = [];
-		//peers_to_call_when_stream_allowed
-		this.peers_to_call_when_stream_allowed = [];
-
-
-
-		/**
-		 * check if this.user is presenter
-		 */
-		this.user.checkIfPresenter(function( isPresenter ){
-			if(isPresenter){
-				console.log('I\'m presenter');
-				//set userVideo to presenter
-				self.presenterElement.appendChild(self.user.video.element);
-			}else{
-				console.log('I\'m not presenter');
-				//add to peer list
-				var li = document.createElement('li');
-				li.appendChild(self.user.video.element);
-				self.peersList.appendChild(li);
-			}
-
-			self.user.connect();
-		});
-
 		/**
 		 * connect to peer, socket
 		 * communicate with socket
 		 */
 		this.events();
-		this.connect();
+
+		this.start();
 	},
 	events : function(){
 		var self = this;
@@ -129,6 +100,46 @@ OpenPath = {
 				}
 			}
 		}, false); 
+	},
+	start : function(){
+		var self = this;
+
+		//update user
+		this.user.room_id = document.getElementById('roomId').value;
+		this.user.event_id = document.getElementById('eventId').value;
+
+		//clear divs
+		//this.presenterElement.innerHTML = '';
+		//this.peersList.innerHTML = '';
+
+		//array of users in room - get all connected users in my room - excluding me
+		this.others_in_room = [];
+		//array of other user instances, in room of course
+		this.peers = [];
+		//peers_to_call_when_stream_allowed
+		this.peers_to_call_when_stream_allowed = [];
+		
+		/**
+		 * check if this.user is presenter
+		 */
+		this.user.checkIfPresenter(function( isPresenter ){
+			if(isPresenter){
+				console.log('I\'m presenter');
+				//set userVideo to presenter
+				self.presenterElement.appendChild(self.user.video.element);
+			}else{
+				console.log('I\'m not presenter');
+				//add to peer list
+				var li = document.createElement('li');
+				li.appendChild(self.user.video.element);
+				self.peersList.appendChild(li);
+			}
+
+			self.user.connect();
+		});
+
+
+		this.connect();
 	},
 	connect : function(){
 		var self = this;
@@ -462,7 +473,8 @@ OpenPath = {
 		 * find user instance and destroy it!!
 		 */
 		this.socket.on('disconnect', function ( aPeer, connected_users ) {
-			console.log('received disconnect', aPeer.email, connected_users );
+
+			console.log('received disconnect', aPeer, connected_users );
 
 			//delete aPeer user instance
 			//update this.peers array
