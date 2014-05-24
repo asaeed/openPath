@@ -12,6 +12,7 @@ var express = require('express'),
     exphbs  = require('express3-handlebars'),
     fs = require('fs'),
     http = require('http'),
+    https = require('https'),
     path = require('path'),
     mongoose = require('mongoose'),
     passport = require("passport"),
@@ -19,6 +20,10 @@ var express = require('express'),
     less = require('less'),
     app = express();
 
+var privateKey  = fs.readFileSync('sslcert/server.key', 'utf8');
+var certificate = fs.readFileSync('sslcert/server.crt', 'utf8');
+
+var credentials = {key: privateKey, cert: certificate};
 
 //config
 var env = process.env.NODE_ENV || 'development',
@@ -26,6 +31,7 @@ var env = process.env.NODE_ENV || 'development',
 
 //create server
 var http = http.createServer(app),
+    https = https.createServer(credentials, app),
     io = require('socket.io').listen(http, { log: false });
 
 //connect to mongo
@@ -51,7 +57,8 @@ require('./utils/passport')(passport, config);
  * Config
  */
 app.configure(function(){
-  app.set('port', process.env.PORT || 8080);
+  app.set('port', process.env.PORT || 8080);//80
+  app.set('securePort', 8081);//443
   app.engine('handlebars', exphbs({defaultLayout: 'main'}));
   app.set('views', __dirname + '/views');
   app.set('view engine', 'handlebars');
@@ -89,4 +96,7 @@ var routes = require('./routes/routes')(app,io,passport);
  */
 http.listen(app.get('port'), function(){
   console.log("Server listening on port " + app.get('port'));
+});
+https.listen(app.get('securePort'), function(){
+  console.log("Server listening on port " + app.get('securePort'));
 });
