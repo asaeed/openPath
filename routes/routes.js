@@ -27,16 +27,17 @@ module.exports = function(app, io, passport){
 			//check for query string & sessions
 			RoomHandler.checkForRoom( req , function( event, room ){
 				//console.log('DONE CHECKING FOR ROOM',req.user);
-
+				/*
 				var safeUser = {
 					firstName : req.user.firstName,
 					lastName : req.user.lastName,
 					email : req.user.email
 					//TODO rest of modal
 				}
+				*/
 
-				res.render("home", { user : safeUser,  event : event, room : room });
-
+				//res.render("home", { user : safeUser,  event : event, room : room });
+				res.render("home", { user_email : req.user.email });
 				
 			});
 
@@ -58,21 +59,18 @@ module.exports = function(app, io, passport){
 	app.get("/login", function(req, res){ 
 		res.render("login");
 	});
-
 	app.post("/login",
 		passport.authenticate('local',{
 			successRedirect : "/",
 			failureRedirect : "/login",
 		})
 	);
-
 	/**
 	 * signup
 	 */
 	app.get("/signup", function (req, res) {
 		res.render("signup");
 	});
-
 	app.post("/signup", Auth.userExist, function (req, res, next) {
 		User.signup(req.body.email, req.body.password, function(err, user){
 			if(err) throw err;
@@ -91,7 +89,6 @@ module.exports = function(app, io, passport){
 		res.redirect('/');
 	});
 
-
 	/**
 	 * email
 	 */
@@ -101,7 +98,6 @@ module.exports = function(app, io, passport){
 		host:     EmailConfig.email.host, 
 		ssl:      true
 	});
-
 	app.post('/email', function(req, res){
 		console.log('about to send an email...');
 
@@ -122,9 +118,6 @@ module.exports = function(app, io, passport){
 			}
 		});
 	});	
-
-
-
 	/**
 	 * users 
 	 */
@@ -143,9 +136,12 @@ module.exports = function(app, io, passport){
 	app.get("/user/:email", function (req, res) {
 		User.findByEmail(req, function (err, user) {
 			if (err) return console.error(err);
-			
+
 		// If a user is returned, load the given user
 			console.log('user is',user);
+			var safeUser = {
+
+			}
 			res.send(user);
 		});
 	});
@@ -272,12 +268,13 @@ module.exports = function(app, io, passport){
 		});
 	});
 
-	//events post
+	//add event, events post
 	app.post("/events", function (req, res) {
 		Event.addEvent(req, function(err, newEvent){
 			if(err) throw err;
 			console.log('newEvent=',newEvent);
-			res.redirect("/#/events");
+			//res.redirect("/#/events");
+			res.send(newEvent);
 		});
 	});
 
@@ -292,7 +289,6 @@ module.exports = function(app, io, passport){
 				room : room,
 				event : event
 			});
-
 		});
 	});
 };

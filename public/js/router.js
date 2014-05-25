@@ -260,7 +260,7 @@ OpenPath.Router = {
 					tell socket
 					re init openPath obj 
 					*/
-					OpenPath.start();
+					//OpenPath.start();
 				}
 			};
 
@@ -292,21 +292,42 @@ OpenPath.Router = {
 		this.show(this.events);
 		this.show(this.addNewEvent);
 
-		var date = document.getElementById("date");
-		date.addEventListener('change',function(e){
-			console.log('change',date.value)
-		},false);
+		/**
+		 * Event helper class
+		 * create individual event modal instance
+		 */
+		function eventModel(data){
+			var me = this;
+			me.url = '/events';
+			me.post(data);
+		}
+		//inherits OpenPath.View
+		eventModel.prototype = new OpenPath.Model();
+		eventModel.prototype.constructor = eventModel;
+		
+		//when posted, join event
+		eventModel.prototype.posted = function(data){
+			if(data){
+			}
+		};
+
+
+		var name = document.getElementById("name"),
+			link = document.getElementById("link"),
+			date = document.getElementById("date"),
+			startTime = document.getElementById("startTime"),
+			endTime = document.getElementById("endTime"),
+			description = document.getElementById("description"),
+			locationInput = document.getElementById("location"),
+			longitudeInput = document.getElementById("longitude"),
+			latitudeInput = document.getElementById("latitude"),
+			referenceInput = document.getElementById("reference"),
+			formattedAddressInput = document.getElementById("formattedAddress"),
+			saveEventBtn = document.getElementById('saveEventBtn');
 		/**
 		 * autocompleteLocationInput
 		 */
 		function autocompleteLocationInput(){
-
-			var locationInput = document.getElementById("location"),
-				longitudeInput = document.getElementById("longitude"),
-				latitudeInput = document.getElementById("latitude"),
-				referenceInput = document.getElementById("reference"),
-				formattedAddressInput = document.getElementById("formattedAddress");
-
 			var autocomplete = new google.maps.places.Autocomplete(locationInput);
 			
 			google.maps.event.addListener(autocomplete, 'place_changed', function() {
@@ -327,7 +348,7 @@ OpenPath.Router = {
 				}
 			});
 		}
-
+		//call auto complete
 		autocompleteLocationInput();
 		
 		/**
@@ -339,6 +360,29 @@ OpenPath.Router = {
 			gradelevelsArr.push( $(this).val() );
 		});
 		*/
+
+
+		saveEventBtn.addEventListener('click',function(e){
+			e.preventDefault();
+			var dSplit = date.value.split('-');
+			var newDate = new Date( dSplit[0], dSplit[1]-1, dSplit[2] );
+			//create model (above) auto post
+			new eventModel({
+				name: name.value,
+				link: link.value,
+				description: description.value,
+				location : {
+					name : locationInput.value,
+					longitude : longitudeInput.value ,
+					latitude : latitudeInput.value,
+					reference : referenceInput.value,
+					formattedAddress : formattedAddressInput.value
+				},
+				date : newDate,
+				startTime:  startTime.value,
+				endTime : endTime.value
+			});
+		},false);
 	},
 	showEditEvent : function(){
 		this.show(this.events);
