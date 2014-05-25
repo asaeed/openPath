@@ -36,7 +36,7 @@ EventSchema.statics.addEvent = function(req, done){
 	});
 
 	function createEvent( room ){
-		//console.log('ev req = ', req.body);
+		console.log('ev req = ', req.body);
 
 		self.create({
 			creatorID : req.user._id,
@@ -47,11 +47,11 @@ EventSchema.statics.addEvent = function(req, done){
 			link: req.body.link,
 			description: req.body.description,
 			location : {
-				name : req.body.location,
-				longitude : req.body.longitude,
-				latitude : req.body.latitude,
-				reference : req.body.reference,
-				formattedAddress : req.body.formattedAddress
+				name : req.body.location.name,
+				longitude : req.body.location.longitude,
+				latitude : req.body.location.latitude,
+				reference : req.body.location.reference,
+				formattedAddress : req.body.location.formattedAddress
 			},
 			date : req.body.date,
 			startTime:  req.body.startTime,

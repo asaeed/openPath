@@ -333,6 +333,7 @@ OpenPath.Router = {
 			google.maps.event.addListener(autocomplete, 'place_changed', function() {
 				//infowindow.close();
 				
+				
 				var place = autocomplete.getPlace();
 				if (!place.geometry) {
 					// Inform the user that a place was not found and return.
