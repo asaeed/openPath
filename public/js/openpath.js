@@ -36,7 +36,7 @@ OpenPath = {
 		/**
 		 * dom elemets
 		 */
-		this.presenterElement = document.getElementById('presenter')
+		this.presenterElement = document.getElementById('presenter');
 		this.peersList = document.getElementById('peersList');
 		this.chat = document.getElementById("chat");
 		this.chatInput = document.getElementById("chatinput");
@@ -51,10 +51,10 @@ OpenPath = {
 		 * user obj to send to others - you :)
 		 */
 		this.user = new OpenPath.User({
-			name :  document.getElementById('userName').value,
+			name :  null,//document.getElementById('userName').value,
 			email :  document.getElementById('email').value,
-			room_id : document.getElementById('roomId').value,
-			event_id : document.getElementById('eventId').value,
+			room_id : null,// document.getElementById('roomId').value,
+			event_id : null,// document.getElementById('eventId').value,
 			peer_id : null,
 			stream :  null,
 			location : {
@@ -71,7 +71,7 @@ OpenPath = {
 		 */
 		this.events();
 
-		this.start();
+		//this.start();
 	},
 	events : function(){
 		var self = this;

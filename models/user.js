@@ -62,7 +62,20 @@ UserSchema.statics.isValidUserPassword = function(email, password, done) {
 	});
 };
 
-
+/**
+ * find by email
+ */
+UserSchema.statics.findByEmail = function(req, done){
+	//TODO: auth here check if same id
+	var email = req.params.email;
+	User.findOne({'email': email}, function(err, user){
+		if(user){
+			done(null,user);
+		}else{
+			console.log('Can\'t find user by email.');
+		}
+	});
+};
 /**
  * update profile
  */
@@ -81,7 +94,7 @@ UserSchema.statics.updateProfile = function(req, done){
 			});
 			console.log('user: ' + user.email)
 		} else {
-			console.log('There is no user by that id so no profile updating happening.')
+			console.log('There is no user by that id so no profile updating happening.');
 		}
 	});
 };

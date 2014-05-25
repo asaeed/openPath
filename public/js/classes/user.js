@@ -8,9 +8,25 @@ OpenPath = window.OpenPath || {};
 OpenPath.User = function( obj ){
 	//console.log('new User');
 	this.obj = obj;
-	this.video = new OpenPath.Video(this);
+	this.url = '/user/'+this.obj.email;
+	//get data
+	this.get();
+
+
 
 };
+//inherits View
+OpenPath.User.prototype = new OpenPath.Model();
+OpenPath.User.prototype.constructor = OpenPath.User;
+
+OpenPath.User.prototype.got = function(data){
+	console.log('get user',data);
+
+
+	//create video
+	this.video = new OpenPath.Video(this);
+};
+
 OpenPath.User.prototype.connect = function(){
 	if(!this.obj.stream) this.getMyMedia();
 	if(!this.obj.location) this.getMyLocation();
@@ -39,6 +55,8 @@ OpenPath.User.prototype.getMyMedia = function(){
 		function(err) {
 			console.log('Failed to get local stream' ,err);
 		});
+	}else{
+		console.log('can\'t get user media');
 	}
 };
 /**

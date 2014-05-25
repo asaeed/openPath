@@ -139,6 +139,16 @@ module.exports = function(app, io, passport){
 		});
 	});
 
+	//get user by email
+	app.get("/user/:email", function (req, res) {
+		User.findByEmail(req, function (err, user) {
+			if (err) return console.error(err);
+			
+		// If a user is returned, load the given user
+			console.log('user is',user);
+			res.send(user);
+		});
+	});
 
 	//profile post
 	app.post("/profile", Auth.userExist, function(req, res, next){
@@ -150,8 +160,28 @@ module.exports = function(app, io, passport){
 		});
 	});
 
+	/**
+	 * check if presenter 
+	 */
+	app.get('/presenter/:id/:email', function(req, res){
+		var id = req.params.id;
+		var email = req.params.email;
+   		console.log('Retrieving presenter : ' + id+' '+email);
+		Room.findOne({ _id: id }, function (err, room) {
+			if (err) return console.error(err);
 
+			//check users for room creator
+			User.findOne({ _id: room.creatorID }, function (err, user) {
+				if (err) return console.error(err);
 
+				if(user.email == email){
+					res.send(true);
+				}else{
+					res.send(false);
+				}
+			});
+		});
+	});
 
 	/**
 	 * rooms 
@@ -264,28 +294,5 @@ module.exports = function(app, io, passport){
 			});
 
 		});
-	});
-	/**
-	 * check if presenter 
-	 */
-	app.get('/presenter/:id/:email', function(req, res){
-		var id = req.params.id;
-		var email = req.params.email;
-   		console.log('Retrieving presenter : ' + id+' '+email);
-		Room.findOne({ _id: id }, function (err, room) {
-			if (err) return console.error(err);
-
-			//check users for room creator
-			User.findOne({ _id: room.creatorID }, function (err, user) {
-				if (err) return console.error(err);
-
-				if(user.email == email){
-					res.send(true);
-				}else{
-					res.send(false);
-				}
-			});
-		});
-
 	});
 };
