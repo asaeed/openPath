@@ -201,6 +201,8 @@ OpenPath.Router = {
 		this.show(this.events);
 		this.show(this.upcomingEvents);
 
+
+
 		//create view instance
 		var upcomingEventsView = new OpenPath.View();
 		upcomingEventsView.url = '/events';
@@ -237,7 +239,6 @@ OpenPath.Router = {
 					me.url = "/gotoevent/"+ me.joinBtn.getAttribute('href');
 					me.post({"data":null});
 
-
 				});
 			}
 			//inherits OpenPath.View
@@ -248,10 +249,10 @@ OpenPath.Router = {
 			eventView.prototype.posted = function(data){
 				if(data){
 					//update hidden inputs
-					document.getElementById('roomId').value = data.room._id;
-					document.getElementById('eventId').value = data.event._id;
+					//document.getElementById('roomId').value = data.room._id;
+					//document.getElementById('eventId').value = data.event._id;
 
-					OpenPath.Ui.updateHeader(data.event);
+					//OpenPath.Ui.updateHeader(data.event);
 					/*
 					//TODO
 					udapte user,
@@ -260,7 +261,7 @@ OpenPath.Router = {
 					tell socket
 					re init openPath obj 
 					*/
-					//OpenPath.start();
+					OpenPath.start();
 				}
 			};
 
@@ -275,10 +276,11 @@ OpenPath.Router = {
 				//render map
 				OpenPath.Ui.renderMap(mapwrap, mapwrap.dataset.latitude, mapwrap.dataset.longitude, mapwrap.dataset.reference, mapwrap.dataset.formattedaddress );
 
-
-				new eventView(events[i]);
+				//TODO :  don't remake on events page load
+				OpenPath.eventArr.push( new eventView(events[i]) );
 			}
 
+			console.log(OpenPath.eventArr)
 
 			//rebind routes
 			self.bindRoutes();
@@ -331,7 +333,7 @@ OpenPath.Router = {
 		//reset form
 		form.reset();
 
-		
+
 		/**
 		 * autocompleteLocationInput
 		 */
@@ -392,7 +394,7 @@ OpenPath.Router = {
 			});
 		}
 
-		//don't add more that one event listener first
+		//don't add more that one event listener 
 		if(saveEventBtn._hasEventListener) return;
 		saveEventBtn.addEventListener('click',this.postNewEvent,false);
 		saveEventBtn._hasEventListener = true;

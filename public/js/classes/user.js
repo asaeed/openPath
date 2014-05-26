@@ -5,9 +5,25 @@ OpenPath = window.OpenPath || {};
 /**
  * @class User, you :) or your friends :|
  */
-OpenPath.User = function( obj ){
+OpenPath.User = function( email ){
 	//console.log('new User');
-	this.obj = obj;
+	/*
+	
+	*/
+	this.obj = {
+		name :  null,//document.getElementById('userName').value,
+		email :  email,
+		room_id : null,// document.getElementById('roomId').value,
+		event_id : null,// document.getElementById('eventId').value,
+		peer_id : null,
+		stream :  null,
+		location : {
+			coords: {
+				latitude : null,
+				longitude : null
+			}
+		}
+	};
 	this.url = '/user/'+this.obj.email;
 	//get data
 	this.get();
@@ -20,11 +36,37 @@ OpenPath.User.prototype = new OpenPath.Model();
 OpenPath.User.prototype.constructor = OpenPath.User;
 
 OpenPath.User.prototype.got = function(data){
-	console.log('get user',data);
+	var self = this;
+	this.obj.name = data.name;
+	this.obj.room_id = data.currentRoom;
+	this.obj.event_id = data.currentEvent;
+	console.log('get user',this.obj, data);
 
 
 	//create video
 	this.video = new OpenPath.Video(this);
+
+	/**
+	 * check if this.user is presenter
+	 */
+	this.checkIfPresenter(function( isPresenter ){
+		if(isPresenter){
+			console.log('I\'m presenter');
+			//set userVideo to presenter
+			OpenPath.presenterElement.appendChild(self.video.element);
+		}else{
+			console.log('I\'m not presenter');
+			//add to peer list
+			var li = document.createElement('li');
+			li.appendChild(self.video.element);
+			OpenPath.peersList.appendChild(li);
+		}
+
+		self.connect();
+	});
+
+
+
 };
 
 OpenPath.User.prototype.connect = function(){
@@ -36,6 +78,7 @@ OpenPath.User.prototype.connect = function(){
  */
 OpenPath.User.prototype.getMyMedia = function(){
 	var self = this;
+	console.log('get my media?')
 	if(navigator.getUserMedia) {
 		navigator.getUserMedia( {video: true, audio: true}, function(stream) {
 

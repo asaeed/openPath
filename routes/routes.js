@@ -138,7 +138,7 @@ module.exports = function(app, io, passport){
 			if (err) return console.error(err);
 
 		// If a user is returned, load the given user
-			console.log('user is',user);
+			console.log('user is',user,req.session.room,req.session.event);
 			var publicUser = {
 				firstName:  user.firstName,
 				lastName:   user.lastName,
@@ -159,7 +159,9 @@ module.exports = function(app, io, passport){
 				//dateModified: Date,
 				gradeLevel : user.gradeLevel,
 				interests : user.interests,
-				coLearners : user.coLearners
+				coLearners : user.coLearners,
+				currentRoom : req.session.room,
+				currentEvent : req.session.event
 			}
 			res.send(publicUser);
 		});

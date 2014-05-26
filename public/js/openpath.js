@@ -26,6 +26,8 @@ OpenPath = {
 		this.peer_connection = null;
 
 
+		this.eventArr = [];
+
 		//init ui 
 		this.Ui.init();
 
@@ -47,23 +49,6 @@ OpenPath = {
 		this.chatToggler = document.getElementById("chatToggler");
 
 		
-		/**
-		 * user obj to send to others - you :)
-		 */
-		this.user = new OpenPath.User({
-			name :  null,//document.getElementById('userName').value,
-			email :  document.getElementById('email').value,
-			room_id : null,// document.getElementById('roomId').value,
-			event_id : null,// document.getElementById('eventId').value,
-			peer_id : null,
-			stream :  null,
-			location : {
-				coords: {
-					latitude : null,
-					longitude : null
-				}
-			}
-		});
 
 		/**
 		 * connect to peer, socket
@@ -71,7 +56,7 @@ OpenPath = {
 		 */
 		this.events();
 
-		//this.start();
+		this.start();
 	},
 	events : function(){
 		var self = this;
@@ -104,9 +89,10 @@ OpenPath = {
 	start : function(){
 		var self = this;
 
-		//update user
-		this.user.room_id = document.getElementById('roomId').value;
-		this.user.event_id = document.getElementById('eventId').value;
+		/**
+		 * user obj to send to others - you :)
+		 */
+		this.user = new OpenPath.User( document.getElementById('email').value );
 
 		//clear divs
 		//this.presenterElement.innerHTML = '';
@@ -119,25 +105,6 @@ OpenPath = {
 		//peers_to_call_when_stream_allowed
 		this.peers_to_call_when_stream_allowed = [];
 		
-		/**
-		 * check if this.user is presenter
-		 */
-		this.user.checkIfPresenter(function( isPresenter ){
-			if(isPresenter){
-				console.log('I\'m presenter');
-				//set userVideo to presenter
-				self.presenterElement.appendChild(self.user.video.element);
-			}else{
-				console.log('I\'m not presenter');
-				//add to peer list
-				var li = document.createElement('li');
-				li.appendChild(self.user.video.element);
-				self.peersList.appendChild(li);
-			}
-
-			self.user.connect();
-		});
-
 
 		this.connect();
 	},
@@ -598,6 +565,7 @@ OpenPath = {
 		}
 		//set this.others_in_room
 		this.others_in_room = others;
+		console.log('others_in_room',this.others_in_room);
 	},
 	createUser : function( userObj ){
 		console.log('create', userObj.email);
