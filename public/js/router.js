@@ -313,7 +313,8 @@ OpenPath.Router = {
 		};
 
 
-		var name = document.getElementById("name"),
+		var form = document.getElementById("addNewEventForm"),
+			name = document.getElementById("name"),
 			link = document.getElementById("link"),
 			date = document.getElementById("date"),
 			startTime = document.getElementById("startTime"),
@@ -325,6 +326,12 @@ OpenPath.Router = {
 			referenceInput = document.getElementById("reference"),
 			formattedAddressInput = document.getElementById("formattedAddress"),
 			saveEventBtn = document.getElementById('saveEventBtn');
+
+
+		//reset form
+		form.reset();
+
+		
 		/**
 		 * autocompleteLocationInput
 		 */
@@ -362,14 +369,6 @@ OpenPath.Router = {
 			gradelevelsArr.push( $(this).val() );
 		});
 		*/
-		/*
-		if(route._hasEventListener) return;
-			//remove event first
-			route.addEventListener('click',routeEvent,false);
-			route._hasEventListener = true;
-		*/
-		//don't add more than one event listener
-		//if(saveEventBtn._hasEventListener) return;
 
 		this.postNewEvent = function(e){
 			e.preventDefault();
