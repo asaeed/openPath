@@ -289,6 +289,7 @@ OpenPath.Router = {
 		this.show(this.nearbyEvents);
 	},
 	showAddNewEvent :  function(){
+		var self = this;
 		this.show(this.events);
 		this.show(this.addNewEvent);
 
@@ -307,8 +308,8 @@ OpenPath.Router = {
 		
 		//when posted, join event
 		eventModel.prototype.posted = function(data){
-			if(data){
-			}
+			console.log('posted',data)
+			self.checkRoute('#/events');
 		};
 
 
@@ -333,7 +334,7 @@ OpenPath.Router = {
 			google.maps.event.addListener(autocomplete, 'place_changed', function() {
 				//infowindow.close();
 				
-				
+
 				var place = autocomplete.getPlace();
 				if (!place.geometry) {
 					// Inform the user that a place was not found and return.
@@ -361,9 +362,16 @@ OpenPath.Router = {
 			gradelevelsArr.push( $(this).val() );
 		});
 		*/
+		/*
+		if(route._hasEventListener) return;
+			//remove event first
+			route.addEventListener('click',routeEvent,false);
+			route._hasEventListener = true;
+		*/
+		//don't add more than one event listener
+		//if(saveEventBtn._hasEventListener) return;
 
-
-		saveEventBtn.addEventListener('click',function(e){
+		this.postNewEvent = function(e){
 			e.preventDefault();
 			var dSplit = date.value.split('-');
 			var newDate = new Date( dSplit[0], dSplit[1]-1, dSplit[2] );
@@ -383,7 +391,12 @@ OpenPath.Router = {
 				startTime:  startTime.value,
 				endTime : endTime.value
 			});
-		},false);
+		}
+
+		//don't add more that one event listener first
+		if(saveEventBtn._hasEventListener) return;
+		saveEventBtn.addEventListener('click',this.postNewEvent,false);
+		saveEventBtn._hasEventListener = true;
 	},
 	showEditEvent : function(){
 		this.show(this.events);
