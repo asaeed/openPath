@@ -139,10 +139,29 @@ module.exports = function(app, io, passport){
 
 		// If a user is returned, load the given user
 			console.log('user is',user);
-			var safeUser = {
-
+			var publicUser = {
+				firstName:  user.firstName,
+				lastName:   user.lastName,
+				email:      user.email,
+				//salt:       String,
+				//hash:       String,
+				//facebook:{
+				//	id:       String,
+				//	email:    String,
+				//	name:     String
+				//},
+				//google:{
+				//	id:       String,
+				//	email:    String,
+				//	name:     String
+				//},
+				//dateCreated:  Date,
+				//dateModified: Date,
+				gradeLevel : user.gradeLevel,
+				interests : user.interests,
+				coLearners : user.coLearners
 			}
-			res.send(user);
+			res.send(publicUser);
 		});
 	});
 

@@ -8,7 +8,7 @@ module.exports.formatDate = function( dateString ){
   // console.log('format date : '+ monthNames[d.getMonth()]  +'/'+ d.getDate() +'/'+d.getFullYear(),d)
 	//return d.getMonth() +'/'+ d.getDate() +'/'+d.getFullYear();
    //return (d.getMonth()+1) +'/'+ d.getDate() +'/'+d.getFullYear();
-   return monthNames[d.getMonth()] +','+ d.getDate() +' '+d.getFullYear();
+   return monthNames[d.getMonth()] +' '+ d.getDate() +', '+d.getFullYear();
 };
 
 module.exports.formatTime = function( timeString ){
