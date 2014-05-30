@@ -37,7 +37,7 @@ OpenPath.User.prototype.constructor = OpenPath.User;
 
 OpenPath.User.prototype.got = function(data){
 	var self = this;
-	this.obj.name = data.name;
+	this.obj.name = data.firstName + ' ' +data.lastName;
 	this.obj.room_id = data.currentRoom;
 	this.obj.event_id = data.currentEvent;
 	console.log('get user',this.obj, data);
@@ -78,7 +78,6 @@ OpenPath.User.prototype.connect = function(){
  */
 OpenPath.User.prototype.getMyMedia = function(){
 	var self = this;
-	console.log('get my media?')
 	if(navigator.getUserMedia) {
 		navigator.getUserMedia( {video: true, audio: true}, function(stream) {
 
@@ -97,6 +96,8 @@ OpenPath.User.prototype.getMyMedia = function(){
 		},
 		function(err) {
 			console.log('Failed to get local stream' ,err);
+			//did not join, pressed no allow
+			//TODO msg
 		});
 	}else{
 		console.log('can\'t get user media');

@@ -25,17 +25,12 @@ OpenPath = {
 		this.socket = io.connect(this.socketConnection);
 		this.peer_connection = null;
 
-		//testing
+
 		this.eventArr = [];
 
 		//init ui 
 		this.Ui.init();
 
-		/**
-		 * user obj to send to others - you :)
-		 */
-		this.user = new OpenPath.User( document.getElementById('email').value );
-		
 		//hanlder routes
 		this.Router.init();
 		this.Router.checkRoute();
@@ -94,7 +89,10 @@ OpenPath = {
 	start : function(){
 		var self = this;
 
-
+		/**
+		 * user obj to send to others - you :)
+		 */
+		this.user = new OpenPath.User( document.getElementById('email').value );
 
 		//clear divs
 		//this.presenterElement.innerHTML = '';

@@ -180,7 +180,8 @@ OpenPath.Router = {
 		var source = document.getElementById('addParticipantsTemplate').innerHTML;
 		var template = Handlebars.compile(source);
 
-		inviteMsg.innerHTML = template();
+		console.log('bbbeeech',OpenPath.user)
+		inviteMsg.innerHTML = template(OpenPath.user.obj);
 	},
 	showInvited : function(){
 		this.show(this.invite);
@@ -191,6 +192,7 @@ OpenPath.Router = {
 		var source = document.getElementById('addParticipantsTemplate').innerHTML;
 		var template = Handlebars.compile(source);
 
+		
 		inviteMsg.innerHTML = template();
 
 		//TODO: modal
@@ -421,7 +423,8 @@ OpenPath.Router = {
 
 		inviteToEventView.got = function(data){
 			console.log('inviteToEventView got', data );
-
+			data.user = OpenPath.user.obj;
+			console.log(data)
 			inviteMsg.innerHTML = template( data );
 		};
 	},
