@@ -283,6 +283,18 @@ OpenPath = {
 	onMyStreamAllowed : function(){
 
 	},
+	joinEvent : function( event_id ){
+		//create view instance
+		var newEvent = new OpenPath.Model();
+		newEvent.url = '/events/'+event_id;
+		//get data
+		newEvent.get();
+
+		newEvent.got = function(data){
+			console.log('newEvent got', data );
+			OpenPath.Ui.updateHeader({event:data});
+		};
+	},
 	switchRoom : function( data ){
 		console.log('switchRoom',data);
 		this.socket.emit("switchRoom", this.user.obj);
