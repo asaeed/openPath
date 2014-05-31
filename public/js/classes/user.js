@@ -68,8 +68,10 @@ OpenPath.User.prototype.got = function(data){
 };
 
 OpenPath.User.prototype.connect = function(){
-	if(!this.obj.stream) this.getMyMedia();
-	if(!this.obj.location) this.getMyLocation();
+	//if(!this.obj.stream) this.getMyMedia();
+	//if(!this.obj.location) this.getMyLocation();
+	this.getMyMedia();
+	this.getMyLocation();
 };
 /**
  * getMyMedia, send to socket
@@ -83,7 +85,7 @@ OpenPath.User.prototype.getMyMedia = function(){
 			//set user stream
 			self.obj.stream = stream;
 
-			OpenPath.OnMyStreamAllowed();
+			OpenPath.onMyStreamAllowed();
 
 			//send stream
 	  		OpenPath.socket.emit("stream", self.obj);

@@ -113,20 +113,16 @@ OpenPath.Ui = {
 		}
 	},
 	updateHeader : function(data){
-		console.log('update header',data)
 		///update main header
-		this.header = document.getElementById('mainHeader');
-		this.eventTitle = this.header.getElementsByClassName('eventTitle')[0];
-		this.eventName = this.eventTitle.getElementsByTagName('h2')[0];
+		var headerTitle = document.getElementById('headerTitle');
 
-		this.st = this.eventTitle.getElementsByClassName('startTime')[0];
-		this.et = this.eventTitle.getElementsByClassName('endTime')[0];
-		this.loc = this.eventTitle.getElementsByClassName('location')[0];
-			
-		this.eventName.innerHTML = data.name;
-		this.st.innerHTML = OpenPath.Utils.formatTime(data.startTime);
-		this.et.innerHTML = OpenPath.Utils.formatTime(data.endTime);
-		this.loc.innerHTML = data.location.name;
+		console.log('update header',data,headerTitle)
+
+		//compile template
+		var source = document.getElementById('headerTitleTemplate').innerHTML;
+		var template = Handlebars.compile(source);
+
+		headerTitle.innerHTML = template( data );
 	},
 	/**
 	 * convert event title time from 24 hour to 12 hour clock

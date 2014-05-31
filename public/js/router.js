@@ -245,24 +245,16 @@ OpenPath.Router = {
 			eventView.prototype.constructor = eventView;
 			
 			//when posted, join event
+					/***
+		 *** JOIN EVENT ******
+		 ***/
 			eventView.prototype.posted = function(data){
 				if(data){
-					//update hidden inputs
-					//document.getElementById('roomId').value = data.room._id;
-					//document.getElementById('eventId').value = data.event._id;
-
-					//OpenPath.Ui.updateHeader(data.event);
-					/*
-					//TODO
-					udapte user,
-					//re render event header 
-					//update inputs above
-					tell socket
-					re init openPath obj 
-					*/
-					OpenPath.start();
-
 					self.checkRoute('#/videos');
+					//remove #/events from url
+					history.pushState({query:window.location.search}, document.title, '#/videos');
+					
+					OpenPath.switchRoom(data);
 				}
 			};
 
@@ -281,7 +273,7 @@ OpenPath.Router = {
 				OpenPath.eventArr.push( new eventView(events[i]) );
 			}
 
-			console.log(OpenPath.eventArr)
+			console.log(OpenPath.eventArr,'fix this! duplicating dom items')
 
 			//rebind routes
 			self.bindRoutes();
@@ -309,7 +301,7 @@ OpenPath.Router = {
 		eventModel.prototype = new OpenPath.Model();
 		eventModel.prototype.constructor = eventModel;
 		
-		//when posted, join event
+		//when posted
 		eventModel.prototype.posted = function(data){
 			console.log('posted',data)
 			self.checkRoute('#/events');

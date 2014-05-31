@@ -105,23 +105,25 @@ module.exports.start = function( io ){
 			//io.sockets.in( user.room_id ).emit('stream', user , connected_users);
 			socket.broadcast.to( user.room_id ).emit('stream', user ); //doesn't include you
 		});
+
 		/**
 		 * switch room
-		
-		socket.on('switchRoom', function(newroom){
+		 */
+		socket.on('switchRoom', function( user ){
+			console.log("Client has switched room",socket.user,connected_users);
 			// leave the current room (stored in session)
 			socket.leave(socket.room);
 			// join new room, received as function parameter
-			socket.join(newroom);
+			socket.join(user.room_id);
 			socket.emit('updatechat', 'SERVER', 'you have connected to '+ newroom);
 			// sent message to OLD room
 			socket.broadcast.to(socket.room).emit('updatechat', 'SERVER', socket.username+' has left this room');
 			// update socket session room title
 			socket.room = newroom;
 			socket.broadcast.to(newroom).emit('updatechat', 'SERVER', socket.username+' has joined this room');
-			socket.emit('updaterooms', rooms, newroom);
+			//socket.emit('updaterooms', rooms, newroom);
 		});
- */
+
 		
 		/**
 		 * on disconnect

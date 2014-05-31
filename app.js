@@ -32,7 +32,7 @@ var env = process.env.NODE_ENV || 'development',
 //create server
 var http = http.createServer(app),
     https = https.createServer(credentials, app),
-    io = require('socket.io').listen(http, { log: false });
+    io = require('socket.io').listen(http);//, { log: true }
 
 //connect to mongo
 mongoose.connect( config.db );
