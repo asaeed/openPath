@@ -9,7 +9,7 @@ Click here to join:
 \{{#if event_id }}
 http://www.openpath.me/?e=\{{ event_id }}
 \{{else}}
-http://www.openpath.me/?r={{room_id}}
+http://www.openpath.me/?r=\{{room_id}}
 \{{/if}}
 
 Let&apos;s learn together!
@@ -18,31 +18,4 @@ Regards,
 Open Path Team
 </script>
 
-{{!--<script id="addParticipantsTemplate" type="text/x-handlebars-template">
-
-{{#if event}}Hi there,
-
-{{#if user.firstName }}{{user.firstName}} {{user.lastName}}{{else}}{{user.email}}{{/if}} would like to invite you to a video session on Open Path on {{ event.date }} from {{ event.startTime }} to {{ event.endTime }} called "{{ event.name }}".
-
-Click here to join:
-
-http://www.openpath.me/?e={{ event._id }}
-
-Let&apos;s learn together!
-
-Regards,
-Open Path Team
-{{else}}Hi,
-
-{{#if user.firstName }}{{user.firstName}} {{user.lastName}}{{else}}{{user.email}}{{/if}} would like to invite you to a video session on Open Path. Click here to join:
-
-http://www.openpath.me/?r={{room._id}}
-
-Let's learn together!
-
-Regards,
-Open Path Team
-{{/if}}
-
-</script>--}}
 

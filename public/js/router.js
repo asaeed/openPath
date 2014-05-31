@@ -180,7 +180,6 @@ OpenPath.Router = {
 		var source = document.getElementById('addParticipantsTemplate').innerHTML;
 		var template = Handlebars.compile(source);
 
-		console.log('bbbeeech',OpenPath.user)
 		inviteMsg.innerHTML = template(OpenPath.user.obj);
 	},
 	showInvited : function(){
@@ -202,8 +201,6 @@ OpenPath.Router = {
 		var self = this;
 		this.show(this.events);
 		this.show(this.upcomingEvents);
-
-
 
 		//create view instance
 		var upcomingEventsView = new OpenPath.View();
@@ -264,6 +261,8 @@ OpenPath.Router = {
 					re init openPath obj 
 					*/
 					OpenPath.start();
+
+					self.checkRoute('#/videos');
 				}
 			};
 

@@ -7,14 +7,12 @@ OpenPath = window.OpenPath || {};
  */
 OpenPath.User = function( email ){
 	//console.log('new User');
-	/*
-	
-	*/
+
 	this.obj = {
-		name :  null,//document.getElementById('userName').value,
-		email :  email,
-		room_id : null,// document.getElementById('roomId').value,
-		event_id : null,// document.getElementById('eventId').value,
+		name :  null,
+		email :  email, //value passed by server to hidden input
+		room_id : null,
+		event_id : null,
 		peer_id : null,
 		stream :  null,
 		location : {
@@ -40,7 +38,7 @@ OpenPath.User.prototype.got = function(data){
 	this.obj.name = data.firstName + ' ' +data.lastName;
 	this.obj.room_id = data.currentRoom;
 	this.obj.event_id = data.currentEvent;
-	console.log('get user',this.obj, data);
+	//console.log('get user',this.obj, data);
 
 
 	//create video
