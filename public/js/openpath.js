@@ -303,7 +303,14 @@ OpenPath = {
 				this.others_in_room.push(peer);
 				this.peers.push( new OpenPath.Peer( peer ) );
 			}else{
-				console.log('no peer, incoming')
+
+				var peerObj = {
+					peer_id : peer_id,
+					stream : stream
+				}
+				console.log('no peer, makng shell')
+				this.others_in_room.push(peerObj);
+				this.peers.push( new OpenPath.Peer( peerObj ) );
 			}
 		}
 		
