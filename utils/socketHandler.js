@@ -116,14 +116,17 @@ module.exports.start = function( io ){
 			// join new room, received as function parameter
 			var newroom = user.room_id;
 			socket.join(newroom);
-
+			var name = user.name ? user.name : user.email;
 			socket.emit('updatechat', 'SERVER', 'you have connected to '+ newroom);
 			// sent message to OLD room
-			socket.broadcast.to(socket.room).emit('updatechat', 'SERVER', socket.username+' has left this room');
+			socket.broadcast.to(socket.room).emit('updatechat', 'SERVER', name+' has left this room');
 			// update socket session room title
 			socket.room = newroom;
-			socket.broadcast.to(newroom).emit('updatechat', 'SERVER', socket.username+' has joined this room');
+			socket.broadcast.to(newroom).emit('updatechat', 'SERVER', name+' has joined this room');
 			//socket.emit('updaterooms', rooms, newroom);
+
+			//socket.broadcast.to(user.room_id).emit('connected', user, connected_users); //doesn't include you
+			io.sockets.in( user.room_id ).emit('switchedRoom', user, connected_users ); //includes you
 		});
 
 		

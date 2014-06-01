@@ -24,17 +24,6 @@ OpenPath.Peer.prototype.got = function(){
 	 * check if peer is presenter
 	 */
 	this.checkIfPresenter(function( isPresenter ){
-		if(isPresenter){
-			console.log('Peer is presenter');
-			//set userVideo to presenter
-			OpenPath.presenterElement.appendChild(self.video.element);
-		}else{
-			console.log('Peer is not presenter');
-			//add to peer list
-			var li = document.createElement('li');
-			li.appendChild(self.video.element);
-			OpenPath.peersList.appendChild(li);
-		}
 		self.video.render();
 	});
 };

@@ -91,9 +91,6 @@ OpenPath = {
 	},
 	start : function(){
 		var self = this;
-		//clear divs
-		//this.presenterElement.innerHTML = '';
-		this.peersList.innerHTML = '';
 
 		//array of users in room - get all connected users in my room - excluding me
 		this.others_in_room = [];
@@ -133,7 +130,7 @@ OpenPath = {
 			incoming_call.answer(self.user.obj.stream); // Answer the call with our stream from getUserMedia
 			incoming_call.on('stream', function(remoteStream) {  // we receive a getUserMedia stream from the remote caller
 				console.log('got other\'s stream');
-				self.createPeer(incoming_call.peer, remoteStream);
+				self.createPeer(incoming_call, remoteStream);
 			});
 		});
 
@@ -188,6 +185,14 @@ OpenPath = {
 			console.log('received stream', aPeer.email )
 		});
 		/**
+		 * receive stream of others
+		 */
+		this.socket.on('switchedRoom', function ( aPeer,connected_users ) {
+			console.log('received switchedRoom', aPeer.email )
+			self.findOthersInRoom(connected_users);
+		});
+		
+		/**
 		 * receive disconnect
 		 * find user instance and destroy it!!
 		 */
@@ -205,7 +210,10 @@ OpenPath = {
 		for(var i=0;i<this.peers.length;i++){
 			//call all your peers
 			///this.callPeer(this.peers[i].peer_id);
-			console.log('call', this.peers[i])
+			console.log('call me', this.peers[i].obj)
+			//this.callPeer(this.peers[i].obj)
+
+			//have them call me?
 		}
 	},
 	/**
@@ -222,7 +230,7 @@ OpenPath = {
 			if(this.call)
 			this.call.on('stream', function(remoteStream) {
 				console.log("Got remote stream", remoteStream, aPeer.stream);
-				self.createPeer(aPeer.peer_id, remoteStream);
+				self.createPeer(aPeer, remoteStream);
 			});
 		}else{
 			//since you have no stream, send connection
@@ -259,7 +267,7 @@ OpenPath = {
 		this.chatmessages.innerHTML += message;
 		this.chatwindow.scrollTop = this.chatwindow.scrollHeight;
 	},
-	findOthersInRoom : function( connected_users , done ){
+	findOthersInRoom : function( connected_users ){
 		var others = [];
 		for(var i=0;i<connected_users.length;i++){
 
@@ -276,14 +284,29 @@ OpenPath = {
 		this.others_in_room = others;
 		console.log('others_in_room',this.others_in_room);
 	},
-	createPeer : function( peer_id , stream ){
-		for(var i=0;i<this.others_in_room.length;i++){
-			if(this.others_in_room[i].peer_id === peer_id){
-				this.others_in_room[i].stream = stream;
-				//add to peers array
-				this.peers.push( new OpenPath.Peer( this.others_in_room[i]) );
+	createPeer : function( peer , stream ){
+		var peer_id = peer.peer_id ? peer.peer_id : peer.peer; //second is incoming call
+		//find others first
+		console.log('create peer',peer_id,this.others_in_room,this.others_in_room.length);
+		if(this.others_in_room.length>0){
+			for(var i=0;i<this.others_in_room.length;i++){
+				if(this.others_in_room[i].peer_id === peer_id){
+					this.others_in_room[i].stream = stream;
+					//add to peers array
+					console.log('push peer',i)
+					this.peers.push( new OpenPath.Peer( this.others_in_room[i]) );
+				}
+			}	
+		}else{
+			if(peer.peer_id){
+				peer.stream = stream;
+				this.others_in_room.push(peer);
+				this.peers.push( new OpenPath.Peer( peer ) );
+			}else{
+				console.log('no peer, incoming')
 			}
 		}
+		
 
 	},
 	joinEvent : function( event_id ){
@@ -299,7 +322,13 @@ OpenPath = {
 		};
 	},
 	switchRoom : function( data ){
+		var self=this;
 		console.log('switchRoom',data.room._id);
+
+		//clear divs
+		this.presenterElement.innerHTML = '';
+		this.peersList.innerHTML = '';
+
 		//update user
 		this.user.obj.room_id = data.room._id;
 		this.user.obj.event_id = data.event._id
@@ -310,6 +339,9 @@ OpenPath = {
 		//update header
 		OpenPath.Ui.updateHeader(data);
 
+		this.user.checkIfPresenter(function( isPresenter ){
+			self.user.video.render();
+		})
 		//send id so if anyone is in room, they'll give you a call 
 		//after their socket recieves your peer id (below)
 		this.socket.emit("peer_id", this.user.obj);

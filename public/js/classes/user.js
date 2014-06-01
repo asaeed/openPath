@@ -52,18 +52,6 @@ OpenPath.User.prototype.got = function(data){
 	 * check if this.user is presenter
 	 */
 	this.checkIfPresenter(function( isPresenter ){
-		if(isPresenter){
-			console.log('I\'m presenter');
-			//set userVideo to presenter
-			OpenPath.presenterElement.appendChild(self.video.element);
-		}else{
-			console.log('I\'m not presenter');
-			//add to peer list
-			var li = document.createElement('li');
-			li.appendChild(self.video.element);
-			OpenPath.peersList.appendChild(li);
-		}
-
 		self.connect();
 	});
 };
@@ -158,6 +146,17 @@ OpenPath.User.prototype.checkIfPresenter = function( done ){
 	presenterMondal.get();
 	presenterMondal.got = function( isPresenter ){
 		self.isPresenter = isPresenter;
+		if(isPresenter){
+			console.log('I\'m presenter');
+			//set userVideo to presenter
+			OpenPath.presenterElement.appendChild(self.video.element);
+		}else{
+			console.log('I\'m not presenter');
+			//add to peer list
+			var li = document.createElement('li');
+			li.appendChild(self.video.element);
+			OpenPath.peersList.appendChild(li);
+		}
 		done(isPresenter);
 	};
 };
