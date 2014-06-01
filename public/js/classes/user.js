@@ -3,7 +3,7 @@
 OpenPath = window.OpenPath || {};
 
 /**
- * @class User, you :) or your friends :|
+ * @class User, you :)
  */
 OpenPath.User = function( email ){
 	//console.log('new User');
@@ -66,9 +66,6 @@ OpenPath.User.prototype.got = function(data){
 
 		self.connect();
 	});
-
-
-
 };
 
 OpenPath.User.prototype.connect = function(){
@@ -165,13 +162,13 @@ OpenPath.User.prototype.checkIfPresenter = function( done ){
 	};
 };
 /**
- * update peer_id (for incoming users that are not me)
+ * update peer_id
  */
 OpenPath.User.prototype.updatePeerId = function(id){
 	this.obj.peer_id = id;
 };
 /**
- * update location (for incoming users that are not me)
+ * update location
  */
 OpenPath.User.prototype.updateLocation = function(obj){
  	this.obj.location = obj.location;
@@ -179,7 +176,7 @@ OpenPath.User.prototype.updateLocation = function(obj){
 	this.video.render();
 };
 /**
- * update stream (for incoming users that are not me)
+ * update stream 
  */
 OpenPath.User.prototype.updateStream = function(stream){
 	this.obj.stream = stream;

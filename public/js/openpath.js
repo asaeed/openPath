@@ -99,10 +99,6 @@ OpenPath = {
 		this.others_in_room = [];
 		//array of other user instances, in room of course
 		this.peers = [];
-		//peers_to_call_when_stream_allowed
-		//this.peers_to_call_when_stream_allowed = [];
-		
-
 		this.connect();
 	},
 	connect : function(){
@@ -116,11 +112,39 @@ OpenPath = {
 		});
 
 		/**
+		 * peer open
+		 * get id from PeerJS server and send it to socket
+		 */
+		this.peer.on('open', function(id) {
+			console.log('got my peerID, sending it', id);
+			//update this.user
+			self.user.updatePeerId(id);
+			//send id so if anyone is in room, they'll give you a call 
+			//after their socket recieves your peer id (below)
+			self.socket.emit("peer_id", self.user.obj);
+		});
+
+		/**
 		 * INCOMING CALL
 		 */
 		this.peer.on('call', function( incoming_call ) {
 			console.log('INCOMING CaLL',incoming_call);
+			//WHAT TODO WITH INCOMING CALL USER....
+			incoming_call.answer(self.user.obj.stream); // Answer the call with our stream from getUserMedia
+			incoming_call.on('stream', function(remoteStream) {  // we receive a getUserMedia stream from the remote caller
+				console.log('got other\'s stream');
+				self.createPeer(incoming_call.peer, remoteStream);
+			});
 		});
+
+		this.peer.on('connection', function(incoming_connection) {
+			console.log('INCOMING Connection',incoming_connection);
+			//they have no stream so call them only if you do
+			//if(self.user.obj.stream){
+				//self.callPeer(aPeer);
+			//}
+		});
+
 		/**
 		 * socket receiving
 		 */
@@ -158,13 +182,18 @@ OpenPath = {
 			console.log('received location', aPeer.email )
 		});
 		/**
+		 * receive stream of others
+		 */
+		this.socket.on('stream', function ( aPeer ) {
+			console.log('received stream', aPeer.email )
+		});
+		/**
 		 * receive disconnect
 		 * find user instance and destroy it!!
 		 */
 		this.socket.on('disconnect', function ( aPeer, connected_users ) {
-
 			console.log('received disconnect', aPeer, connected_users ,self.peers);
-
+			self.findOthersInRoom(connected_users);
 		});
 	},
 	/**
@@ -172,25 +201,18 @@ OpenPath = {
 	 */
 	onMyStreamAllowed : function(){
 		var self = this;
-
-		/**
-		 * peer open
-		 * get id from PeerJS server and send it to socket
-		 */
-		this.peer.on('open', function(id) {
-			console.log('got my peerID, sending it', id);
-			//update this.user
-			self.user.updatePeerId(id);
-			//send id so if anyone is in room, they'll give you a call 
-			//after their socket recieves your peer id (below)
-			self.socket.emit("peer_id", self.user.obj);
-		});
+		console.log('onMyStreamAllowed');
+		for(var i=0;i<this.peers.length;i++){
+			//call all your peers
+			///this.callPeer(this.peers[i].peer_id);
+			console.log('call', this.peers[i])
+		}
 	},
 	/**
 	 * CALL
 	 * make the call
 	 */
-	callPeer : function(aPeer,peerInstance){		
+	callPeer : function(aPeer){		
 		var self = this;
 
 		if(this.user.obj.stream){
@@ -200,8 +222,11 @@ OpenPath = {
 			if(this.call)
 			this.call.on('stream', function(remoteStream) {
 				console.log("Got remote stream", remoteStream, aPeer.stream);
-
+				self.createPeer(aPeer.peer_id, remoteStream);
 			});
+		}else{
+			//since you have no stream, send connection
+			this.peer_connection = this.peer.connect( aPeer.peer_id );
 		}
 	},
 	updateChat : function( user, msg ){
@@ -251,12 +276,15 @@ OpenPath = {
 		this.others_in_room = others;
 		console.log('others_in_room',this.others_in_room);
 	},
-	createUser : function( userObj ){
-		console.log('create', userObj.email);
+	createPeer : function( peer_id , stream ){
+		for(var i=0;i<this.others_in_room.length;i++){
+			if(this.others_in_room[i].peer_id === peer_id){
+				this.others_in_room[i].stream = stream;
+				//add to peers array
+				this.peers.push( new OpenPath.Peer( this.others_in_room[i]) );
+			}
+		}
 
-		var self = this;
-		var newPeer = new OpenPath.User(userObj)
-		this.peers.push( newPeer );
 	},
 	joinEvent : function( event_id ){
 		//create view instance
@@ -282,7 +310,9 @@ OpenPath = {
 		//update header
 		OpenPath.Ui.updateHeader(data);
 
-		//this.connect();
+		//send id so if anyone is in room, they'll give you a call 
+		//after their socket recieves your peer id (below)
+		this.socket.emit("peer_id", this.user.obj);
 	}
 };
 

@@ -89,7 +89,7 @@ module.exports.start = function( io ){
 		
 		/**
 		 * on stream
-		
+		 */
 		socket.on('stream', function( user ) {
 			//update connected users
 			for(var i=0;i<connected_users.length;i++){
@@ -99,13 +99,13 @@ module.exports.start = function( io ){
 				}
 			}
 			console.log('got stream of', user.email );
-			console.log('c-u:', connected_users );
+			//console.log('c-u:', connected_users );
 			
 			// we tell the client to execute 'stream' with 1 parameter
 			//io.sockets.in( user.room_id ).emit('stream', user , connected_users);
 			socket.broadcast.to( user.room_id ).emit('stream', user ); //doesn't include you
 		});
- 		*/
+ 		
 		/**
 		 * switch room
 		 */
