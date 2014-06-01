@@ -38,7 +38,9 @@ OpenPath.User.prototype.got = function(data){
 	this.obj.name = data.firstName + ' ' +data.lastName;
 	this.obj.room_id = data.currentRoom;
 	this.obj.event_id = data.currentEvent;
-	console.log('get user',this.obj, data);
+	//console.log('get user',this.obj, data);
+
+	//if event id, join event
 	if(this.obj.event_id){
 		OpenPath.joinEvent(this.obj.event_id);
 	}
@@ -90,11 +92,10 @@ OpenPath.User.prototype.getMyMedia = function(){
 			OpenPath.onMyStreamAllowed();
 
 			//send stream
-	  		OpenPath.socket.emit("stream", self.obj);
+	  		//OpenPath.socket.emit("stream", self.obj);
 
 	  		//render video
 			self.video.render();
-
 		},
 		function(err) {
 			console.log('Failed to get local stream' ,err);

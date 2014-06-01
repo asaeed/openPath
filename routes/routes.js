@@ -138,7 +138,7 @@ module.exports = function(app, io, passport){
 			if (err) return console.error(err);
 
 		// If a user is returned, load the given user
-			console.log('user is',user,req.session.room,req.session.event);
+			//console.log('user is',user,req.session.room,req.session.event);
 			var publicUser = {
 				firstName:  user.firstName,
 				lastName:   user.lastName,
@@ -303,7 +303,6 @@ module.exports = function(app, io, passport){
 	 * go to event
 	 */
 	app.post("/gotoevent/", function (req, res) {
-
 		console.log('gotoevent',req.query)
 		RoomHandler.checkForRoom( req , function( event, room ){
 			res.send({

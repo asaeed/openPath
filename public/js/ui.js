@@ -115,9 +115,6 @@ OpenPath.Ui = {
 	updateHeader : function(data){
 		///update main header
 		var headerTitle = document.getElementById('headerTitle');
-
-		console.log('update header',data,headerTitle)
-
 		//compile template
 		var source = document.getElementById('headerTitleTemplate').innerHTML;
 		var template = Handlebars.compile(source);

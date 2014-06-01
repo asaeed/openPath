@@ -61,7 +61,7 @@ module.exports.start = function( io ){
 				}
 			}
 			console.log('got peer_id of', user.email );
-			console.log('c-u:', connected_users );
+			//console.log('c-u:', connected_users );
 
 			// we tell the client to execute 'peer_id' with 1 parameter
 			//io.sockets.in( user.room_id ).emit('peer_id', user, connected_users ); //includes you
@@ -80,7 +80,7 @@ module.exports.start = function( io ){
 				}
 			}
 			console.log('got location of', user.email );
-			console.log('c-u:', connected_users );
+			//console.log('c-u:', connected_users );
 
 			// we tell the client to execute 'location' with 1 parameter
 			//io.sockets.in( user.room_id ).emit('location', user , connected_users);
@@ -89,7 +89,7 @@ module.exports.start = function( io ){
 		
 		/**
 		 * on stream
-		 */
+		
 		socket.on('stream', function( user ) {
 			//update connected users
 			for(var i=0;i<connected_users.length;i++){
@@ -105,7 +105,7 @@ module.exports.start = function( io ){
 			//io.sockets.in( user.room_id ).emit('stream', user , connected_users);
 			socket.broadcast.to( user.room_id ).emit('stream', user ); //doesn't include you
 		});
-
+ 		*/
 		/**
 		 * switch room
 		 */
@@ -114,7 +114,9 @@ module.exports.start = function( io ){
 			// leave the current room (stored in session)
 			socket.leave(socket.room);
 			// join new room, received as function parameter
-			socket.join(user.room_id);
+			var newroom = user.room_id;
+			socket.join(newroom);
+
 			socket.emit('updatechat', 'SERVER', 'you have connected to '+ newroom);
 			// sent message to OLD room
 			socket.broadcast.to(socket.room).emit('updatechat', 'SERVER', socket.username+' has left this room');

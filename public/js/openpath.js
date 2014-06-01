@@ -16,8 +16,8 @@ OpenPath = {
 		
 		//configs
 		this.peerKey = 'w8hlftc242jzto6r';
-		this.socketConnection = 'http://openpath.me/' ;
-		//http://localhost:8080';//'http://10.0.1.15:8080'// //'http://openpath.me/'; //
+		this.socketConnection = 'http://localhost:8080';//http://openpath.me/' ;
+		//';//'http://10.0.1.15:8080'// //'http://openpath.me/'; //
 
 		//peer & socket
 		this.call = null;
@@ -113,26 +113,6 @@ OpenPath = {
 		this.socket.on('connect', function() {
 			console.log("connected to socket");
 			self.socket.emit('adduser',  self.user.obj );
-
-			// When we connect, if we have a peer_id, send it out	
-			if (self.user.obj.peer_id != null) {
-				console.log("peer id is not null, sending it");
-				self.socket.emit("peer_id",self.user.obj);
-			}
-
-		});
-
-		/**
-		 * peer open
-		 * get id from PeerJS server and send it to socket
-		 */
-		this.peer.on('open', function(id) {
-			console.log('got my peerID,sending it', id);
-			//update this.user
-			self.user.updatePeerId(id);
-			//send id so if anyone is in room, they'll give you a call 
-			//after their socket recieves your peer id (below)
-			self.socket.emit("peer_id", self.user.obj);
 		});
 
 		/**
@@ -140,18 +120,6 @@ OpenPath = {
 		 */
 		this.peer.on('call', function( incoming_call ) {
 			console.log('INCOMING CaLL',incoming_call);
-		});
-		this.peer.on('connection', function(conn) {
-			console.log('on peer connection', conn)
-			conn.on('open', function() {
-				// Receive messages
-				conn.on('data', function(data) {
-					console.log('peer_connection Received', data);
-				});
-
-				// Send messages
-				conn.send('Hello!');
-			});
 		});
 		/**
 		 * socket receiving
@@ -172,7 +140,7 @@ OpenPath = {
 		 */
 		this.socket.on('connected', function (aPeer, connected_users) {
 			console.log('someone connected',aPeer,connected_users);
-
+			self.findOthersInRoom(connected_users);
 		});
 		/**
 		 * receive peer_ids of others
@@ -188,13 +156,6 @@ OpenPath = {
 		 */
 		this.socket.on('location', function ( aPeer ) {
 			console.log('received location', aPeer.email )
-
-		});
-		/**
-		 * receive stream of others
-		 */
-		this.socket.on('stream', function ( aPeer ) {
-			console.log('received stream, calling peer', aPeer.email,self.peers );
 		});
 		/**
 		 * receive disconnect
@@ -207,13 +168,30 @@ OpenPath = {
 		});
 	},
 	/**
+	 * once allowed video
+	 */
+	onMyStreamAllowed : function(){
+		var self = this;
+
+		/**
+		 * peer open
+		 * get id from PeerJS server and send it to socket
+		 */
+		this.peer.on('open', function(id) {
+			console.log('got my peerID, sending it', id);
+			//update this.user
+			self.user.updatePeerId(id);
+			//send id so if anyone is in room, they'll give you a call 
+			//after their socket recieves your peer id (below)
+			self.socket.emit("peer_id", self.user.obj);
+		});
+	},
+	/**
 	 * CALL
 	 * make the call
 	 */
 	callPeer : function(aPeer,peerInstance){		
 		var self = this;
-		//connect to peer
-		this.peer_connection = this.peer.connect(aPeer.peer_id);
 
 		if(this.user.obj.stream){
 			this.call = this.peer.call( aPeer.peer_id, this.user.obj.stream );
@@ -280,9 +258,6 @@ OpenPath = {
 		var newPeer = new OpenPath.User(userObj)
 		this.peers.push( newPeer );
 	},
-	onMyStreamAllowed : function(){
-
-	},
 	joinEvent : function( event_id ){
 		//create view instance
 		var newEvent = new OpenPath.Model();
@@ -291,14 +266,23 @@ OpenPath = {
 		newEvent.get();
 
 		newEvent.got = function(data){
-			console.log('newEvent got', data );
+			//console.log('newEvent got', data );
 			OpenPath.Ui.updateHeader({event:data});
 		};
 	},
 	switchRoom : function( data ){
-		console.log('switchRoom',data);
+		console.log('switchRoom',data.room._id);
+		//update user
+		this.user.obj.room_id = data.room._id;
+		this.user.obj.event_id = data.event._id
+
+		//tell socket
 		this.socket.emit("switchRoom", this.user.obj);
+
+		//update header
 		OpenPath.Ui.updateHeader(data);
+
+		//this.connect();
 	}
 };
 
