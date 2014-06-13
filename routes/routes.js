@@ -11,7 +11,7 @@ var Email  = require("emailjs/email");
 /**
  * routes 
  */
-module.exports = function(app, io, webRTC, passport){
+module.exports = function(app, io, passport){
 	
 	
 	//start socket
