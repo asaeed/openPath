@@ -13,11 +13,17 @@ navigator.getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia 
 OpenPath = {
 	init : function(){
 		console.log('OpenPath init');
+		
 		//configs
-		this.socketConnection = 'http://localhost:8080';//'http://openpath.me/'
-		this.rtc = {};
-		this.rtc.server =  'ws://localhost:8001';// "ws://www.openpath.me:8001/";
+		this.peerKey = 'w8hlftc242jzto6r';
+		this.socketConnection = 'http://localhost:8080';//'http://openpath.me/' ;//
+		//';//'http://10.0.1.15:8080'// //'http://openpath.me/'; //
+
+		//peer & socket
+		this.call = null;
+		this.peer = new Peer({key: this.peerKey }), //TODO: out own peer server? //OpenPath.rtc.server= "ws://www.openpath.me:8001/";
 		this.socket = io.connect(this.socketConnection);
+		this.peer_connection = null;
 
 		//testing TODO fix
 		this.eventArr = [];
@@ -90,16 +96,7 @@ OpenPath = {
 		this.others_in_room = [];
 		//array of other user instances, in room of course
 		this.peers = [];
-		
-
-		rtc.createStream({"video": true, "audio":true}, function(stream){
-			// get local stream for manipulation
-			console.log('rtc',stream)
-		})
- 		//rtc.connect('ws://yourserveraddress:8001', optionalRoom);
-
-
-		//this.connect();
+		this.connect();
 	},
 	connect : function(){
 		var self = this;

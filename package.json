@@ -20,6 +20,7 @@
     "forever":"*",
     "less":"*",
     "request":"*",
-    "socket.io":"*"
+    "socket.io":"*",
+    "webrtc.io":"*"
   }
 }

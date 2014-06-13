@@ -22,9 +22,8 @@ var express = require('express'),
 
 //var privateKey  = fs.readFileSync('sslcert/server.key', 'utf8');
 //var certificate = fs.readFileSync('sslcert/server.crt', 'utf8');
-//
 //var credentials = {key: privateKey, cert: certificate};
-//
+
 //config
 var env = process.env.NODE_ENV || 'development',
     config = require('./config')[env];
@@ -32,7 +31,9 @@ var env = process.env.NODE_ENV || 'development',
 //create server
 var http = http.createServer(app),
     //https = https.createServer(credentials, app),
-    io = require('socket.io').listen(http);//, { log: true }
+    io = require('socket.io').listen(http),//, { log: true }
+    webRTC = require('webrtc.io').listen(8001);
+
 
 //connect to mongo
 mongoose.connect( config.db );
@@ -57,7 +58,7 @@ require('./utils/passport')(passport, config);
  * Config
  */
 app.configure(function(){
-  app.set('port', process.env.PORT || 8080);//8080
+  app.set('port', process.env.PORT || 8080);//8080 == prod
   //app.set('securePort', 8081);//443
   app.engine('handlebars', exphbs({defaultLayout: 'main'}));
   app.set('views', __dirname + '/views');
@@ -89,7 +90,7 @@ app.configure('development', function(){
 /**
  *routes
  */
-var routes = require('./routes/routes')(app,io,passport);
+var routes = require('./routes/routes')(app,io,webRTC,passport);
 
 /**
  * serve through http server
@@ -102,3 +103,4 @@ https.listen(app.get('securePort'), function(){
   console.log("Server listening on port " + app.get('securePort'));
 });
 */
+
