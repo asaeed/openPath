@@ -22,24 +22,21 @@ body {
 	-o-user-select: none;
 	user-select: none;
 	*/
-
   /*.user-select(none);*/
-
   -webkit-tap-highlight-color: #56acdd;
   /**
 	 * globals
 	 */
-
   /* a centering div */
-
   /**
 	 * admin
 	 */
-
+  /**
+	 * shared
+	 */
   /**
 	 * pages
 	 */
-
 }
 body a {
   color: #56acdd;
@@ -145,6 +142,83 @@ body .admin table tr td {
 body .admin table tr th {
   font-weight: bold;
 }
+body footer {
+  padding: 2em 0 2em 0;
+}
+body footer ul {
+  text-align: center;
+}
+body footer ul li {
+  display: inline;
+  padding: 0 10px 0 10px;
+}
+body footer ul li a {
+  font-size: 1.3em;
+  display: inline;
+}
+body .modalWrap {
+  display: none;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: rgba(0, 0, 0, 0.7);
+  z-index: 10;
+}
+body .modalWrap .modalContent {
+  background: #fff;
+  position: absolute;
+  width: 100em;
+  top: 5em;
+  left: 50%;
+  margin-left: -50em;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  -webkit-border-radius: 1em;
+  -webkit-background-clip: padding-box;
+  -moz-border-radius: 1em;
+  -moz-background-clip: padding;
+  border-radius: 1em;
+  background-clip: padding-box;
+  padding: 4em;
+}
+body .modalWrap .modalContent a.closeBtn {
+  position: absolute;
+  top: 2em;
+  right: 2em;
+  text-indent: -9999px;
+}
+body .modalWrap .modalContent section.modal {
+  display: none;
+}
+body .modalWrap .modalContent section.modal h1 {
+  font-size: 3em;
+  color: #c0c2c4;
+  padding-bottom: 1rem;
+}
+body .modalWrap .modalContent section.modal h2,
+body .modalWrap .modalContent section.modal h4 {
+  font-size: 2em;
+  padding-bottom: 1rem;
+}
+body .modalWrap .modalContent section.modal p {
+  font-size: 1.5em;
+  line-height: 1.3em;
+  padding-bottom: 1em;
+}
+body .modalWrap .modalContent section.modal ul,
+body .modalWrap .modalContent section.modal ol {
+  padding: 0 0 1em 3em;
+  list-style-type: disc;
+}
+body .modalWrap .modalContent section.modal ul li,
+body .modalWrap .modalContent section.modal ol li {
+  font-size: 1.5em;
+  line-height: 1.3em;
+  padding-bottom: 1em;
+}
 body #intro section.main {
   background: #666666 url('/images/home/headerbgd.jpg') no-repeat;
   -webkit-background-size: cover;
@@ -162,7 +236,6 @@ body #intro section.main .content h1 {
 			font-weight: bold;
 			text-shadow: 2px 2px rgba(0,0,0,0.5);
 			color:#fff;*/
-
   padding-bottom: 8.8em;
 }
 body #intro section.main .content .toggle {
@@ -256,100 +329,19 @@ body #intro section.bottomCallouts .content .calloutWrap article:last-child {
   width: 37.3em;
   padding: 3em 0 0 0;
 }
-body #intro footer {
-  padding: 2em 0 2em 0;
-}
-body #intro footer ul {
-  text-align: center;
-}
-body #intro footer ul li {
-  display: inline;
-  padding: 0 10px 0 10px;
-}
-body #intro footer ul li a {
-  font-size: 1.3em;
-  display: inline;
-}
-body #intro .modalWrap {
-  display: none;
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  background: rgba(0, 0, 0, 0.7);
-  z-index: 10;
-}
-body #intro .modalWrap .modalContent {
-  background: #fff;
-  position: absolute;
-  width: 100em;
-  top: 5em;
-  left: 50%;
-  margin-left: -50em;
-  -webkit-box-sizing: border-box;
-  -moz-box-sizing: border-box;
-  box-sizing: border-box;
-  -webkit-border-radius: 1em;
-  -webkit-background-clip: padding-box;
-  -moz-border-radius: 1em;
-  -moz-background-clip: padding;
-  border-radius: 1em;
-  background-clip: padding-box;
-  padding: 4em;
-}
-body #intro .modalWrap .modalContent a.closeBtn {
-  position: absolute;
-  top: 2em;
-  right: 2em;
-  text-indent: -9999px;
-}
-body #intro .modalWrap .modalContent section.modal {
-  display: none;
-}
-body #intro .modalWrap .modalContent section.modal h1 {
-  font-size: 3em;
-  color: #c0c2c4;
-  padding-bottom: 1rem;
-}
-body #intro .modalWrap .modalContent section.modal h2,
-body #intro .modalWrap .modalContent section.modal h4 {
-  font-size: 2em;
-  padding-bottom: 1rem;
-}
-body #intro .modalWrap .modalContent section.modal p {
-  font-size: 1.5em;
-  line-height: 1.3em;
-  padding-bottom: 1em;
-}
-body #intro .modalWrap .modalContent section.modal ul,
-body #intro .modalWrap .modalContent section.modal ol {
-  padding: 0 0 1em 3em;
-  list-style-type: disc;
-}
-body #intro .modalWrap .modalContent section.modal ul li,
-body #intro .modalWrap .modalContent section.modal ol li {
-  font-size: 1.5em;
-  line-height: 1.3em;
-  padding-bottom: 1em;
-}
 body #home {
   /**
-		 * header,footer,modal
+		 * header
 		 */
-
   /**
  * header styles
  */
-
   /**
 		 * page
 		 */
-
   /**
 		 * individual 'pages'
 		 */
-
 }
 body #home header#mainHeader {
   position: relative;
@@ -443,7 +435,6 @@ body #home header#mainHeader .content nav.main ul li a span.badge {
   border-radius: 1em;
   background-clip: padding-box;
   /*hide for now*/
-
 }
 body #home header#mainHeader .content nav.main ul li a:hover,
 body #home header#mainHeader .content nav.main ul li a.active {
@@ -474,83 +465,6 @@ body #home header#mainHeader .content nav.main ul li.profile a {
 body #home header#mainHeader .content nav.main ul li.profile a.active {
   background-position: -196px -2px;
 }
-body #home footer {
-  padding: 2em 0 2em 0;
-}
-body #home footer ul {
-  text-align: center;
-}
-body #home footer ul li {
-  display: inline;
-  padding: 0 10px 0 10px;
-}
-body #home footer ul li a {
-  font-size: 1.3em;
-  display: inline;
-}
-body #home .modalWrap {
-  display: none;
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  background: rgba(0, 0, 0, 0.7);
-  z-index: 10;
-}
-body #home .modalWrap .modalContent {
-  background: #fff;
-  position: absolute;
-  width: 100em;
-  top: 5em;
-  left: 50%;
-  margin-left: -50em;
-  -webkit-box-sizing: border-box;
-  -moz-box-sizing: border-box;
-  box-sizing: border-box;
-  -webkit-border-radius: 1em;
-  -webkit-background-clip: padding-box;
-  -moz-border-radius: 1em;
-  -moz-background-clip: padding;
-  border-radius: 1em;
-  background-clip: padding-box;
-  padding: 4em;
-}
-body #home .modalWrap .modalContent a.closeBtn {
-  position: absolute;
-  top: 2em;
-  right: 2em;
-  text-indent: -9999px;
-}
-body #home .modalWrap .modalContent section.modal {
-  display: none;
-}
-body #home .modalWrap .modalContent section.modal h1 {
-  font-size: 3em;
-  color: #c0c2c4;
-  padding-bottom: 1rem;
-}
-body #home .modalWrap .modalContent section.modal h2,
-body #home .modalWrap .modalContent section.modal h4 {
-  font-size: 2em;
-  padding-bottom: 1rem;
-}
-body #home .modalWrap .modalContent section.modal p {
-  font-size: 1.5em;
-  line-height: 1.3em;
-  padding-bottom: 1em;
-}
-body #home .modalWrap .modalContent section.modal ul,
-body #home .modalWrap .modalContent section.modal ol {
-  padding: 0 0 1em 3em;
-  list-style-type: disc;
-}
-body #home .modalWrap .modalContent section.modal ul li,
-body #home .modalWrap .modalContent section.modal ol li {
-  font-size: 1.5em;
-  line-height: 1.3em;
-  padding-bottom: 1em;
-}
 body #home section.page {
   opacity: 0;
   -webkit-transition: opacity 0.5s linear, color 0.4s 0.2s ease;
@@ -560,7 +474,6 @@ body #home section.page {
   /**
  * subnav
  */
-
 }
 body #home section.page nav.subnav {
   background: #f6f6f6;
@@ -618,15 +531,11 @@ body #home section#videos #videosView {
   /**
 	 * video mixin
 	 */
-
   /**
 	 * usermeta
 	 */
-
   /*#chat*/
-
   /*chat open*/
-
 }
 body #home section#videos #videosView .usermeta {
   position: absolute;
@@ -738,6 +647,7 @@ body #home section#videos #videosView #presenter {
 body #home section#videos #videosView #presenter .video {
   position: relative;
   width: 100%;
+  height: 100%;
 }
 body #home section#videos #videosView #presenter .video video {
   width: 100%;
@@ -767,6 +677,7 @@ body #home section#videos #videosView aside ul#peersList li {
 body #home section#videos #videosView aside ul#peersList li .video {
   position: relative;
   width: 100%;
+  height: 100%;
 }
 body #home section#videos #videosView aside ul#peersList li .video video {
   width: 100%;
@@ -822,7 +733,6 @@ body #home section#videos #videosView #chat #chatwindow {
   overflow: auto;
   padding: 0 10px 0 20px;
   /*background:#ebeae7;*/
-
 }
 body #home section#videos #videosView #chat #chatwindow strong {
   font-weight: normal;
@@ -857,7 +767,6 @@ body #home section#videos #videosView #chat input.commentfield {
   width: 90%;
   padding: 10px;
   /*max-width:215px; */
-
   margin: 25px 10px 35px 20px;
 }
 body #home section#videos #videosView #chat.open {
@@ -870,7 +779,6 @@ body #home section#invite {
   /**
  *inviteToEvent
  */
-
 }
 body #home section#invite #inviteView .content h1 {
   font-size: 2em;
@@ -891,15 +799,12 @@ body #home section#profile {
   /**
  * myProfile
  */
-
   /**
  * editProfile
  */
-
   /**
  * settings
  */
-
 }
 body #home section#profile #myProfile .content a.editBtn {
   font-size: 1.8em;
@@ -962,11 +867,9 @@ body #home section#events {
   /**
  * eventsList
  */
-
   /**
  * addNewEvent
  */
-
 }
 body #home section#events ul.eventsList {
   list-style-type: none;
@@ -1111,10 +1014,8 @@ body #errorPage .content section.page a {
 ::selection {
   background: #56acdd;
   /* Safari & Chrome */
-
 }
 ::-moz-selection {
   background: #56acdd;
   /* Firefox */
-
 }
