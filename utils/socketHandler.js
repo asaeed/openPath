@@ -36,6 +36,7 @@ module.exports.start = function( io ){
 			//join room
 			socket.join(user.room_id);
 
+			var others_in_room = self.getOthersInRoom(user);
 			// echo to client they've connected
 			Event.findOne({ _id: user.event_id }, function (err, item) {
 				if (err) return console.error(err);
@@ -46,9 +47,10 @@ module.exports.start = function( io ){
 					//connecting to just a room
 					socket.emit('updatechat', 'SERVER', 'you have connected to room #'+user.room_id );
 				}
+				if(others_in_room.length > 0) socket.emit('updatechat','SERVER','others in this room include : '+ others_in_room.join(', '));
 			});
 			
-
+			
 			var name = user.name ? user.name : user.email;
 			// echo to room that a person has connected to their room
 			socket.broadcast.to(user.room_id).emit('updatechat', 'SERVER', name + ' has connected to this room.' );
@@ -107,14 +109,17 @@ module.exports.start = function( io ){
 		 * switch room
 		 */
 		socket.on('switchRoom', function( user ){
-			console.log("Client has switched room",socket.user);
-			// leave the current room (stored in session)
+			console.log("Client has switched room",socket.user,socket.room,user);
+			var oldroom = socket.room;//socket.user.room_id;
+			// leave the current room (stored in session);
 			socket.leave(socket.room);
 			// join new room, received as function parameter
 			var newroom = user.room_id;
 			socket.join(newroom);
+			//socket.room = newroom;
 			var name = user.name ? user.name : user.email;
 			
+			var others_in_room = self.getOthersInRoom(user);
 			// echo to client they've connected
 			Event.findOne({ _id: user.event_id }, function (err, item) {
 				if (err) return console.error(err);
@@ -125,12 +130,11 @@ module.exports.start = function( io ){
 					//connecting to just a room
 					socket.emit('updatechat', 'SERVER', 'you have connected to room #'+user.room_id );
 				}
+				if(others_in_room.length > 0) socket.emit('updatechat','SERVER','others in this room include : '+ others_in_room.join(', '));
 			});
-
-			// sent message to OLD room
-			socket.broadcast.to(socket.room).emit('updatechat', 'SERVER', name+' has left this room');
+			// sent message to OLD room NOT WORKING
+			//socket.broadcast.to(oldroom).emit('updatechat', 'SERVER', name+' has left this room');
 			// update socket session room title
-			socket.room = newroom;
 			socket.broadcast.to(newroom).emit('updatechat', 'SERVER', name+' has joined this room');
 			//socket.emit('updaterooms', rooms, newroom);
 
@@ -174,15 +178,36 @@ module.exports.updateConnectedUsers = function( user ){
 		console.log('connected users:',i,'of',connected_users.length-1,connected_users[i].email);
 		if(connected_users[i].email === user.email){
 			//update user with new data from front end
-			console.log('matched user', user);
+			
 			//override user with new info
-			connected_users[i] = user;
-			//for(key in connected_users[i]){
-			//	console.log(key,connected_users[i][key])
-			//}
+			//connected_users[i] = user;
+			for(key in connected_users[i]){
+				if(key !== 'email'){
+					if(connected_users[i][key] !== user[key]){
+						console.log('updating ',key, connected_users[i][key], 'to',user[key])
+						connected_users[i][key] = user[key];
+					} 
+				}
+			}
+			console.log('matched and updated user', user);
 		}
 	}
 };
+
+module.exports.getOthersInRoom = function( user ){
+	var arr=[];
+	//user.room_id)
+	for(var i=0;i<connected_users.length;i++){
+		if(connected_users[i].room_id === user.room_id && connected_users[i].email !== user.email ){
+			if(connected_users[i].name){
+				arr.push(connected_users[i].name);
+			}else{
+				arr.push(connected_users[i].email);
+			}		
+		}
+	}
+	return arr;
+}
 module.exports.removeConnectedUsers = function( user ){
 	var user_index = null;
 	// remove the username from global usernames list
@@ -194,4 +219,5 @@ module.exports.removeConnectedUsers = function( user ){
 	if(user_index !== null) connected_users.splice(user_index, 1);
 	console.log('after disconnecting user,',connected_users);
 };
+
 			

@@ -147,7 +147,7 @@ OpenPath.User.prototype.checkIfPresenter = function( done ){
 	presenterMondal.got = function( isPresenter ){
 		self.isPresenter = isPresenter;
 		if(isPresenter){
-			console.log('I\'m presenter');
+			console.log('I\'m presenter (this could be called from peer)');
 			//set userVideo to presenter
 			OpenPath.presenterElement.appendChild(self.video.element);
 		}else{

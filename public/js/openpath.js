@@ -182,13 +182,16 @@ OpenPath = {
 		 * receive stream of others
 		 */
 		this.socket.on('stream', function ( aPeer ) {
-			console.log('received stream', aPeer.email )
+			console.log('received stream', aPeer.email );
+
+			//make the call again
+			self.callPeer(aPeer);
 		});
 		/**
 		 * switch room
 		 */
 		this.socket.on('switchedRoom', function ( aPeer,connected_users ) {
-			console.log('received switchedRoom', aPeer.email )
+			console.log('received switchedRoom', aPeer.email );
 			self.findOthersInRoom(connected_users);
 		});
 		
