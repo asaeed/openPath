@@ -77,7 +77,7 @@ OpenPath.User.prototype.getMyMedia = function(){
 			OpenPath.onMyStreamAllowed();
 
 			//send stream
-	  		//OpenPath.socket.emit("stream", self.obj);
+	  		OpenPath.socket.emit("stream", self.obj);
 
 	  		//render video
 			self.video.render();

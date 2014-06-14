@@ -137,7 +137,7 @@ module.exports = function(app, io, passport){
 		User.findByEmail(req, function (err, user) {
 			if (err) return console.error(err);
 
-		// If a user is returned, load the given user
+			// If a user is returned, load the given user
 			//console.log('user is',user,req.session.room,req.session.event);
 			var publicUser = {
 				firstName:  user.firstName,
@@ -183,7 +183,7 @@ module.exports = function(app, io, passport){
 	app.get('/presenter/:id/:email', function(req, res){
 		var id = req.params.id;
 		var email = req.params.email;
-   		console.log('Retrieving presenter : ' + id+' '+email);
+   		console.log('checking if presenter : ' + id+' '+email);
 		Room.findOne({ _id: id }, function (err, room) {
 			if (err) return console.error(err);
 
