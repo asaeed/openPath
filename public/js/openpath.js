@@ -16,7 +16,7 @@ OpenPath = {
 		
 		//configs
 		this.peerKey = 'w8hlftc242jzto6r';
-		this.socketConnection = 'http://openpath.me/' ;//'http://localhost:8080';//
+		this.socketConnection = 'http://10.0.1.15:8080';//'http://openpath.me/' ;//'http://localhost:8080';//
 		//';//'http://10.0.1.15:8080'// //'http://openpath.me/'; //
 
 		//peer & socket
@@ -25,8 +25,6 @@ OpenPath = {
 		this.socket = io.connect(this.socketConnection);
 		this.peer_connection = null;
 
-		//testing TODO fix
-		this.eventArr = [];
 
 		//init ui 
 		this.Ui.init();
@@ -36,9 +34,15 @@ OpenPath = {
 		 */
 		this.user = new OpenPath.User( document.getElementById('email').value );
 		
+		//handle events
+		this.eventsController = new OpenPath.Controller();
+		this.eventsController.url = '/events';
+		this.eventsController.data = null;
+
 		//hanlder routes
 		this.Router.init();
 		this.Router.checkRoute();
+
 		
 		/**
 		 * dom elemets

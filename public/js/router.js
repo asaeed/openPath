@@ -197,29 +197,35 @@ OpenPath.Router = {
 		//TODO: modal
 		alert('Your email has been sent.')
 	},
-	showEvents :  function(){
+	showEvents : function(){
 		var self = this;
 		this.show(this.events);
 		this.show(this.upcomingEvents);
-
-		//create view instance
-		var upcomingEventsView = new OpenPath.View();
-		upcomingEventsView.url = '/events';
-		//get data
-		upcomingEventsView.get();
 
 		var content = this.upcomingEvents.getElementsByClassName('content')[0];
 		//compile template
 		var source = document.getElementById('upcomingEventsTemplate').innerHTML;
 		var template = Handlebars.compile(source);
 
-		//get all events
-		upcomingEventsView.got = function(data){
-			console.log('upcomingEventsView got', data );
+		if(OpenPath.eventsController.data === null){
+			OpenPath.eventsController.get();
+			OpenPath.eventsController.got = function(data){
+				console.log('ev',data);
+				this.data = data;
+				content.innerHTML = template( data );
 
-			//add data to template
-			content.innerHTML = template( data );
+				createEvents();
+			};
+		}else{
+			content.innerHTML = template( OpenPath.eventsController.data );
 
+			createEvents();	
+		}
+		
+		/**
+		 * create event views
+		 */
+		function createEvents(){
 			var events = content.getElementsByClassName('event');
 
 			/**
@@ -237,7 +243,6 @@ OpenPath.Router = {
 					//set url and post
 					me.url = "/gotoevent/"+ me.joinBtn.getAttribute('href');
 					me.post({"data":null});
-
 				});
 			}
 			//inherits OpenPath.View
@@ -245,9 +250,9 @@ OpenPath.Router = {
 			eventView.prototype.constructor = eventView;
 			
 			//when posted, join event
-					/***
-		 *** JOIN EVENT ******
-		 ***/
+			/***
+			 *** JOIN EVENT ******
+			 ***/
 			eventView.prototype.posted = function(data){
 				if(data){
 					self.checkRoute('#/videos');
@@ -270,18 +275,26 @@ OpenPath.Router = {
 				OpenPath.Ui.renderMap(mapwrap, mapwrap.dataset.latitude, mapwrap.dataset.longitude, mapwrap.dataset.reference, mapwrap.dataset.formattedaddress );
 
 				//TODO :  don't remake on events page load
-				OpenPath.eventArr.push( new eventView(events[i]) );
+				//OpenPath.eventArr.push( new eventView(events[i]) );
 			}
 
-			console.log(OpenPath.eventArr,'fix this! duplicating dom items')
+			//console.log(OpenPath.eventArr,'fix this! duplicating dom items')
 
 			//rebind routes
-			self.bindRoutes();
-		};
+			self.bindRoutes();	
+		}
 	},
 	showNearbyEvents :  function(){
 		this.show(this.events);
 		this.show(this.nearbyEvents);
+
+		var nearbyMap = document.getElementById('nearbyMap');
+
+		if(OpenPath.user.obj.location.coords.latitude!==null && OpenPath.user.obj.location.coords.longitude!==null){
+
+			OpenPath.Ui.renderMap(nearbyMap, OpenPath.user.obj.location.coords.latitude, OpenPath.user.obj.location.coords.longitude );
+
+		}
 	},
 	showAddNewEvent :  function(){
 		var self = this;
