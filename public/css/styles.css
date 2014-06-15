@@ -870,6 +870,9 @@ body #home section#events {
   /**
  * addNewEvent
  */
+  /**
+ * nearByEvents
+ */
 }
 body #home section#events ul.eventsList {
   list-style-type: none;
@@ -951,6 +954,20 @@ body #home section#events #addNewEvent fieldset#gradelevel ul li label {
 }
 body #home section#events #addNewEvent fieldset#gradelevel ul li input {
   float: left;
+}
+body #home section#events #nearByEvents {
+  border: 1px solid red;
+}
+body #home section#events #nearByEvents .content {
+  overflow: hidden;
+}
+body #home section#events #nearByEvents .content #nearByMap {
+  float: left;
+  width: 60%;
+}
+body #home section#events #nearByEvents .content aside {
+  float: left;
+  width: 40%;
 }
 body #home section#error {
   padding: 8em 0;

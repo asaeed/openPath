@@ -36,7 +36,7 @@ OpenPath.Router = {
 		this.settings = document.querySelector('#settings');
 			//events
 		this.upcomingEvents = document.querySelector('#upcomingEvents');
-		this.nearbyEvents = document.querySelector('#nearbyEvents');
+		this.nearbyEvents = document.querySelector('#nearByEvents');
 		this.addNewEvent = document.querySelector('#addNewEvent');
 		this.inviteToEvent = document.querySelector('#inviteToEvent');
 
@@ -204,7 +204,7 @@ OpenPath.Router = {
 
 		var content = this.upcomingEvents.getElementsByClassName('content')[0];
 		//compile template
-		var source = document.getElementById('upcomingEventsTemplate').innerHTML;
+		var source = document.getElementById('EventsTemplate').innerHTML;
 		var template = Handlebars.compile(source);
 
 		if(OpenPath.eventsController.data === null){
@@ -214,18 +214,18 @@ OpenPath.Router = {
 				this.data = data;
 				content.innerHTML = template( data );
 
-				createEvents();
+				initEvents();
 			};
 		}else{
 			content.innerHTML = template( OpenPath.eventsController.data );
 
-			createEvents();	
+			initEvents();	
 		}
 		
 		/**
-		 * create event views
+		 * init event views
 		 */
-		function createEvents(){
+		function initEvents(){
 			var events = content.getElementsByClassName('event');
 
 			/**
@@ -288,8 +288,31 @@ OpenPath.Router = {
 		this.show(this.events);
 		this.show(this.nearbyEvents);
 
-		var nearbyMap = document.getElementById('nearbyMap');
+		var content = this.nearbyEvents.getElementsByClassName('content')[0];
+		var aside = content.getElementsByTagName('aside')[0];
+		var nearbyMap = document.getElementById('nearByMap');
+		nearbyMap.style.height = window.innerHeight - 200 + 'px';
 
+		//compile template
+		var source = document.getElementById('EventsTemplate').innerHTML;
+		var template = Handlebars.compile(source);
+
+		if(OpenPath.eventsController.data === null){
+			OpenPath.eventsController.get();
+			OpenPath.eventsController.got = function(data){
+				console.log('ev',data);
+				this.data = data;
+				aside.innerHTML = template( data );
+
+				//initEvents();
+			};
+		}else{
+			aside.innerHTML = template( OpenPath.eventsController.data );
+
+			//initEvents();	
+		}
+
+		
 		if(OpenPath.user.obj.location.coords.latitude!==null && OpenPath.user.obj.location.coords.longitude!==null){
 
 			OpenPath.Ui.renderMap(nearbyMap, OpenPath.user.obj.location.coords.latitude, OpenPath.user.obj.location.coords.longitude );
