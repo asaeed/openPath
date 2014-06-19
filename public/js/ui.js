@@ -219,8 +219,9 @@ OpenPath.Ui = {
 		window.scrollTo(0,0);
 		
 		this.modalWrap.style.display = 'block';
-		this.modalWrap.style.height = document.body.offsetHeight +200 + 'px'; //shameless hack to make about fit
-
+		//this.modalWrap.style.height = document.body.offsetHeight +200 + 'px'; //shameless hack to make about fit
+		this.modalWrap.style = window.innerHeight+'px'
+		
 		for(var i=0;i<this.modals.length;i++){
 			if(this.modals[i] === modal){
 				this.modals[i].style.display = 'block';

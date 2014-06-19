@@ -16,20 +16,12 @@ OpenPath = {
 		
 		//configs
 		this.peerKey = 'w8hlftc242jzto6r';
-		this.socketConnection = 'http://localhost:8080';//'http://10.0.1.15:8080';//'http://openpath.me/' ;
+		this.socketConnection = 'http://10.0.1.15:8080';//'http://localhost:8080';//'http://openpath.me/' ;
 		//';//'http://10.0.1.15:8080'// //'http://openpath.me/'; //
-
-		//peer & socket
-		this.call = null;
-		this.peer = new Peer({key: this.peerKey }), //TODO: out own peer server? //OpenPath.rtc.server= "ws://www.openpath.me:8001/";
-		this.socket = io.connect(this.socketConnection);
-		this.peer_connection = null;
 
 
 		//init ui 
 		this.Ui.init();
-
-
 
 		/**
 		 * user obj to send to others - you :)
@@ -37,7 +29,7 @@ OpenPath = {
 		this.user = new OpenPath.User( document.getElementById('email').value );
 		
 
-		
+
 		//handle events
 		this.eventsController = new OpenPath.Controller();
 		this.eventsController.url = '/events';
@@ -61,12 +53,21 @@ OpenPath = {
 		this.chatheader = chat.getElementsByTagName("header")[0];
 		this.chatToggler = document.getElementById("chatToggler");
 
+		
+		
+	},
+	/**
+	 * once allowed video
+	 */
+	onMyStreamAllowed : function(){
+		var self = this;
+		console.log('onMyStreamAllowed');
+
 		/**
 		 * connect to peer, socket
 		 * communicate with socket
 		 */
 		this.events();
-
 		this.start();
 	},
 	events : function(){
@@ -99,15 +100,26 @@ OpenPath = {
 	},
 	start : function(){
 		var self = this;
-
 		//array of users in room - get all connected users in my room - excluding me
 		this.others_in_room = [];
 		//array of other user instances, in room of course
 		this.peers = [];
+
 		this.connect();
 	},
 	connect : function(){
 		var self = this;
+
+
+		//peer & socket
+		this.call = null;
+		this.peer = new Peer({key: this.peerKey }), //TODO: out own peer server? //OpenPath.rtc.server= "ws://www.openpath.me:8001/";
+		this.socket = io.connect(this.socketConnection);
+		this.peer_connection = null;
+
+
+
+
 		/**
 		 * socket connect
 		 */
@@ -168,7 +180,7 @@ OpenPath = {
 		 * receive connected of others (not yourself on this one)
 		 */
 		this.socket.on('connected', function (aPeer, connected_users) {
-			console.log('someone connected',aPeer,connected_users);
+			console.log('someone connected',aPeer.email);
 			self.findOthersInRoom(connected_users);
 		});
 		/**
@@ -211,21 +223,6 @@ OpenPath = {
 			console.log('received disconnect', aPeer, connected_users ,self.peers);
 			self.findOthersInRoom(connected_users);
 		});
-	},
-	/**
-	 * once allowed video
-	 */
-	onMyStreamAllowed : function(){
-		var self = this;
-		console.log('onMyStreamAllowed');
-		for(var i=0;i<this.peers.length;i++){
-			//call all your peers
-			///this.callPeer(this.peers[i].peer_id);
-			console.log('call me', this.peers[i].obj)
-			//this.callPeer(this.peers[i].obj)
-
-			//have them call me?
-		}
 	},
 	/**
 	 * CALL
@@ -306,23 +303,16 @@ OpenPath = {
 					//add to peers array
 					console.log('push peer',i)
 					this.peers.push( new OpenPath.Peer( this.others_in_room[i]) );
+				}else{
+					console.log('new peer')
+					//add new peer with this obj
+					peer.stream = stream;
+					//add to peers array
+					this.peers.push( new OpenPath.Peer( peer ));
 				}
-			}	
-		}else{
-			if(peer.peer_id){
-				peer.stream = stream;
-				this.others_in_room.push(peer);
-				this.peers.push( new OpenPath.Peer( peer ) );
-			}else{
-
-				var peerObj = {
-					peer_id : peer_id,
-					stream : stream
-				}
-				console.log('no peer, makng shell')
-				this.others_in_room.push(peerObj);
-				this.peers.push( new OpenPath.Peer( peerObj ) );
 			}
+
+	
 		}
 	},
 	joinEvent : function( event_id ){
