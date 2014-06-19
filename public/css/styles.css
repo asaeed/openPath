@@ -868,10 +868,10 @@ body #home section#events {
  * eventsList
  */
   /**
- * addNewEvent
+ * nearByEvents
  */
   /**
- * nearByEvents
+ * addNewEvent
  */
 }
 body #home section#events ul.eventsList {
@@ -930,6 +930,57 @@ body #home section#events ul.eventsList li.event .mapWrap {
 body #home section#events ul.eventsList li.event:last-child {
   border-bottom: 0;
 }
+body #home section#events #nearByEvents {
+  border: 1px solid red;
+}
+body #home section#events #nearByEvents .content {
+  overflow: hidden;
+}
+body #home section#events #nearByEvents .content #nearByMap {
+  float: left;
+  width: 55%;
+  margin-right: 5%;
+}
+body #home section#events #nearByEvents .content aside {
+  float: left;
+  width: 40%;
+}
+body #home section#events #nearByEvents .content aside ul.eventsList li.event article {
+  float: none;
+  width: 100%;
+  padding: 2em 0 0 0;
+}
+body #home section#events #nearByEvents .content aside ul.eventsList li.event article h3 {
+  font-size: 2em;
+  font-weight: bold;
+  display: block;
+  padding-bottom: 0.5em;
+}
+body #home section#events #nearByEvents .content aside ul.eventsList li.event article p {
+  font-size: 1.5em;
+  line-height: 1.3em;
+  padding-bottom: 1em;
+}
+body #home section#events #nearByEvents .content aside ul.eventsList li.event article p.date {
+  font-weight: bold;
+}
+body #home section#events #nearByEvents .content aside ul.eventsList li.event article p.date span {
+  font-size: 0.8em;
+  color: #666;
+}
+body #home section#events #nearByEvents .content aside ul.eventsList li.event article p.location {
+  font-weight: bold;
+}
+body #home section#events #nearByEvents .content aside ul.eventsList li.event article .buttons {
+  overflow: hidden;
+}
+body #home section#events #nearByEvents .content aside ul.eventsList li.event article .buttons .joinBtn {
+  float: left;
+}
+body #home section#events #nearByEvents .content aside ul.eventsList li.event article .buttons .inviteBtn,
+body #home section#events #nearByEvents .content aside ul.eventsList li.event article .buttons .editBtn {
+  display: none;
+}
 body #home section#events #addNewEvent textarea {
   height: 6em;
 }
@@ -954,21 +1005,6 @@ body #home section#events #addNewEvent fieldset#gradelevel ul li label {
 }
 body #home section#events #addNewEvent fieldset#gradelevel ul li input {
   float: left;
-}
-body #home section#events #nearByEvents {
-  border: 1px solid red;
-}
-body #home section#events #nearByEvents .content {
-  overflow: hidden;
-}
-body #home section#events #nearByEvents .content #nearByMap {
-  float: left;
-  width: 55%;
-  margin-right: 5%;
-}
-body #home section#events #nearByEvents .content aside {
-  float: left;
-  width: 40%;
 }
 body #home section#error {
   padding: 8em 0;

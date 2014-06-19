@@ -285,6 +285,7 @@ OpenPath.Router = {
 		}
 	},
 	showNearbyEvents :  function(){
+		var self = this;
 		this.show(this.events);
 		this.show(this.nearbyEvents);
 
@@ -309,10 +310,68 @@ OpenPath.Router = {
 		}else{
 			aside.innerHTML = template( OpenPath.eventsController.data );
 
-			//initEvents();	
+			initEvents();	
 		}
 
-		
+
+		/**
+		 * init event views - copied from above TODO: merge with above
+		 */
+		function initEvents(){
+			var events = content.getElementsByClassName('event');
+
+			/**
+			 * Event helper class
+			 * individual event instance
+			 */
+			function eventView(element){
+				var me = this;
+				this.element = element;
+				this.joinBtn = this.element.getElementsByClassName('joinBtn')[0]
+
+				this.eventHandler(this.joinBtn,'click',function(e){
+					e.preventDefault();
+					console.log('join',me.joinBtn.getAttribute('href'));
+					//set url and post
+					me.url = "/gotoevent/"+ me.joinBtn.getAttribute('href');
+					me.post({"data":null});
+				});
+			}
+			//inherits OpenPath.View
+			eventView.prototype = new OpenPath.View();
+			eventView.prototype.constructor = eventView;
+			
+			//when posted, join event
+			/***
+			 *** JOIN EVENT ******
+			 ***/
+			eventView.prototype.posted = function(data){
+				if(data){
+					self.checkRoute('#/videos');
+					//remove #/events from url
+					history.pushState({query:window.location.search}, document.title, '#/videos');
+					
+					OpenPath.switchRoom(data);
+				}
+			};
+
+
+			/**
+			 * events loop
+			 */
+			for(var i=0; i<events.length; i++){
+				//TODO :  don't remake on events page load
+				new eventView(events[i]);
+			}
+
+			//console.log(OpenPath.eventArr,'fix this! duplicating dom items')
+
+			//rebind routes
+			self.bindRoutes();	
+		}
+
+
+		//if onload this page location not saved to server so load at great pyramid		
 		if(OpenPath.user.obj.location.coords.latitude!==null && OpenPath.user.obj.location.coords.longitude!==null){
 			OpenPath.Ui.renderMap(nearbyMap, OpenPath.user.obj.location.coords.latitude, OpenPath.user.obj.location.coords.longitude );
 		}else{

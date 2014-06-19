@@ -68,6 +68,74 @@ ul.eventsList {
 }
 
 /**
+ * nearByEvents
+ */
+#nearByEvents {
+	border:1px solid red;
+	.content {	
+		overflow: hidden;
+		#nearByMap {
+			float:left;
+			width:55%;
+			
+			margin-right: 5%;
+		}
+		aside {
+			float:left;
+			width: 40%;
+			ul.eventsList {
+				li.event {
+					article{
+						float:none;
+						width:100%;
+						padding:2em 0 0 0;
+						h3{
+							.label();
+							padding-bottom:0.5em;
+							a {
+
+							}
+						}
+						p {
+							.pNormal();
+							padding-bottom:1em;
+						}
+						p.link {
+
+						}
+						p.date{
+							font-weight:bold;
+							span{
+								font-size:0.8em;
+								color:#666;
+							}
+							span.startTime{
+							}
+							span.endTime{
+							}
+						}
+						
+						p.location{
+							font-weight:bold;	
+						}
+						.buttons {
+							overflow:hidden;
+							.joinBtn {
+								float:left;
+							}
+							.inviteBtn,
+							.editBtn {
+								display:none;
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+}
+
+/**
  * addNewEvent
  */
 #addNewEvent {
@@ -98,22 +166,4 @@ ul.eventsList {
 	}
 }
 
-/**
- * nearByEvents
- */
-#nearByEvents {
-	border:1px solid red;
-	.content {	
-		overflow: hidden;
-		#nearByMap {
-			float:left;
-			width:55%;
-			
-			margin-right: 5%;
-		}
-		aside {
-			float:left;
-			width: 40%;
-		}
-	}
-}
+
