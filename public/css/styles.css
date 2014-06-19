@@ -963,7 +963,8 @@ body #home section#events #nearByEvents .content {
 }
 body #home section#events #nearByEvents .content #nearByMap {
   float: left;
-  width: 60%;
+  width: 55%;
+  margin-right: 5%;
 }
 body #home section#events #nearByEvents .content aside {
   float: left;

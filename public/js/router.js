@@ -275,7 +275,7 @@ OpenPath.Router = {
 				OpenPath.Ui.renderMap(mapwrap, mapwrap.dataset.latitude, mapwrap.dataset.longitude, mapwrap.dataset.reference, mapwrap.dataset.formattedaddress );
 
 				//TODO :  don't remake on events page load
-				//OpenPath.eventArr.push( new eventView(events[i]) );
+				new eventView(events[i]);
 			}
 
 			//console.log(OpenPath.eventArr,'fix this! duplicating dom items')
@@ -314,9 +314,9 @@ OpenPath.Router = {
 
 		
 		if(OpenPath.user.obj.location.coords.latitude!==null && OpenPath.user.obj.location.coords.longitude!==null){
-
 			OpenPath.Ui.renderMap(nearbyMap, OpenPath.user.obj.location.coords.latitude, OpenPath.user.obj.location.coords.longitude );
-
+		}else{
+			OpenPath.Ui.renderMap(nearbyMap, 29.979252, 31.133874 );
 		}
 	},
 	showAddNewEvent :  function(){
