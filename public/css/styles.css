@@ -219,6 +219,13 @@ body .modalWrap .modalContent section.modal ol li {
   line-height: 1.3em;
   padding-bottom: 1em;
 }
+body .alertModal .modalContent {
+  width: 35em;
+  margin-left: -17.5em;
+}
+body .alertModal .modalContent a.closeBtn {
+  display: none;
+}
 body #intro section.main {
   background: #666666 url('/images/home/headerbgd.jpg') no-repeat;
   -webkit-background-size: cover;

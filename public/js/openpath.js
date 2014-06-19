@@ -29,10 +29,14 @@ OpenPath = {
 		//init ui 
 		this.Ui.init();
 
+
+
 		/**
 		 * user obj to send to others - you :)
 		 */
 		this.user = new OpenPath.User( document.getElementById('email').value );
+		
+
 		
 		//handle events
 		this.eventsController = new OpenPath.Controller();
@@ -189,7 +193,7 @@ OpenPath = {
 			console.log('received stream', aPeer.email );
 
 			//make the call again
-			self.callPeer(aPeer);
+			//self.callPeer(aPeer);
 		});
 		/**
 		 * switch room

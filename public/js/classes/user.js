@@ -67,8 +67,19 @@ OpenPath.User.prototype.connect = function(){
  */
 OpenPath.User.prototype.getMyMedia = function(){
 	var self = this;
+
+	//modal
+	var notYetAllowed = document.getElementById('notYetAllowed');
+	OpenPath.Ui.modal(notYetAllowed);
+	OpenPath.Ui.modalWrap.classList.add('alertModal');
+
+
 	if(navigator.getUserMedia) {
 		navigator.getUserMedia( {video: true, audio: true}, function(stream) {
+
+			//hide modal
+			OpenPath.Ui.closeModals();
+
 
 			console.log('got my stream')
 			//set user stream
@@ -85,10 +96,17 @@ OpenPath.User.prototype.getMyMedia = function(){
 		function(err) {
 			console.log('Failed to get local stream' ,err);
 			//did not join, pressed no allow
-			//TODO msg
+			//hide modal
+			OpenPath.Ui.closeModals();
+
+			//new modal
+			var saidNoToAllow = document.getElementById('saidNoToAllow');
+			OpenPath.Ui.modal(saidNoToAllow);
+			OpenPath.Ui.modalWrap.classList.add('alertModal');
 		});
 	}else{
 		console.log('can\'t get user media');
+
 	}
 };
 /**
