@@ -31,8 +31,7 @@ OpenPath.Video.prototype.render = function(renderWhat){
 		this.template = Handlebars.compile(this.source);
 
 		//add data to template
-		this.element.innerHTML = this.template( {name: user.name, mute : 'false'} );
-
+		this.element.innerHTML = this.template( {id:user.peer_id, name: user.name, mute : 'false'} );
 
 		//define elements now in dom
 		this.video = this.element.getElementsByTagName('video')[0];

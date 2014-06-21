@@ -211,7 +211,7 @@ OpenPath = {
 		 * switch room
 		 */
 		this.socket.on('switchedRoom', function ( aPeer,connected_users ) {
-			console.log('received switchedRoom', aPeer.email );
+			console.log('received switchedRoom', aPeer.email, aPeer,self.user.obj.room_id );
 			self.findOthersInRoom(connected_users);
 		});
 		
@@ -356,6 +356,9 @@ OpenPath = {
 		//send id so if anyone is in room, they'll give you a call 
 		//after their socket recieves your peer id (below)
 		this.socket.emit("peer_id", this.user.obj);
+	},
+	removePeer : function(){
+		
 	}
 };
 

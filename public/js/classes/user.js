@@ -156,6 +156,7 @@ OpenPath.User.prototype.getMyLocation = function(){
 };
 /**
  * check if I'm presenter, return a callback function
+ * HERE IS WHERE VIDEO IS ADDED TO DOM
  */
 OpenPath.User.prototype.checkIfPresenter = function( done ){
 	var self = this;
