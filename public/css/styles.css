@@ -291,13 +291,16 @@ body #intro section.main .content .signup form input[type=password] {
 body #intro section.bottomCallouts .content .calloutWrap {
   overflow: hidden;
   width: 100%;
-  position: relative;
+  text-align: center;
 }
 body #intro section.bottomCallouts .content .calloutWrap article {
-  position: absolute;
-  left: 50%;
-  margin-left: -21em;
-  width: 34.5em;
+  text-align: left;
+  width: 30%;
+  font-size: 0.8em;
+  display: inline-block;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
   padding: 3em 4em 0 4em;
 }
 body #intro section.bottomCallouts .content .calloutWrap article h2 {
@@ -314,27 +317,10 @@ body #intro section.bottomCallouts .content .calloutWrap article ul li {
   padding: 0 0 0.5em 0;
 }
 body #intro section.bottomCallouts .content .calloutWrap article .icon {
-  text-align: center;
+  width: 100%;
 }
-body #intro section.bottomCallouts .content .calloutWrap article:first-child {
-  position: relative;
-  left: 0;
-  float: left;
-  margin-left: 0;
-  width: 34.3em;
-  padding: 3em 0 0 0;
-}
-body #intro section.bottomCallouts .content .calloutWrap article:first-child .icon {
-  padding: 3em 0 0 0;
-}
-body #intro section.bottomCallouts .content .calloutWrap article:last-child {
-  position: relative;
-  left: 0;
-  right: 0;
-  float: right;
-  margin-left: 0;
-  width: 37.3em;
-  padding: 3em 0 0 0;
+body #intro section.bottomCallouts .content .calloutWrap article .icon img {
+  width: 100%;
 }
 body #home {
   /**

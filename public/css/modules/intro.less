@@ -72,12 +72,13 @@ section.bottomCallouts {
 		.calloutWrap {
 			overflow: hidden;
 			width:100%;
-			position: relative;
+			text-align: center;
 			article {
-				position:absolute;
-				left:50%;
-				margin-left:-21em;
-				width:34.5em;
+				text-align: left;
+				width:30%;
+				font-size:0.8em;
+				display: inline-block;
+				.box-sizing(border-box);
 				padding:3em 4em 0 4em;
 				h2 {
 					font-size: 2.6em;
@@ -93,32 +94,13 @@ section.bottomCallouts {
 					}
 				}
 				.icon {
-					text-align: center;
+					width:100%;
 					img {
+						width: 100%;
 					}
 				}
 			}
-			article:first-child {
-				position: relative;
-				left:0;
-				float: left;
-				margin-left:0;
-				width: 34.3em;
-				padding:3em 0 0 0;
-				.icon{
-					padding:3em 0 0 0;
-				}
-			}
-			article:last-child {
-				position: relative;
-				left:0;
-				right:0;
-				float:right;
-				margin-left:0;
-				width: 37.3em;
-				padding:3em 0 0 0;
 
-			}
 		}
 				
 	}
