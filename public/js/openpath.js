@@ -16,7 +16,7 @@ OpenPath = {
 		
 		//configs
 		this.peerKey = 'w8hlftc242jzto6r';
-		this.socketConnection = 'http://10.0.1.15:8080';//'http://localhost:8080';//
+		this.socketConnection = 'http://10.0.1.9:8080';//'http://localhost:8080';//
 		//';//'http://10.0.1.15:8080'// //'http://openpath.me/'; //
 
 
@@ -304,15 +304,19 @@ OpenPath = {
 					console.log('push peer',i)
 					this.peers.push( new OpenPath.Peer( this.others_in_room[i]) );
 				}else{
-					console.log('new peer')
+					console.log('new peer'+'no match')
 					//add new peer with this obj
 					peer.stream = stream;
 					//add to peers array
 					this.peers.push( new OpenPath.Peer( peer ));
 				}
 			}
-
-	
+		}else{
+			console.log('new peer'+'others length 0',peer);
+			//add new peer with this obj
+			peer.stream = stream;
+			//add to peers array
+			this.peers.push( new OpenPath.Peer( peer ));
 		}
 	},
 	joinEvent : function( event_id ){
