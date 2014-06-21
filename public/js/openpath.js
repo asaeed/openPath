@@ -212,7 +212,8 @@ OpenPath = {
 		 */
 		this.socket.on('switchedRoom', function ( aPeer,connected_users ) {
 			console.log('received switchedRoom', aPeer.email, aPeer,self.user.obj.room_id );
-			self.findOthersInRoom(connected_users);
+			self.findOthersInRoom(connected_users);//removes them from others in room (i think TODO)
+			self.removePeer(aPeer);
 		});
 		
 		/**
@@ -222,6 +223,7 @@ OpenPath = {
 		this.socket.on('disconnect', function ( aPeer, connected_users ) {
 			console.log('received disconnect', aPeer, connected_users ,self.peers);
 			self.findOthersInRoom(connected_users);
+			self.removePeer(aPeer);
 		});
 	},
 	/**
@@ -357,8 +359,18 @@ OpenPath = {
 		//after their socket recieves your peer id (below)
 		this.socket.emit("peer_id", this.user.obj);
 	},
-	removePeer : function(){
-		
+	removePeer : function(peer){
+		console.log('remove peer',peer);
+		//remove from dom
+		var peer_in_dom = document.getElementById(peer.peer_id);
+		console.log('peer_in_dom',peer_in_dom,peer_in_dom.parentNode.parentNode)
+		if(peer_in_dom.parentNode.parentNode.getAttribute('id') === 'presenter'){
+			console.log('empty presenter');
+			this.presenterElement.innerHTML = '';
+		}else{
+			console.log('ul.peersList remove li');
+			peer_in_dom.parentNode.parentNode.parentNode.removeChild(peer_in_dom.parentNode.parentNode);
+		}
 	}
 };
 
