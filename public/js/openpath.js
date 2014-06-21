@@ -371,6 +371,18 @@ OpenPath = {
 			console.log('ul.peersList remove li');
 			peer_in_dom.parentNode.parentNode.parentNode.removeChild(peer_in_dom.parentNode.parentNode);
 		}
+
+		var peer_index;
+		//remove from peers
+		for(var i=0;i<this.peers.length;i++){
+			console.log('peers',this.peers[i]);
+			if(this.peers[i].obj.peer_id === peer.peer_id){
+				peer_index = this.peers[i];
+			}
+		}
+		//remove from array
+		this.peers.splice(peer_index,1);
+		console.log('peers',this.peers)
 	}
 };
 
