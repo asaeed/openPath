@@ -25,13 +25,13 @@ OpenPath.Video.prototype.render = function(renderWhat){
 
 	if(this.unRendered){
 
-
+		this.muted = true ? user.email === OpenPath.user.obj.email : false;
 		//compile template
 		this.source = document.getElementById('videoTemplate').innerHTML;
 		this.template = Handlebars.compile(this.source);
 
 		//add data to template
-		this.element.innerHTML = this.template( {id:user.peer_id, name: user.name, mute : 'false'} );
+		this.element.innerHTML = this.template( {id:user.peer_id, name: user.name, mute : this.muted} );
 
 		//define elements now in dom
 		this.video = this.element.getElementsByTagName('video')[0];
