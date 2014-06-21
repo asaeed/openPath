@@ -16,7 +16,7 @@ OpenPath = {
 		
 		//configs
 		this.peerKey = 'w8hlftc242jzto6r';
-		this.socketConnection = 'http://10.0.1.9:8080';
+		this.socketConnection = 'http://openpath.me/';
 		// 'http://10.0.1.9:8080'; 
 		// 'http://localhost:8080'; 
 		// 'http://10.0.1.15:8080';
