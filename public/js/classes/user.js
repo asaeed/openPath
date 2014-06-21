@@ -93,7 +93,7 @@ OpenPath.User.prototype.getMyMedia = function(){
 	  		//get location
 	  		self.getMyLocation();
 	  		//render video
-			self.video.render();
+			self.video.render('stream');
 		},
 		function(err) {
 			console.log('Failed to get local stream' ,err);
@@ -127,7 +127,7 @@ OpenPath.User.prototype.getMyLocation = function(){
 	 	OpenPath.socket.emit("location", self.obj );
 
 	 	//re-render video
-		self.video.render();
+		self.video.render('location');
 	}
 	//location error
 	function showLocationError(error){

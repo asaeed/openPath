@@ -10,6 +10,8 @@ OpenPath.Video = function(user){
 	//console.log('new video');
 	this.element = document.createElement('div');
 	this.element.classList.add('video-element');
+
+	this.unRendered = true;
 };
 //inherits View & SuperMVC
 //OpenPath.Video.prototype = new OpenPath.View();
@@ -18,29 +20,46 @@ OpenPath.Video = function(user){
 /**
  * called everytime we get a new piece of data
  */
-OpenPath.Video.prototype.render = function(){
+OpenPath.Video.prototype.render = function(renderWhat){
 	var user = this.user.obj; //gets update user obj
 
-
-	//compile template
-	this.source = document.getElementById('videoTemplate').innerHTML;
-	this.template = Handlebars.compile(this.source);
-
-	//add data to template
-	this.element.innerHTML = this.template( {name: user.name, mute : 'false'} );
+	if(this.unRendered){
 
 
-	//define elements now in dom
-	this.video = this.element.getElementsByTagName('video')[0];
-	this.usermeta = this.element.getElementsByClassName('usermeta')[0];
-	this.header =  this.usermeta.getElementsByTagName('header')[0];
-	this.closeBtn = this.header.getElementsByClassName('closeBtn')[0];
-	this.mapBtn = this.header.getElementsByClassName('mapBtn')[0];
-	this.mapWrap = this.usermeta.getElementsByClassName('mapWrap')[0];
-	this.map = this.mapWrap.getElementsByClassName('map')[0];
+		//compile template
+		this.source = document.getElementById('videoTemplate').innerHTML;
+		this.template = Handlebars.compile(this.source);
 
-	//now that in dom, bind events
-	this.events();
+		//add data to template
+		this.element.innerHTML = this.template( {name: user.name, mute : 'false'} );
+
+
+		//define elements now in dom
+		this.video = this.element.getElementsByTagName('video')[0];
+		this.usermeta = this.element.getElementsByClassName('usermeta')[0];
+		this.header =  this.usermeta.getElementsByTagName('header')[0];
+		this.closeBtn = this.header.getElementsByClassName('closeBtn')[0];
+		this.mapBtn = this.header.getElementsByClassName('mapBtn')[0];
+		this.mapWrap = this.usermeta.getElementsByClassName('mapWrap')[0];
+		this.map = this.mapWrap.getElementsByClassName('map')[0];
+
+		//now that in dom, bind events
+		this.events();
+
+
+		//for room switch
+		if(user.stream){
+			this.video.src =  window.URL.createObjectURL(user.stream) || user.stream
+			this.video.play();
+			console.log('stream playing');
+		}
+		if(user.location){
+			OpenPath.Ui.renderMap(this.map, user.location.coords.latitude, user.location.coords.longitude);
+		}
+
+
+		this.unRendered = false;
+	}
 
 
 	/**
@@ -53,7 +72,7 @@ OpenPath.Video.prototype.render = function(){
 	/**
 	 * render map
 	 */
-	if(user.location)
+	if(renderWhat === 'location' && user.location)
 	if(user.location.coords.latitude && user.location.coords.longitude){// && !this.mapRendered
 		
 		OpenPath.Ui.renderMap(this.map, user.location.coords.latitude, user.location.coords.longitude);
@@ -62,7 +81,7 @@ OpenPath.Video.prototype.render = function(){
 	/**
 	 * render video
 	 */
-	if(user.stream){// && !this.streamRendered
+	if(renderWhat === 'stream' && user.stream){// && !this.streamRendered
 		/**
   		 * now that we have your video
   		 */

@@ -346,6 +346,7 @@ OpenPath = {
 		OpenPath.Ui.updateHeader(data);
 
 		this.user.checkIfPresenter(function( isPresenter ){
+			self.user.video.unRendered = true;
 			self.user.video.render();
 		})
 		//send id so if anyone is in room, they'll give you a call 
