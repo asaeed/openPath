@@ -1,0 +1,30 @@
+<!-- events front end template (remember \{{ }} ) -->
+<script id="ProfileTemplate" type="text/x-handlebars-template">
+	<a href="#/edit-profile" class="route editBtn">Edit</a>
+	<header class="profileHeader">
+		<div class="icon">
+			<img src="\{{avatar}}">
+		</div>
+		<h2>\{{name}}</h2>
+	</header>
+	<article>
+		<h3 class="label">Grade Level:</h3>
+		<div class="results">
+			\{{gradeLevel}}
+		</div>
+	</article>
+	<article>
+		<h3 class="label">Interests:</h3>
+		<div class="results">
+			\{{interests}}
+		</div>
+	</article>
+	<article>
+		<h3 class="label">List of Co-Learners:</h3>
+		<div class="results">
+			\{{coLearners}}
+		</div>
+	</article>
+
+	<a href="/logout" class="logoutBtn btn">Logout</a>
+</script>

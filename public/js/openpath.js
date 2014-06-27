@@ -28,6 +28,7 @@ OpenPath = {
 
 		/**
 		 * user obj to send to others - you :)
+		 * handles allow modal
 		 */
 		this.user = new OpenPath.User( document.getElementById('email').value );
 		

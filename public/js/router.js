@@ -517,6 +517,14 @@ OpenPath.Router = {
 	showProfile : function(){
 		this.show(this.profile);
 		this.show(this.myProfile);
+
+		console.log(OpenPath.user.obj);
+		var content = this.myProfile.getElementsByClassName('content')[0];
+		//compile template
+		var source = document.getElementById('ProfileTemplate').innerHTML;
+		var template = Handlebars.compile(source);
+
+		content.innerHTML = template( OpenPath.user.obj );
 	},
 	showEditProfile : function(){
 		this.show(this.profile);
