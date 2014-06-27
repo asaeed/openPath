@@ -67,7 +67,7 @@ OpenPath.Ui = {
 			var self = this;
 			var over = false;
 			var mousePos={};
-			var delay = 800;
+			var delay = 300;
 
 			//make tip
 			var tip = document.createElement('div');

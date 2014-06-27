@@ -240,5 +240,31 @@
 		}
 	}
 
+	a#leaveRoomBtn {
+		position:absolute;
+		display:block;
+		bottom:0;
+		right:0;
+		width:25%;
+		background-color:@blackTransulcent;
+		color:#fff;
+		padding:1.1em 1.3em;
+		.box-sizing(border-box);
+		text-align: center;
+		.transition(~"background-color 0.1s ease-in-out");
+		span {
+			font-size:1.5em;
+		}
+		span:after{
+			content:'>';
+			font-weight: bold;
+			font-size: 0.8em;
+			padding:0 0 0 0.5em;
+		}
+	}
+	a#leaveRoomBtn:hover {
+		color:@blue;
+		background-color:rgba(100,100,100,0.2);
+	}
 
 }
