@@ -15,7 +15,7 @@ OpenPath.User = function( email ){
 		event_id : null,
 		peer_id : null,
 		stream :  null,
-		avatar : 'images/marker.png',
+		avatar : 'images/row.jpg',
 		location : {
 			coords: {
 				latitude : null,

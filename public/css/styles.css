@@ -803,6 +803,38 @@ body #home section#profile #myProfile .content a.editBtn {
   font-size: 1.8em;
   float: right;
 }
+body #home section#profile #myProfile .content header {
+  position: absolute;
+  top: -80px;
+  width: 45%;
+}
+body #home section#profile #myProfile .content header .avatar {
+  display: inline-block;
+  background: #c0c2c4;
+  border: 0.3em solid #56acdd;
+  width: 45px;
+  height: 45px;
+  margin-top: 0.4em;
+  -webkit-border-radius: 100px;
+  -webkit-background-clip: padding-box;
+  -moz-border-radius: 100px;
+  -moz-background-clip: padding;
+  border-radius: 100px;
+  background-clip: padding-box;
+  overflow: hidden;
+}
+body #home section#profile #myProfile .content header .avatar img {
+  width: 45px;
+  height: 45px;
+}
+body #home section#profile #myProfile .content header h2 {
+  display: inline-block;
+  vertical-align: top;
+  font-weight: bold;
+  color: #000;
+  font-size: 2em;
+  padding: 0.95em 0 0 0.6em;
+}
 body #home section#profile #myProfile .content article {
   padding: 0 0 3em 0;
 }
