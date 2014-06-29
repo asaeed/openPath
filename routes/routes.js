@@ -178,6 +178,16 @@ module.exports = function(app, io, passport){
 	});
 
 	/**
+	 * interests
+	 */
+	app.get("/interests", function(req, res, next){
+
+	});
+	app.post("/interests", Auth.userExist, function(req, res, next){
+
+	});
+
+	/**
 	 * check if presenter 
 	 */
 	app.get('/presenter/:id/:email', function(req, res){

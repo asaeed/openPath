@@ -9,7 +9,9 @@ OpenPath.User = function( email ){
 	//console.log('new User');
 
 	this.obj = {
-		name :  null,
+		name : null,
+		firstName:  null,
+		lastName:   null,
 		email :  email, //value passed by server to hidden input
 		room_id : null,
 		event_id : null,
@@ -21,7 +23,9 @@ OpenPath.User = function( email ){
 				latitude : null,
 				longitude : null
 			}
-		}
+		},
+		interests : [],
+		colearners : []
 	};
 	this.url = '/user/'+this.obj.email;
 	//get data
@@ -37,6 +41,8 @@ OpenPath.User.prototype.constructor = OpenPath.User;
 OpenPath.User.prototype.got = function(data){
 	var self = this;
 	this.obj.name = data.firstName + ' ' +data.lastName;
+	this.obj.firstName = data.firstName;
+	this.obj.lastName = data.lastName;
 	this.obj.room_id = data.currentRoom;
 	this.obj.event_id = data.currentEvent;
 	//console.log('get user',this.obj, data);

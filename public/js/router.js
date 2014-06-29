@@ -6,6 +6,7 @@ OpenPath = window.OpenPath || {};
  * OpenPath.Router
  * @author jamiegilmartin@gmail.com
  * @description a front end router to hide / show different views
+ *   			bind events and templates
  */
 OpenPath.Router = {
 	init : function(){
@@ -525,10 +526,21 @@ OpenPath.Router = {
 		var template = Handlebars.compile(source);
 
 		content.innerHTML = template( OpenPath.user.obj );
+
+		//var editBtn = content.getElementsByClassName('editBtn')[0];
+		this.bindRoutes();//bind edit btn
 	},
 	showEditProfile : function(){
 		this.show(this.profile);
 		this.show(this.editProfile);
+
+		var content = this.editProfile.getElementsByClassName('content')[0];
+		//compile template
+		var source = document.getElementById('EditProfileTemplate').innerHTML;
+		var template = Handlebars.compile(source);
+
+		content.innerHTML = template( OpenPath.user.obj );
+
 	},
 	showMyPath : function(){
 		this.show(this.profile);
@@ -541,6 +553,8 @@ OpenPath.Router = {
 	showSettings : function(){
 		this.show(this.profile);
 		this.show(this.settings);
+
+		//ProfileSettingsTemplate
 	},
 	showError : function(){
 		this.show(this.err);
