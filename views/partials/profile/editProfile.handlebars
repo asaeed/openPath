@@ -30,13 +30,13 @@
 		</header>
 		<fieldset>
 			<label>Grade Level:</label>
-			<select name="gradelevel" class="gradelevel">
-				<option value="Pre-K to Grade 2">Pre-K to Grade 2</option>
-				<option value="Grade 3-5">Grade 3-5</option>
-				<option value="Grade 9-12">Grade 9-12</option>
-				<option value="Post Secondary">Post Secondary</option>
-				<option value="Adults">Adults</option>
-				<option value="Families">Families</option>
+			<select name="gradeLevel" class="gradelevel">
+				<option \{{#ifCond gradeLevel '===' 'Pre-K to Grade 2'}}selected\{{/ifCond}}value="Pre-K to Grade 2">Pre-K to Grade 2</option>
+				<option \{{#ifCond gradeLevel '===' 'Grade 3-5'}}selected\{{/ifCond}}value="Grade 3-5">Grade 3-5</option>
+				<option \{{#ifCond gradeLevel '===' 'Grade 9-12'}}selected\{{/ifCond}}value="Grade 9-12">Grade 9-12</option>
+				<option \{{#ifCond gradeLevel '===' 'Post Secondary'}}selected\{{/ifCond}}value="Post Secondary">Post Secondary</option>
+				<option \{{#ifCond gradeLevel '===' 'Adults'}}selected\{{/ifCond}}value="Adults">Adults</option>
+				<option \{{#ifCond gradeLevel '===' 'Families'}}selected\{{/ifCond}}value="Families">Families</option>
 			</select>
 		</fieldset>
 		<fieldset>

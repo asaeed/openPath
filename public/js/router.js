@@ -44,8 +44,33 @@ OpenPath.Router = {
 
 		//console.log(this.pages,this.views)
 
-		
+		this.helpers();
 		this.bindRoutes();
+	},
+	helpers : function(){
+		//@see http://stackoverflow.com/a/16315366/1308629
+		Handlebars.registerHelper('ifCond', function (v1, operator, v2, options) {
+		    switch (operator) {
+		        case '==':
+		            return (v1 == v2) ? options.fn(this) : options.inverse(this);
+		        case '===':
+		            return (v1 === v2) ? options.fn(this) : options.inverse(this);
+		        case '<':
+		            return (v1 < v2) ? options.fn(this) : options.inverse(this);
+		        case '<=':
+		            return (v1 <= v2) ? options.fn(this) : options.inverse(this);
+		        case '>':
+		            return (v1 > v2) ? options.fn(this) : options.inverse(this);
+		        case '>=':
+		            return (v1 >= v2) ? options.fn(this) : options.inverse(this);
+		        case '&&':
+		            return (v1 && v2) ? options.fn(this) : options.inverse(this);
+		        case '||':
+		            return (v1 || v2) ? options.fn(this) : options.inverse(this);
+		        default:
+		            return options.inverse(this);
+		    }
+		});
 	},
 	bindRoutes : function(){
 		var self = this;
@@ -540,6 +565,10 @@ OpenPath.Router = {
 		var template = Handlebars.compile(source);
 
 		content.innerHTML = template( OpenPath.user.obj );
+
+		//gradelevel
+		var gradelevel = content.getElementsByClassName('gradelevel')[0];
+
 
 	},
 	showMyPath : function(){

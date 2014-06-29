@@ -86,7 +86,11 @@ UserSchema.statics.updateProfile = function(req, done){
 		// If a user is returned, load the given user
 		if(user){
 
-			user.update({firstName: req.body.firstName , lastName: req.body.lastName},function(err, numberAffected, raw){
+			user.update({
+				firstName: req.body.firstName,
+				lastName: req.body.lastName,
+				gradeLevel : req.body.gradeLevel
+			},function(err, numberAffected, raw){
 				if (err) return console.error(err);
 				console.log('The number of updated documents was %d', numberAffected);
 				console.log('The raw response from Mongo was ', raw);

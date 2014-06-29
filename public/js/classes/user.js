@@ -24,6 +24,7 @@ OpenPath.User = function( email ){
 				longitude : null
 			}
 		},
+		gradeLevel :  null,
 		interests : [],
 		colearners : []
 	};
@@ -45,6 +46,7 @@ OpenPath.User.prototype.got = function(data){
 	this.obj.lastName = data.lastName;
 	this.obj.room_id = data.currentRoom;
 	this.obj.event_id = data.currentEvent;
+	this.obj.gradeLevel = data.gradeLevel;
 	//console.log('get user',this.obj, data);
 
 	//if event id, join event
