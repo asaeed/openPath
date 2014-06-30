@@ -583,7 +583,13 @@ OpenPath.Router = {
 		this.show(this.profile);
 		this.show(this.settings);
 
-		//ProfileSettingsTemplate
+		var content = this.settings.getElementsByClassName('content')[0];
+		//compile template
+		var source = document.getElementById('ProfileSettingsTemplate').innerHTML;
+		var template = Handlebars.compile(source);
+
+		content.innerHTML = template( OpenPath.user.obj );
+		console.log(OpenPath.user.obj)
 	},
 	showError : function(){
 		this.show(this.err);

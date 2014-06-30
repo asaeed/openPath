@@ -48,6 +48,10 @@ body a:hover {
 body strong {
   font-weight: bold;
 }
+body small {
+  font-size: 10px;
+  font-weight: normal;
+}
 body .btn,
 body input[type=submit],
 body button {
@@ -869,6 +873,14 @@ body #home section#profile #myProfile .content header h2 {
 body #home section#profile #myProfile .content article {
   padding: 0 0 3em 0;
 }
+body #home section#profile #myProfile .content article .results {
+  padding: 1em 0 0 0;
+  font-size: 1.8em;
+  color: #56acdd;
+}
+body #home section#profile #myProfile .content a.logoutBtn {
+  margin: 1em 0;
+}
 body #home section#profile #editProfile .content .profileIntro {
   padding: 0 0 3em 0;
 }
@@ -903,11 +915,21 @@ body #home section#profile #editProfile .content form header.name .userIcon inpu
 body #home section#profile #editProfile .content form header.name fieldset {
   padding: 0 0 0 4.5em;
 }
+body #home section#profile #settings .content form article {
+  padding-bottom: 1em;
+}
+body #home section#profile #settings .content form article h2 {
+  font-size: 1.8em;
+  color: #949494;
+  font-weight: bold;
+}
 body #home section#profile #settings .content form article fieldset {
+  padding: 1.2em 0 1.2em 0;
   overflow: hidden;
 }
 body #home section#profile #settings .content form article fieldset label {
   float: left;
+  margin-left: .5em;
 }
 body #home section#profile #settings .content form article fieldset input {
   float: left;
