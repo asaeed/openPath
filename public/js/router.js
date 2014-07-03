@@ -314,6 +314,9 @@ OpenPath.Router = {
 		var self = this;
 		this.show(this.events);
 		this.show(this.nearbyEvents);
+		
+		//store all event's locations
+		var locations = [];
 
 		var content = this.nearbyEvents.getElementsByClassName('content')[0];
 		var aside = content.getElementsByTagName('aside')[0];
@@ -324,13 +327,21 @@ OpenPath.Router = {
 		var source = document.getElementById('EventsTemplate').innerHTML;
 		var template = Handlebars.compile(source);
 
+		//if already have events from other 'page'
 		if(OpenPath.eventsController.data === null){
 			OpenPath.eventsController.get();
 			OpenPath.eventsController.got = function(data){
-				console.log('ev',data);
+				console.log('nearbyev',data);
 				this.data = data;
-				aside.innerHTML = template( data );
+				//add to locations array
+				for(var i=0;i<data.events.length;i++){
+					locations.push(data.events[i].location)
+				}
 
+				aside.innerHTML = template( data );
+				
+
+				initMap();
 				//initEvents();
 			};
 		}else{
@@ -396,13 +407,19 @@ OpenPath.Router = {
 			self.bindRoutes();	
 		}
 
-
-		//if onload this page location not saved to server so load at great pyramid		
-		if(OpenPath.user.obj.location.coords.latitude!==null && OpenPath.user.obj.location.coords.longitude!==null){
-			OpenPath.Ui.renderMap(nearbyMap, OpenPath.user.obj.location.coords.latitude, OpenPath.user.obj.location.coords.longitude );
-		}else{
-			OpenPath.Ui.renderMap(nearbyMap, 29.979252, 31.133874 );
+		/**
+		 * MAP
+		 */
+		function initMap(){
+			console.log(locations)
+			//if onload this page location not saved to server so load at great pyramid		
+			if(OpenPath.user.obj.location.coords.latitude!==null && OpenPath.user.obj.location.coords.longitude!==null){
+				OpenPath.Ui.renderMap(nearbyMap, OpenPath.user.obj.location.coords.latitude, OpenPath.user.obj.location.coords.longitude );
+			}else{
+				OpenPath.Ui.renderMap(nearbyMap, 29.979252, 31.133874 );
+			}
 		}
+		
 	},
 	showAddNewEvent :  function(){
 		var self = this;

@@ -137,6 +137,8 @@ module.exports = function(app, io, passport){
 		User.findByEmail(req, function (err, user) {
 			if (err) return console.error(err);
 
+			//TODO: if same user, if private profile & diff user
+
 			// If a user is returned, load the given user
 			//console.log('user is',user,req.session.room,req.session.event);
 			var publicUser = {
@@ -161,7 +163,15 @@ module.exports = function(app, io, passport){
 				interests : user.interests,
 				coLearners : user.coLearners,
 				currentRoom : req.session.room,
-				currentEvent : req.session.event
+				currentEvent : req.session.event,
+				settings : {
+					alerts : {
+						colearnerJoin : Boolean,
+						nearEvent : Boolean,
+						allEvents : Boolean
+					},
+					publicProfile : Boolean
+				}
 			}
 			res.send(publicUser);
 		});

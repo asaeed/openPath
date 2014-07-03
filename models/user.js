@@ -22,7 +22,15 @@ UserSchema = mongoose.Schema({
 	dateModified: Date,
 	gradeLevel : String,
 	interests : [String],
-	coLearners : [String]
+	coLearners : [String],
+	settings : {
+		alerts : {
+			colearnerJoin : Boolean,
+			nearEvent : Boolean,
+			allEvents : Boolean
+		},
+		publicProfile : Boolean
+	}
 	//TODO : locations, settings
 });
 
@@ -89,7 +97,17 @@ UserSchema.statics.updateProfile = function(req, done){
 			user.update({
 				firstName: req.body.firstName,
 				lastName: req.body.lastName,
-				gradeLevel : req.body.gradeLevel
+				gradeLevel : req.body.gradeLevel,
+				//interests
+				//colearners
+				/*settings : {
+					alerts : {
+						colearnerJoin : Boolean,
+						nearEvent : Boolean,
+						allEvents : Boolean
+					},
+					publicProfile : Boolean
+				}*/
 			},function(err, numberAffected, raw){
 				if (err) return console.error(err);
 				console.log('The number of updated documents was %d', numberAffected);

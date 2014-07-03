@@ -1008,9 +1008,6 @@ body #home section#events ul.eventsList li.event .mapWrap {
 body #home section#events ul.eventsList li.event:last-child {
   border-bottom: 0;
 }
-body #home section#events #nearByEvents {
-  border: 1px solid red;
-}
 body #home section#events #nearByEvents .content {
   overflow: hidden;
 }
@@ -1057,6 +1054,9 @@ body #home section#events #nearByEvents .content aside ul.eventsList li.event ar
 }
 body #home section#events #nearByEvents .content aside ul.eventsList li.event article .buttons .inviteBtn,
 body #home section#events #nearByEvents .content aside ul.eventsList li.event article .buttons .editBtn {
+  display: none;
+}
+body #home section#events #nearByEvents .content aside ul.eventsList li.event .mapWrap {
   display: none;
 }
 body #home section#events #addNewEvent textarea {
