@@ -411,12 +411,51 @@ OpenPath.Router = {
 		 * MAP
 		 */
 		function initMap(){
-			console.log(locations)
+			console.log(locations,OpenPath.user.obj.location.coords.latitude, OpenPath.user.obj.location.coords.longitude)
+
+
+
+			var pins = [];
+			var mapOptions = {
+				zoom: 3,
+				center: new google.maps.LatLng(OpenPath.user.obj.location.coords.latitude, OpenPath.user.obj.location.coords.longitude),
+				mapTypeId: google.maps.MapTypeId.TERRAIN
+			};
+			var map = new google.maps.Map(nearbyMap,mapOptions);
+			
+			//loop locations
+			for(var i=0;i<locations.length;i++){
+				pins.push(new google.maps.LatLng(locations[i].latitude,locations[i].longitude));
+			}
+
+
+			var pinsMap = new google.maps.Polyline({
+				path: pins,
+				geodesic: true,
+				strokeColor: '#FF0000',
+				strokeOpacity: 1.0,
+				strokeWeight: 2
+			});
+
+			pinsMap.setMap(map);
+			/*
+			marker.setIcon(({
+				url: place.icon,
+				//url: 'images/marker.png',
+				size: new google.maps.Size(71, 71),
+				origin: new google.maps.Point(0, 0),
+				anchor: new google.maps.Point(17, 34),
+				scaledSize: new google.maps.Size(35, 35)
+			}));
+			marker.setPosition(place.geometry.location);
+			marker.setVisible(true);
+			*/
+
 			//if onload this page location not saved to server so load at great pyramid		
 			if(OpenPath.user.obj.location.coords.latitude!==null && OpenPath.user.obj.location.coords.longitude!==null){
-				OpenPath.Ui.renderMap(nearbyMap, OpenPath.user.obj.location.coords.latitude, OpenPath.user.obj.location.coords.longitude );
+				//OpenPath.Ui.renderMap(nearbyMap, OpenPath.user.obj.location.coords.latitude, OpenPath.user.obj.location.coords.longitude );
 			}else{
-				OpenPath.Ui.renderMap(nearbyMap, 29.979252, 31.133874 );
+				//OpenPath.Ui.renderMap(nearbyMap, 29.979252, 31.133874 );
 			}
 		}
 		

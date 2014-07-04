@@ -39,7 +39,7 @@
 	.usermeta {
 		position: absolute;
 		width:90%;
-		height:90%;
+		//height:90%;
 		top:5%;
 		left:5%;
 		z-index:1;
@@ -95,12 +95,14 @@
 			}
 		}
 		.mapWrap {
-			.fade(0.5s);
-			padding:0.4em 1em;
-			height:75%;
+			//.fade(0.5s);
+			//padding:0.4em 1em;
+			//height:75%;
 			position: relative;
 			z-index:0;
-
+			border:0.5em solid @blackTransulcent;
+			.transition(~"height 0.3s ease-in-out"); 
+			display:none;
 
 			.locactionName {
 				color:#fff;
@@ -126,8 +128,9 @@
 		.video();
 		.usermeta {
 			top:100px;
-			width:45%;
-			height:40%;
+			left:0;
+			width:35%;
+			//height:40%;
 		}
 	}
 	aside {

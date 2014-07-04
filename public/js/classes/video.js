@@ -134,7 +134,8 @@ OpenPath.Video.prototype.events = function(){
 		self.mapBtn.style.display = 'none';
 		self.closeBtn.style.display = 'block';
 		
-		self.mapWrap.style.opacity = 1;
+		self.mapWrap.style.display= 'block';
+		self.mapWrap.style.height = 200+'px';
 	},false);
 
 	//closeBtn
@@ -142,7 +143,8 @@ OpenPath.Video.prototype.events = function(){
 		self.closeBtn.style.display = 'none';
 		self.mapBtn.style.display = 'block';
 
-		self.mapWrap.style.opacity = 0;
+		self.mapWrap.style.display= 'none';
+
 	},false);
 };
 
