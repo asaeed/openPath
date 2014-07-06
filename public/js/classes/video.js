@@ -128,9 +128,20 @@ OpenPath.Video.prototype.events = function(){
 		},500);
 		over = false;
 	},false);
+	//click (for presenter)
+	var on = false;
+	this.usermeta.addEventListener('click',function(e){
+		on = !on;
+		if(on){
+			self.usermeta.classList.add('show');
+		}else{
+			if(self.usermeta.classList.contains('show')) self.usermeta.classList.remove('show');
+		}
+	},false);
 
 	//mapBtn
 	this.mapBtn.addEventListener('click',function(e){
+		e.stopPropagation();
 		self.mapBtn.style.display = 'none';
 		self.closeBtn.style.display = 'block';
 		
@@ -140,6 +151,7 @@ OpenPath.Video.prototype.events = function(){
 
 	//closeBtn
 	this.closeBtn.addEventListener('click',function(e){
+		e.stopPropagation();
 		self.closeBtn.style.display = 'none';
 		self.mapBtn.style.display = 'block';
 

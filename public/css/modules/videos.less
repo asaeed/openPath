@@ -110,7 +110,7 @@
 				font-size: 1.2em;
 			}
 			.map {
-				position: absolute;
+				position: relative;
 				top:0;
 				left:0;
 				bottom:0;
@@ -127,12 +127,47 @@
 		width:75%;
 		.video();
 		.usermeta {
-			top:100px;
-			left:0;
-			width:35%;
+			top:82px;
+			width:25em;
+			left:-22em;
 			//height:40%;
+			cursor: pointer;
+			.transition(all 0.3s ease-in-out); 
+			header {
+				width:80%;
+			}
 		}
-
+		.usermeta:after {
+			position: absolute;
+			top:0.5em;
+			right:0.4em;
+			content:'i';
+			font-weight:bold;
+			font-size: 1.4em;
+			width:1.25em;
+			height:1.1em;
+			padding-top: 0.2em;
+			background: #fff;
+			color:#000;
+			text-align: center;
+			.border-radius(2em);
+			opacity:0.7;
+			cursor: pointer;
+		}
+		.usermeta.show{
+			left:0;
+			header {
+				//width:100%;
+			}
+		}
+		.usermeta.show:after{
+			content:'x';
+			width:1.1em;
+			padding-top: 0;
+		}
+		.usermeta:hover:after {
+			opacity:0.9;
+		}
 	}
 	aside {
 		width:25%;
