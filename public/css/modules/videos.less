@@ -132,6 +132,7 @@
 			width:35%;
 			//height:40%;
 		}
+
 	}
 	aside {
 		width:25%;
@@ -144,11 +145,10 @@
 			}
 		}
 	}
-
 	/*#chat*/
 	#chat {
 		position:absolute;
-		width:75%;
+		width:72%;
 		bottom:-225px;
 		z-index:11;
 		background:@blackTransulcent;
@@ -231,7 +231,6 @@
 			/*max-width:215px; */
 			margin:25px 10px 35px 20px;
 		}
-
 	}
 	/*chat open*/
 	#chat.open {
@@ -241,6 +240,23 @@
 				background-position: 0 0;
 			}
 		}
+	}
+
+	a#fullScreenBtn {
+		position:absolute;
+		display:block;
+		bottom:0;
+		right:25%;
+		width:3%;
+		background:@blackTransulcent url('/images/fullscreen-icon.png') no-repeat 50% 50%;
+		color:#fff;
+		padding:1.1em 1.3em;
+		.box-sizing(border-box);
+		text-indent:-9999px;
+		.transition(~"background-color 0.1s ease-in-out");
+	}
+	a#fullScreenBtn:after{
+		content:''
 	}
 
 	a#leaveRoomBtn {

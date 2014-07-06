@@ -57,7 +57,8 @@ OpenPath = {
 		this.chatheader = chat.getElementsByTagName("header")[0];
 		this.chatToggler = document.getElementById("chatToggler");
 
-		
+		this.leaveRoomBtn = document.getElementById("leaveRoomBtn");
+		this.fullScreenBtn = document.getElementById("fullScreenBtn");
 		
 	},
 	/**
@@ -101,6 +102,25 @@ OpenPath = {
 				}
 			}
 		}, false); 
+
+
+		/**
+		 * fullScreenBtn
+		 */
+		this.fullScreenBtn.addEventListener('click',function(event){
+			var element = self.presenterElement;
+			// go full-screen
+			if (element.requestFullscreen) {
+			    element.requestFullscreen();
+			} else if (element.webkitRequestFullscreen) {
+			    element.webkitRequestFullscreen();
+			} else if (element.mozRequestFullScreen) {
+			    element.mozRequestFullScreen();
+			} else if (element.msRequestFullscreen) {
+			    element.msRequestFullscreen();
+			}
+		});
+		console.log('presenterElement',self.presenterElement)
 	},
 	start : function(){
 		var self = this;
