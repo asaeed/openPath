@@ -316,7 +316,7 @@ OpenPath.Router = {
 		this.show(this.nearbyEvents);
 		
 		//store all event's locations
-		var locations = [];
+		var events = [];
 
 		var content = this.nearbyEvents.getElementsByClassName('content')[0];
 		var aside = content.getElementsByTagName('aside')[0];
@@ -335,7 +335,8 @@ OpenPath.Router = {
 				this.data = data;
 				//add to locations array
 				for(var i=0;i<data.events.length;i++){
-					locations.push(data.events[i].location)
+					console.log()
+					events.push(data.events[i])
 				}
 
 				aside.innerHTML = template( data );
@@ -350,12 +351,11 @@ OpenPath.Router = {
 			initEvents();	
 		}
 
-
 		/**
 		 * init event views - copied from above TODO: merge with above
 		 */
 		function initEvents(){
-			var events = content.getElementsByClassName('event');
+			var domEvents = content.getElementsByClassName('event');
 
 			/**
 			 * Event helper class
@@ -396,9 +396,9 @@ OpenPath.Router = {
 			/**
 			 * events loop
 			 */
-			for(var i=0; i<events.length; i++){
+			for(var i=0; i<domEvents.length; i++){
 				//TODO :  don't remake on events page load
-				new eventView(events[i]);
+				new eventView(domEvents[i]);
 			}
 
 			//console.log(OpenPath.eventArr,'fix this! duplicating dom items')
@@ -410,25 +410,83 @@ OpenPath.Router = {
 		/**
 		 * MAP
 		 */
-		function initMap(){
-			console.log(locations,OpenPath.user.obj.location.coords.latitude, OpenPath.user.obj.location.coords.longitude)
-
-
-
-			var pins = [];
+		function initMap(data){
+			//@see http://wrightshq.com/playground/placing-multiple-markers-on-a-google-map-using-api-3/
+			var markers = [];
+			var infoWindowContent = [];
+			var bounds = new google.maps.LatLngBounds();
 			var mapOptions = {
 				zoom: 3,
-				center: new google.maps.LatLng(OpenPath.user.obj.location.coords.latitude, OpenPath.user.obj.location.coords.longitude),
+				//center: new google.maps.LatLng(OpenPath.user.obj.location.coords.latitude, OpenPath.user.obj.location.coords.longitude),
 				mapTypeId: google.maps.MapTypeId.TERRAIN
 			};
 			var map = new google.maps.Map(nearbyMap,mapOptions);
-			
-			//loop locations
-			for(var i=0;i<locations.length;i++){
-				pins.push(new google.maps.LatLng(locations[i].latitude,locations[i].longitude));
+			map.setTilt(45);
+
+			//loop events, make locations and info windows
+			for(var i=0;i<events.length;i++){
+				//markers.push(new google.maps.LatLng(locations[i].latitude,locations[i].longitude));
+				//
+				/*
+date: "June 21, 2015"
+description: "ba ba ba ba ba barbra anne"
+endTime: "1:00 AM"
+id: "53a50985decc9ade03a75527"
+isMine: true
+link: "boster.com"
+location: Object
+name: "bosster"
+room: "53a50985decc9ade03a75526"
+startTime: "1:00 AM"
+				*/
+				var e = events[i];
+				markers.push([e.location.name,e.location.latitude,e.location.longitude]);
+				var infoMarkup = '<div class="event"> \
+			<article> \
+				<h3><a href="javascript:void(0);" target="_blank">'+e.name+'</a></h3> \
+				<p class="link"><a href="'+e.link+'">'+e.link+'</a></p> \
+				<p class="date">'+e.date+' <span class="startTime">'+e.startTime+'</span> - <span class="endTime">'+e.endTime+'</span></p> \
+				<p class="location">'+e.location.name+'</p> \
+				<p class="description">'+e.description+'</p> \
+			</article> \
+			</div>';
+				infoWindowContent.push(infoMarkup);
+				console.log(events[i])
 			}
+		
 
+		    // Display multiple markers on a map
+		    var infoWindow = new google.maps.InfoWindow(), marker, i;
+		    
+		    // Loop through our array of markers & place each one on the map  
+		    for( i = 0; i < markers.length; i++ ) {
+		        var position = new google.maps.LatLng(markers[i][1], markers[i][2]);
+		        bounds.extend(position);
+		        marker = new google.maps.Marker({
+		            position: position,
+		            map: map,
+		            title: markers[i][0]
+		        });
+		        
+		        // Allow each marker to have an info window    
+		        google.maps.event.addListener(marker, 'click', (function(marker, i) {
+		            return function() {
+		                infoWindow.setContent(infoWindowContent[i][0]);
+		                infoWindow.open(map, marker);
+		            }
+		        })(marker, i));
 
+		        // Automatically center the map fitting all markers on the screen
+		        map.fitBounds(bounds);
+		    }
+
+		    // Override our map zoom level once our fitBounds function runs (Make sure it only runs once)
+		    var boundsListener = google.maps.event.addListener((map), 'bounds_changed', function(event) {
+		        this.setZoom(14);
+		        google.maps.event.removeListener(boundsListener);
+		    });
+
+			/*
 			var pinsMap = new google.maps.Polyline({
 				path: pins,
 				geodesic: true,
@@ -438,6 +496,7 @@ OpenPath.Router = {
 			});
 
 			pinsMap.setMap(map);
+			*/
 			/*
 			marker.setIcon(({
 				url: place.icon,
@@ -450,15 +509,15 @@ OpenPath.Router = {
 			marker.setPosition(place.geometry.location);
 			marker.setVisible(true);
 			*/
-
+			/*
 			//if onload this page location not saved to server so load at great pyramid		
 			if(OpenPath.user.obj.location.coords.latitude!==null && OpenPath.user.obj.location.coords.longitude!==null){
 				//OpenPath.Ui.renderMap(nearbyMap, OpenPath.user.obj.location.coords.latitude, OpenPath.user.obj.location.coords.longitude );
 			}else{
 				//OpenPath.Ui.renderMap(nearbyMap, 29.979252, 31.133874 );
 			}
+			*/
 		}
-		
 	},
 	showAddNewEvent :  function(){
 		var self = this;
