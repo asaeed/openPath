@@ -28,4 +28,10 @@ OpenPath.Utils.uniqueArray = function( arr ){
    return a;
 };
 
-
+//@see http://stackoverflow.com/a/587575/1308629
+OpenPath.Utils.checkEnter = function(e){
+   console.log('check enter')
+   e = e || event;
+   var txtArea = /textarea/i.test((e.target || e.srcElement).tagName);
+   return txtArea || (e.keyCode || e.which || e.charCode || 0) !== 13;
+}

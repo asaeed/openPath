@@ -502,8 +502,7 @@ OpenPath.Router = {
 
 		//reset form
 		form.reset();
-
-
+		//try dom hack //form.onkeypress = console.log( OpenPath.Utils.checkEnter() );
 		/**
 		 * autocompleteLocationInput
 		 */
@@ -564,7 +563,7 @@ OpenPath.Router = {
 			});
 		}
 
-		//don't add more that one event listener 
+		//don't add more that one event listener
 		if(saveEventBtn._hasEventListener) return;
 		saveEventBtn.addEventListener('click',this.postNewEvent,false);
 		saveEventBtn._hasEventListener = true;

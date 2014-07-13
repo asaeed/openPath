@@ -1,6 +1,6 @@
 <section id="addNewEvent" class="view">
 	<div class="content">
-		<form action="/events" method="post" id="addNewEventForm">
+		<form action="/events" method="post" id="addNewEventForm" onkeypress="return OpenPath.Utils.checkEnter(event)">
 			<fieldset>
 				<label for="name">Event Name:</label>
 				<input type="text" id="name" name="name" placeholder="Event Name" required />
