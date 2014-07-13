@@ -95,7 +95,7 @@ OpenPath.Router = {
 				self.checkRoute( route.getAttribute('href') );
 			}
 			if(route._hasEventListener) return;
-			//remove event first
+			//check if event already there first
 			route.addEventListener('click',routeEvent,false);
 			route._hasEventListener = true;
 		}
@@ -236,7 +236,7 @@ OpenPath.Router = {
 		if(OpenPath.eventsController.data === null){
 			OpenPath.eventsController.get();
 			OpenPath.eventsController.got = function(data){
-				console.log('ev',data);
+				//console.log('ev',data);
 				this.data = data;
 				content.innerHTML = template( data );
 
@@ -480,7 +480,8 @@ OpenPath.Router = {
 		
 		//when posted
 		eventModel.prototype.posted = function(data){
-			console.log('posted',data)
+			console.log('posted',data);
+			OpenPath.eventsController.data = null;//reset
 			self.checkRoute('#/events');
 		};
 
@@ -623,8 +624,6 @@ OpenPath.Router = {
 
 		//gradelevel
 		var gradelevel = content.getElementsByClassName('gradelevel')[0];
-
-
 	},
 	showMyPath : function(){
 		this.show(this.profile);

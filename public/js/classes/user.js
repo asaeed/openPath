@@ -130,7 +130,7 @@ OpenPath.User.prototype.getMyLocation = function(){
 		self.obj.location.coords.latitude = position.coords.latitude;
 		self.obj.location.coords.longitude  = position.coords.longitude;
 
-		console.log("got my location - Latitude: " + position.coords.latitude + " Longitude: " + position.coords.longitude );
+		console.log("got my location - Latitude: " , position.coords.latitude , " Longitude: " , position.coords.longitude );
 
 		//send location
 	 	OpenPath.socket.emit("location", self.obj );

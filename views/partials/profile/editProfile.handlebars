@@ -16,7 +16,7 @@
 		</div>
 	\{{/if}}
 
-	<form action="/profile" method="post">
+	<form action="/profile" method="post" onkeypress="return OpenPath.Utils.checkEnter(event)">
 		<header class="name">
 			<div class="userIcon">
 				<fieldset>
