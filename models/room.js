@@ -54,10 +54,7 @@ RoomSchema.statics.joinRoom = function(creatorID, roomID, done){
 			}
 
 		});
-
-
 	});
-
 };
 
 
