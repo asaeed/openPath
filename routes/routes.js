@@ -13,7 +13,6 @@ var Email  = require("emailjs/email");
  */
 module.exports = function(app, io, passport){
 	
-	
 	//start socket
 	SocketHandler.start( io );
 

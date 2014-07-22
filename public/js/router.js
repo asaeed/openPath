@@ -328,16 +328,14 @@ OpenPath.Router = {
 		var template = Handlebars.compile(source);
 
 		//if already have events from other 'page'
+		console.log('why snap map',OpenPath.eventsController.data)
 		if(OpenPath.eventsController.data === null){
 			OpenPath.eventsController.get();
 			OpenPath.eventsController.got = function(data){
 				console.log('nearbyev',data);
 				this.data = data;
-				//add to locations array
-				for(var i=0;i<data.events.length;i++){
-					console.log()
-					events.push(data.events[i])
-				}
+				//define events array
+				events = data.events;
 
 				aside.innerHTML = template( data );
 				
@@ -347,6 +345,10 @@ OpenPath.Router = {
 			};
 		}else{
 			aside.innerHTML = template( OpenPath.eventsController.data );
+			//define events array
+			events = OpenPath.eventsController.data.events;
+			console.log('events',events)
+			
 
 			initEvents();	
 		}
@@ -404,13 +406,13 @@ OpenPath.Router = {
 			//console.log(OpenPath.eventArr,'fix this! duplicating dom items')
 
 			//rebind routes
-			self.bindRoutes();	
+			self.bindRoutes();
 		}
 
 		/**
 		 * MAP
 		 */
-		function initMap(data){
+		function initMap(){
 			//@see http://wrightshq.com/playground/placing-multiple-markers-on-a-google-map-using-api-3/
 			var markers = [];
 			var infoWindowContent = [];
@@ -441,15 +443,16 @@ startTime: "1:00 AM"
 				*/
 				var e = events[i];
 				markers.push([e.location.name,e.location.latitude,e.location.longitude]);
-				var infoMarkup = '<div class="event"> \
-			<article> \
-				<h3><a href="javascript:void(0);" target="_blank">'+e.name+'</a></h3> \
-				<p class="link"><a href="'+e.link+'">'+e.link+'</a></p> \
-				<p class="date">'+e.date+' <span class="startTime">'+e.startTime+'</span> - <span class="endTime">'+e.endTime+'</span></p> \
-				<p class="location">'+e.location.name+'</p> \
-				<p class="description">'+e.description+'</p> \
-			</article> \
-			</div>';
+				var infoMarkup = '<div class="event">' +
+									'<article>' +
+										'<h3><a href="javascript:void(0);" target="_blank">'+e.name+'</a></h3>' +
+										'<p class="link"><a href="'+e.link+'">'+e.link+'</a></p>' +
+										'<p class="date">'+e.date+' <span class="startTime">'+e.startTime+'</span> - <span class="endTime">'+e.endTime+'</span></p>' +
+										'<p class="location">'+e.location.name+'</p>' +
+										'<p class="description">'+e.description+'</p>' +
+									'</article>'+
+								  '</div>';
+				infoMarkup = '<div>hi dear</div>'; 
 				infoWindowContent.push(infoMarkup);
 				console.log(events[i])
 			}
@@ -482,7 +485,7 @@ startTime: "1:00 AM"
 
 		    // Override our map zoom level once our fitBounds function runs (Make sure it only runs once)
 		    var boundsListener = google.maps.event.addListener((map), 'bounds_changed', function(event) {
-		        this.setZoom(14);
+		        //this.setZoom(14);
 		        google.maps.event.removeListener(boundsListener);
 		    });
 
