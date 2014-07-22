@@ -12,7 +12,7 @@ var express = require('express'),
     exphbs  = require('express3-handlebars'),
     fs = require('fs'),
     http = require('http'),
-    //https = require('https'),
+    https = require('https'),
     path = require('path'),
     mongoose = require('mongoose'),
     passport = require("passport"),
@@ -25,6 +25,17 @@ var express = require('express'),
 //
 //var credentials = {key: privateKey, cert: certificate};
 //
+
+var sslOptions = {
+  key: fs.readFileSync('./ssl/server.key'),
+  cert: fs.readFileSync('./ssl/server.crt'),
+  ca: fs.readFileSync('./ssl/ca.crt'),
+  requestCert: true,
+  rejectUnauthorized: false
+};
+
+
+
 //config
 var env = process.env.NODE_ENV || 'development',
     config = require('./config')[env];
@@ -102,3 +113,6 @@ https.listen(app.get('securePort'), function(){
   console.log("Server listening on port " + app.get('securePort'));
 });
 */
+var secureServer = https.createServer(sslOptions,app).listen('3030', function(){
+  console.log("Secure Express server listening on port 3030");
+});
