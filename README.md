@@ -1,10 +1,10 @@
-OpenPath Set Up & Implementation
+OpenPath Set-up & Implementation
 
 
 ====================================================================================
 Building an Instance:
 
-	OpenPath is a Node site built on Express.js.  Idealy, after pulling it down, one should just be able to do an 'npm install' and install all the needed node modules to get it up and running.  Of course, both Node and Mongodb must be installed globally (I think here, homebrew would be your best bet though, honestly, I haven't tried it for these two) [note: brew was used to install OpenSSL tools on the mac in order to create SSL keys and certificates @see http://greengeckodesign.com/blog/2013/06/15/creating-an-ssl-certificate-for-node-dot-js/]  
+	OpenPath is a Node site built on Express.js.  Ideally, after pulling it down, one should just be able to do an 'npm install' and install all the needed node modules to get it up and running.  Of course, both Node and Mongodb must be installed globally (I think here, homebrew would be your best bet though, honestly, I haven't tried it for these two) [note: brew was used to install OpenSSL tools on the Mac in order to create SSL keys and certificates @see http://greengeckodesign.com/blog/2013/06/15/creating-an-ssl-certificate-for-node-dot-js/]  
 
 	Notes on specific node modules:
 
