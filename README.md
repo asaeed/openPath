@@ -64,42 +64,44 @@ OpenPath Set up & Implementation
 	All styles, images, and JavaScript are in the 'public' folder.  
 
 	Styles:
+		
 		We are using LESS with the Lesshat mixin library (which is very nice but has a rounded corners issue) as well as Eric Meyer's reset.css.  The 'public/css/modules' folder contains the styles for each section of the site and, hopefully, is pretty straight forward. All the modules are includes in 'styles.less' which contains most of the global styles as well as the hierarchy of the site including the fork between 'intro' and 'home'.  All is compiled into 'styles.css'.
 
 	JS:
-		Libaries: 
-			Peer.min.js is the WebRTC wrapper library we are using.  We now host it ourselves (rather than using the cdn) now that we are running on SSL.  Note that we need to include the secure option (@see openpath.js)
+		
+		-Libraries: 
+			Peer.min.js is the WebRTC wrapper library we are using.  We now host it ourselves (rather than using the cdn) now that we are running on SSL.  Note that we need to include the secure option (@see openpath.js).
 			Handlebars... is the client side templating engine.
 
-		ui.js
+		-ui.js:
 			Here, most of the ui and dom manipulation methods reside.  Tooltips, modals, privacy policy clicks, etc.  Both home and intro share this file.
 
-		utils.js
+		-utils.js:
 			self explainatory
 
-		intro.js
+		-intro.js:
 			Dom code just for the intro page.
 
-		router.js
+		-router.js:
 			This is a meaty script that handles all the known routes for each 'page' in our one page application.  Though some methods are pretty sparce, others include initiation of Handlebars templates and the functions can get pretty complex, particularly in the events pages.  The ability to create OOP instances inside these methods relies on minimal (pretty much just stubs at this point) MVC helper classes.
 
-		Classes:
-			MVC:
+		-Classes:
+			-MVC:
 				Though this folder may look like it contains a lot, it is really just the 'super/mvc.js' that matters.  The other files are there in case we get to the point where separate methods really stand out but for now inheriting any of them pretty much gives you the same methods.  It's really just to clarify what the new class you are creating actually is.  The main methods being used are 'get/got' and 'post/posted'.  It is being used, pretty much, to create a sub class (in most cases inline in the router.js ) with a url property.  The 'get' method is called and a 'got' method is declared, overriding the super's 'got' method where data manipulation is preformed.  The same goes for 'post' and 'posted', where 'posted' overrides the super's 'posted' method.
 
-			eventsController.js:
+			-eventsController.js:
 				This is a small class that is shared between all the events pages in order to minimize the API requests from the client.  If it's instances data property is empty the route landed will then make a 'get' call and fill that property.
 
-			user.js:
+			-user.js:
 				Currently, the only server session property being served on log in is the user email which resides in a hidden input in home.handlerbars.  User.js replicates the server model (to the extent that properties should be on the client side) and with the user email 'gets' the rest of the properties from the server.  Once gotten, this class initializes user location, user media, checks if the user is the presenter, handles the allow popup.
 
-			peer.js
+			-peer.js
 				This class is a subclass of user.js and is there to handle 'other' users - not the current user who is navigating the site.
 
 			video.js
 				This is a helper class that is instantiated from user.js.  This handles all of the clicks in the 'user meta' section in each video module as well as rendering of the video, maps, name etc.
 
-		Openpath.js
+		-Openpath.js:
 			This is the main meat of the main video's page. It handles the connection between users and the chat.  It instantiates user.js and peer.js, and it handles the socket.io and peer.js communications.  It also kicks off the site and kicks off the routing in router.js.  Being the the videos are always 'on' no matter where you navigate in the site, this has to be the case.
 
 
