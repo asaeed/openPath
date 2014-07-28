@@ -16,7 +16,7 @@ OpenPath = {
 		
 		//configs
 		this.peerKey = 'w8hlftc242jzto6r';
-		this.socketConnection = 'http://openpath.me/';
+		this.socketConnection = 'https://localhost:3030';
 		// 'http://10.0.1.9:8080'; 
 		// 'http://localhost:8080'; 
 		// 'http://10.0.1.15:8080';
@@ -137,8 +137,8 @@ OpenPath = {
 
 		//peer & socket
 		this.call = null;
-		this.peer = new Peer({key: this.peerKey }), //TODO: out own peer server? //OpenPath.rtc.server= "ws://www.openpath.me:8001/";
-		this.socket = io.connect(this.socketConnection);
+		this.peer = new Peer({key: this.peerKey, secure: true }), //TODO: out own peer server? //OpenPath.rtc.server= "ws://www.openpath.me:8001/";
+		this.socket = io.connect(this.socketConnection, {secure: true} );
 		this.peer_connection = null;
 
 
