@@ -1,8 +1,8 @@
 OpenPath Set-up & Implementation
 
 
-====================================================================================
-Building an Instance:
+======================================================================================
+1. Building an Instance:
 
 	OpenPath is a Node site built on Express.js.  Ideally, after pulling it down, one should just be able to do an 'npm install' and install all the needed node modules to get it up and running.  Of course, both Node and Mongodb must be installed globally (I think here, homebrew would be your best bet though, honestly, I haven't tried it for these two) [note: brew was used to install OpenSSL tools on the Mac in order to create SSL keys and certificates @see http://greengeckodesign.com/blog/2013/06/15/creating-an-ssl-certificate-for-node-dot-js/]  
 
@@ -44,7 +44,7 @@ Building an Instance:
 	*Caveats : Less & Less-middleware were both at one point working and one was used to replace the other when it stopped working.  Now neither are working and the issue has not been looked into recently.  I use (for mac) the app "LiveReload" to compile the less at the moment.
 
 ====================================================================================
-Server-side Overview
+2. Server-side Overview
 	
 	'app.js' starts things off with by creating both a 'http' and 'https' server, hoooking up to mongoose/mongodb, setting up passport, openSSL config etc and all the configurations for Express.
 
@@ -57,7 +57,7 @@ Server-side Overview
 		This file determines which users are in which room, when data is received (such as location, peer id, stream... ) and then it passes that data to the other users who are in the room creating the connection between users.
 
 ====================================================================================
-Front-end Overview
+3. Front-end Overview
 
 	All markup, as stated above, is in handlebars files in the 'views' folder.  'layouts/main.handlerbars' includes most of the client side templates at the moment though I began moving some of the relevant client side templates in the same files and their corresponding server side templates (e.g. editProfile.handlebars).
 
