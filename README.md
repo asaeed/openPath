@@ -1,111 +1,48 @@
-OpenPath Implementation
+OpenPath Set up & Implementation
 
+1. Building an instance:
 
-Our first steps at connecting place-based learning. 
-This is part of our development in rounds one and two of Mozilla Ignite.
-http://openpathme.tumblr.com/
+  OpenPath is a Node site built on Express.js.  Idealy, after pulling it down, one should just be able to do an 'npm install' and install all the needed node modules to get it up and running.  Of course, both Node and Mongodb must be installed globally (I think here, homebrew would be your best bet though, honestly, I haven't tried it for these two) [note: brew was used to install OpenSSL tools on the mac in order to create SSL keys and certificates @see http://greengeckodesign.com/blog/2013/06/15/creating-an-ssl-certificate-for-node-dot-js/]  
 
-Our WebRTC videochat code is located here: 
-://github.com/vanevery/openpath/blob/master/README.md
+  Notes on specific node modules:
 
-part of Mozilla Ignite (mozillaignite.org)
+  	email.js :  
+	  	Since you don't want to have email passwords pushed to the github repo, create 
+		a config file to store email login/password one level up from the project root.  
+		Do a git pull, be sure to create a file called "config.js", and put it in the same location 
+		as the main openPath project folder.  Here are its contents:
 
-Our pitch is here:
+		// begin config.js
+		var config = {};
 
-https://mozillaignite.org/apps/438/
+		config.email = {};
+		config.email.user = "username";
+		config.email.password = "password";
+		config.email.host = "smtp.gmail.com";
 
-Thanks!
+		module.exports = config;
+		// end config.js
+
+  	forever.js : 
+	  	It's also probably a good idea to install forever.js globally, especially on a server environment.
+
+	express3-handlebars:
+		This is our templating engine.  It has great partial support as well as both server side and client side templating.  All of the templates are in the 'root/views' folder and this could be a bit confusing (and could/should be reorganized). But to tell the difference between a client side and server side template is easy : '<script id="..." type="text/x-handlebars-template">' starts a client side and no script tag is a server side. In a few cases, the same file contains both.  *NOTE: '\{{ ..... }}' the client side templates require a '\' before starting a handlebars '{{' so that the server knows to escape them.
+		Both 'intro.handlebars' (the logged out intro page) & 'home.handlebars' (the whole site, once you are authenticated) inherit from 'root/views/layouts/main.handlebars'.
+
+	passport.js :
+		We are using this in place of Persona so that eventually we can hook up facebook, google, and maybe twitter oauths but for now we are just using local email and password sign up and login.
+
+	mongoose:
+		As it claims, mongoose is a super elegant way to model your mongodb models.  All mongoose models are in 'root/models'.
+
+	socket.io:
+		Being both a client side and server side library, there are references to socket through out the code base but mostly in 'utils/socketHandler.js' which handles the server side socket events and 'public/js/openpath.js' which handles the client side socket events.  'public/js/classes/user.js' has a couple of socket events as well.
+
+  *Caveats : Less & Less-middleware were both at one point working and one was used to replace the other when it stopped working.  Now neither are working and the issue has not been looked into recently.  I use (for mac) the app "LiveReload" to compile the less at the moment.
+
 
 ====================================================================================
-OpenPath's data model is divided into users, sessions, and events.
-Look at the datamodel file to learn how it is structured.
-Be forewarned, this is a work in progress.
-
-Both the User and Session service API's follow the standard "RESTful" setup and include the following methods 
-(these will mostly be removed eventually)
-
-There are 2 ways to save any type of data be it an item in the "users" or "sessions" collections:
-
-Method 1:  GET followed by PUT
-
-  1.  Get a user by calling:
-
-    url: http://openpath.me/users/<id>
-      example: http://openpath.me/users/5171a61a1a719e4a04000010
-    verb: GET
-    body: none
-
-  2.  Modify the JSON object returned (or replace it completely if desired)
-
-  3.  Put the user by calling:
-
-    url: http://openpath.me/users/5171a61a1a719e4a04000010
-    verb: PUT
-    body: modified version of JSON object
-
-Method 2: Change a single key value on a single object
-
-  1.  Call the following service:
-
-    url: http://openpath.me/update/<collection>/<id>/<key>/<value>
-      example: http://openpath.me/update/users/5153c9daf12aa42757000007/name/boblablaw
-    verb: PUT
-    body: none
-
-OTHER SERVICES
-
-GET   - http://baseurl.com/users 
-  - returns the full list of users
-
-POST - http://baseurl.com/users 
-  - with some json in the request body, it saves as a new user
-
-DELETE - http://baseurl.com/users/<id> 
-  - deletes record of the given id
-
-EMAIL - http://openpath.me/email
-  - request type:   POST
-  - headers: Content-Type: application/json
-  - body: {"to":"asaeed@gmail.com","subject":"test subj","text":"test txt"}
-
-Note, the "to" field can also contain "Jared <jaredlamenzo@gmail.com>, Ahmad <asaeed@gmail.com>"
-so that would make the body:
-{"to":"Ahmad <asaeed@gmail.com>, Jared <jaredlamenzo@gmail.com>","subject":"test subj","text":"test txt"}
-
----
-
-We'll be making more specific service calls for our needs 
-as we build out user profiles and event profiles. 
-
-**Some important things to note:
-
-1.  When doing a PUT request, you must have the header: Content-Type: application/json
-  (or else empty object will be saved)
-
-2.  When doing a PUT request, do NOT include the _id part of the json 
-  (or else error will occur)
-
-3.  Before you integrate either of these into your code, we recommend 
-using this chrome extension to just play around with these services:
-https://chrome.google.com/webstore/detail/dev-http-client/aejoelaoggembcahagimdiliamlcdmfm
-IMPORTANT: you must be logged in as guest or persona login in a separate chrome tab 
-for this to work - these are authenticated services!
-
-4.  IMPORTANT: Since you don't want to have email passwords pushed to the github repo, create 
-a config file to store email login/password one level up from the project root.  
-Do a git pull, be sure to create a file called "config.js", and put it in the same location 
-as the main openPath project folder.  Here are its contents:
-
-// begin config.js
-var config = {};
-
-config.email = {};
-config.email.user = "username";
-config.email.password = "password";
-config.email.host = "smtp.gmail.com";
-
-module.exports = config;
-// end config.js
 
 ====================================================================================
 
