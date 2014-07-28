@@ -69,7 +69,7 @@ OpenPath.User.prototype.connect = function(){
 	//if(!this.obj.stream) this.getMyMedia();
 	//if(!this.obj.location) this.getMyLocation();
 	this.getMyMedia();
-	//this.getMyLocation();
+	this.getMyLocation();
 };
 /**
  * getMyMedia, send to socket
