@@ -29,7 +29,7 @@ OpenPath Set up & Implementation
 	  	It's also probably a good idea to install forever.js globally, especially on a server environment.
 
 	express3-handlebars:
-		This is our templating engine.  It has great partial support as well as both server side and client side templating.  All of the templates are in the 'root/views' folder and this could be a bit confusing (and could/should be reorganized). But to tell the difference between a client side and server side template is easy : '<script id="..." type="text/x-handlebars-template">' starts a client side and no script tag is a server side. In a few cases, the same file contains both.  ¡¡ NOTE !!: '\{{ ..... }}' the client side templates require a '\' before starting a handlebars '{{' so that the server knows to escape them.
+		This is our templating engine.  It has great partial support as well as both server side and client side templating.  All of the templates are in the 'root/views' folder and this could be a bit confusing (and could/should be reorganized). But to tell the difference between a client side and server side template is easy : 'script id="..." type="text/x-handlebars-template"' starts a client side and no script tag is a server side. In a few cases, the same file contains both.  ¡¡ NOTE !!: '\{{ ..... }}' the client side templates require a '\' before starting a handlebars '{{' so that the server knows to escape them.
 		Both 'intro.handlebars' (the logged out intro page) & 'home.handlebars' (the whole site, once you are authenticated) inherit from 'root/views/layouts/main.handlebars'.
 
 	passport.js :
