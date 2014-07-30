@@ -48,7 +48,6 @@ module.exports = function(app, io, passport){
 			RoomHandler.checkForRoom( req , function(){
 				res.render("intro");
 			});
-
 		}
 	});
 
@@ -118,7 +117,7 @@ module.exports = function(app, io, passport){
 		});
 	});	
 	/**
-	 * users 
+	 * admin users 
 	 */
 	app.get("/users", function (req, res) {
 		var admin = req.user.email === 'jamiegilmartin@gmail.com' || req.user.email === 'jaredlamenzo@gmail.com';
@@ -220,7 +219,7 @@ module.exports = function(app, io, passport){
 	});
 
 	/**
-	 * rooms 
+	 * admin rooms 
 	 */
 	app.get("/rooms", function (req, res) {
 		var admin = req.user.email === 'jamiegilmartin@gmail.com' || req.user.email === 'jaredlamenzo@gmail.com';
