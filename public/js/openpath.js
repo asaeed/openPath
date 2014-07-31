@@ -22,6 +22,7 @@ OpenPath = {
 		// 'http://10.0.1.15:8080';
 		// 'http://openpath.me/';  
 
+		return;
 
 		//init ui 
 		this.Ui.init();
@@ -40,9 +41,9 @@ OpenPath = {
 		this.eventsController.data = null;
 
 		//hanlder routes
-		//this.Router.init();
-		//this.Router.checkRoute();
-//
+		this.Router.init();
+		this.Router.checkRoute();
+
 		
 		/**
 		 * dom elemets

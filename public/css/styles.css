@@ -463,11 +463,6 @@ body #home header#mainHeader .content nav.main ul li.profile a.active {
   background-position: -196px -2px;
 }
 body #home section.page {
-  opacity: 0;
-  -webkit-transition: opacity 0.5s linear, color 0.4s 0.2s ease;
-  -moz-transition: opacity 0.5s linear, color 0.4s 0.2s ease;
-  -o-transition: opacity 0.5s linear, color 0.4s 0.2s ease;
-  transition: opacity 0.5s linear, color 0.4s 0.2s ease;
   /**
  * subnav
  */
@@ -506,11 +501,6 @@ body #home section.page nav.subnav .content ul li:last-child {
   border-right: none;
 }
 body #home section.page .view {
-  opacity: 0;
-  -webkit-transition: opacity 0.2s linear, color 0.4s 0.2s ease;
-  -moz-transition: opacity 0.2s linear, color 0.4s 0.2s ease;
-  -o-transition: opacity 0.2s linear, color 0.4s 0.2s ease;
-  transition: opacity 0.2s linear, color 0.4s 0.2s ease;
   background: #eeedeb;
   padding: 2em 0;
 }
