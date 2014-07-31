@@ -1,0 +1,21 @@
+<!-- add participant front end template (remember \{{ }} ) -->
+<script id="addParticipantsTemplate" type="text/x-handlebars-template">
+Hi there,
+
+You have been invited by \{{#if name }} \{{name}} \{{else}} \{{email}} \{{/if}} to a video session on Open Path.
+
+Click here to join:
+
+\{{#if event_id }}
+http://www.openpath.me/?e=\{{ event_id }}
+\{{else}}
+http://www.openpath.me/?r=\{{room_id}}
+\{{/if}}
+
+Let&apos;s learn together!
+
+Regards,
+Open Path Team
+</script>
+
+

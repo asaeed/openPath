@@ -1,0 +1,21 @@
+<div class="admin">
+	<h1>Admin - Rooms</h1>
+	<table>
+		<tr>
+			<th>number</th>
+			<th>creator</th>
+			<th>dateCreated</th>
+			<th>dateModified</th>
+			<th>joined users</th>
+		</tr>
+		{{#each rooms}}
+		<tr>
+			<td>{{this._id}}</td>
+			<td>{{this.creatorID}}</td>
+			<td>{{this.dateCreated}}</td>
+			<td>{{this.dateModified}}</td>
+			<td>{{this.joinedUsers}}</td>
+		</tr>
+		{{/each}}
+	</table>
+</div>

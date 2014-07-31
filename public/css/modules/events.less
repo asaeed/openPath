@@ -1,0 +1,171 @@
+
+/**
+ * eventsList
+ */
+ul.eventsList {
+	list-style-type: none;
+	li.event {
+		width:100%;
+		overflow:hidden;
+		padding-bottom:2em; 
+		border-bottom:1px solid #c3c3c3;
+		article{
+			float:left;
+			width:60%;
+			padding:2em 0 0 0;
+			h3{
+				.label();
+				padding-bottom:0.5em;
+				a {
+
+				}
+			}
+			p {
+				.pNormal();
+				padding-bottom:1em;
+			}
+			p.link {
+
+			}
+			p.date{
+				font-weight:bold;
+				span{
+					font-size:0.8em;
+					color:#666;
+				}
+				span.startTime{
+				}
+				span.endTime{
+				}
+			}
+			
+			p.location{
+				font-weight:bold;	
+			}
+			.buttons {
+				overflow:hidden;
+				.joinBtn {
+					float:left;
+				}
+				.inviteBtn,
+				.editBtn {
+					float:right;
+					margin:0 0.5em;
+				}
+			}
+		}
+		.mapWrap{
+			float:right;
+			width:35%;
+			height:200px;
+			margin-top:20px;
+			margin-left:5%;
+		}
+	}
+	li.event:last-child {
+		border-bottom:0;
+	}
+}
+
+/**
+ * nearByEvents
+ */
+#nearByEvents {
+	.content {	
+		overflow: hidden;
+		#nearByMap {
+			float:left;
+			width:55%;
+			
+			margin-right: 5%;
+		}
+		aside {
+			float:left;
+			width: 40%;
+			ul.eventsList {
+				li.event {
+					article{
+						float:none;
+						width:100%;
+						padding:2em 0 0 0;
+						h3{
+							.label();
+							padding-bottom:0.5em;
+							a {
+
+							}
+						}
+						p {
+							.pNormal();
+							padding-bottom:1em;
+						}
+						p.link {
+
+						}
+						p.date{
+							font-weight:bold;
+							span{
+								font-size:0.8em;
+								color:#666;
+							}
+							span.startTime{
+							}
+							span.endTime{
+							}
+						}
+						
+						p.location{
+							font-weight:bold;	
+						}
+						.buttons {
+							overflow:hidden;
+							.joinBtn {
+								float:left;
+							}
+							.inviteBtn,
+							.editBtn {
+								display:none;
+							}
+						}
+					}
+					.mapWrap {
+						display: none;
+					}
+				}
+			}
+		}
+	}
+}
+
+/**
+ * addNewEvent
+ */
+#addNewEvent {
+	textarea {
+		height:6em;
+	}
+	fieldset#gradelevel  {
+		overflow: hidden;
+		ul {
+			list-style-type: none;
+			padding:1em 0 0 0;
+			float:left;
+			width:140px;
+			li {
+				overflow:hidden;
+				label {
+					float:right;
+					width:120px;
+					padding:0.3em 0 0 0;
+					font-size:1.3em;
+					font-weight: normal;
+				}
+				input {
+					float:left;
+				}
+			}
+		}
+	}
+}
+
+

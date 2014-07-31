@@ -1,0 +1,48 @@
+<div id="home" ng-app="openPath">
+	{{> header }}
+	
+	<div ui-view></div>
+	
+	{{> footer }}
+	<!--
+	
+	
+	{{> videos }}
+	{{> invite }}
+	{{> events }}
+	{{> profile }}
+	{{> error }}
+	
+
+	
+	-->
+</div>
+
+<input type="hidden" name="email" id="email" value="{{user_email}}" />
+
+
+<!--scripts-->
+<script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=true&libraries=places"></script>
+<script src="/socket.io/socket.io.js"></script>
+
+<!--<script src="http://cdn.peerjs.com/0.3/peer.min.js"></script>-->
+<script src="js/libraries/peer.min.js"></script>
+<script src="js/libraries/handlebars-v1.3.0.js"></script>
+
+<script src="js/app.js"></script>
+
+
+<script src="js/openpath.js"></script>
+<script src="js/ui.js"></script>
+<script src="js/router.js"></script>
+<script src="js/utils.js"></script>
+
+<script src="js/classes/mvc/super/mvc.js" type="text/javascript" charset="utf-8"></script>
+<script src="js/classes/mvc/model.js" type="text/javascript" charset="utf-8"></script>
+<script src="js/classes/mvc/view.js" type="text/javascript" charset="utf-8"></script>
+<script src="js/classes/mvc/controller.js" type="text/javascript" charset="utf-8"></script>
+<script src="js/classes/mvc/collection.js" type="text/javascript" charset="utf-8"></script>
+
+<script src="js/classes/video.js"></script>
+<script src="js/classes/user.js"></script>
+<script src="js/classes/peer.js"></script>

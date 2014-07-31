@@ -1,0 +1,23 @@
+{
+  "name": "OpenPath",
+  "description": "OpenPath",
+  "version": "0.0.2",
+  "private": true,
+  "scripts": {
+    "start": "node app"
+  },
+  "dependencies": {
+    "express": "3.4.8",
+    "express3-handlebars":"*",
+    "mongodb": "*",
+    "passport": "*",
+    "passport-local": "*",
+    "passport-facebook": "*",
+    "passport-google-oauth": "*",
+    "mongoose": "*",
+    "emailjs":"*",
+    "forever":"*",
+    "less":"*",
+    "socket.io":"*"
+  }
+}

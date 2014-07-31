@@ -1,0 +1,27 @@
+<div class="admin">
+	<h1>Admin - Users</h1>
+	<table>
+		<tr>
+			<th>email</th>
+			<th>firstName</th>
+			<th>lastName</th>
+			<th>gradeLevel</th>
+			<th>dateCreated</th>
+			<th>dateModified</th>
+			<th>online</th>
+			<th>room</th>
+		</tr>
+		{{#each user}}
+		<tr>
+			<td>{{this.email}}</td>
+			<td>{{this.firstName}}</td>
+			<td>{{this.lastName}}</td>
+			<td>{{this.gradeLevel}}</td>
+			<td>{{this.dateCreated}}</td>
+			<td>{{this.dateModified}}</td>
+			<td>xxx</td>
+			<td>xxx</td>
+		</tr>
+		{{/each}}
+	</table>
+</div>

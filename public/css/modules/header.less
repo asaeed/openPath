@@ -1,0 +1,130 @@
+/**
+ * header styles
+ */
+header#mainHeader {
+	position: relative;
+	z-index: 1;
+	background:@blackTransulcent;
+	width:100%;
+	padding:1em 0;
+	.content {
+		overflow:hidden;
+
+		a.logo {
+			float:left;
+			overflow: hidden;
+
+			.marker {
+				float:left;
+				width: 4em;
+				height:4em;
+				background-image: url('/images/marker.png');
+				background-repeat: no-repeat;
+				background-size: contain;
+				margin-right: 0.5em;
+			}
+			
+
+			.title {
+				float:left;
+				h1 {
+					font-size:3.8em;
+					line-height:1.1em;
+					font-weight: bold;
+					text-shadow: 2px 2px rgba(0,0,0,0.5);
+					color:#fff;
+				}
+				h2 {
+					color:#fff;
+					font-size:2em;
+					font-weight: bold;
+					line-height:1.3em;
+					text-transform: capitalize;
+				}
+				h3 {
+					color:#fff;
+					font-size:1.5em;
+					font-weight: bold;
+					span.startTime,
+					span.endTime {
+						font-size: 0.8em;
+						font-weight: normal;
+					}
+				}
+			}
+			.eventTitle {
+				h1 {
+					display: none;
+				}
+			}
+			
+		}
+		nav.main {
+			float:right; 
+			ul {
+				overflow: hidden;
+				list-style-type: none;
+				li {
+					float:left;
+					padding:0 2em 0 0;
+					a {
+						position: relative;
+						top:0.3em;
+						display:block;
+						background-image:url('/images/nav-icons.png');
+						background-repeat: no-repeat;
+						.fade(1s);
+						opacity: 0.7;
+						span.badge {
+							position:absolute;
+							padding:0.5em 0.5em 0.2em 0.5em; 
+							top:-0.3em;
+							left:-0.2em;
+							color:#fff;
+							font-weight:bold;
+							background:#ff0000;
+							.border-radius(1em);
+							/*hide for now*/
+						}
+						
+					}
+					a:hover,
+					a.active {
+						opacity:1;
+					}
+				}
+				li.invite {
+					a {
+						width:3.8em;
+						height:3.2em;
+						background-position: -78px -2px;
+					}
+					a.active {
+						background-position: -118px -2px;
+					}
+				}
+				li.events {
+					a {
+						top:0;
+						width:3.6em;
+						height:3.6em;
+						background-position: -2px -2px;
+					}
+					a.active {
+						background-position: -40px -2px;
+					}
+				}
+				li.profile {
+					a {
+						width:3.6em;
+						height:3.2em;
+						background-position: -158px -2px;
+					}
+					a.active {
+						background-position: -196px -2px;
+					}
+				}
+			}
+		}
+	}
+}
