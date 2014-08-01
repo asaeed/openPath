@@ -1,3 +1,30 @@
+/**
+ * all under section#profile in styles.less
+ */
+
+
+.avatar {
+	display: inline-block;
+	background: @grey;
+	border: 0.3em solid @blue;
+	width:45px;
+	height:45px;
+	margin-top: 0.4em;
+	.border-radius(100px);
+	overflow: hidden;
+	img {
+		width:45px;
+		height:45px;
+	}
+}
+h2 {
+	display: inline-block;
+	vertical-align: top;
+	font-weight:bold;
+	color:#000;
+	font-size:2em;
+	padding:0.95em 0 0 0.6em;
+}
 
 /**
  * myProfile
@@ -8,33 +35,7 @@
 			font-size:1.8em;
 			float:right;
 		}
-		header {
-			position:absolute;
-			top:-80px;
-			width:45%;
-			.avatar {
-				display: inline-block;
-				background: @grey;
-				border: 0.3em solid @blue;
-				width:45px;
-				height:45px;
-				margin-top: 0.4em;
-				.border-radius(100px);
-				overflow: hidden;
-				img {
-					width:45px;
-					height:45px;
-				}
-			}
-			h2 {
-				display: inline-block;
-				vertical-align: top;
-				font-weight:bold;
-				color:#000;
-				font-size:2em;
-				padding:0.95em 0 0 0.6em;
-			}
-		}
+		
 		article {
 			padding:0 0 3em 0;
 			.results {

@@ -472,7 +472,6 @@ body #home section.page nav.subnav {
 }
 body #home section.page nav.subnav .content {
   overflow: hidden;
-  padding: 2em 0;
 }
 body #home section.page nav.subnav .content h1 {
   float: left;
@@ -480,6 +479,7 @@ body #home section.page nav.subnav .content h1 {
   font-weight: bold;
 }
 body #home section.page nav.subnav .content ul {
+  padding: 2em 0;
   float: right;
 }
 body #home section.page nav.subnav .content ul li {
@@ -875,6 +875,9 @@ body #home section#invite #inviteView .content form textarea {
 }
 body #home section#profile {
   /**
+ * all under section#profile in styles.less
+ */
+  /**
  * myProfile
  */
   /**
@@ -884,16 +887,7 @@ body #home section#profile {
  * settings
  */
 }
-body #home section#profile #myProfile .content a.editBtn {
-  font-size: 1.8em;
-  float: right;
-}
-body #home section#profile #myProfile .content header {
-  position: absolute;
-  top: -80px;
-  width: 45%;
-}
-body #home section#profile #myProfile .content header .avatar {
+body #home section#profile .avatar {
   display: inline-block;
   background: #c0c2c4;
   border: 0.3em solid #56acdd;
@@ -908,17 +902,21 @@ body #home section#profile #myProfile .content header .avatar {
   background-clip: padding-box;
   overflow: hidden;
 }
-body #home section#profile #myProfile .content header .avatar img {
+body #home section#profile .avatar img {
   width: 45px;
   height: 45px;
 }
-body #home section#profile #myProfile .content header h2 {
+body #home section#profile h2 {
   display: inline-block;
   vertical-align: top;
   font-weight: bold;
   color: #000;
   font-size: 2em;
   padding: 0.95em 0 0 0.6em;
+}
+body #home section#profile #myProfile .content a.editBtn {
+  font-size: 1.8em;
+  float: right;
 }
 body #home section#profile #myProfile .content article {
   padding: 0 0 3em 0;

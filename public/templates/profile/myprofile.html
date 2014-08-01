@@ -1,13 +1,7 @@
 <section id="myProfile" class="view">
 	<div class="content">
 		<a ng-href="#/profile/editprofile" class="editBtn">Edit</a>
-		<header>
-			<div class="avatar">
-				<img src="">
-			</div>
-			<h2 ng-if="user.firstName">{{user.firstName}} {{user.lastName}}</h2>
-			<h2 ng-if="!user.firstName">{{user.email}}</h2>
-		</header>
+		
 		<article>
 			<h3 class="label">Grade Level:</h3>
 			<div class="results">{{user.gradeLevel}}</div>

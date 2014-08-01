@@ -2,14 +2,11 @@
 
 	<nav class="subnav">
 		<div class="content">
-<!-- 		{{!--
-			{{#if user.firstName }}
-				<h1>{{user.firstName}} {{user.lastName}}</h1>
-			{{else}}
-				<h1>{{user.email}}</h1>
-			{{/if}}
-		--}}
- -->
+			<div class="avatar">
+				<img src="">
+			</div>
+			<h2 ng-if="user.firstName">{{user.firstName}} {{user.lastName}}</h2>
+			<h2 ng-if="!user.firstName">{{user.email}}</h2>
 		    <ul>
 				<li><a ui-sref=".myProfile">Profile</a></li>
 		        <li><a ui-sref=".myPath">My Path</a></li>
@@ -18,7 +15,6 @@
 		    </ul>
 		</div>
 	</nav>
-
 	<div ui-view></div>
 
 </section>
