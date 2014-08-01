@@ -1,25 +1,24 @@
 <section id="myProfile" class="view">
 	<div class="content">
-		<a href="#/edit-profile" class="route editBtn">Edit</a>
+		<a ng-href="#/profile/editprofile" class="editBtn">Edit</a>
 		<header>
 			<div class="avatar">
 				<img src="">
 			</div>
+			<h2 ng-if="user.firstName">{{user.firstName}} {{user.lastName}}</h2>
+			<h2 ng-if="!user.firstName">{{user.email}}</h2>
 		</header>
 		<article>
 			<h3 class="label">Grade Level:</h3>
-			<div class="results">
-			</div>
+			<div class="results">{{user.gradeLevel}}</div>
 		</article>
 		<article>
 			<h3 class="label">Interests:</h3>
-			<div class="results">
-			</div>
+			<div class="results">{{user.interests}}</div>
 		</article>
 		<article>
 			<h3 class="label">List of Co-Learners:</h3>
-			<div class="results">
-			</div>
+			<div class="results">{{user.colearners}}</div>
 		</article>
 
 		<a href="/logout" class="logoutBtn btn">Logout</a>

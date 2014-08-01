@@ -18,12 +18,17 @@ App.config(function($stateProvider, $urlRouterProvider){
         //PROFILE ROUTES
         .state('profile', {
             url: '/profile',
-            templateUrl: 'templates/profile.html'     
+            templateUrl: 'templates/profile.html',
+            controller : 'profileController'
         })
         //nested profile states
         .state('profile.myProfile', {
             url: '/myprofile',
             templateUrl: 'templates/profile/myprofile.html'     
+        })
+        .state('profile.editProfile', {
+            url: '/editprofile',
+            templateUrl: 'templates/profile/editprofile.html'     
         })
         .state('profile.myPath', {
             url: '/mypath',
@@ -44,4 +49,18 @@ App.controller('eventsController', function($scope,$element){
 
 	console.log('app events')
 
+});
+
+App.controller('profileController', function($scope,$http){
+
+    console.log('app events');
+    $http({method: 'GET', url: '/user/'+document.getElementById('email').value }).success(function(data){
+        console.log('d',data);
+        $scope.user = data;
+    }).error(function(){
+        console.log('error');
+    });
+
+    
+    
 });

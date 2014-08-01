@@ -22,7 +22,7 @@ OpenPath = {
 		// 'http://10.0.1.15:8080';
 		// 'http://openpath.me/';  
 
-		return;
+		return;//!!!!!!
 
 		//init ui 
 		this.Ui.init();
