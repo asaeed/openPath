@@ -1,6 +1,7 @@
 var User = require('../models/user');
 var Room = require('../models/room');
 var Event = require('../models/event');
+var Interest = require('../models/interest');
 var Auth = require('../utils/auth');
 var Utils = require('../utils/utils');
 var RoomHandler = require('../utils/roomHandler');
@@ -26,18 +27,7 @@ module.exports = function(app, io, passport){
 			//check for query string & sessions
 			RoomHandler.checkForRoom( req , function( event, room ){
 				//console.log('DONE CHECKING FOR ROOM',req.user);
-				/*
-				var safeUser = {
-					firstName : req.user.firstName,
-					lastName : req.user.lastName,
-					email : req.user.email
-					//TODO rest of modal
-				}
-				*/
-
-				//res.render("home", { user : safeUser,  event : event, room : room });
 				res.render("home", { user_email : req.user.email });
-				
 			});
 
 			

@@ -20,18 +20,14 @@
 			</header>
 			<fieldset>
 				<label>Grade Level:</label>
-				<select name="gradeLevel" class="gradelevel" ng-model="user.gradeLevel">
-					<option ng-selected="PreKToGrade2" value="PreKToGrade2">Pre-K to Grade 2</option>
-					<option ng-selected="Grade3To5" value="Grade3To5">Grade 3-5</option>
-					<option ng-selected="Grade9To12" value="Grade9To12">Grade 9-12</option>
-					<option ng-selected="PostSecondary" value="PostSecondary">Post Secondary</option>
-					<option ng-selected="Adults" value="Adults">Adults</option>
-					<option ng-selected="Families" value="Families">Families</option>
+				<select name="gradeLevel" class="gradelevel" ng-model="defaultOption" 
+					ng-init="defaultOption = user.gradeLevel || gradeLevelOptions[0].value"
+					ng-options="option.value as option.name for option in gradeLevelOptions">
 				</select>
 			</fieldset>
 			<fieldset>
 				<label>Interests: <small><em>(comma separated)</em></small></label>
-				<input type="text" class="interests" name="interests" value="{{user.interests}}" />
+				<input type="text" class="interests" name="interests" value="{{interests}}" />
 			</fieldset>
 			<fieldset>
 				<label>List of Co-Learners:</label>

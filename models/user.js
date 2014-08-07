@@ -1,6 +1,6 @@
 var mongoose = require('mongoose');
 var hash = require('../utils/hash');
-
+var Interest = require('../models/interest');
 
 UserSchema = mongoose.Schema({
 	firstName:  String,
@@ -98,7 +98,7 @@ UserSchema.statics.updateProfile = function(req, done){
 				firstName: req.body.firstName,
 				lastName: req.body.lastName,
 				gradeLevel : req.body.gradeLevel,
-				//interests
+				interests : req.body.interests
 				//colearners
 				/*settings : {
 					alerts : {

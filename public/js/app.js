@@ -11,10 +11,34 @@ App.config(function($stateProvider, $urlRouterProvider){
             url: '/home',
             template: '<div style="font-size:100px;">HOMe</div>'
         })
+
+
+        //EVENTS ROUTES
         .state('events', {
             url: '/events',
-            templateUrl: 'templates/events.html'     
+            templateUrl: 'templates/events.html',
+            controller : 'eventsController'     
         })
+        //nested events states
+        .state('events.upcoming', {
+            url: '/upcoming',
+            templateUrl: 'templates/events/upcoming.html'     
+        })
+        .state('events.nearby', {
+            url: '/nearby',
+            templateUrl: 'templates/events/nearby.html'     
+        })
+        .state('events.addNewEvent', {
+            url: '/addNewEvent',
+            templateUrl: 'templates/events/addNewEvent.html',
+            controller : 'addNewEventController'     
+        })
+        .state('events.editEvent', {
+            url: '/editEvent',
+            templateUrl: 'templates/events/editEvent.html'     
+        })
+
+
         //PROFILE ROUTES
         .state('profile', {
             url: '/profile',
@@ -45,22 +69,4 @@ App.config(function($stateProvider, $urlRouterProvider){
 
 });
 
-App.controller('eventsController', function($scope,$element){
 
-	console.log('app events')
-
-});
-
-App.controller('profileController', function($scope,$http){
-
-    console.log('app events');
-    $http({method: 'GET', url: '/user/'+document.getElementById('email').value }).success(function(data){
-        console.log('d',data);
-        $scope.user = data;
-    }).error(function(){
-        console.log('error');
-    });
-
-    
-    
-});
