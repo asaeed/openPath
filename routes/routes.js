@@ -239,7 +239,7 @@ module.exports = function(app, io, passport){
 				var yesterday = today.setDate(today.getDate() - 1);
 
 				console.log('date',yesterday,today)
-				//remove date check and move to front end
+				//!!! remove date check and move to front end
 				//if( Date.parse(items[i].date) > yesterday ){//if today or in future
 					var mine = req.user ? ( items[i].creatorID == req.user._id ) : false;
 					var publicItem = {
@@ -266,8 +266,12 @@ module.exports = function(app, io, passport){
 				// to get a value that is either negative, positive, or zero.
 				return new Date(b.date) - new Date(a.date);
 			});
+
+			//!!! remove ascending, save for front end
+
+			
 			//ascending
-			publicItems.reverse();
+			//publicItems.reverse();
 
 			res.send({ events: publicItems }); //TODO : fork for admin res.send({ events: items }); 
 			//res.send("events", { event: items });
