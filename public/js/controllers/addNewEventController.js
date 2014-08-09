@@ -85,6 +85,7 @@ App.controller('addNewEventController', function($scope,$http){
 
 		$http({method: 'POST', url: '/events', data: data}).success(function(data){
 	        console.log('posted',data);
+	        window.location = '#/events';
 	    }).error(function(){
 	        console.log('error');
 	    });
