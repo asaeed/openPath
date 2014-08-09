@@ -239,8 +239,8 @@ module.exports = function(app, io, passport){
 				var yesterday = today.setDate(today.getDate() - 1);
 
 				console.log('date',yesterday,today)
-
-				if( Date.parse(items[i].date) > yesterday ){//if today or in future
+				//remove date check and move to front end
+				//if( Date.parse(items[i].date) > yesterday ){//if today or in future
 					var mine = req.user ? ( items[i].creatorID == req.user._id ) : false;
 					var publicItem = {
 						id          : items[i]._id,
@@ -258,7 +258,7 @@ module.exports = function(app, io, passport){
 
 					publicItems.push( publicItem );
 
-				}
+				//}
 			}
 			//sort by date descending
 			publicItems.sort(function(a,b){

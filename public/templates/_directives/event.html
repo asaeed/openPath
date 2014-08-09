@@ -1,0 +1,12 @@
+<h3><a href="javascript:void(0);" target="_blank">{{ event.name }}</a></h3>
+<p class="link"><a href="{{ event.link }}">{{ event.link }}</a></p>
+<p class="date">{{ event.date }} <span class="startTime">{{ event.startTime }}</span> - <span class="endTime">{{ event.endTime }}</span></p>
+<p class="location">{{ event.location.name }}</p>
+<p class="description">{{ event.description }}</p>
+<div class="buttons">
+	<!--{{#if  isMine  }}-->
+		<a href="#/edit-event/{{ event.id }}" class="btn route editBtn">Edit</a>
+		<a href="#/invite-to-event/{{ event.id }}" class="btn route inviteBtn">Invite</a>
+	<!--{{/if}}-->
+		<a href="?e={{ event.id }}" class="btn joinBtn">Join</a>
+</div>

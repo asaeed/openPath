@@ -146,7 +146,6 @@ OpenPath.Ui = {
 			reference : reference,
 			formatted_address : formattedAddress
 		};
-		console.log('MAPRENDER',request,lat, lng, reference, formattedAddress )
 		
 		var mapOptions = {
 			center: new google.maps.LatLng(lat, lng),

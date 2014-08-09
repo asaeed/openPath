@@ -13,6 +13,17 @@
 		    </ul>
 		</div>
 	</nav>
-	<div ui-view></div>
+	<div ui-view>
+		<section id="allEvents" class="view">
+			<div class="content">
+				<ul class="eventsList">
+					<li class="event" ng-repeat="event in events">
+						<article event></article>
+						<div map class="mapWrap"></div>
+					</li>
+				</ul>
+			</div>
+		</section>
+	</div>
 
 </section>

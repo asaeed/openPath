@@ -17,7 +17,7 @@ App.config(function($stateProvider, $urlRouterProvider){
         .state('events', {
             url: '/events',
             templateUrl: 'templates/events.html',
-            controller : 'eventsController'     
+            controller : 'eventsController'  
         })
         //nested events states
         .state('events.upcoming', {
@@ -37,7 +37,6 @@ App.config(function($stateProvider, $urlRouterProvider){
             url: '/editEvent',
             templateUrl: 'templates/events/editEvent.html'     
         })
-
 
         //PROFILE ROUTES
         .state('profile', {
