@@ -269,7 +269,6 @@ module.exports = function(app, io, passport){
 
 			//!!! remove ascending, save for front end
 
-			
 			//ascending
 			//publicItems.reverse();
 

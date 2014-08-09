@@ -1,7 +1,8 @@
 <section id="upcomingEvents" class="view">
 	<div class="content">
 		<ul class="eventsList">
-			<li class="event" ng-repeat="event in events">
+			<li class="event" ng-repeat="event in events | filter : dateFilter">
+				<!--  | orderBy : -->
 				<article event></article>
 				<div map class="mapWrap"></div>
 			</li>

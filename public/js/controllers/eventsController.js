@@ -6,14 +6,17 @@ App.controller('eventsController', function($scope,$http){
     $http({method: 'GET', url: '/events'}).success(function(data){
         console.log('d',data);
         $scope.events = data.events;
-
-        init();
     }).error(function(){
         console.log('error');
     });
 
-
-    function init(){
-    	
+    //date filter
+    $scope.dateFilter = function(item){
+    	var today = new Date();
+		var yesterday = today.setDate(today.getDate() - 1);
+		return(Date.parse(item.date) > yesterday);//if today or in future
     }
+
+
+
 });
