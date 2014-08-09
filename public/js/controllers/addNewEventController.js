@@ -66,15 +66,7 @@ App.controller('addNewEventController', function($scope,$http){
 		//create model (above) auto post
 
 
-		$http({method: 'POST', url: '/events'}).success(function(data){
-	        console.log('d',data);
-	        $scope.events = data.events;
-	    }).error(function(){
-	        console.log('error');
-	    });
-
-
-
+		
 		var data = {
 			name: name.value,
 			link: link.value,
@@ -90,6 +82,15 @@ App.controller('addNewEventController', function($scope,$http){
 			startTime:  startTime.value,
 			endTime : endTime.value
 		};
+
+		$http({method: 'POST', url: '/events', data: data}).success(function(data){
+	        console.log('posted',data);
+	    }).error(function(){
+	        console.log('error');
+	    });
+
+
+
 	}
 
 	//don't add more that one event listener

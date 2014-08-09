@@ -1,31 +1,14 @@
-App.directive('menu', function () {
+App.directive('map', function () {
 	return {
-		templateUrl: "templates/menu.html",
+		template: "no map",
         link: function($scope, $element, attrs) {
+            var $loc = $scope.event.location;
+            if($loc.latitude){
 
-            $scope.list = [
-                {
-                    name: 'Apps',
-                    bg: '#FFFFFF',
-                    w: 100,
-                    h: 75
-                },
-                {
-                    name: 'Lab',
-                    bg: '#FFFF00',
-                    w: 100,
-                    h: 75
-                },
-                {
-                    name: 'About', 
-                    bg: '#F00FFF',
-                    w: 100,
-                    h: 75
-                }
-            ];
-
-          //  console.log($element.find('ul'))
-
+                console.log($loc,$element);
+                OpenPath.Ui.renderMap($element[0], $loc.latitude, $loc.longitude, $loc.reference, $loc.formattedAddress );
+            }
+            
         }
 	}
 });

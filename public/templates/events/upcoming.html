@@ -1,6 +1,5 @@
 <section id="upcomingEvents" class="view">
 	<div class="content">
-	
 		<ul class="eventsList">
 			<li class="event" ng-repeat="event in events">
 				<article>
@@ -19,7 +18,7 @@
 						
 					</div>
 				</article>
-				<div class="mapWrap" data-latitude="{{ event.location.latitude }}" data-longitude="{{ event.location.longitude }}" data-reference="\{{ event.location.reference }}" data-formattedaddress="{{ event.location.formattedAddress }}" ></div>
+				<div map class="mapWrap" data-latitude="{{ event.location.latitude }}" data-longitude="{{ event.location.longitude }}" data-reference="\{{ event.location.reference }}" data-formattedaddress="{{ event.location.formattedAddress }}"></div>
 			</li>
 		</ul>
 
