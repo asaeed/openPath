@@ -5,8 +5,8 @@
 <p class="description">{{ event.description }}</p>
 <div class="buttons">
 	<!--{{#if  isMine  }}-->
-		<a href="#/edit-event/{{ event.id }}" class="btn route editBtn">Edit</a>
-		<a href="#/invite-to-event/{{ event.id }}" class="btn route inviteBtn">Invite</a>
+		<a href="#/events/editEvent" id="{{ event.id }}" class="btn editBtn">Edit</a>
+		<a href="#/events/inviteToEvent" id="{{ event.id }}" class="btn inviteBtn">Invite</a>
 	<!--{{/if}}-->
 		<a href="?e={{ event.id }}" class="btn joinBtn">Join</a>
 </div>

@@ -16,7 +16,4 @@ App.controller('eventsController', function($scope,$http){
 		var yesterday = today.setDate(today.getDate() - 1);
 		return(Date.parse(item.date) > yesterday);//if today or in future
     }
-
-
-
 });
