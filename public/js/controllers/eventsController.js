@@ -1,19 +1,45 @@
 
-App.controller('eventsController', function($scope,$http){
+App.controller('eventsController', function($scope,$http,$stateParams,eventService){
+    $scope.currentEditEvent = null;
+
     /**
      * get events
      */
-    $http({method: 'GET', url: '/events'}).success(function(data){
+    eventService.get(function(data){
         console.log('d',data);
-        $scope.events = data.events;
-    }).error(function(){
-        console.log('error');
-    });
+        //$scope.content = data;
 
+        $scope.events = data.events;
+    });
+    
     //date filter
     $scope.dateFilter = function(item){
     	var today = new Date();
 		var yesterday = today.setDate(today.getDate() - 1);
 		return(Date.parse(item.date) > yesterday);//if today or in future
     }
+
+    //watch for edit event
+    /*
+    $scope.$watch('currentEditEventId',function(){
+        console.log('ev change')
+        angular.forEach($scope.events, function(item) {          
+            if($scope.currentEditEventId === item.id){
+                $scope.currentEditEvent = item;
+                if($scope.currentEditEventId)
+                console.log($scope.currentEditEventId,$scope.currentEditEvent.name)
+            }
+        });
+    });
+    */
+    console.log($stateParams)
+    var eventId = $stateParams.eventId;
+    if($stateParams.eventId)
+    angular.forEach($scope.events, function(item) {          
+        if(item.id === $stateParams.eventId){
+            $scope.currentEditEvent = item;
+            if($scope.currentEditEventId)
+            console.log('cuur ev',$scope.currentEditEvent.name)
+        }
+    });
 });

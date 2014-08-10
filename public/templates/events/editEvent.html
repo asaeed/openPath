@@ -3,7 +3,7 @@
 		<form action="/events" method="post" id="editEventForm" onkeypress="return OpenPath.Utils.checkEnter(event)">
 			<fieldset>
 				<label for="name">Event Name:</label>
-				<input type="text" id="name" name="name" placeholder="Event Name" required />
+				<input type="text" id="name" name="name" placeholder="Event Name" value="{{currentEditEvent.name}}" required />
 			</fieldset>
 			<fieldset>
 				<label for="link">Website Link:</label>

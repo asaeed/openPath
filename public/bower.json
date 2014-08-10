@@ -4,6 +4,7 @@
   "dependencies": {
     "angular": "latest",
     "angular-ui-router": "latest",
+    "angular-resource": "latest",
     "jquery": "latest",
     "modernizr": "latest"
   }

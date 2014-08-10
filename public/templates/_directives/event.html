@@ -4,9 +4,9 @@
 <p class="location">{{ event.location.name }}</p>
 <p class="description">{{ event.description }}</p>
 <div class="buttons">
-	<!--{{#if  isMine  }}-->
-		<a href="#/events/editEvent" id="{{ event.id }}" class="btn editBtn">Edit</a>
-		<a href="#/events/inviteToEvent" id="{{ event.id }}" class="btn inviteBtn">Invite</a>
-	<!--{{/if}}-->
+	<!--{{#if  isMine  #/events/editEvent}}-->
+		<a ui-sref=".editEvent({eventId:event.id})" class="btn editBtn">Edit</a>
+		<a href="#/events/inviteToEvent" class="btn inviteBtn">Invite</a>
+	<!--{{/if}} -->
 		<a href="?e={{ event.id }}" class="btn joinBtn">Join</a>
 </div>

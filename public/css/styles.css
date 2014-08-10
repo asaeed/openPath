@@ -476,6 +476,7 @@ body #home section.page nav.subnav .content {
 body #home section.page nav.subnav .content h1 {
   float: left;
   font-size: 2em;
+  padding: 0.5em 0 0 0;
   font-weight: bold;
 }
 body #home section.page nav.subnav .content ul {
@@ -1107,21 +1108,26 @@ body #home section#events #nearByEvents .content aside ul.eventsList li.event ar
 body #home section#events #nearByEvents .content aside ul.eventsList li.event .mapWrap {
   display: none;
 }
+body #home section#events #editEvent textarea,
 body #home section#events #addNewEvent textarea {
   height: 6em;
 }
+body #home section#events #editEvent fieldset#gradelevel,
 body #home section#events #addNewEvent fieldset#gradelevel {
   overflow: hidden;
 }
+body #home section#events #editEvent fieldset#gradelevel ul,
 body #home section#events #addNewEvent fieldset#gradelevel ul {
   list-style-type: none;
   padding: 1em 0 0 0;
   float: left;
   width: 140px;
 }
+body #home section#events #editEvent fieldset#gradelevel ul li,
 body #home section#events #addNewEvent fieldset#gradelevel ul li {
   overflow: hidden;
 }
+body #home section#events #editEvent fieldset#gradelevel ul li label,
 body #home section#events #addNewEvent fieldset#gradelevel ul li label {
   float: right;
   width: 120px;
@@ -1129,6 +1135,7 @@ body #home section#events #addNewEvent fieldset#gradelevel ul li label {
   font-size: 1.3em;
   font-weight: normal;
 }
+body #home section#events #editEvent fieldset#gradelevel ul li input,
 body #home section#events #addNewEvent fieldset#gradelevel ul li input {
   float: left;
 }

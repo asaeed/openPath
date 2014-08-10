@@ -1,6 +1,6 @@
 'use strict';
 
-var App = angular.module('openPath', ['ui.router']);
+var App = angular.module('openPath', ['ui.router','ngResource']);
 
 App.config(function($stateProvider, $urlRouterProvider){
 	//routing
@@ -34,7 +34,7 @@ App.config(function($stateProvider, $urlRouterProvider){
             controller : 'addNewEventController'     
         })
         .state('events.editEvent', {
-            url: '/editEvent',
+            url: '/editEvent/:eventId',
             templateUrl: 'templates/events/editEvent.html'     
         })
         .state('events.inviteToEvent', {
