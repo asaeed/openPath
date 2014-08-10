@@ -1,12 +1,13 @@
 "use strict";
 
-App.controller('eventsController', function($scope,$http,$state,$stateParams,eventService){
+App.controller('eventsController', function($scope,$http,$state,eventService){
     $scope.currentEditEvent = null;
 
-    console.log('state',$state)
+    //onload, default to upcoming
     if($state.current.name ==='events'){
         $state.go('.upcoming')
     }
+    
     /**
      * get events
      */
@@ -37,14 +38,5 @@ App.controller('eventsController', function($scope,$http,$state,$stateParams,eve
         });
     });
     */
-    console.log($stateParams)
-    var eventId = $stateParams.eventId;
-    if($stateParams.eventId)
-    angular.forEach($scope.events, function(item) {          
-        if(item.id === $stateParams.eventId){
-            $scope.currentEditEvent = item;
-            if($scope.currentEditEventId)
-            console.log('cuur ev',$scope.currentEditEvent.name)
-        }
-    });
+
 });

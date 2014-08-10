@@ -35,7 +35,8 @@ App.config(function($stateProvider, $urlRouterProvider){
         })
         .state('events.editEvent', {
             url: '/editEvent/:eventId',
-            templateUrl: 'templates/events/editEvent.html'     
+            templateUrl: 'templates/events/editEvent.html',
+            controller : 'editEventController'      
         })
         .state('events.inviteToEvent', {
             url: '/inviteToEvent',
