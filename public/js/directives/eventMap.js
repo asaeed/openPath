@@ -1,3 +1,5 @@
+"use strict";
+
 App.directive('map', function () {
 	return {
 		template: "no map",

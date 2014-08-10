@@ -1,3 +1,5 @@
+"use strict";
+
 /*
 usage
 
@@ -13,6 +15,6 @@ https://docs.angularjs.org/api/ngResource/service/$resource
 
 App.factory('eventService', function($resource) {
 	return $resource('/events/:id', null, {
-		//'update': {method: 'PUT'}
+		'update': {method: 'PUT'}
 	});
 });

@@ -1,3 +1,5 @@
+"use strict";
+
 App.directive('event', function () {
 	return {
 		templateUrl: "templates/_directives/event.html",
@@ -8,6 +10,7 @@ App.directive('event', function () {
             	//console.log($scope.event.id);
             	//$scope.currentEditEventId = $scope.event.id;
             	//window.location = $editBtn.attr('href');
+                //$state.go('^.editEvent($scope.event.id)')
             });
         }
 	}

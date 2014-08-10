@@ -1,7 +1,12 @@
+"use strict";
 
-App.controller('eventsController', function($scope,$http,$stateParams,eventService){
+App.controller('eventsController', function($scope,$http,$state,$stateParams,eventService){
     $scope.currentEditEvent = null;
 
+    console.log('state',$state)
+    if($state.current.name ==='events'){
+        $state.go('.upcoming')
+    }
     /**
      * get events
      */
@@ -11,7 +16,7 @@ App.controller('eventsController', function($scope,$http,$stateParams,eventServi
 
         $scope.events = data.events;
     });
-    
+
     //date filter
     $scope.dateFilter = function(item){
     	var today = new Date();

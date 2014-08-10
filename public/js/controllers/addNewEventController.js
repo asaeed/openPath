@@ -1,5 +1,6 @@
+"use strict";
 
-App.controller('addNewEventController', function($scope,$http){
+App.controller('addNewEventController', function($scope,$http){//todo eventService
     /**
      * get events
      */
@@ -82,6 +83,7 @@ App.controller('addNewEventController', function($scope,$http){
 			startTime:  startTime.value,
 			endTime : endTime.value
 		};
+
 
 		$http({method: 'POST', url: '/events', data: data}).success(function(data){
 	        console.log('posted',data);
