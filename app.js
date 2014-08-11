@@ -89,6 +89,7 @@ app.configure('development', function(){
  *routes 
  */
 var routes = require('./routes/routes')(app,io,passport);
+var events = require('./routes/events')(app);
 
 /**
  * serve through http server

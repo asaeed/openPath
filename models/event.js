@@ -63,9 +63,51 @@ EventSchema.statics.addEvent = function(req, done){
 			done(null, newEvent);
 		});
 	}
-
-	
 };
+
+
+/**
+ * update
+ */
+EventSchema.statics.updateEvent = function(req, done){
+	Event.findOne(req.user._id, function(err, item){
+		if(err) throw err;
+
+		// If a item is returned, load the given user
+		if(item){
+			item.update({
+				creatorID : req.user._id,
+				roomID : room._id,
+				dateCreated : Date.now(),
+				dateModified : Date.now(),
+				name: req.body.name,
+				link: req.body.link,
+				description: req.body.description,
+				location : {
+					name : req.body.location.name,
+					longitude : req.body.location.longitude,
+					latitude : req.body.location.latitude,
+					reference : req.body.location.reference,
+					formattedAddress : req.body.location.formattedAddress
+				},
+				date : req.body.date,
+				startTime:  req.body.startTime,
+				endTime : req.body.endTime
+			},function(err, numberAffected, raw){
+				if (err) return console.error(err);
+				console.log('The number of updated documents was %d', numberAffected);
+				console.log('The raw response from Mongo was ', raw);
+				done(null, item);
+			});
+			console.log('event: ' + item.name)
+		} else {
+			console.log('There is no event by that id so no event updating happening.');
+		}
+	});
+};
+
+
+
 
 /*
 EventSchema.statics.deleteAll = function(req, done) {

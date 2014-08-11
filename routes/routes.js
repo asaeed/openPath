@@ -1,6 +1,6 @@
 var User = require('../models/user');
 var Room = require('../models/room');
-var Event = require('../models/event');
+//var Event = require('../models/event');
 var Interest = require('../models/interest');
 var Auth = require('../utils/auth');
 var Utils = require('../utils/utils');
@@ -179,10 +179,10 @@ module.exports = function(app, io, passport){
 	 * interests
 	 */
 	app.get("/interests", function(req, res, next){
-
+		//todo
 	});
 	app.post("/interests", Auth.userExist, function(req, res, next){
-
+		//todo
 	});
 
 	/**
@@ -225,101 +225,5 @@ module.exports = function(app, io, passport){
 
 
 
-	/**
-	 * events 
-	 */
-	app.get("/events", function (req, res) {
-		Event.find(function (err, items) {
-			if (err) return console.error(err);
 
-			var publicItems = [];
-			for(var i=0;i<items.length;i++){
-
-				var today = new Date();
-				var yesterday = today.setDate(today.getDate() - 1);
-
-				console.log('date',yesterday,today)
-				//!!! remove date check and move to front end
-				//if( Date.parse(items[i].date) > yesterday ){//if today or in future
-					var mine = req.user ? ( items[i].creatorID == req.user._id ) : false;
-					var publicItem = {
-						id          : items[i]._id,
-						room        : items[i].roomID,
-						name        : items[i].name,
-						link        : items[i].link,
-						description : items[i].description,
-						date        : Utils.formatDate( items[i].date ),
-						startTime   : Utils.formatTime( items[i].startTime ),
-						endTime     : Utils.formatTime( items[i].endTime ),
-						location    : items[i].location,
-						isMine      : mine ? true : false
-					};
-					
-
-					publicItems.push( publicItem );
-
-				//}
-			}
-			//sort by date descending
-			publicItems.sort(function(a,b){
-				// Turn your strings into dates, and then subtract them
-				// to get a value that is either negative, positive, or zero.
-				return new Date(b.date) - new Date(a.date);
-			});
-
-			//!!! remove ascending, save for front end
-
-			//ascending
-			//publicItems.reverse();
-
-			res.send({ events: publicItems }); //TODO : fork for admin res.send({ events: items }); 
-			//res.send("events", { event: items });
-		});
-	});
-
-	//get event by id
-	app.get('/events/:id', function(req, res){
-		var id = req.params.id;
-   		console.log('Retrieving event id : ' + id);
-		Event.findOne({ _id: id }, function (err, item) {
-			if (err) return console.error(err);
-			var publicItem = {
-				id          : item._id,
-				room        : item.roomID,
-				name        : item.name,
-				link        : item.link,
-				description : item.description,
-				date        : Utils.formatDate( item.date ),
-				startTime   : Utils.formatTime( item.startTime ),
-				endTime     : Utils.formatTime( item.endTime ),
-				location    : item.location
-			};
-
-
-			res.send(publicItem);
-		});
-	});
-
-	//add event, events post
-	app.post("/events", function (req, res) {
-		Event.addEvent(req, function(err, newEvent){
-			if(err) throw err;
-			console.log('newEvent=',newEvent);
-			//res.redirect("/#/events");
-			res.send(newEvent);
-		});
-	});
-
-	/**
-	 * go to event
-	 */
-	app.post("/gotoevent/", function (req, res) {
-		console.log('gotoevent',req.query)
-		RoomHandler.checkForRoom( req , function( event, room ){
-			res.send({
-				room : room,
-				event : event
-			});
-		});
-	});
 };

@@ -96,7 +96,7 @@ App.controller('editEventController', function($scope,$http,$stateParams,eventSe
 			endTime : endTime.value
 		};
 
-
+		//!!!!! TODO as update !!!! this creates new oone
 		$http({method: 'POST', url: '/events', data: data}).success(function(data){
 	        console.log('posted',data);
 	        window.location = '#/events';
