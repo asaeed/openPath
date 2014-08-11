@@ -89,6 +89,8 @@ app.configure('development', function(){
  *routes 
  */
 var routes = require('./routes/routes')(app,io,passport);
+var users = require('./routes/users')(app);
+var rooms = require('./routes/rooms')(app);
 var events = require('./routes/events')(app);
 
 /**
