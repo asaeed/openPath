@@ -3,7 +3,7 @@ var mongoose = require('mongoose');
 //animalSchema.set('autoIndex', false); //preformance
 
 JoinedUserSchema = mongoose.Schema({
-	creatorID: String,
+	joinedUserID: String,
 	dateJoined:  { type: Date, default: Date.now },
 	dateLeft: Date
 });
@@ -18,11 +18,11 @@ RoomSchema = mongoose.Schema({
 
 });
 
-RoomSchema.statics.joinRoom = function(creatorID, roomID, done){
+RoomSchema.statics.joinRoom = function(joinedUserID, roomID, done){
 	var self = this;
 
 	JoinedUser.create({
-		creatorID : creatorID,
+		joinedUserID : joinedUserID,
 		dateJoined : Date.now()
 	}, function(err, joinedUser ){
 		if(err) throw err;

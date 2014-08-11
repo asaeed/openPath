@@ -120,7 +120,9 @@ module.exports = function(app, io, passport){
 	});
 
 	/**
-	 * check if presenter 
+	 * check if presenter
+	 * @param room id
+	 * @param user email
 	 */
 	app.get('/presenter/:id/:email', function(req, res){
 		var id = req.params.id;
