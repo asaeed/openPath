@@ -19,7 +19,7 @@ module.exports = function(app){
 
 				console.log('date',yesterday,today)
 				//!!! remove date check and move to front end
-				if( Date.parse(items[i].date) > yesterday ){//if today or in future
+				//if( Date.parse(items[i].date) > yesterday ){//if today or in future
 					var mine = req.user ? ( items[i].creatorID == req.user._id ) : false;
 					var publicItem = {
 						id          : items[i]._id,
@@ -37,7 +37,7 @@ module.exports = function(app){
 
 					publicItems.push( publicItem );
 
-				}
+				//}
 			}
 			//sort by date descending
 			publicItems.sort(function(a,b){
@@ -100,6 +100,7 @@ module.exports = function(app){
 		});
 	});
 	*/
+
 	/**
 	 * go to event
 	 */

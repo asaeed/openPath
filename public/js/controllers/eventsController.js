@@ -7,15 +7,15 @@ App.controller('eventsController', function($scope,$http,$state,eventService){
     if($state.current.name ==='events'){
         $state.go('.upcoming')
     }
-    
+    console.log('evevv')
     /**
      * get events
      */
-    eventService.get(function(data){
+    eventService.query(function(data){
         console.log('d',data);
         //$scope.content = data;
 
-        $scope.events = data.events;
+        $scope.events = data;
     });
 
     //date filter

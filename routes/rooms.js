@@ -48,8 +48,6 @@ module.exports = function(app){
 				//send roomsUserHasJoined
 				res.send(roomsUserHasJoined);
 			});
-			
-
 		});
 	});
 };
