@@ -1,5 +1,6 @@
 var Room = require('../models/room');
 var Event = require('../models/event');
+var User = require('../models/user');
 var RoomHandler = require('../utils/roomHandler');
 var Utils = require('../utils/utils');
 
@@ -59,7 +60,7 @@ module.exports = function(app){
 	//get event by id
 	app.get('/events/:id', function(req, res){
 		var id = req.params.id;
-   		console.log('Retrieving event id : ' + id);
+   		console.log('Retrieving event id : ' + id,req.params);
 		Event.findOne({ _id: id }, function (err, item) {
 			if (err) return console.error(err);
 			var publicItem = {
@@ -100,6 +101,40 @@ module.exports = function(app){
 		});
 	});
 	*/
+
+
+	/**
+	 * get events that user has joined
+	 */
+	app.get("/events/email/:email", function (req, res) {
+		Event.find(function (err, items) {
+			if (err) return console.error(err);
+			
+			var eventsUserHasJoined = [];
+			//for each event
+			for(var i=0;i<items.length;i++){
+				console.log(items[i].roomID);
+				//for each room id connected to event
+				Room.findOne({ _id: items[i].roomID }, function (err, item) {
+					if (err) return console.error(err);
+					User.findByEmail(req, function (err, user) {
+						if (err) return console.error(err);
+
+						//loop through joined users
+						for(var j=0;j<item.joinedUsers.length;j++){
+							if(item.joinedUsers[j].joinedUserID == user._id){
+								eventsUserHasJoined.push(item);
+							}
+						}
+
+						//send roomsUserHasJoined
+						res.send(eventsUserHasJoined);
+					});
+				});
+			}
+		});
+	});
+
 
 	/**
 	 * go to event

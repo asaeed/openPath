@@ -21,11 +21,19 @@ module.exports = function(app){
 			//res.render("admin/rooms", { rooms: items });
 		});
 	});
-
+	//get room by id
+	app.get('/room/:id', function(req, res){
+		var id = req.params.id;
+   		console.log('Retrieving room id : ' + id,req.params);
+		Room.findOne({ _id: id }, function (err, item) {
+			if (err) return console.error(err);
+			res.send(item);
+		});
+	});
 	/**
 	 * get rooms that user has joined
 	 */
-	app.get("/rooms/:email", function(req, res){
+	app.get("/rooms/email/:email", function(req, res){
 		Room.find(function (err, items) {
 			if (err) return console.error(err);
 			
