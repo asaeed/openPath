@@ -16,6 +16,17 @@ OpenPath.Utils.formatTime = function( timeString ){
 	
 	return hour + ':' + mins + ' '+meridiem;
 };
+
+OpenPath.Utils.formatDate = function( dateString ){
+   var monthNames = [ "January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December" ];
+
+   var d = dateString;
+   //console.log('format date : '+ monthNames[d.getMonth()]  +'/'+ d.getDate() +'/'+d.getFullYear(),d)
+   //return d.getMonth() +'/'+ d.getDate() +'/'+d.getFullYear();
+   //return (d.getMonth()+1) +'/'+ d.getDate() +'/'+d.getFullYear();
+   return d;//monthNames[d.getMonth()] +' '+ d.getDate() +', '+d.getFullYear();
+};
+
 OpenPath.Utils.uniqueArray = function( arr ){
    var u = {}, a = [];
    for(var i = 0, l = arr.length; i < l; ++i){

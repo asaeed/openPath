@@ -3,21 +3,8 @@
 App.controller('editEventController', function($scope,$http,$stateParams,eventFactory){
     console.log($stateParams,$stateParams.eventId);
 
-    if($stateParams.eventId){
-
-	    eventFactory.getOne($stateParams.eventId).then(function(data){
-	        $scope.item = data;
-	    },function(data){
-	        alert(data);
-	    });
-	   		
-    }
-
-
-    /**
-     * get events
-     */
-	var form = document.getElementById("addNewEventForm"),
+    //dom vars
+    var form = document.getElementById("editEventForm"),
 		name = document.getElementById("name"),
 		link = document.getElementById("link"),
 		date = document.getElementById("date"),
@@ -30,6 +17,30 @@ App.controller('editEventController', function($scope,$http,$stateParams,eventFa
 		referenceInput = document.getElementById("reference"),
 		formattedAddressInput = document.getElementById("formattedAddress"),
 		saveEventBtn = document.getElementById('saveEventBtn');
+
+
+    if($stateParams.eventId){
+	    /**
+	     * get event
+	     */
+	    eventFactory.getOne($stateParams.eventId).then(function(data){
+	        $scope.item = data;
+
+	        console.log(startTime,$scope.item,OpenPath.Utils);
+
+	        console.log($scope.item.date,OpenPath.Utils.formatDate($scope.item.date) )
+	        //set date & time values
+	        date.setAttribute('value',$scope.item.date);
+	        startTime.valueAsDate = $scope.item.startTime;
+	        endTime.valueAsDate = $scope.item.endTime;
+
+	    },function(data){
+	        alert(data);
+	    });
+	   		
+    }
+//valueAsDate
+
 
 
 	//reset form

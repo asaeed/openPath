@@ -28,9 +28,9 @@ module.exports = function(app){
 						name        : items[i].name,
 						link        : items[i].link,
 						description : items[i].description,
-						date        : Utils.formatDate( items[i].date ),
-						startTime   : Utils.formatTime( items[i].startTime ),
-						endTime     : Utils.formatTime( items[i].endTime ),
+						date        : items[i].date ,//Utils.formatDate( items[i].date ),
+						startTime   : items[i].startTime, //Utils.formatTime( items[i].startTime ),
+						endTime     : items[i].endTime, //Utils.formatTime( items[i].endTime ),
 						location    : items[i].location,
 						isMine      : mine ? true : false
 					};
