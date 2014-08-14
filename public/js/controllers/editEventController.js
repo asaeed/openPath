@@ -4,20 +4,13 @@ App.controller('editEventController', function($scope,$http,$stateParams,eventFa
     console.log($stateParams,$stateParams.eventId);
 
     if($stateParams.eventId){
-    	/*
-    	$http({method: 'GET', url: '/events/'+$stateParams.eventId}).success(function(data){
-	        console.log('got one',data);
-	        $scope.item = data;
-	    }).error(function(){
-	        console.log('error');
-	    });
-		*/
-		eventFactory.get({ id:$stateParams.eventId },function(data){
-			console.log('got ev',data);
-			$scope.item = data;
-		});
 
-   		
+	    eventFactory.getOne($stateParams.eventId).then(function(data){
+	        $scope.item = data;
+	    },function(data){
+	        alert(data);
+	    });
+	   		
     }
 
 
