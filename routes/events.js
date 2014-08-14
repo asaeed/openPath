@@ -93,8 +93,9 @@ module.exports = function(app){
 	//update event by id
 	/**/
 	app.put("/events/:id", function (req, res) {
-		console.log('update event',req.body.name);
-		Event.updateEvent(req , function(err,user){
+		console.log('update event',req.body.name,req.body.id);
+		var id = req.params.id;
+		Event.updateEvent( id, req , function(err, updatedEvent ){
 			if(err) throw err;
 			console.log(req.body.name + '\'s updated');
 			//res.redirect("/#/profile");

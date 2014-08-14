@@ -96,18 +96,22 @@ App.controller('editEventController', function($scope,$http,$stateParams,eventFa
 			startTime:  startTime.value,
 			endTime : endTime.value
 		};
-		/*
+		
 		//!!!!! TODO as update !!!! this creates new oone
 		$http({method: 'PUT', url: '/events/'+$stateParams.eventId, data: data}).success(function(data){
 	        console.log('put',data);
-	        window.location = '#/events';
+	       // window.location = '#/events';
 	    }).error(function(){
 	        console.log('error');
 	    });
-		*/
+	/*	
 		console.log('ost it',data)
-		eventFactory.update({id:$stateParams.eventId}, data);
-
+		eventFactory.update($stateParams.eventId, data).then(function(data){
+	        console.log('event updated',data);
+	    },function(data){
+	        alert(data);
+	    });
+	*/
 
 	}
 

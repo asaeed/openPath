@@ -69,17 +69,17 @@ EventSchema.statics.addEvent = function(req, done){
 /**
  * update
  */
-EventSchema.statics.updateEvent = function(req, done){
-	console.log('eventeventevent',req,req.event)
-	Event.findOne(req.event._id, function(err, item){
+EventSchema.statics.updateEvent = function(id, req, done){
+	console.log('eventeventevent',req)
+	Event.findOne(id, function(err, item){
 		if(err) throw err;
 
 		// If a item is returned, load the given user
 		if(item){
 			item.update({
-				creatorID : req.user._id,
-				roomID : room._id,
-				dateCreated : Date.now(),
+				//creatorID : req.user._id,
+				//roomID : room._id,
+				//dateCreated : Date.now(),
 				dateModified : Date.now(),
 				name: req.body.name,
 				link: req.body.link,
@@ -91,9 +91,9 @@ EventSchema.statics.updateEvent = function(req, done){
 					reference : req.body.location.reference,
 					formattedAddress : req.body.location.formattedAddress
 				},
-				date : req.body.date,
-				startTime:  req.body.startTime,
-				endTime : req.body.endTime
+				//date : req.body.date,
+				//startTime:  req.body.startTime,
+				//endTime : req.body.endTime
 			},function(err, numberAffected, raw){
 				if (err) return console.error(err);
 				console.log('The number of updated documents was %d', numberAffected);
