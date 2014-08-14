@@ -12,7 +12,12 @@ App.config(function($stateProvider, $urlRouterProvider){
             template: '<div style="font-size:100px;">HOMe</div>'
         })
 
-
+        //INVITE ROUTES
+        .state('invite', {
+            url: '/invite',
+            templateUrl: 'templates/invite.html',
+            controller : 'inviteController'
+        })
         //EVENTS ROUTES
         .state('events', {
             url: '/events',
