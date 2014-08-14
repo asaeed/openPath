@@ -98,9 +98,8 @@ EventSchema.statics.updateEvent = function(id, req, done){
 				if (err) return console.error(err);
 				console.log('The number of updated documents was %d', numberAffected);
 				console.log('The raw response from Mongo was ', raw);
-				done(null, item);
+				done(null, item);//TODO shouldn't be passing item back cuz it is old one, need updated item or just a msg - check user profile update for same issue
 			});
-			console.log('event: ' + item.name)
 		} else {
 			console.log('There is no event by that id so no event updating happening.');
 		}

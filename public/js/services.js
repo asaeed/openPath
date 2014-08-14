@@ -43,15 +43,15 @@ App.factory('eventFactory', function($http,$q) {
 	    return deferred.promise;
 	}
 	//update one by id
-	service.update = function(id,data){
-		var deferred = $q.defer();
-		$http({method: 'PUT', url: url+id, data: data }).success(function(data){
-	    	deferred.resolve(data);
+	service.update = function(id,data,done){
+		$http({method: 'PUT', url: url+id, data: data }).success(function(d){
+			done(d);
 	    }).error(function(){
-	        deferred.reject('There was an error');
+	        console.log('service putting error')
 	    });
-	    return deferred.promise;
 	}
 
+
+	//return service
 	return service;
 })
