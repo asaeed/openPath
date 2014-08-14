@@ -1,15 +1,23 @@
 "use strict";
 
-App.controller('editEventController', function($scope,$http,$stateParams,eventService){
-    console.log($stateParams);
+App.controller('editEventController', function($scope,$http,$stateParams,eventFactory){
+    console.log($stateParams,$stateParams.eventId);
 
     if($stateParams.eventId){
+    	/*
     	$http({method: 'GET', url: '/events/'+$stateParams.eventId}).success(function(data){
 	        console.log('got one',data);
 	        $scope.item = data;
 	    }).error(function(){
 	        console.log('error');
 	    });
+		*/
+		eventFactory.get({ id:$stateParams.eventId },function(data){
+			console.log('got ev',data);
+			$scope.item = data;
+		});
+
+   		
     }
 
 
@@ -95,15 +103,17 @@ App.controller('editEventController', function($scope,$http,$stateParams,eventSe
 			startTime:  startTime.value,
 			endTime : endTime.value
 		};
-
+		/*
 		//!!!!! TODO as update !!!! this creates new oone
-		$http({method: 'POST', url: '/events', data: data}).success(function(data){
-	        console.log('posted',data);
+		$http({method: 'PUT', url: '/events/'+$stateParams.eventId, data: data}).success(function(data){
+	        console.log('put',data);
 	        window.location = '#/events';
 	    }).error(function(){
 	        console.log('error');
 	    });
-
+		*/
+		console.log('ost it',data)
+		eventFactory.update({id:$stateParams.eventId}, data);
 
 
 	}

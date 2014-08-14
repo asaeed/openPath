@@ -70,7 +70,8 @@ EventSchema.statics.addEvent = function(req, done){
  * update
  */
 EventSchema.statics.updateEvent = function(req, done){
-	Event.findOne(req.user._id, function(err, item){
+	console.log('eventeventevent',req,req.event)
+	Event.findOne(req.event._id, function(err, item){
 		if(err) throw err;
 
 		// If a item is returned, load the given user

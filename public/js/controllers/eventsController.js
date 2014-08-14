@@ -1,6 +1,6 @@
 "use strict";
 
-App.controller('eventsController', function($scope,$http,$state,eventService){
+App.controller('eventsController', function($scope,$http,$state,eventFactory){
     $scope.currentEditEvent = null;
 
     //onload, default to upcoming
@@ -10,13 +10,20 @@ App.controller('eventsController', function($scope,$http,$state,eventService){
     console.log('evevv')
     /**
      * get events
-     */
-    eventService.query(function(data){
+     
+    eventFactory.query(function(data){
         console.log('d',data);
         //$scope.content = data;
-
         $scope.events = data;
     });
+
+     */
+    eventFactory.get().then(function(data){
+        $scope.events = data;
+    },function(data){
+        alert(data);
+    });
+
 
     //date filter
     $scope.dateFilter = function(item){

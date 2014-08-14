@@ -91,7 +91,7 @@ module.exports = function(app){
 	});
 
 	//update event by id
-	/*
+	/**/
 	app.put("/events/:id", function (req, res) {
 		console.log('update event',req.body.name);
 		Event.updateEvent(req , function(err,user){
@@ -100,7 +100,7 @@ module.exports = function(app){
 			//res.redirect("/#/profile");
 		});
 	});
-	*/
+	
 
 
 	/**
