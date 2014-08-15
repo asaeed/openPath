@@ -25,7 +25,7 @@ App.controller('editEventController', function($scope,$http,$stateParams,eventFa
 	     */
 	    eventFactory.getOne($stateParams.eventId).then(function(data){
 	        $scope.item = data;
-
+	        console.log($scope.item)
 	        //set date & time values
 	        date.setAttribute('value',OpenPath.Utils.formatDateForHTMLInput($scope.item.date) );
 	        startTime.setAttribute('value',OpenPath.Utils.formatTimeForHTMLInput($scope.item.startTime) );
@@ -108,7 +108,8 @@ App.controller('editEventController', function($scope,$http,$stateParams,eventFa
 
 		//call update in service
 		eventFactory.update($stateParams.eventId, data, function(d){
-			console.log('ev put', d)
+			console.log('ev put', d);
+			window.location = '#/events/';
 		});
 	}
 

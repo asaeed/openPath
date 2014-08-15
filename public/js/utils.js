@@ -48,7 +48,6 @@ OpenPath.Utils.formatTimeForHTMLInput = function( timeString ){
    if(min !== '00')
    min = min < 10 ? '0'+min : min;
 
-   console.log(meridiem,hour);
    return hour+':'+min+':00';
 };
 

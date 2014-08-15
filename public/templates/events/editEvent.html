@@ -24,10 +24,10 @@
 			<fieldset>
 				<label for="location">Location:</label>
 				<input type="text" id="location" name="location" required value="{{item.location.name}}" />
-				<input type="hidden" id="longitude" name="longitude" />
-				<input type="hidden" id="latitude" name="latitude" />
-				<input type="hidden" id="reference" name="reference" />
-				<input type="hidden" id="formattedAddress" name="formattedAddress" />
+				<input type="hidden" id="longitude" name="longitude" value="{{item.location.longitude}}" />
+				<input type="hidden" id="latitude" name="latitude" value="{{item.location.latitude}}" />
+				<input type="hidden" id="reference" name="reference" value="{{item.location.reference}}"/>
+				<input type="hidden" id="formattedAddress" name="formattedAddress" value="{{item.location.formattedAddress}}" />
 			</fieldset>
 			<fieldset id="gradelevel" class="gradelevel">
 				<label for="gradelevel">Grade Level(s)</label>
