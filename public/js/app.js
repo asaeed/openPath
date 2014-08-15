@@ -27,7 +27,8 @@ App.config(function($stateProvider, $urlRouterProvider){
         //nested events states
         .state('events.upcoming', {
             url: '/upcoming',
-            templateUrl: 'templates/events/upcoming.html'     
+            templateUrl: 'templates/events/upcoming.html',
+            controller : 'upcomingEventsController'      
         })
         .state('events.nearby', {
             url: '/nearby',

@@ -10,13 +10,6 @@ App.controller('eventsController', function($scope,$http,$state,eventFactory){
     console.log('evevv')
     /**
      * get events
-     
-    eventFactory.query(function(data){
-        console.log('d',data);
-        //$scope.content = data;
-        $scope.events = data;
-    });
-
      */
     eventFactory.get().then(function(data){
         $scope.events = data;
@@ -48,6 +41,23 @@ App.controller('eventsController', function($scope,$http,$state,eventFactory){
 
 });
 
+/**
+ * upcoming events controller
+ */
+App.controller('upcomingEventsController',function($scope,$http,$state,eventFactory){
+    /**
+     * get events
+     */
+    eventFactory.get().then(function(data){
+        $scope.events = data;
+    },function(data){
+        alert(data);
+    });
+});
+
+/**
+ * nearby events controller
+ */
 App.controller('nearbyEventsController',function($scope,$http,$state,eventFactory){
     var nearByEvents = document.getElementById('nearByEvents');
     var aside = nearByEvents.getElementsByTagName('aside')[0];
