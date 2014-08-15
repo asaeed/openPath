@@ -4,7 +4,6 @@
  * @see http://itp.nyu.edu/~sve204/liveweb_fall2013/week5.html
  */
 
-
 /**
  * Module dependencies.
  */
@@ -33,7 +32,13 @@ var env = process.env.NODE_ENV || 'development',
     config = require('./config')[env];
 
 //create server
-var http = http.createServer(app),
+var http = http.createServer(function(req,res){
+    /**
+     * set up redirect http to https
+     */
+      res.writeHead(301, { "Location": "https://" + req.headers['host'] + req.url });
+      res.end();
+    }),//http.createServer(app),
     https = https.createServer(sslOptions, app),
     io = require('socket.io').listen(https);//, { log: true }
 
@@ -85,6 +90,9 @@ app.configure('development', function(){
   app.use(express.errorHandler());
 });
 
+
+
+
 /**
  *routes 
  */
@@ -100,6 +108,9 @@ http.listen(app.get('port'), function(){
   console.log("Server listening on port " + app.get('port'));
 });
 
+/**
+ * serve through https server
+ */
 https.listen(app.get('securePort'), function(){
   console.log("Secure Server listening on port " + app.get('securePort'));
 });
