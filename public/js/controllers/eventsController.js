@@ -7,7 +7,9 @@ App.controller('eventsController', function($scope,$http,$state,eventFactory){
     if($state.current.name ==='events'){
         $state.go('.upcoming')
     }
-    console.log('evevv')
+    console.log('event controller');
+
+
     /**
      * get events
      */
@@ -16,9 +18,9 @@ App.controller('eventsController', function($scope,$http,$state,eventFactory){
     },function(data){
         alert(data);
     });
+/*
 
-
-    //date filter
+    //date filter  TODO move to child controller
     $scope.dateFilter = function(item){
     	var today = new Date();
 		var yesterday = today.setDate(today.getDate() - 1);
@@ -26,7 +28,7 @@ App.controller('eventsController', function($scope,$http,$state,eventFactory){
     }
 
     //watch for edit event
-    /*
+    
     $scope.$watch('currentEditEventId',function(){
         console.log('ev change')
         angular.forEach($scope.events, function(item) {          
@@ -37,7 +39,8 @@ App.controller('eventsController', function($scope,$http,$state,eventFactory){
             }
         });
     });
-    */
+
+*/
 
 });
 
@@ -53,6 +56,15 @@ App.controller('upcomingEventsController',function($scope,$http,$state,eventFact
     },function(data){
         alert(data);
     });
+
+    //date filter  TODO move to child controller
+    $scope.dateFilter = function(item){
+        var today = new Date();
+        var yesterday = today.setDate(today.getDate() - 1);
+        
+        return(Date.parse(item.date) > yesterday);//if today or in future
+    }
+    
 });
 
 /**

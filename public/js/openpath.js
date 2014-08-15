@@ -22,7 +22,7 @@ OpenPath = {
 		// 'http://10.0.1.15:8080';
 		// 'http://openpath.me/';  
 
-		return;//!!!!!!
+		
 
 		//init ui 
 		this.Ui.init();
@@ -31,9 +31,9 @@ OpenPath = {
 		 * user obj to send to others - you :)
 		 * handles allow modal
 		 */
-		this.user = new OpenPath.User( document.getElementById('email').value );
+		//this.user = new OpenPath.User( document.getElementById('email').value );
 		
-
+return;//!!!!!!
 
 		//handle events
 		this.eventsController = new OpenPath.Controller();

@@ -1,10 +1,11 @@
 <div id="home" ng-app="openPath">
-	{{> header }}
-	
-	<div ui-view></div>
-	
-	{{> footer }}
-
+	<div ng-controller="mainController">
+		{{> header }}
+		
+		<div ui-view></div>
+		
+		{{> footer }}
+	</div>
 </div>
 
 <input type="hidden" name="email" id="email" value="{{user_email}}" />
