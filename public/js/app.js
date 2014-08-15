@@ -31,7 +31,8 @@ App.config(function($stateProvider, $urlRouterProvider){
         })
         .state('events.nearby', {
             url: '/nearby',
-            templateUrl: 'templates/events/nearby.html'     
+            templateUrl: 'templates/events/nearby.html',
+            controller : 'nearbyEventsController'   
         })
         .state('events.addNewEvent', {
             url: '/addNewEvent',

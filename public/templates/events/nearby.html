@@ -1,1 +1,13 @@
-nearby.html
+<section id="nearByEvents" class="view">
+	<div class="content">
+		<div id="nearByMap"></div>
+		<aside>
+			<ul class="eventsList">
+			<li class="event" ng-repeat="event in events | filter : dateFilter">
+				<!--  | orderBy : -->
+				<article event></article>
+			</li>
+		</ul>
+		</aside>
+	</div>
+</section>
