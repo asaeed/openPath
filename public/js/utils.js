@@ -29,9 +29,27 @@ OpenPath.Utils.formatDateForHTMLInput = function( dateString ){
    month = month < 10 ? '0'+month : month;
    var day = dateString.split(' ')[1].split(',')[0];
    day = day < 10 ? '0'+day : day;
-   
+
    //need format YYYY-MM-DD
    return year+'-'+month+'-'+day;
+};
+
+/**
+ * formatTimeForHTMLInput
+ * @see http://www.w3.org/TR/html-markup/input.time.html
+ */
+OpenPath.Utils.formatTimeForHTMLInput = function( timeString ){
+   var hour = timeString.split(':')[0];
+   var min = timeString.split(':')[1].split(' ')[0];
+   var meridiem = timeString.split(' ')[1];
+
+   hour = meridiem==='PM' ?  12 + Number(hour) : hour;
+   hour = hour < 10 ? '0'+hour : hour;
+   if(min !== '00')
+   min = min < 10 ? '0'+min : min;
+
+   console.log(meridiem,hour);
+   return hour+':'+min+':00';
 };
 
 OpenPath.Utils.uniqueArray = function( arr ){

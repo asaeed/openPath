@@ -26,13 +26,10 @@ App.controller('editEventController', function($scope,$http,$stateParams,eventFa
 	    eventFactory.getOne($stateParams.eventId).then(function(data){
 	        $scope.item = data;
 
-	        console.log(startTime,$scope.item,OpenPath.Utils);
-
-	        console.log($scope.item.date,OpenPath.Utils.formatDateForHTMLInput($scope.item.date) )
 	        //set date & time values
 	        date.setAttribute('value',OpenPath.Utils.formatDateForHTMLInput($scope.item.date) );
-	        startTime.valueAsDate = $scope.item.startTime;
-	        endTime.valueAsDate = $scope.item.endTime;
+	        startTime.setAttribute('value',OpenPath.Utils.formatTimeForHTMLInput($scope.item.startTime) );
+	        endTime.setAttribute('value',OpenPath.Utils.formatTimeForHTMLInput($scope.item.endTime) );
 
 	    },function(data){
 	        alert(data);

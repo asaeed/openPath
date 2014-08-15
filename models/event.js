@@ -92,8 +92,8 @@ EventSchema.statics.updateEvent = function(id, req, done){
 					formattedAddress : req.body.location.formattedAddress
 				},
 				date : req.body.date,
-				//startTime:  req.body.startTime,
-				//endTime : req.body.endTime
+				startTime:  req.body.startTime,
+				endTime : req.body.endTime
 			},function(err, numberAffected, raw){
 				if (err) return console.error(err);
 				console.log('The number of updated documents was %d', numberAffected);
