@@ -13,12 +13,14 @@ App.controller('eventsController', function($scope,$http,$state,eventFactory){
     /**
      * get events
      */
+    /*
+    
     eventFactory.get().then(function(data){
         $scope.events = data;
     },function(data){
         alert(data);
     });
-/*
+
 
     //date filter  TODO move to child controller
     $scope.dateFilter = function(item){
@@ -61,7 +63,7 @@ App.controller('upcomingEventsController',function($scope,$http,$state,eventFact
     $scope.dateFilter = function(item){
         var today = new Date();
         var yesterday = today.setDate(today.getDate() - 1);
-        
+
         return(Date.parse(item.date) > yesterday);//if today or in future
     }
     
