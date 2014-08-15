@@ -1,14 +1,16 @@
 
 
 module.exports.formatDate = function( dateString ){
-   var monthNames = [ "January", "February", "March", "April", "May", "June",
-    "July", "August", "September", "October", "November", "December" ]
+    var monthNames = [ "January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December" ]
 
-	var d = dateString ;
-  // console.log('format date : '+ monthNames[d.getMonth()]  +'/'+ d.getDate() +'/'+d.getFullYear(),d)
-	//return d.getMonth() +'/'+ d.getDate() +'/'+d.getFullYear();
-   //return (d.getMonth()+1) +'/'+ d.getDate() +'/'+d.getFullYear();
-   return monthNames[d.getMonth()] +' '+ d.getDate() +', '+d.getFullYear();
+    var d = dateString;
+    // console.log('format date : '+ monthNames[d.getMonth()]  +'/'+ d.getDate() +'/'+d.getFullYear(),d)
+    //return d.getMonth() +'/'+ d.getDate() +'/'+d.getFullYear();
+    //return (d.getMonth()+1) +'/'+ d.getDate() +'/'+d.getFullYear();
+
+
+    //correct for FrontEnd
+    return monthNames[d.getMonth()] +' '+ d.getDate() +', '+d.getFullYear();
 };
 
 module.exports.formatTime = function( timeString ){

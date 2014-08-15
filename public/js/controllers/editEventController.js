@@ -28,9 +28,9 @@ App.controller('editEventController', function($scope,$http,$stateParams,eventFa
 
 	        console.log(startTime,$scope.item,OpenPath.Utils);
 
-	        console.log($scope.item.date,OpenPath.Utils.formatDate($scope.item.date) )
+	        console.log($scope.item.date,OpenPath.Utils.formatDateForHTMLInput($scope.item.date) )
 	        //set date & time values
-	        date.setAttribute('value',$scope.item.date);
+	        date.setAttribute('value',OpenPath.Utils.formatDateForHTMLInput($scope.item.date) );
 	        startTime.valueAsDate = $scope.item.startTime;
 	        endTime.valueAsDate = $scope.item.endTime;
 

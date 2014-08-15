@@ -16,15 +16,22 @@ OpenPath.Utils.formatTime = function( timeString ){
 	
 	return hour + ':' + mins + ' '+meridiem;
 };
-
-OpenPath.Utils.formatDate = function( dateString ){
+/**
+ * formatDateForHTMLInput
+ * @see http://stackoverflow.com/questions/14212527/how-to-set-default-value-to-the-inputtype-date
+ * Note: perhaps the server date needs to be changed so that this is easier TODO
+ */
+OpenPath.Utils.formatDateForHTMLInput = function( dateString ){
    var monthNames = [ "January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December" ];
 
-   var d = dateString;
-   //console.log('format date : '+ monthNames[d.getMonth()]  +'/'+ d.getDate() +'/'+d.getFullYear(),d)
-   //return d.getMonth() +'/'+ d.getDate() +'/'+d.getFullYear();
-   //return (d.getMonth()+1) +'/'+ d.getDate() +'/'+d.getFullYear();
-   return d;//monthNames[d.getMonth()] +' '+ d.getDate() +', '+d.getFullYear();
+   var year = dateString.split(', ')[1];
+   var month = monthNames.indexOf( dateString.split(' ')[0] ) + 1;
+   month = month < 10 ? '0'+month : month;
+   var day = dateString.split(' ')[1].split(',')[0];
+   day = day < 10 ? '0'+day : day;
+   
+   //need format YYYY-MM-DD
+   return year+'-'+month+'-'+day;
 };
 
 OpenPath.Utils.uniqueArray = function( arr ){

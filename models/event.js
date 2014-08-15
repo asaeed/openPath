@@ -91,7 +91,7 @@ EventSchema.statics.updateEvent = function(id, req, done){
 					reference : req.body.location.reference,
 					formattedAddress : req.body.location.formattedAddress
 				},
-				//date : req.body.date,
+				date : req.body.date,
 				//startTime:  req.body.startTime,
 				//endTime : req.body.endTime
 			},function(err, numberAffected, raw){
