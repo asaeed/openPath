@@ -16,8 +16,8 @@ App.controller('editEventController', function($scope,$http,$stateParams,eventFa
 		latitudeInput = document.getElementById("latitude"),
 		referenceInput = document.getElementById("reference"),
 		formattedAddressInput = document.getElementById("formattedAddress"),
-		saveEventBtn = document.getElementById('saveEventBtn');
-
+		saveEventBtn = document.getElementById('saveEventBtn'),
+		deleteEventBtn = document.getElementById('deleteEventBtn');
 
     if($stateParams.eventId){
 	    /**
@@ -113,8 +113,23 @@ App.controller('editEventController', function($scope,$http,$stateParams,eventFa
 		});
 	}
 
+	this.deleteEvent = function(e){
+		e.preventDefault();
+		//call update in service
+		eventFactory.delete($stateParams.eventId, function(d){
+			console.log('ev deleted', d);
+			alert('event deleted');
+			window.location = '#/events/';
+		});
+	};
+
 	//don't add more that one event listener
 	if(saveEventBtn._hasEventListener) return;
 	saveEventBtn.addEventListener('click',this.postNewEvent,false);
 	saveEventBtn._hasEventListener = true;
+
+	if(deleteEventBtn._hasEventListener) return;
+	deleteEventBtn.addEventListener('click',this.deleteEvent,false);
+	deleteEventBtn._hasEventListener = true;
+	
 });

@@ -4,9 +4,8 @@
 <p class="location">{{ event.location.name }}</p>
 <p class="description">{{ event.description }}</p>
 <div class="buttons">
-	<!--{{#if  isMine  #/events/editEvent}}-->
-		<a ng-if="event.isMine" ui-sref="^.editEvent({eventId:event.id})" class="btn editBtn">Edit</a>
-		<a ng-if="event.isMine" href="#/events/inviteToEvent" class="btn inviteBtn">Invite</a>
-	<!--{{/if}} -->
-		<a href="?e={{ event.id }}" class="btn joinBtn">Join</a>
+	<a ng-if="event.isMine" ui-sref="^.editEvent({eventId:event.id})" class="btn editBtn">Edit</a>
+	<a href="#/events/inviteToEvent" class="btn inviteBtn">Invite</a>
+
+	<a href="?e={{ event.id }}" class="btn joinBtn">Join</a>
 </div>

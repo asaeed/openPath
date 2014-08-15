@@ -50,7 +50,14 @@ App.factory('eventFactory', function($http,$q) {
 	        console.log('service putting error')
 	    });
 	}
-
+	//update one by id
+	service.delete = function(id,done){
+		$http({method: 'DELETE', url: url+id }).success(function(d){
+			done(d);
+	    }).error(function(){
+	        console.log('service deletin error')
+	    });
+	}
 
 	//return service
 	return service;

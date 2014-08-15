@@ -1101,10 +1101,6 @@ body #home section#events #nearByEvents .content aside ul.eventsList li.event ar
 body #home section#events #nearByEvents .content aside ul.eventsList li.event article .buttons .joinBtn {
   float: left;
 }
-body #home section#events #nearByEvents .content aside ul.eventsList li.event article .buttons .inviteBtn,
-body #home section#events #nearByEvents .content aside ul.eventsList li.event article .buttons .editBtn {
-  display: none;
-}
 body #home section#events #nearByEvents .content aside ul.eventsList li.event .mapWrap {
   display: none;
 }
@@ -1138,6 +1134,16 @@ body #home section#events #addNewEvent fieldset#gradelevel ul li label {
 body #home section#events #editEvent fieldset#gradelevel ul li input,
 body #home section#events #addNewEvent fieldset#gradelevel ul li input {
   float: left;
+}
+body #home section#events #editEvent #deleteEventBtn,
+body #home section#events #addNewEvent #deleteEventBtn {
+  background-color: #cc0000;
+  background-image: url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiA/PjxzdmcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiB2aWV3Qm94PSIwIDAgMSAxIiBwcmVzZXJ2ZUFzcGVjdFJhdGlvPSJub25lIj48bGluZWFyR3JhZGllbnQgaWQ9Imxlc3NoYXQtZ2VuZXJhdGVkIiBncmFkaWVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSIgeDE9IjAlIiB5MT0iMCUiIHgyPSIwJSIgeTI9IjEwMCUiPjxzdG9wIG9mZnNldD0iMCUiIHN0b3AtY29sb3I9IiNjYzAwMDAiIHN0b3Atb3BhY2l0eT0iMSIvPjxzdG9wIG9mZnNldD0iMTAwJSIgc3RvcC1jb2xvcj0iI2NjMDAxMSIgc3RvcC1vcGFjaXR5PSIxIi8+PC9saW5lYXJHcmFkaWVudD48cmVjdCB4PSIwIiB5PSIwIiB3aWR0aD0iMSIgaGVpZ2h0PSIxIiBmaWxsPSJ1cmwoI2xlc3NoYXQtZ2VuZXJhdGVkKSIgLz48L3N2Zz4=);
+  background-image: -webkit-linear-gradient(top, #cc0000 0%, #cc0011 100%);
+  background-image: -moz-linear-gradient(top, #cc0000 0%, #cc0011 100%);
+  background-image: -o-linear-gradient(top, #cc0000 0%, #cc0011 100%);
+  background-image: linear-gradient(to bottom, #cc0000 0%, #cc0011 100%);
+  margin-left: 6em;
 }
 body #home section#error {
   padding: 8em 0;

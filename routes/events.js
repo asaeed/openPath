@@ -91,7 +91,6 @@ module.exports = function(app){
 	});
 
 	//update event by id
-	/**/
 	app.put("/events/:id", function (req, res) {
 		console.log('update event',req.body.name,req.body.id);
 		var id = req.params.id;
@@ -102,7 +101,17 @@ module.exports = function(app){
 			res.send(updatedEvent);//TODO: actually the old event and not updated one, though updates
 		});
 	});
-	
+
+	//delete event by id
+	app.delete("/events/:id", function (req, res) {
+		console.log('delete event',req.params.id);
+		var id = req.params.id;
+		Event.deleteEvent( id, req , function(err, response){
+			if(err) throw err;
+			console.log(req.body.name + '\'s deleted');
+			res.send(response);
+		});
+	});
 
 
 	/**

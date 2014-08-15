@@ -71,7 +71,7 @@ EventSchema.statics.addEvent = function(req, done){
  */
 EventSchema.statics.updateEvent = function(id, req, done){
 	console.log('eventeventevent',req)
-	Event.findOne(id, function(err, item){
+	Event.findOne({_id:id}, function(err, item){
 		if(err) throw err;
 
 		// If a item is returned, load the given user
@@ -108,7 +108,15 @@ EventSchema.statics.updateEvent = function(id, req, done){
 
 
 
-
+EventSchema.statics.deleteEvent = function(id, req, done) {
+	Event.findOne({_id:id}, function(err, item){
+		if(err) return done(err);
+		if(item){
+			console.log('found item, gonna delete')
+			item.remove(done);			
+		}
+	});
+};
 /*
 EventSchema.statics.deleteAll = function(req, done) {
 	this.remove( function(err, user){
