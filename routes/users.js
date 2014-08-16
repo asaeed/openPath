@@ -64,12 +64,22 @@ module.exports = function(app){
 	});
 
 	//profile post
-	app.post("/profile", Auth.userExist, function(req, res, next){
+	app.put("/user/profile", Auth.userExist, function(req, res, next){
 		console.log('update profile',req.user._id,req.body.firstName,req.body.lastName);
 		User.updateProfile(req , function(err,user){
 			if(err) throw err;
 			console.log(user.email + '\'s profile updated');
 			res.redirect("/#/profile");
+		});
+	});
+
+	app.put("/user/settings", Auth.userExist, function(req, res, next){
+		console.log('update settings',req.user._id, req.body);
+		User.updateSettings(req , function(err,user){
+			if(err) throw err;
+			console.log(user.email + '\'s settings updated');
+			//res.redirect("/#/profile");
+			res.send(user.settings);
 		});
 	});
 };

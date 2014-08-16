@@ -76,7 +76,8 @@ App.config(function($stateProvider, $urlRouterProvider){
         })
         .state('profile.settings', {
             url: '/settings',
-            templateUrl: 'templates/profile/settings.html'     
+            templateUrl: 'templates/profile/settings.html',
+            controller : 'settingsController'     
         })
     ;//end state provider
 

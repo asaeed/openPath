@@ -93,21 +93,12 @@ UserSchema.statics.updateProfile = function(req, done){
 
 		// If a user is returned, load the given user
 		if(user){
-
 			user.update({
 				firstName: req.body.firstName,
 				lastName: req.body.lastName,
 				gradeLevel : req.body.gradeLevel,
 				interests : req.body.interests
 				//colearners
-				/*settings : {
-					alerts : {
-						colearnerJoin : Boolean,
-						nearEvent : Boolean,
-						allEvents : Boolean
-					},
-					publicProfile : Boolean
-				}*/
 			},function(err, numberAffected, raw){
 				if (err) return console.error(err);
 				console.log('The number of updated documents was %d', numberAffected);
@@ -120,7 +111,37 @@ UserSchema.statics.updateProfile = function(req, done){
 		}
 	});
 };
+/**
+ * update settings
+ */
+UserSchema.statics.updateSettings = function(req, done){
+	console.log('updateSettings',req.body)
+	User.findOne(req.user._id, function(err, user){
+		if(err) throw err;
 
+		// If a user is returned, load the given user
+		if(user){
+			user.update({
+				settings : {
+					alerts : {
+						colearnerJoin : req.body.colearnerJoin,
+						nearEvent : req.body.nearEvent,
+						allEvents : req.body.allEvents
+					},
+					publicProfile : req.body.publicProfile
+				}
+			},function(err, numberAffected, raw){
+				if (err) return console.error(err);
+				console.log('The number of updated documents was %d', numberAffected);
+				console.log('The raw response from Mongo was ', raw);
+				done(null, user);
+			});
+			console.log('user: ' + user.email)
+		} else {
+			console.log('There is no user by that id so no settings updating happening.');
+		}
+	});
+};
 /*
 UserSchema.statics.deleteAll = function(req, done) {
 	this.remove( function(err, user){

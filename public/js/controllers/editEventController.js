@@ -123,7 +123,7 @@ App.controller('editEventController', function($scope,$http,$stateParams,eventFa
 		});
 	};
 
-	//don't add more that one event listener
+	//don't add more that one event listener //legacy but what the hell
 	if(saveEventBtn._hasEventListener) return;
 	saveEventBtn.addEventListener('click',this.postNewEvent,false);
 	saveEventBtn._hasEventListener = true;

@@ -103,6 +103,7 @@ App.controller('nearbyEventsController',function($scope,$state,eventFactory){
         var bounds = new google.maps.LatLngBounds();
         var mapOptions = {
             zoom: 3,
+            //TODO
             //center: new google.maps.LatLng(OpenPath.user.obj.location.coords.latitude, OpenPath.user.obj.location.coords.longitude),
             mapTypeId: google.maps.MapTypeId.TERRAIN
         };
@@ -127,7 +128,7 @@ startTime: "1:00 AM"
             */
             var e = $scope.events[i];
             markers.push([e.location.name,e.location.latitude,e.location.longitude]);
-            var infoMarkup = '<div class="event">' +
+            /*var infoMarkup = '<div class="event">' +
                                 '<article>' +
                                     '<h3><a href="javascript:void(0);" target="_blank">'+e.name+'</a></h3>' +
                                     '<p class="link"><a href="'+e.link+'">'+e.link+'</a></p>' +
@@ -135,8 +136,8 @@ startTime: "1:00 AM"
                                     '<p class="location">'+e.location.name+'</p>' +
                                     '<p class="description">'+e.description+'</p>' +
                                 '</article>'+
-                              '</div>';
-            infoMarkup = '<div>hi dear</div>'; 
+                              '</div>';*/
+            var infoMarkup = '<div>hi dear</div>'; 
             infoWindowContent.push(infoMarkup);
             console.log($scope.events[i])
         }
@@ -172,37 +173,5 @@ startTime: "1:00 AM"
             //this.setZoom(14);
             google.maps.event.removeListener(boundsListener);
         });
-
-        /*
-        var pinsMap = new google.maps.Polyline({
-            path: pins,
-            geodesic: true,
-            strokeColor: '#FF0000',
-            strokeOpacity: 1.0,
-            strokeWeight: 2
-        });
-
-        pinsMap.setMap(map);
-        */
-        /*
-        marker.setIcon(({
-            url: place.icon,
-            //url: 'images/marker.png',
-            size: new google.maps.Size(71, 71),
-            origin: new google.maps.Point(0, 0),
-            anchor: new google.maps.Point(17, 34),
-            scaledSize: new google.maps.Size(35, 35)
-        }));
-        marker.setPosition(place.geometry.location);
-        marker.setVisible(true);
-        */
-        /*
-        //if onload this page location not saved to server so load at great pyramid     
-        if(OpenPath.user.obj.location.coords.latitude!==null && OpenPath.user.obj.location.coords.longitude!==null){
-            //OpenPath.Ui.renderMap(nearbyMap, OpenPath.user.obj.location.coords.latitude, OpenPath.user.obj.location.coords.longitude );
-        }else{
-            //OpenPath.Ui.renderMap(nearbyMap, 29.979252, 31.133874 );
-        }
-        */
     }
 });

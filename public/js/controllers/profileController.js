@@ -10,7 +10,6 @@ App.controller('profileController', function($scope,$state,userFactory){
         alert(data);
     });
 
-
     //grade obj
     $scope.gradeLevelOptions = [
         {
@@ -59,7 +58,7 @@ App.controller('myPathController',function($scope,$state,eventFactory){
     /**
      * get events by email
      */
-    eventFactory.getByEmail(document.getElementById('email').value).then(function(data){
+    eventFactory.getEventsByEmail(document.getElementById('email').value).then(function(data){
         $scope.events = data;
         console.log('near',$scope.events);
         //init map
@@ -93,16 +92,16 @@ App.controller('myPathController',function($scope,$state,eventFactory){
             //markers.push(new google.maps.LatLng(locations[i].latitude,locations[i].longitude));
             //
             /*
-date: "June 21, 2015"
-description: "ba ba ba ba ba barbra anne"
-endTime: "1:00 AM"
-id: "53a50985decc9ade03a75527"
-isMine: true
-link: "boster.com"
-location: Object
-name: "bosster"
-room: "53a50985decc9ade03a75526"
-startTime: "1:00 AM"
+            date: "June 21, 2015"
+            description: "ba ba ba ba ba barbra anne"
+            endTime: "1:00 AM"
+            id: "53a50985decc9ade03a75527"
+            isMine: true
+            link: "boster.com"
+            location: Object
+            name: "bosster"
+            room: "53a50985decc9ade03a75526"
+            startTime: "1:00 AM"
             */
             var e = $scope.events[i];
             markers.push([e.location.name,e.location.latitude,e.location.longitude]);
@@ -175,7 +174,7 @@ startTime: "1:00 AM"
         marker.setPosition(place.geometry.location);
         marker.setVisible(true);
         */
-        
+
         /*
         //if onload this page location not saved to server so load at great pyramid     
         if(OpenPath.user.obj.location.coords.latitude!==null && OpenPath.user.obj.location.coords.longitude!==null){
@@ -185,4 +184,42 @@ startTime: "1:00 AM"
         }
         */
     }
+});
+
+/**
+ * settingsController
+ */
+App.controller('settingsController',function($scope,$state,userFactory){
+    var settingsForm = document.getElementById('settingsForm'),
+        saveSettingsBtn = document.getElementById('saveSettingsBtn'),
+        alertsColearnerJoin = document.getElementById('alertsColearnerJoin'),
+        alertsNearEvent = document.getElementById('alertsNearEvent'),
+        alertsAllEvents = document.getElementById('alertsAllEvents');
+
+    console.log('settings',saveSettingsBtn);
+
+    this.saveSettings = function(e){
+        //e.preventDefault();
+        console.log('save the whales', alertsColearnerJoin.checked,alertsNearEvent.checked,alertsAllEvents.checked, settingsForm.elements['profileaccess'].value);
+        var profileaccess = settingsForm.elements['profileaccess'].value == 'private' ? false : true;
+        var data = {
+            alerts : {
+                colearnerJoin : alertsColearnerJoin.checked,
+                nearEvent : alertsNearEvent.checked,
+                allEvents : alertsAllEvents.checked
+            },
+            publicProfile : profileaccess
+        }
+        console.log(data)
+        userFactory.updateSettings(data,function(d){
+            console.log('settings have been updated',d);
+        });
+    };
+
+
+    //don't add more that one event listener //legacy but what the hell
+    if(saveSettingsBtn._hasEventListener) return;
+    saveSettingsBtn.addEventListener('click',this.saveSettings,false);
+    saveSettingsBtn._hasEventListener = true;
+
 });

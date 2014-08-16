@@ -1,6 +1,6 @@
 <section id="settings" class="view">
 	<div class="content">
-		<form action="/profile" method="post">
+		<form action="/user/settings" method="put" id="settingsForm">
 			<article>
 				<h2>Receive alerts when...</h2>
 				<fieldset>
@@ -19,16 +19,16 @@
 			<article>
 				<h2>Set profile as...</h2>
 				<fieldset>
-					<input type="radio" id="profileAccessPublic" name="profileaccess" value="public" />
+					<input type="radio" id="profileAccessPublic" name="profileaccess" value="public"  checked />
 					<label class="checkbox" for="profileAccessPublic">Public</label>
 				</fieldset>
 				<fieldset>
-					<input type="radio" id="profileAccessPrivate" name="profileaccess" value="private" />
+					<input type="radio" id="profileAccessPrivate" name="profileaccess" value="private"/>
 					<label class="checkbox" for="profileAccessPrivate">Private</label>
 				</fieldset>
 			</article>
 			<fieldset>
-				<button type="submit">Save</button>
+				<button type="submit" id="saveSettingsBtn">Save</button>
 			</fieldset>
 			<article class="saved">
 				<p>Your settings have been saved.</p>
