@@ -34,28 +34,30 @@ module.exports = function(app){
 	 * get rooms that user has joined
 	 */
 	app.get("/rooms/email/:email", function(req, res){
+		var roomsUserHasJoined = [];
+		var user_id;
+		User.findByEmail(req, function (err, user) {
+			if (err) return console.error(err);
+			user_id = user._id;
+		});
+
 		Room.find(function (err, items) {
 			if (err) return console.error(err);
 			
-			var roomsUserHasJoined = [];
-			console.log('items',items);
-			User.findByEmail(req, function (err, user) {
-				if (err) return console.error(err);
+			//loop through all rooms
+			for(var i=0;i<items.length;i++){
 
-				//loop through all rooms
-				for(var i=0;i<items.length;i++){
-
-					//loop through joined users
-					for(var j=0;j<items[i].joinedUsers.length;j++){
-						if(items[i].joinedUsers[j].joinedUserID == user._id){
-							roomsUserHasJoined.push(items[i]);
-						}
+				//loop through joined users
+				for(var j=0;j<items[i].joinedUsers.length;j++){
+					if(items[i].joinedUsers[j].joinedUserID == user_id){
+						roomsUserHasJoined.push(items[i]);
 					}
 				}
+			}
 
-				//send roomsUserHasJoined
-				res.send(roomsUserHasJoined);
-			});
+			//send roomsUserHasJoined
+			res.send(Utils.uniqueArray(roomsUserHasJoined));
+		
 		});
 	});
 };

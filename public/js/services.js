@@ -1,25 +1,31 @@
 "use strict";
 
-/*
-usage
+/**
+ * user factory
+ */
+App.factory('userFactory', function($http,$q){
+	var service = {};
+	var url = '/user/';
 
-{
-	'get':    {method:'GET'},
-	'save':   {method:'POST'},
-	'query':  {method:'GET', isArray:true},
-	'remove': {method:'DELETE'},
-	'delete': {method:'DELETE'}
-};
-//https://docs.angularjs.org/api/ngResource/service/$resource
-//@see http://tylermcginnis.com/angularjs-factory-vs-service-vs-provider/
+	service.getByEmail = function(email){
+		var deferred = $q.defer();
+		$http({method: 'GET', url: url+email }).success(function(data){
+	        deferred.resolve(data);
+	    }).error(function(){
+	        deferred.reject('There was an error');
+	    });
+	    return deferred.promise;
+	};
 
-App.factory('eventFactory', function($resource) {
-	return $resource('/events/:id', null, {
-		'update': {method: 'PUT'}
-	});
-});*/
 
-App.factory('eventFactory', function($http,$q) {
+	//return service
+	return service;	
+});
+
+/**
+ * event factory
+ */
+App.factory('eventFactory', function($http,$q){
 	var service = {};
 	var url = '/events/';
 	//get all
@@ -61,4 +67,4 @@ App.factory('eventFactory', function($http,$q) {
 
 	//return service
 	return service;
-})
+});

@@ -109,7 +109,7 @@ App.controller('editEventController', function($scope,$http,$stateParams,eventFa
 		//call update in service
 		eventFactory.update($stateParams.eventId, data, function(d){
 			console.log('ev put', d);
-			window.location = '#/events/';
+			window.location = '#/events';
 		});
 	}
 
@@ -119,7 +119,7 @@ App.controller('editEventController', function($scope,$http,$stateParams,eventFa
 		eventFactory.delete($stateParams.eventId, function(d){
 			console.log('ev deleted', d);
 			alert('event deleted');
-			window.location = '#/events/';
+			window.location = '#/events';
 		});
 	};
 

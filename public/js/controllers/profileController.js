@@ -1,15 +1,15 @@
 'use strict';
 
-App.controller('profileController', function($scope,$http){
+App.controller('profileController', function($scope,$state,userFactory){
     /**
      * get user
      */
-    $http({method: 'GET', url: '/user/'+document.getElementById('email').value }).success(function(data){
-        console.log('d',data);
+    userFactory.getByEmail(document.getElementById('email').value).then(function(data){
         $scope.user = data;
-    }).error(function(){
-        console.log('error');
+    },function(data){
+        alert(data);
     });
+
     
     //grade obj
     $scope.gradeLevelOptions = [

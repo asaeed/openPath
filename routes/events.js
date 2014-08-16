@@ -118,32 +118,66 @@ module.exports = function(app){
 	 * get events that user has joined
 	 */
 	app.get("/events/email/:email", function (req, res) {
-		Event.find(function (err, items) {
+		var events = [];
+		var roomsUserHasJoined = [];
+		var eventsUserHasJoined = [];
+		var user_id;
+		User.findByEmail(req, function (err, user) {
 			if (err) return console.error(err);
-			
-			var eventsUserHasJoined = [];
-			//for each event
-			for(var i=0;i<items.length;i++){
-				console.log(items[i].roomID);
-				//for each room id connected to event
-				Room.findOne({ _id: items[i].roomID }, function (err, item) {
-					if (err) return console.error(err);
-					User.findByEmail(req, function (err, user) {
-						if (err) return console.error(err);
+			user_id = user._id;
 
+			//next
+			getEvents();
+		});
+		function getEvents(){
+			//get all events
+			Event.find(function (err, items) {
+				if (err) return console.error(err);
+				for(var i=0;i<items.length;i++){
+					events.push(items[i]);
+				}
+				//next
+				getRooms();
+			});
+		}
+		function getRooms(){
+			//get rooms user has joing //duplicated code from rooms...:(
+			Room.find(function (err, items) {
+				if (err) return console.error(err);
+
+				//loop through all rooms
+				for(var i=0;i<items.length;i++){
+					if(items[i].isEvent){
 						//loop through joined users
-						for(var j=0;j<item.joinedUsers.length;j++){
-							if(item.joinedUsers[j].joinedUserID == user._id){
-								eventsUserHasJoined.push(item);
+						for(var j=0;j<items[i].joinedUsers.length;j++){
+							if(items[i].joinedUsers[j].joinedUserID == user_id){
+								roomsUserHasJoined.push(items[i]);
 							}
 						}
+					}
+				}
 
-						//send roomsUserHasJoined
-						res.send(eventsUserHasJoined);
-					});
-				});
+				//next
+				compareEventsAndRooms();
+			});			
+		}
+
+		function compareEventsAndRooms(){
+			//check all events for matching rooms user has joined
+			
+			for(var j=0;j<roomsUserHasJoined.length;j++){
+				for(var i=0;i<events.length;i++){
+					console.log(events[i].roomID,roomsUserHasJoined[j]._id)
+					if(events[i].roomID == roomsUserHasJoined[j]._id){
+						eventsUserHasJoined.push(events[i]);
+					}
+				}
 			}
-		});
+
+			//send	
+			res.send(Utils.uniqueArray(eventsUserHasJoined))
+		}
+
 	});
 
 

@@ -1,6 +1,6 @@
 "use strict";
 
-App.controller('eventsController', function($scope,$http,$state,eventFactory){
+App.controller('eventsController', function($scope,$state,eventFactory){
     $scope.currentEditEvent = null;
 
     //onload, default to upcoming
@@ -49,7 +49,7 @@ App.controller('eventsController', function($scope,$http,$state,eventFactory){
 /**
  * upcoming events controller
  */
-App.controller('upcomingEventsController',function($scope,$http,$state,eventFactory){
+App.controller('upcomingEventsController',function($scope,$state,eventFactory){
     /**
      * get events
      */
@@ -72,13 +72,15 @@ App.controller('upcomingEventsController',function($scope,$http,$state,eventFact
 /**
  * nearby events controller
  */
-App.controller('nearbyEventsController',function($scope,$http,$state,eventFactory){
+App.controller('nearbyEventsController',function($scope,$state,eventFactory){
     var nearByEvents = document.getElementById('nearByEvents');
     var aside = nearByEvents.getElementsByTagName('aside')[0];
     var nearbyMap = document.getElementById('nearByMap');
     nearbyMap.style.height = window.innerHeight - 200 + 'px';
 
-
+    /**
+     * get events
+     */
     eventFactory.get().then(function(data){
         $scope.events = data;
         console.log('near',$scope.events);
