@@ -74,7 +74,6 @@ App.controller('upcomingEventsController',function($scope,$state,eventFactory){
  */
 App.controller('nearbyEventsController',function($scope,$state,eventFactory){
     var nearByEvents = document.getElementById('nearByEvents');
-    var aside = nearByEvents.getElementsByTagName('aside')[0];
     var nearbyMap = document.getElementById('nearByMap');
     nearbyMap.style.height = window.innerHeight - 200 + 'px';
 

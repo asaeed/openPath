@@ -67,7 +67,8 @@ App.config(function($stateProvider, $urlRouterProvider){
         })
         .state('profile.myPath', {
             url: '/mypath',
-            templateUrl: 'templates/profile/mypath.html'     
+            templateUrl: 'templates/profile/mypath.html',
+            controller : 'myPathController'    
         })
         .state('profile.notifications', {
             url: '/notifications',

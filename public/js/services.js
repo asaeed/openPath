@@ -48,6 +48,16 @@ App.factory('eventFactory', function($http,$q){
 	    });
 	    return deferred.promise;
 	}
+	//get all attended by email
+	service.getByEmail = function(email){
+		var deferred = $q.defer();
+		$http({method: 'GET', url: url+'email/'+email}).success(function(data){
+	    	deferred.resolve(data);
+	    }).error(function(){
+	        deferred.reject('There was an error');
+	    });
+	    return deferred.promise;
+	}
 	//update one by id
 	service.update = function(id,data,done){
 		$http({method: 'PUT', url: url+id, data: data }).success(function(d){

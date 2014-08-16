@@ -175,7 +175,7 @@ module.exports = function(app){
 			}
 
 			//send	
-			res.send(Utils.uniqueArray(eventsUserHasJoined))
+			res.send(Utils.uniqueArray(eventsUserHasJoined));
 		}
 
 	});
