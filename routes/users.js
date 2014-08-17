@@ -52,11 +52,11 @@ module.exports = function(app){
 				currentEvent : req.session.event,
 				settings : {
 					alerts : {
-						colearnerJoin : Boolean,
-						nearEvent : Boolean,
-						allEvents : Boolean
+						colearnerJoin : user.settings.alerts.colearnerJoin,
+						nearEvent : user.settings.alerts.nearEvent,
+						allEvents : user.settings.alerts.allEvents,
 					},
-					publicProfile : Boolean
+					publicProfile : user.settings.publicProfile
 				}
 			}
 			res.send(publicUser);
@@ -74,7 +74,6 @@ module.exports = function(app){
 	});
 
 	app.put("/user/settings", Auth.userExist, function(req, res, next){
-		console.log('update settings',req.user._id, req.body);
 		User.updateSettings(req , function(err,user){
 			if(err) throw err;
 			console.log(user.email + '\'s settings updated');

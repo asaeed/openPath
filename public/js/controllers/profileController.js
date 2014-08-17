@@ -194,9 +194,31 @@ App.controller('settingsController',function($scope,$state,userFactory){
         saveSettingsBtn = document.getElementById('saveSettingsBtn'),
         alertsColearnerJoin = document.getElementById('alertsColearnerJoin'),
         alertsNearEvent = document.getElementById('alertsNearEvent'),
-        alertsAllEvents = document.getElementById('alertsAllEvents');
+        alertsAllEvents = document.getElementById('alertsAllEvents'),
+        profileAccessPublic = document.getElementById('profileAccessPublic'),
+        profileAccessPrivate = document.getElementById('profileAccessPrivate');
 
-    console.log('settings',saveSettingsBtn);
+    userFactory.getByEmail(document.getElementById('email').value).then(function(data){
+        $scope.user = data;
+        console.log($scope.user.settings,$scope.user.settings.publicProfile);
+
+        //set values
+        if($scope.user.settings.alerts.colearnerJoin) alertsColearnerJoin.checked = true;
+        if($scope.user.settings.alerts.allEvents) alertsAllEvents.checked = true;
+        if($scope.user.settings.alerts.nearEvent) alertsNearEvent.checked = true;
+
+        if($scope.user.settings.publicProfile){
+            profileAccessPublic.checked = true;
+        }else{
+            profileAccessPrivate.checked = true;
+        }
+
+
+    },function(data){
+        alert(data);
+    });
+
+
 
     this.saveSettings = function(e){
         //e.preventDefault();

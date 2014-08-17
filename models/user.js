@@ -45,7 +45,16 @@ UserSchema.statics.signup = function(email, password, done){
 			salt : salt,
 			hash : hash,
 			dateCreated : Date.now(),
-			dateModified : Date.now()
+			dateModified : Date.now(),
+			//default settings
+			settings : {
+				alerts : {
+					colearnerJoin : true,
+					nearEvent : true,
+					allEvents : true
+				},
+				publicProfile : true
+			}
 		}, function(err, user){
 			if(err) throw err;
 			// if (err) return done(err);
@@ -88,7 +97,7 @@ UserSchema.statics.findByEmail = function(req, done){
  * update profile
  */
 UserSchema.statics.updateProfile = function(req, done){
-	User.findOne(req.user._id, function(err, user){
+	User.findOne({_id:req.user._id}, function(err, user){
 		if(err) throw err;
 
 		// If a user is returned, load the given user
@@ -115,8 +124,8 @@ UserSchema.statics.updateProfile = function(req, done){
  * update settings
  */
 UserSchema.statics.updateSettings = function(req, done){
-	console.log('updateSettings',req.body)
-	User.findOne(req.user._id, function(err, user){
+	console.log('updateSettings',req.user._id,req.body)
+	User.findOne({_id:req.user._id}, function(err, user){
 		if(err) throw err;
 
 		// If a user is returned, load the given user
@@ -124,9 +133,9 @@ UserSchema.statics.updateSettings = function(req, done){
 			user.update({
 				settings : {
 					alerts : {
-						colearnerJoin : req.body.colearnerJoin,
-						nearEvent : req.body.nearEvent,
-						allEvents : req.body.allEvents
+						colearnerJoin : req.body.alerts.colearnerJoin,
+						nearEvent : req.body.alerts.nearEvent,
+						allEvents : req.body.alerts.allEvents
 					},
 					publicProfile : req.body.publicProfile
 				}
