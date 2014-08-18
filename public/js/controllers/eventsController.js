@@ -1,14 +1,15 @@
 "use strict";
 
 App.controller('eventsController', function($scope,$state,eventFactory){
-    $scope.currentEditEvent = null;
+    //show footer
+    $('#mainFooter').show();
 
     //onload, default to upcoming
     if($state.current.name ==='events'){
-        $state.go('.upcoming')
-    }
-    console.log('event controller');
+        $state.go('.upcoming');
 
+
+    }
 
     /**
      * get events
@@ -82,7 +83,7 @@ App.controller('nearbyEventsController',function($scope,$state,eventFactory){
      */
     eventFactory.get().then(function(data){
         $scope.events = data;
-        console.log('near',$scope.events);
+        //console.log('near',$scope.events);
         //init map
         initMap();
 
@@ -139,7 +140,7 @@ startTime: "1:00 AM"
                               '</div>';*/
             var infoMarkup = '<div>hi dear</div>'; 
             infoWindowContent.push(infoMarkup);
-            console.log($scope.events[i])
+            //console.log($scope.events[i])
         }
     
 

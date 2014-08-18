@@ -1,6 +1,13 @@
 'use strict';
 
 App.controller('profileController', function($scope,$state,userFactory){
+    //show footer
+    $('#mainFooter').show();
+    
+    //onload, default to myprofile
+    if($state.current.name ==='profile'){
+        $state.go('.myProfile')
+    }
     /**
      * get user
      */
@@ -60,7 +67,7 @@ App.controller('myPathController',function($scope,$state,eventFactory){
      */
     eventFactory.getEventsByEmail(document.getElementById('email').value).then(function(data){
         $scope.events = data;
-        console.log('near',$scope.events);
+        //console.log('near',$scope.events);
         //init map
         initMap();
 
@@ -200,7 +207,7 @@ App.controller('settingsController',function($scope,$state,userFactory){
 
     userFactory.getByEmail(document.getElementById('email').value).then(function(data){
         $scope.user = data;
-        console.log($scope.user.settings,$scope.user.settings.publicProfile);
+        //console.log($scope.user.settings,$scope.user.settings.publicProfile);
 
         //set values
         if($scope.user.settings.alerts.colearnerJoin) alertsColearnerJoin.checked = true;
@@ -234,7 +241,7 @@ App.controller('settingsController',function($scope,$state,userFactory){
         }
         console.log(data)
         userFactory.updateSettings(data,function(d){
-            console.log('settings have been updated',d);
+            alert('Your settings have been saved.')
         });
     };
 
@@ -243,5 +250,4 @@ App.controller('settingsController',function($scope,$state,userFactory){
     if(saveSettingsBtn._hasEventListener) return;
     saveSettingsBtn.addEventListener('click',this.saveSettings,false);
     saveSettingsBtn._hasEventListener = true;
-
 });

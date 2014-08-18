@@ -9,7 +9,8 @@ App.config(function($stateProvider, $urlRouterProvider){
 	$stateProvider
         .state('home', {
             url: '/home',
-            template: '<div style="font-size:100px;">HOMe</div>'
+            templateUrl: 'templates/videos.html',
+            controller : 'videosController'
         })
 
         //INVITE ROUTES
@@ -85,6 +86,16 @@ App.config(function($stateProvider, $urlRouterProvider){
 /**
  * mainController
  */
-App.controller('mainController', function($scope,$element,$stateParams){
+App.controller('mainController', function($scope,$element,$state,$stateParams){
     //console.log($scope, $element);
+    //console.log($state.current,$element)
+
+
+    // $scope.$watch('$state',function(){
+    //     console.log('$state change',$state)
+    // });
 });
+
+
+
+

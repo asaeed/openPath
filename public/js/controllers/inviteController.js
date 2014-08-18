@@ -1,6 +1,9 @@
 'use strict';
 
 App.controller('inviteController', function($scope,$http){
+	//show footer
+    $('#mainFooter').show();
+    
     /**
      * get user
      */
