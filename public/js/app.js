@@ -1,9 +1,5 @@
 'use strict';
 
-//shims for peer
-window.URL = window.URL || window.webkitURL || window.mozURL || window.msURL;
-navigator.getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia;
-
 var App = angular.module('openPath', ['ui.router','ngResource']);
 
 App.config(function($stateProvider, $urlRouterProvider){
@@ -99,14 +95,10 @@ App.controller('mainController', function($scope,$element,$state,$stateParams,us
     //     console.log('$state change',$state)
     // });
 
-    //configs
-    this.peerKey = 'w8hlftc242jzto6r';
-    this.socketConnection = 'https://localhost:3030';
-
     //peer & socket
     this.call = null;
-    this.peer = new Peer({key: this.peerKey, secure: true }), //TODO: out own peer server? //OpenPath.rtc.server= "ws://www.openpath.me:8001/";
-    $scope.socket = io.connect(this.socketConnection, {secure: true} );
+    this.peer = new Peer({key: OpenPath.peerKey, secure: true }), //TODO: out own peer server? //OpenPath.rtc.server= "ws://www.openpath.me:8001/";
+    $scope.socket = io.connect(OpenPath.socketConnection, {secure: true} );
     this.peer_connection = null;
 
     //array of users in room - get all connected users in my room - excluding me
@@ -115,24 +107,27 @@ App.controller('mainController', function($scope,$element,$state,$stateParams,us
     this.peers = [];
 
     var self = this;
+
+
+    /**
+     * get user
+     */
+    userFactory.getByEmail(document.getElementById('email').value).then(function(data){
+        $scope.user = data;
+        
+
+        console.log('user',$scope.user)
+
+    },function(data){
+        alert(data);
+    });
+    
     /**
      * socket connect
      */
     $scope.socket.on('connect', function() {
-        /**
-         * get user
-         */
-        userFactory.getByEmail(document.getElementById('email').value).then(function(data){
-            $scope.user = data;
-            console.log("connected to socket");
-            $scope.socket.emit('adduser',  $scope.user );
-
-            console.log('user',$scope.user)
-
-        },function(data){
-            alert(data);
-        });
-        
+        console.log("connected to socket");
+        $scope.socket.emit('adduser',  $scope.user );
     });
 
     /**
@@ -229,6 +224,7 @@ App.controller('mainController', function($scope,$element,$state,$stateParams,us
      */
     $scope.socket.on('disconnect', function ( aPeer, connected_users ) {
         console.log('received disconnect', aPeer, connected_users ,self.peers);
+        if(connected_users)
         self.findOthersInRoom(connected_users);
         self.removePeer(aPeer);
     });
@@ -237,6 +233,38 @@ App.controller('mainController', function($scope,$element,$state,$stateParams,us
     /**
      * helpers
      */
+    //update chat
+    this.updateChat = function( user, msg ){
+        var from = user === 'SERVER' ? user : user.email;
+
+        //format msg string
+        msg = msg.replace(/</g, '&lt;');
+
+        //set color of user
+        var className;
+        if(from === 'SERVER'){
+            className = 'server';
+            from = 'OpenPath'
+        }else if(from === this.user.obj.email){
+            className = 'me';
+            from = user.name ? user.name: user.email;
+        }else{
+            className = 'other';
+            from = user.name ? user.name: user.email;
+        }
+
+        //if chat closed show 'new message' blink
+        //TODO if you want to hide server messages add ' && from !== 'SERVER' ' to if statement
+        if( !self.chat.classList.contains('open') ){ //&& from !== 'SERVER
+            self.chatmsg.innerHTML = 'New Message from ' + from;
+            self.chatmsg.classList.add('blink');    
+        }
+
+        var message = '<li class="'+className+'"><span>'+ from +'</span>: ' + msg + '</li>';
+        self.chatmessages.innerHTML += message;
+        self.chatwindow.scrollTop = self.chatwindow.scrollHeight;
+    };
+    //find others in room
     this.findOthersInRoom = function( connected_users ){
         var others = [];
         for(var i=0;i<connected_users.length;i++){
@@ -253,7 +281,17 @@ App.controller('mainController', function($scope,$element,$state,$stateParams,us
         //set this.others_in_room
         self.others_in_room = others;
         console.log('others_in_room',self.others_in_room);
-    }
+    };
+
+    this.createPeer = function(){
+
+    };
+    this.joinEvent = function(){
+
+    };
+    this.removePeer = function(){
+
+    };
 });
 
 
