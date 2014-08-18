@@ -113,6 +113,14 @@ App.controller('mainController', function($scope,$element,$state,$stateParams,us
      */
     userFactory.getByEmail(document.getElementById('email').value).then(function(data){
         $scope.user = data;
+        $scope.user.location = {
+            coords : {
+                latitude : null,
+                longitude : null
+            },
+            timestamp : null
+        };//set to watch in directive
+        
         //console.log('user',$scope.user)
         start();
     },function(data){
@@ -231,7 +239,7 @@ App.controller('mainController', function($scope,$element,$state,$stateParams,us
      * socket connect
      */
     $scope.socket.on('connect', function() {
-        console.log("connected to socket",$scope.user);
+        console.log("connected to socket",$scope.user.email);
         $scope.socket.emit('adduser',  $scope.user );
     });
 
@@ -281,7 +289,7 @@ App.controller('mainController', function($scope,$element,$state,$stateParams,us
      */
     //todo : save room chats on server, send up on first connection
     $scope.socket.on('updatechat', function (user, data) {
-        console.log('received updatechat',user+ ': ' + data );
+        console.log('received updatechat',user.email+ ': ' + data );
 
         //update chat
         self.updateChat( user, data );
@@ -341,7 +349,7 @@ App.controller('mainController', function($scope,$element,$state,$stateParams,us
     /**
      * helpers
      */
-    //update chat
+    //update chat //TODO move to video controller
     this.updateChat = function( user, msg ){
         var from = user === 'SERVER' ? user : user.email;
         //dom vars
@@ -367,13 +375,16 @@ App.controller('mainController', function($scope,$element,$state,$stateParams,us
 
         //if chat closed show 'new message' blink
         //TODO if you want to hide server messages add ' && from !== 'SERVER' ' to if statement
+        if(chat)//hack
         if( !chat.classList.contains('open') ){ //&& from !== 'SERVER
             chatmsg.innerHTML = 'New Message from ' + from;
             chatmsg.classList.add('blink');    
         }
 
         var message = '<li class="'+className+'"><span>'+ from +'</span>: ' + msg + '</li>';
+        if(chatmessages)//hack
         chatmessages.innerHTML += message;
+        if(chatwindow)//hack
         chatwindow.scrollTop = chatwindow.scrollHeight;
     };
     //find others in room

@@ -4,11 +4,7 @@
 App.controller('videosController',function($scope,$state,$stateParams,userFactory){
 	//hide footer
     $('#mainFooter').hide();
-
-    $scope.userFactory = userFactory;
-
-    console.log('vid',$scope.user)
-
+    
 	/**
 	 * dom elemets
 	 */
