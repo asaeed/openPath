@@ -34,7 +34,18 @@ App.factory('userFactory', function($http,$q){
 	    }).error(function(){
 	        console.log('service putting error')
 	    });
-	}
+	};
+
+	service.checkIfPresenter = function(user,done){
+		$http({method: 'GET', url:'/presenter/'+user.room_id+'/'+user.email}).success(function(d){
+			console.log('presenter is',d)
+			done(d);
+	    }).error(function(){
+	        console.log('service getting error')
+	    });
+
+	};
+
 
 	//return service
 	return service;	

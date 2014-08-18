@@ -22,7 +22,7 @@ module.exports.start = function( io ){
 			
 			//save user & room to socket session
 			socket.user = user;
-			socket.room = user.room_id;
+			socket.room = user.currentRoom;
 
 			//add user to global user list
 			connected_users.push(user);
@@ -34,7 +34,7 @@ module.exports.start = function( io ){
 			self.updateConnectedUsers(user);
 
 			//join room
-			socket.join(user.room_id);
+			socket.join(user.currentRoom);
 
 			var others_in_room = self.getOthersInRoom(user);
 			// echo to client they've connected
@@ -45,7 +45,7 @@ module.exports.start = function( io ){
 					socket.emit('updatechat', 'SERVER', 'you have connected to event : '+item.name );
 				}else{
 					//connecting to just a room
-					socket.emit('updatechat', 'SERVER', 'you have connected to room #'+user.room_id );
+					socket.emit('updatechat', 'SERVER', 'you have connected to room #'+user.currentRoom );
 				}
 				if(others_in_room.length > 0) socket.emit('updatechat','SERVER','others in this room include : '+ others_in_room.join(', '));
 			});
@@ -53,15 +53,15 @@ module.exports.start = function( io ){
 			
 			var name = user.name ? user.name : user.email;
 			// echo to room that a person has connected to their room
-			socket.broadcast.to(user.room_id).emit('updatechat', 'SERVER', name + ' has connected to this room.' );
-			//socket.broadcast.to(user.room_id).emit('connected', user, connected_users); //doesn't include you
-			io.sockets.in( user.room_id ).emit('connected', user, connected_users ); //includes you
+			socket.broadcast.to(user.currentRoom).emit('updatechat', 'SERVER', name + ' has connected to this room.' );
+			//socket.broadcast.to(user.currentRoom).emit('connected', user, connected_users); //doesn't include you
+			io.sockets.in( user.currentRoom ).emit('connected', user, connected_users ); //includes you
 		});
 
 		// when the client emits 'sendchat', this listens and executes
 		socket.on('sendchat', function (user, msg) {
 			// we tell the client to execute 'updatechat' with 2 parameters
-			io.sockets.in( user.room_id ).emit('updatechat', socket.user, msg );
+			io.sockets.in( user.currentRoom ).emit('updatechat', socket.user, msg );
 		});
 
 
@@ -75,8 +75,8 @@ module.exports.start = function( io ){
 			self.updateConnectedUsers(user);
 
 			// we tell the client to execute 'peer_id' with 1 parameter
-			//io.sockets.in( user.room_id ).emit('peer_id', user, connected_users ); //includes you
-			socket.broadcast.to( user.room_id ).emit('peer_id', user ); //doesn't include you
+			//io.sockets.in( user.currentRoom ).emit('peer_id', user, connected_users ); //includes you
+			socket.broadcast.to( user.currentRoom ).emit('peer_id', user ); //doesn't include you
 		});
 		
 		/**
@@ -88,8 +88,8 @@ module.exports.start = function( io ){
 			self.updateConnectedUsers(user);
 
 			// we tell the client to execute 'location' with 1 parameter
-			//io.sockets.in( user.room_id ).emit('location', user , connected_users);
-			socket.broadcast.to( user.room_id ).emit('location', user ); //doesn't include you
+			//io.sockets.in( user.currentRoom ).emit('location', user , connected_users);
+			socket.broadcast.to( user.currentRoom ).emit('location', user ); //doesn't include you
 		});
 		
 		/**
@@ -101,8 +101,8 @@ module.exports.start = function( io ){
 			self.updateConnectedUsers(user);
 
 			// we tell the client to execute 'stream' with 1 parameter
-			//io.sockets.in( user.room_id ).emit('stream', user , connected_users);
-			socket.broadcast.to( user.room_id ).emit('stream', user ); //doesn't include you
+			//io.sockets.in( user.currentRoom ).emit('stream', user , connected_users);
+			socket.broadcast.to( user.currentRoom ).emit('stream', user ); //doesn't include you
 		});
  		
 		/**
@@ -110,11 +110,11 @@ module.exports.start = function( io ){
 		 */
 		socket.on('switchRoom', function( user ){
 			console.log("Client has switched room",socket.user,socket.room,user);
-			var oldroom = socket.room;//socket.user.room_id;
+			var oldroom = socket.room;//socket.user.currentRoom;
 			// leave the current room (stored in session);
 			socket.leave(socket.room);
 			// join new room, received as function parameter
-			var newroom = user.room_id;
+			var newroom = user.currentRoom;
 			socket.join(newroom);
 			//socket.room = newroom;
 			var name = user.name ? user.name : user.email;
@@ -128,7 +128,7 @@ module.exports.start = function( io ){
 					socket.emit('updatechat', 'SERVER', 'you have connected to event : '+item.name );
 				}else{
 					//connecting to just a room
-					socket.emit('updatechat', 'SERVER', 'you have connected to room #'+user.room_id );
+					socket.emit('updatechat', 'SERVER', 'you have connected to room #'+user.currentRoom );
 				}
 				if(others_in_room.length > 0) socket.emit('updatechat','SERVER','others in this room include : '+ others_in_room.join(', '));
 			});
@@ -138,8 +138,8 @@ module.exports.start = function( io ){
 			socket.broadcast.to(newroom).emit('updatechat', 'SERVER', name+' has joined this room');
 			//socket.emit('updaterooms', rooms, newroom);
 
-			//socket.broadcast.to(user.room_id).emit('connected', user, connected_users); //doesn't include you
-			io.sockets.in( user.room_id ).emit('switchedRoom', user, connected_users ); //includes you
+			//socket.broadcast.to(user.currentRoom).emit('connected', user, connected_users); //doesn't include you
+			io.sockets.in( user.currentRoom ).emit('switchedRoom', user, connected_users ); //includes you
 		});
 
 		
@@ -153,7 +153,7 @@ module.exports.start = function( io ){
 
 			var user = socket.user;
 			var email = socket.user.email;
-			var room = socket.user.room_id;//save for later
+			var room = socket.user.currentRoom;//save for later
 			
 			self.removeConnectedUsers(socket.user);
 
@@ -196,9 +196,9 @@ module.exports.updateConnectedUsers = function( user ){
 
 module.exports.getOthersInRoom = function( user ){
 	var arr=[];
-	//user.room_id)
+	//user.currentRoom)
 	for(var i=0;i<connected_users.length;i++){
-		if(connected_users[i].room_id === user.room_id && connected_users[i].email !== user.email ){
+		if(connected_users[i].currentRoom === user.currentRoom && connected_users[i].email !== user.email ){
 			if(connected_users[i].name){
 				arr.push(connected_users[i].name);
 			}else{

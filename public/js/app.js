@@ -108,25 +108,130 @@ App.controller('mainController', function($scope,$element,$state,$stateParams,us
 
     var self = this;
 
-
     /**
      * get user
      */
     userFactory.getByEmail(document.getElementById('email').value).then(function(data){
         $scope.user = data;
-        
-
-        console.log('user',$scope.user)
-
+        //console.log('user',$scope.user)
+        start();
     },function(data){
         alert(data);
     });
-    
+
+
+
+    //start
+    function start(){
+        userFactory.checkIfPresenter($scope.user,function(d){
+            console.log('done',d)
+        });
+        self.getMyMedia();
+        self.getMyLocation();       
+    }
+
+
+
+    /**
+     * getMyMedia, send to socket
+     */
+    this.getMyMedia = function(){
+
+        //modal
+        var notYetAllowed = document.getElementById('notYetAllowed');
+        OpenPath.Ui.modal(notYetAllowed);
+        OpenPath.Ui.modalWrap.classList.add('alertModal');
+
+
+        if(navigator.getUserMedia) {
+            navigator.getUserMedia( {video: true, audio: true}, function(stream) {
+
+                //hide modal
+                OpenPath.Ui.closeModals();
+
+
+                console.log('got my stream')
+                //set user stream
+                $scope.user.stream = stream;
+
+
+                //send stream
+                $scope.socket.emit("stream", $scope.user);
+
+
+                //get location
+                //self.getMyLocation();
+                //render video
+                //self.video.render('stream');
+            },
+            function(err) {
+                console.log('Failed to get local stream' ,err);
+                //did not join, pressed no allow
+                //hide modal
+                OpenPath.Ui.closeModals();
+
+                //new modal
+                var saidNoToAllow = document.getElementById('saidNoToAllow');
+                OpenPath.Ui.modal(saidNoToAllow);
+                OpenPath.Ui.modalWrap.classList.add('alertModal');
+            });
+        }else{
+            console.log('can\'t get user media');
+        }
+    };
+
+    /**
+     * getMyLocation, send to socket
+     */
+    this.getMyLocation = function(){
+        function setLocation(position){
+            $scope.user.location = {
+                coords : {
+                    latitude : position.coords.latitude,
+                    longitude : position.coords.longitude
+                },
+                timestamp : position.timestamp
+            };
+            console.log("got my location - Latitude: " );
+            //, $scope.user.location,position.coords.latitude , " Longitude: " , position.coords.longitude );
+
+            //send location
+            $scope.socket.emit("location", $scope.user );
+
+            //re-render video
+            //self.video.render('location');
+        }
+        //location error
+        function showLocationError(error){
+            switch(error.code){
+                case error.PERMISSION_DENIED:
+                    console.log("User denied the request for Geolocation.");
+                break;
+                
+                case error.POSITION_UNAVAILABLE:
+                    console.log("Location information is unavailable.");
+                break;
+                case error.TIMEOUT:
+                    console.log("The request to get user location timed out.");
+                break;
+                case error.UNKNOWN_ERROR:
+                    console.log("An unknown error occurred.");
+                break;
+            }
+        }
+        //get location
+        if(navigator.geolocation){
+            navigator.geolocation.getCurrentPosition( setLocation, showLocationError );
+        }else{
+            console.log("Geolocation is not supported by this browser.");
+        }
+    };
+
     /**
      * socket connect
      */
     $scope.socket.on('connect', function() {
-        console.log("connected to socket");
+        console.log("connected to socket",$scope.user);
         $scope.socket.emit('adduser',  $scope.user );
     });
 
@@ -137,10 +242,13 @@ App.controller('mainController', function($scope,$element,$state,$stateParams,us
     this.peer.on('open', function(id) {
         console.log('got my peerID, sending it', id);
         //update this.user
-        self.user.updatePeerId(id);
+        //self.user.updatePeerId(id);
+        $scope.user.peer_id = id;
+
+
         //send id so if anyone is in room, they'll give you a call 
         //after their socket recieves your peer id (below)
-        $scope.socket.emit("peer_id", self.user.obj);
+        $scope.socket.emit("peer_id", $scope.user);
     });
 
     /**
@@ -213,7 +321,7 @@ App.controller('mainController', function($scope,$element,$state,$stateParams,us
      * switch room
      */
     $scope.socket.on('switchedRoom', function ( aPeer,connected_users ) {
-        console.log('received switchedRoom', aPeer.email, aPeer,self.user.obj.room_id );
+        console.log('received switchedRoom', aPeer.email, aPeer,self.user.currentRoom );
         self.findOthersInRoom(connected_users);//removes them from others in room (i think TODO)
         self.removePeer(aPeer);
     });
@@ -236,6 +344,10 @@ App.controller('mainController', function($scope,$element,$state,$stateParams,us
     //update chat
     this.updateChat = function( user, msg ){
         var from = user === 'SERVER' ? user : user.email;
+        //dom vars
+        var chat = document.getElementById("chat");
+        var chatwindow = document.getElementById("chatwindow");
+        var chatmessages = document.getElementById("chatmessages");
 
         //format msg string
         msg = msg.replace(/</g, '&lt;');
@@ -245,7 +357,7 @@ App.controller('mainController', function($scope,$element,$state,$stateParams,us
         if(from === 'SERVER'){
             className = 'server';
             from = 'OpenPath'
-        }else if(from === this.user.obj.email){
+        }else if(from === $scope.user.email){
             className = 'me';
             from = user.name ? user.name: user.email;
         }else{
@@ -255,14 +367,14 @@ App.controller('mainController', function($scope,$element,$state,$stateParams,us
 
         //if chat closed show 'new message' blink
         //TODO if you want to hide server messages add ' && from !== 'SERVER' ' to if statement
-        if( !self.chat.classList.contains('open') ){ //&& from !== 'SERVER
-            self.chatmsg.innerHTML = 'New Message from ' + from;
-            self.chatmsg.classList.add('blink');    
+        if( !chat.classList.contains('open') ){ //&& from !== 'SERVER
+            chatmsg.innerHTML = 'New Message from ' + from;
+            chatmsg.classList.add('blink');    
         }
 
         var message = '<li class="'+className+'"><span>'+ from +'</span>: ' + msg + '</li>';
-        self.chatmessages.innerHTML += message;
-        self.chatwindow.scrollTop = self.chatwindow.scrollHeight;
+        chatmessages.innerHTML += message;
+        chatwindow.scrollTop = chatwindow.scrollHeight;
     };
     //find others in room
     this.findOthersInRoom = function( connected_users ){
@@ -271,7 +383,7 @@ App.controller('mainController', function($scope,$element,$state,$stateParams,us
 
             //if not me && in same room
             var notMe = connected_users[i].email !== $scope.user.email;
-            var sameRoom = connected_users[i].room_id === $scope.user.room_id;
+            var sameRoom = connected_users[i].currentRoom === $scope.user.currentRoom;
 
             if( notMe && sameRoom ){
                 console.log('other users in room', connected_users[i].email )

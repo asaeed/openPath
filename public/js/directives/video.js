@@ -1,24 +1,33 @@
 "use strict";
 
-App.directive('video', function () {
+App.directive('presenter', function () {
+    return {
+        templateUrl: "templates/_directives/presenter.html",
+        link: function($scope, $element, attrs ) {
+            $scope.name;
+            if($scope.user.firstName){
+                $scope.name = $scope.user.firstName+ ' '+$scope.user.lastName;
+            }else{
+                $scope.user.email;
+            }
+            console.log($scope.user)
+            $element.find('video.video').attr('muted',false);
+        }
+    }
+});
+
+App.directive('video', ['$timeout', function ($timeout) {
 	return {
+        restrict: 'A',
+        // NB: isolated scope!!
+        scope: {
+            video: '='
+        },
 		templateUrl: "templates/_directives/video.html",
         link: function($scope, $element, attrs ) {
-            console.log('video',$element.find('video.video'), $scope.userFactory);
-            /**
-             * get user
-             */
-            $scope.userFactory.getByEmail(document.getElementById('email').value).then(function(data){
-                $scope.user = data;
-            },function(data){
-                alert(data);
-            });
+            console.log('vid dir',$scope.video);
 
-            $scope.id='frank'
-            $scope.name = 'j'
-            //$scope.muted = 'muted';
 
-            $element.find('video.video').attr('muted',true);
         }
 	}
-});
+}]);

@@ -532,11 +532,6 @@ body #home section#videos #videosView .usermeta {
   left: 5%;
   z-index: 1;
   background: rgba(0, 0, 0, 0.7);
-  opacity: 0;
-  -webkit-transition: opacity 0.5s linear, color 0.4s 0.2s ease;
-  -moz-transition: opacity 0.5s linear, color 0.4s 0.2s ease;
-  -o-transition: opacity 0.5s linear, color 0.4s 0.2s ease;
-  transition: opacity 0.5s linear, color 0.4s 0.2s ease;
 }
 body #home section#videos #videosView .usermeta header {
   overflow: hidden;
@@ -642,7 +637,6 @@ body #home section#videos #videosView #presenter .video video {
 body #home section#videos #videosView #presenter .usermeta {
   top: 82px;
   width: 25em;
-  left: -22em;
   cursor: pointer;
   -webkit-transition: all 0.3s ease-in-out;
   -moz-transition: all 0.3s ease-in-out;

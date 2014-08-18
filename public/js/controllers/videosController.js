@@ -7,6 +7,8 @@ App.controller('videosController',function($scope,$state,$stateParams,userFactor
 
     $scope.userFactory = userFactory;
 
+    console.log('vid',$scope.user)
+
 	/**
 	 * dom elemets
 	 */
