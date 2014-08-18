@@ -31,15 +31,28 @@ App.directive('video', function () {
             
             
             //this takes forever!!!!
+            //watch for location
             scope.$watch('video.location.coords.latitude',function(newValue,oldValue){
                 console.log('location change',newValue,oldValue)
 
                 if(newValue){
-                    var $loc = scope.video.location.coords;
-                    OpenPath.Ui.renderMap($map.get(0), $loc.latitude, $loc.longitude);
+                    renderMap();
                 }
             },true);
 
+            //watch for stream
+            scope.$watch('video.stream',function(newValue,oldValue){
+                console.log('stream change',newValue,oldValue)
+
+                if(newValue){
+                   console.log('dir got steram',scope.video.stream);
+                   renderStream();
+                }
+            },true);
+
+
+
+            setTimeout(renderStream,5000);//HACK
 
             //mute
             $video.attr('muted',false);//TODO : if presenter == true
@@ -99,9 +112,7 @@ App.directive('video', function () {
                 
                 //check if we have location yet
                 if(scope.video.location.coords.latitude !== null){
-                    var $loc = scope.video.location.coords;
-                    console.log(scope.video.location.coords.latitude)
-                    OpenPath.Ui.renderMap($map.get(0), $loc.latitude, $loc.longitude);    
+                    renderMap();
                 }
 
                 $mapWrap.show();
@@ -117,6 +128,25 @@ App.directive('video', function () {
 
                 $mapWrap.hide();
             });
+
+
+
+
+            //helpers
+            function renderMap(){
+                var $loc = scope.video.location.coords;
+                console.log(scope.video.location.coords.latitude)
+                OpenPath.Ui.renderMap($map.get(0), $loc.latitude, $loc.longitude);         
+            }
+
+            function renderStream(){
+                /**
+                 * now that we have your video
+                 */
+                $video.get(0).src =  window.URL.createObjectURL(scope.video.stream) || scope.video.stream
+                $video.get(0).play();
+                console.log('stream playing');
+            }
         }
 	}
 });
