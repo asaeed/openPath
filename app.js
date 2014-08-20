@@ -26,7 +26,6 @@ var sslOptions = {
 };
 
 
-
 //config
 var env = process.env.NODE_ENV || 'development',
     config = require('./config')[env];
@@ -41,6 +40,19 @@ var http = http.createServer(function(req,res){
     }),//http.createServer(app),
     https = https.createServer(sslOptions, app),
     io = require('socket.io').listen(https);//, { log: true }
+
+//create peer server
+var PeerServer = require('peer').PeerServer;
+
+var peerServer = new PeerServer({
+  port: 9000,
+  ssl: {
+    key: sslOptions.key,
+    certificate: sslOptions.cert
+  },
+  path:'/openpath'
+});
+
 
 //connect to mongo
 mongoose.connect( config.db );

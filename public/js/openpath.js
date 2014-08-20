@@ -12,7 +12,8 @@ navigator.getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia 
  */
 OpenPath = {
 	//configs
-	peerKey : 'w8hlftc242jzto6r',
+	host : 'localhost',
+	//peerKey : 'w8hlftc242jzto6r',
 	socketConnection : 'https://localhost:3030',
 	// 'http://10.0.1.9:8080' 
 	// 'http://localhost:8080' 
@@ -31,6 +32,17 @@ OpenPath = {
 		 */
 		//this.user = new OpenPath.User( document.getElementById('email').value );
 		
+		/**
+		 * peer open
+		 * get id from PeerJS server and send it to socket
+		
+		this.peer = new Peer({key: this.peerKey, secure: true }); //TODO: out own peer server? //OpenPath.rtc.server= "ws://www.openpath.me:8001/";
+		this.peer_connection = null;
+		this.peer.on('open', function(id) {
+			console.log('got my peerID, sending it', id);
+		});
+ */
+
 return;//!!!!!!
 
 		//handle events

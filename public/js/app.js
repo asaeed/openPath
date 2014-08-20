@@ -87,6 +87,8 @@ App.config(function($stateProvider, $urlRouterProvider){
  * mainController
  */
 App.controller('mainController', function($scope,$element,$state,$stateParams,userFactory){
+    var self = this;
+
     //console.log($scope, $element);
     //console.log($state.current,$element)
 
@@ -97,8 +99,7 @@ App.controller('mainController', function($scope,$element,$state,$stateParams,us
 
     //peer & socket
     this.call = null;
-    this.peer = new Peer({key: OpenPath.peerKey, secure: true }), //TODO: out own peer server? //OpenPath.rtc.server= "ws://www.openpath.me:8001/";
-    $scope.socket = io.connect(OpenPath.socketConnection, {secure: true} );
+
     this.peer_connection = null;
 
     //array of users in room - get all connected users in my room - excluding me
@@ -106,13 +107,14 @@ App.controller('mainController', function($scope,$element,$state,$stateParams,us
     //array of other user instances, in room of course
     this.peers = [];
 
-    var self = this;
+
 
     /**
      * get user
      */
     userFactory.getByEmail(document.getElementById('email').value).then(function(data){
         $scope.user = data;
+        //set front end vars
         $scope.user.location = {
             coords : {
                 latitude : null,
@@ -120,8 +122,11 @@ App.controller('mainController', function($scope,$element,$state,$stateParams,us
             },
             timestamp : null
         };//set to watch in directive
-        
+        $scope.user.peer_id = null;
+
+
         //console.log('user',$scope.user)
+        
         start();
     },function(data){
         alert(data);
@@ -132,18 +137,140 @@ App.controller('mainController', function($scope,$element,$state,$stateParams,us
     //start
     function start(){
         userFactory.checkIfPresenter($scope.user,function(d){
-            console.log('done',d)
+            console.log('checkIfPresenterf',d)
         });
-        self.getMyMedia();
-        self.getMyLocation();       
+        connect();
+        getMyMedia();
+        getMyLocation();
+
     }
 
+    /**
+     * connect to socket and peer servers
+     */
+    function connect(){
+        // No API key required when not using cloud server
+        $scope.peer = new Peer($scope.user.email.split('@')[0], {host: OpenPath.host, port: 9000, path: '/openpath'});
+        $scope.socket = io.connect(OpenPath.socketConnection, {secure: true} );
+        $scope.peer.on('error',function(error){
+            console.log('error',error)
+        });
 
+        /**
+         * socket connect
+         */
+        $scope.socket.on('connect', function() {
+            console.log("connected to socket",$scope.user.email);
+            $scope.socket.emit('adduser',  $scope.user );
+        });
+
+        /**
+         * peer open
+         * get id from PeerJS server and send it to socket
+         */
+        $scope.peer.on('open', function(id) {
+            console.log('got my peerID, sending it',$scope.user, id);
+            //update this.user
+            //self.user.updatePeerId(id);
+            $scope.user.peer_id = id;
+
+
+            //send id so if anyone is in room, they'll give you a call 
+            //after their socket recieves your peer id (below)
+            $scope.socket.emit("peer_id", $scope.user);
+        });
+
+        /**
+         * INCOMING CALL
+         */
+        $scope.peer.on('call', function( incoming_call ) {
+            console.log('INCOMING CaLL',incoming_call);
+            //WHAT TODO WITH INCOMING CALL USER....
+            incoming_call.answer(self.user.obj.stream); // Answer the call with our stream from getUserMedia
+            incoming_call.on('stream', function(remoteStream) {  // we receive a getUserMedia stream from the remote caller
+                console.log('got other\'s stream');
+                self.createPeer(incoming_call, remoteStream);
+            });
+        });
+
+        $scope.peer.on('connection', function(incoming_connection) {
+            console.log('INCOMING Connection',incoming_connection);
+            //they have no stream so call them only if you do
+            //if(self.user.obj.stream){
+                //self.callPeer(aPeer);
+            //}
+        });
+
+        /**
+         * socket receiving
+         */
+
+        /**
+         * update chat 
+         */
+        //todo : save room chats on server, send up on first connection
+        $scope.socket.on('updatechat', function (user, data) {
+            console.log('received updatechat',user.email+ ': ' + data );
+
+            //update chat
+            self.updateChat( user, data );
+        });
+        /**
+         * receive connected of others (not yourself on this one)
+         */
+        $scope.socket.on('connected', function (aPeer, connected_users) {
+            console.log('someone connected',aPeer.email);
+            self.findOthersInRoom(connected_users);
+        });
+        /**
+         * receive peer_ids of others
+         * open peer connection a.k.a. you make the call 
+         */
+        $scope.socket.on('peer_id', function ( aPeer ) {
+            console.log('received peer_id, calling', aPeer.email );
+            //make the call here
+            self.callPeer(aPeer);
+        });
+        /**
+         * receive location of others
+         */
+        $scope.socket.on('location', function ( aPeer ) {
+            console.log('received location', aPeer.email )
+        });
+        /**
+         * receive stream of others
+         */
+        $scope.socket.on('stream', function ( aPeer ) {
+            console.log('received stream', aPeer.email );
+
+            //make the call again
+            //self.callPeer(aPeer);
+        });
+        /**
+         * switch room
+         */
+        $scope.socket.on('switchedRoom', function ( aPeer,connected_users ) {
+            console.log('received switchedRoom', aPeer.email, aPeer,self.user.currentRoom );
+            self.findOthersInRoom(connected_users);//removes them from others in room (i think TODO)
+            self.removePeer(aPeer);
+        });
+        
+        /**
+         * receive disconnect
+         * find user instance and destroy it!!
+         */
+        $scope.socket.on('disconnect', function ( aPeer, connected_users ) {
+            console.log('received disconnect', aPeer, connected_users ,self.peers);
+            if(connected_users)
+            self.findOthersInRoom(connected_users);
+            self.removePeer(aPeer);
+        });
+    };
 
     /**
      * getMyMedia, send to socket
      */
-    this.getMyMedia = function(){
+    function getMyMedia(){
 
         //modal
         var notYetAllowed = document.getElementById('notYetAllowed');
@@ -191,7 +318,7 @@ App.controller('mainController', function($scope,$element,$state,$stateParams,us
     /**
      * getMyLocation, send to socket
      */
-    this.getMyLocation = function(){
+    function getMyLocation(){
         function setLocation(position){
             $scope.user.location = {
                 coords : {
@@ -235,115 +362,6 @@ App.controller('mainController', function($scope,$element,$state,$stateParams,us
         }
     };
 
-    /**
-     * socket connect
-     */
-    $scope.socket.on('connect', function() {
-        console.log("connected to socket",$scope.user.email);
-        $scope.socket.emit('adduser',  $scope.user );
-    });
-
-    /**
-     * peer open
-     * get id from PeerJS server and send it to socket
-     */
-    this.peer.on('open', function(id) {
-        console.log('got my peerID, sending it', id);
-        //update this.user
-        //self.user.updatePeerId(id);
-        $scope.user.peer_id = id;
-
-
-        //send id so if anyone is in room, they'll give you a call 
-        //after their socket recieves your peer id (below)
-        $scope.socket.emit("peer_id", $scope.user);
-    });
-
-    /**
-     * INCOMING CALL
-     */
-    this.peer.on('call', function( incoming_call ) {
-        console.log('INCOMING CaLL',incoming_call);
-        //WHAT TODO WITH INCOMING CALL USER....
-        incoming_call.answer(self.user.obj.stream); // Answer the call with our stream from getUserMedia
-        incoming_call.on('stream', function(remoteStream) {  // we receive a getUserMedia stream from the remote caller
-            console.log('got other\'s stream');
-            self.createPeer(incoming_call, remoteStream);
-        });
-    });
-
-    this.peer.on('connection', function(incoming_connection) {
-        console.log('INCOMING Connection',incoming_connection);
-        //they have no stream so call them only if you do
-        //if(self.user.obj.stream){
-            //self.callPeer(aPeer);
-        //}
-    });
-
-    /**
-     * socket receiving
-     */
-
-    /**
-     * update chat 
-     */
-    //todo : save room chats on server, send up on first connection
-    $scope.socket.on('updatechat', function (user, data) {
-        console.log('received updatechat',user.email+ ': ' + data );
-
-        //update chat
-        self.updateChat( user, data );
-    });
-    /**
-     * receive connected of others (not yourself on this one)
-     */
-    $scope.socket.on('connected', function (aPeer, connected_users) {
-        console.log('someone connected',aPeer.email);
-        self.findOthersInRoom(connected_users);
-    });
-    /**
-     * receive peer_ids of others
-     * open peer connection a.k.a. you make the call 
-     */
-    $scope.socket.on('peer_id', function ( aPeer ) {
-        console.log('received peer_id, calling', aPeer.email );
-        //make the call here
-        self.callPeer(aPeer);
-    });
-    /**
-     * receive location of others
-     */
-    $scope.socket.on('location', function ( aPeer ) {
-        console.log('received location', aPeer.email )
-    });
-    /**
-     * receive stream of others
-     */
-    $scope.socket.on('stream', function ( aPeer ) {
-        console.log('received stream', aPeer.email );
-
-        //make the call again
-        //self.callPeer(aPeer);
-    });
-    /**
-     * switch room
-     */
-    $scope.socket.on('switchedRoom', function ( aPeer,connected_users ) {
-        console.log('received switchedRoom', aPeer.email, aPeer,self.user.currentRoom );
-        self.findOthersInRoom(connected_users);//removes them from others in room (i think TODO)
-        self.removePeer(aPeer);
-    });
-    
-    /**
-     * receive disconnect
-     * find user instance and destroy it!!
-     */
-    $scope.socket.on('disconnect', function ( aPeer, connected_users ) {
-        console.log('received disconnect', aPeer, connected_users ,self.peers);
-        if(connected_users)
-        self.findOthersInRoom(connected_users);
-        self.removePeer(aPeer);
-    });
 
 
     /**

@@ -57,7 +57,13 @@ OpenPath Set-up & Implementation
 		This file determines which users are in which room, when data is received (such as location, peer id, stream... ) and then it passes that data to the other users who are in the room creating the connection between users.
 
 ====================================================================================
-3. Front-end Overview
+3. Peer Server
+
+	@see https://github.com/peers/peerjs-server
+	npm install peer
+
+====================================================================================
+4. Front-end Overview
 
 	All markup, as stated above, is in handlebars files in the 'views' folder.  'layouts/main.handlerbars' includes most of the client side templates at the moment though I began moving some of the relevant client side templates in the same files and their corresponding server side templates (e.g. editProfile.handlebars).
 
