@@ -232,7 +232,21 @@ App.controller('mainController', function($scope,$element,$state,$stateParams,us
             //make the call here
             callPeer(aPeer);
         });
+        /**
+         * receive location of others
+         */
+        $scope.socket.on('location', function ( aPeer ) {
+            console.log('received location', aPeer.email )
+        });
+        /**
+         * receive stream of others
+         */
+        $scope.socket.on('stream', function ( aPeer ) {
+            console.log('received stream', aPeer.email );
 
+            //make the call again
+            //self.callPeer(aPeer);
+        });
         /**
          * switch room
          */
