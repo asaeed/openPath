@@ -125,9 +125,9 @@ App.controller('mainController', function($scope,$element,$state,$stateParams,us
         $scope.user.peer_id = null;
 
 
-        //console.log('user',$scope.user)
+        console.log('user',$scope.user)
         
-        start();
+        //start();
     },function(data){
         alert(data);
     });

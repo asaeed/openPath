@@ -21,7 +21,7 @@ module.exports = function(app, io, passport){
 	 * home
 	 */
 	app.get("/", function(req, res){
-	
+
 		if(req.isAuthenticated()){
 			//logged in
 			//check for query string & sessions

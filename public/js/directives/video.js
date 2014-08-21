@@ -10,7 +10,7 @@ App.directive('video', function () {
         link: function(scope, element, attrs ) {
             //scope.video is passed in in markup, it is a user obj
             
-            console.log('vid dir',scope.video,scope.$parent.user);
+            //console.log('vid dir',scope.video,scope.$parent.user);
            
             //dom vars
             var $video = element.find('video.video'),

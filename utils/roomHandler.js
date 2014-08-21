@@ -1,6 +1,7 @@
 var Event = require('../models/event');
 var Room = require('../models/room');
 
+var url = require('url');
 /**
  * checkForRoom - both logged in and out
  */
@@ -8,11 +9,14 @@ module.exports.checkForRoom = function( req , done ){
 	/**
 	 * check Query for Event
 	 */
-	if(req.query.e){
-		console.log("REQ ? E",req.query);
+	var url_parts = url.parse(req.url, true);
+	var query = url_parts.query;
+
+	if(query.e){
+		console.log("REQ ? E",query);
 
 		//set session event
-		req.session.event = req.query.e;
+		req.session.event = query.e;
 
 		//if user logged join event
 		if(req.user){
@@ -26,11 +30,11 @@ module.exports.checkForRoom = function( req , done ){
 	/**
 	 * check Query for Room
 	 */
-	else if(req.query.r){
-		console.log("REQ ? R",req.query);
+	else if(query.r){
+		console.log("REQ ? R",query);
 
 		//set session room
-		req.session.room = req.query.r;
+		req.session.room = query.r;
 
 		//if user logged in join room
 		if(req.user){
