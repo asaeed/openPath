@@ -79,7 +79,7 @@ require('./utils/passport')(passport, config);
  */
 app.configure(function(){
   app.set('port', process.env.PORT || 8080);//8080
-  app.set('securePort', 3030);//443
+  app.set('securePort', 443);//443 //3030
   app.engine('handlebars', exphbs({defaultLayout: 'main'}));
   app.set('views', __dirname + '/views');
   app.set('view engine', 'handlebars');
