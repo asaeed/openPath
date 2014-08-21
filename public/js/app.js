@@ -86,7 +86,7 @@ App.config(function($stateProvider, $urlRouterProvider){
 /**
  * mainController
  */
-App.controller('mainController', function($scope,$element,$state,$stateParams,userFactory){
+App.controller('mainController', function($scope,$element,$state,$stateParams,userFactory,eventFactory){
     var self = this;
 
     //console.log($scope, $element);
@@ -125,9 +125,22 @@ App.controller('mainController', function($scope,$element,$state,$stateParams,us
         $scope.user.peer_id = null;
 
 
-        console.log('user',$scope.user)
+        console.log('user',$scope.user.currentEvent)
         
-        //start();
+        if($scope.user.currentEvent){
+            //TODO header
+            
+            eventFactory.getOne($scope.user.currentEvent).then(function(data){
+                console.log('you are connected to event : '+data.name)
+            },function(data){
+                alert(data);
+            });
+            
+        }
+
+        //connect
+        start();
+
     },function(data){
         alert(data);
     });
