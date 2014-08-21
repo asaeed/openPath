@@ -42,17 +42,18 @@ var http = http.createServer(function(req,res){
     io = require('socket.io').listen(https);//, { log: true }
 
 //create peer server
+/*
 var PeerServer = require('peer').PeerServer;
 
 var peerServer = new PeerServer({
-  port: 8000,//9000 //8000
+  port: 9000,//9000 //8000
   ssl: {
     key: sslOptions.key,
     certificate: sslOptions.cert
   },
   path:'/openpath'
 });
-
+*/
 
 //connect to mongo
 mongoose.connect( config.db );
