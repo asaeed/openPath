@@ -31,13 +31,14 @@ var env = process.env.NODE_ENV || 'development',
     config = require('./config')[env];
 
 //create server
-var http = http.createServer(function(req,res){
     /**
      * set up redirect http to https
-     */
+
+var http = http.createServer(function(req,res){
       res.writeHead(301, { "Location": "https://" + req.headers['host'] + req.url });
       res.end();
-    }),//http.createServer(app),
+    }),*/
+var http.createServer(app),
     https = https.createServer(sslOptions, app),
     io = require('socket.io').listen(https);//, { log: true }
 
