@@ -14,7 +14,7 @@
     "passport-local": "*",
     "passport-facebook": "*",
     "passport-google-oauth": "*",
-    "mongoose": "*",
+    "mongoose": "3.8.15",
     "emailjs":"*",
     "forever":"*",
     "less":"*",
