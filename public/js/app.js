@@ -89,6 +89,9 @@ App.config(function($stateProvider, $urlRouterProvider){
 App.controller('mainController', function($scope,$element,$state,$stateParams,userFactory,eventFactory){
     var self = this;
 
+    //init ui 
+    OpenPath.Ui.init();
+
     //array of users in room - get all connected users in my room - excluding me
     $scope.others_in_room = [];
 
@@ -133,9 +136,13 @@ App.controller('mainController', function($scope,$element,$state,$stateParams,us
 
     //start
     function start(){
+
+        //check if presenter
         userFactory.checkIfPresenter($scope.user,function(d){
-            console.log('checkIfPresenterf',d)
+            console.log('checkIfPresenterf',d);
+            //TODO!!
         });
+
         //load data chain
         getMyMedia(function(){
             console.log("got my media")

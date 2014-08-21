@@ -19,7 +19,6 @@ OpenPath = {
 				}else{
 					toggles[i].style.display = 'none';
 				}
-				
 			}
 		}
 		//events

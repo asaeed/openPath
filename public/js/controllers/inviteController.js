@@ -5,15 +5,20 @@ App.controller('inviteController', function($scope,$http){
     $("#mainHeader").css({width:100+'%'});
     $('#mainFooter').show();
     
-    /**
-     * get user
-     */
-    $http({method: 'GET', url: '/user/'+document.getElementById('email').value }).success(function(data){
-        console.log('d',data);
-        $scope.user = data;
-    }).error(function(){
-        console.log('error');
-    });
-
+    //set scope name
+    $scope.name;
+    if($scope.user.firstName != undefined){
+        $scope.name = $scope.user.firstName+ ' '+$scope.user.lastName;
+    }else{
+        $scope.name = $scope.user.email;
+    }
+    
+    //set invite url 
+    $scope.invite_url;
+    if($scope.user.currentEvent){
+        $scope.invite_url = '?e='+$scope.user.currentRoom;
+    }else{
+        $scope.invite_url = '?r='+$scope.user.currentRoom;
+    }
 
 });

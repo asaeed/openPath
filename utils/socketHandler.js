@@ -31,7 +31,7 @@ module.exports.start = function( io ){
 			//connected_users = Utils.uniqueArray(connected_users);
 
 			console.log('added user', user.email );
-			self.updateConnectedUsers(user);
+			//self.updateConnectedUsers(user);
 
 			//join room
 			socket.join(user.currentRoom);
@@ -72,7 +72,7 @@ module.exports.start = function( io ){
 		socket.on('peer_id', function( user ) {
 			console.log('got peer_id of', user.email );
 			//update connected users
-			self.updateConnectedUsers(user);
+			//self.updateConnectedUsers(user);
 
 			// we tell the client to execute 'peer_id' with 1 parameter
 			//io.sockets.in( user.currentRoom ).emit('peer_id', user, connected_users ); //includes you
@@ -147,7 +147,7 @@ module.exports.start = function( io ){
 
 /**
  * loop through connected users, match email, and update
- */
+
 module.exports.updateConnectedUsers = function( user ){
 	for(var i=0;i<connected_users.length;i++){
 		console.log('connected users:',i,'of',connected_users.length-1,connected_users[i].email);
@@ -164,10 +164,11 @@ module.exports.updateConnectedUsers = function( user ){
 					} 
 				}
 			}
-			console.log('matched and updated user', user);
+			console.log('matched and updated user', user.email);
 		}
 	}
 };
+*/
 
 module.exports.getOthersInRoom = function( user ){
 	var arr=[];

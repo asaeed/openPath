@@ -6,23 +6,18 @@
 				<fieldset>
 					<label>Email Address</label>
 					<input type="text" name="to" placeholder="someone@somewhere.com">
-					<!--
-					<input type="hidden" name="subject" value="Open Path Invitation from {{#if user.firstName }} {{user.firstName}} {{user.lastName}} {{else}} {{user.email}} {{/if}}">
-					-->
 				</fieldset>
 				<fieldset>
 					<textarea rows="10" name="inviteMsg" id="inviteMsg">
 Hi there,
 
-You have been invited by \{{#if name }} \{{name}} \{{else}} \{{email}} \{{/if}} to a video session on Open Path.
+You have been invited by {{name}} to a video session on Open Path.
 
 Click here to join:
 
-\{{#if event_id }}
-http://www.openpath.me/?e=\{{ event_id }}
-\{{else}}
-http://www.openpath.me/?r=\{{room_id}}
-\{{/if}}
+
+http://www.openpath.me/{{ invite_url }}
+
 
 Let&apos;s learn together!
 
