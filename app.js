@@ -39,7 +39,7 @@ var http = http.createServer(function(req,res){
       res.end();
     }),*/
 var http = http.createServer(app),
-    //https = https.createServer(sslOptions, app),
+    https = https.createServer(sslOptions, app),
     io = require('socket.io').listen(https);//, { log: true }
 
 /*
@@ -124,8 +124,7 @@ http.listen(app.get('port'), function(){
 
 /**
  * serve through https server
-
+ */
 https.listen(app.get('securePort'), function(){
   console.log("Secure Server listening on port " + app.get('securePort'));
 });
- */
