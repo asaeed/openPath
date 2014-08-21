@@ -12,9 +12,9 @@ navigator.getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia 
  */
 OpenPath = {
 	//configs
-	host : 'https://openpath.me/',
+	host : 'https://openpath.me',
 	//peerKey : 'w8hlftc242jzto6r',
-	socketConnection : 'https://openpath.me/',//https://localhost:3030',
+	socketConnection : 'https://openpath.me',//https://localhost:3030',
 	// 'http://10.0.1.9:8080' 
 	// 'http://localhost:8080' 
 	// 'http://10.0.1.15:8080'
