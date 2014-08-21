@@ -31,19 +31,20 @@ var env = process.env.NODE_ENV || 'development',
     config = require('./config')[env];
 
 //create server
-var http = http.createServer(function(req,res){
-    /**
+ /*var http = http.createServer(function(req,res){
+    **
      * set up redirect http to https
-     */
+     *
       res.writeHead(301, { "Location": "https://" + req.headers['host'] + req.url });
       res.end();
-    }),//http.createServer(app),
+    }),*/
+var http = http.createServer(app),
     https = https.createServer(sslOptions, app),
     io = require('socket.io').listen(https);//, { log: true }
 
 //create peer server
 var PeerServer = require('peer').PeerServer;
-
+/*
 var peerServer = new PeerServer({
   port: 9000,
   ssl: {
@@ -52,7 +53,7 @@ var peerServer = new PeerServer({
   },
   path:'/openpath'
 });
-
+*/
 
 //connect to mongo
 mongoose.connect( config.db );
