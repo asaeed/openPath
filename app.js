@@ -43,7 +43,6 @@ var http = http.createServer(app),
     io = require('socket.io').listen(https);//, { log: true }
 
 //create peer server
-/*
 var PeerServer = require('peer').PeerServer;
 
 var peerServer = new PeerServer({
@@ -54,7 +53,7 @@ var peerServer = new PeerServer({
   },
   path:'/openpath'
 });
-*/
+
 
 //connect to mongo
 mongoose.connect( config.db );
@@ -80,7 +79,7 @@ require('./utils/passport')(passport, config);
  */
 app.configure(function(){
   app.set('port', process.env.PORT || 8080);//8080
-  app.set('securePort', 443);//443 //3030
+  app.set('securePort', 3030);//443 //3030
   app.engine('handlebars', exphbs({defaultLayout: 'main'}));
   app.set('views', __dirname + '/views');
   app.set('view engine', 'handlebars');
