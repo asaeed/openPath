@@ -79,31 +79,6 @@ module.exports.start = function( io ){
 			socket.broadcast.to( user.currentRoom ).emit('peer_id', user ); //doesn't include you
 		});
 		
-		/**
-		 * on location
-		 */
-		socket.on('location', function( user ) {
-			console.log('got location of', user.email );
-			//update connected users
-			self.updateConnectedUsers(user);
-
-			// we tell the client to execute 'location' with 1 parameter
-			//io.sockets.in( user.currentRoom ).emit('location', user , connected_users);
-			socket.broadcast.to( user.currentRoom ).emit('location', user ); //doesn't include you
-		});
-		
-		/**
-		 * on stream
-		 */
-		socket.on('stream', function( user ) {
-			console.log('got stream of', user.email );
-			//update connected users
-			self.updateConnectedUsers(user);
-
-			// we tell the client to execute 'stream' with 1 parameter
-			//io.sockets.in( user.currentRoom ).emit('stream', user , connected_users);
-			socket.broadcast.to( user.currentRoom ).emit('stream', user ); //doesn't include you
-		});
  		
 		/**
 		 * switch room
