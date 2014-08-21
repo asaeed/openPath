@@ -52,7 +52,7 @@ App.directive('video', function () {
 
 
 
-            setTimeout(renderStream,5000);//HACK
+            //setTimeout(renderStream,5000);//HACK
 
             //mute
             $video.attr('muted',false);//TODO : if presenter == true
@@ -135,7 +135,6 @@ App.directive('video', function () {
             //helpers
             function renderMap(){
                 var $loc = scope.video.location.coords;
-                console.log(scope.video.location.coords.latitude)
                 OpenPath.Ui.renderMap($map.get(0), $loc.latitude, $loc.longitude);         
             }
 
@@ -145,7 +144,6 @@ App.directive('video', function () {
                  */
                 $video.get(0).src =  window.URL.createObjectURL(scope.video.stream) || scope.video.stream
                 $video.get(0).play();
-                console.log('stream playing');
             }
         }
 	}

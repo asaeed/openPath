@@ -89,25 +89,8 @@ App.config(function($stateProvider, $urlRouterProvider){
 App.controller('mainController', function($scope,$element,$state,$stateParams,userFactory,eventFactory){
     var self = this;
 
-    //console.log($scope, $element);
-    //console.log($state.current,$element)
-
-
-    // $scope.$watch('$state',function(){
-    //     console.log('$state change',$state)
-    // });
-
-    //peer & socket
-    this.call = null;
-
-    this.peer_connection = null;
-
     //array of users in room - get all connected users in my room - excluding me
-    this.others_in_room = [];
-    //array of other user instances, in room of course
-    this.peers = [];
-
-
+    $scope.others_in_room = [];
 
     /**
      * get user
@@ -131,7 +114,8 @@ App.controller('mainController', function($scope,$element,$state,$stateParams,us
             //TODO header
             
             eventFactory.getOne($scope.user.currentEvent).then(function(data){
-                console.log('you are connected to event : '+data.name)
+                console.log('you are connected to event : '+data.name);
+                OpenPath.Ui.updateHeader({event:data});
             },function(data){
                 alert(data);
             });
@@ -152,10 +136,17 @@ App.controller('mainController', function($scope,$element,$state,$stateParams,us
         userFactory.checkIfPresenter($scope.user,function(d){
             console.log('checkIfPresenterf',d)
         });
-        connect();
-        getMyMedia();
-        getMyLocation();
+        //load data chain
+        getMyMedia(function(){
+            console.log("got my media")
+            getMyLocation(function(){
+                console.log("got my location" );
+                connect();
+            });  
+        });
+        
 
+        
     }
 
     /**
@@ -165,6 +156,7 @@ App.controller('mainController', function($scope,$element,$state,$stateParams,us
         // No API key required when not using cloud server
         $scope.peer = new Peer($scope.user.email.split('@')[0], {host: OpenPath.host, port: 9000, path: '/openpath'});
         $scope.socket = io.connect(OpenPath.socketConnection, {secure: true} );
+        
         $scope.peer.on('error',function(error){
             console.log('error',error)
         });
@@ -199,21 +191,15 @@ App.controller('mainController', function($scope,$element,$state,$stateParams,us
         $scope.peer.on('call', function( incoming_call ) {
             console.log('INCOMING CaLL',incoming_call);
             //WHAT TODO WITH INCOMING CALL USER....
-            incoming_call.answer(self.user.obj.stream); // Answer the call with our stream from getUserMedia
+            incoming_call.answer($scope.user.stream); // Answer the call with our stream from getUserMedia
             incoming_call.on('stream', function(remoteStream) {  // we receive a getUserMedia stream from the remote caller
                 console.log('got other\'s stream');
                 self.createPeer(incoming_call, remoteStream);
+
+
+                //$scope.$apply();
             });
         });
-
-        $scope.peer.on('connection', function(incoming_connection) {
-            console.log('INCOMING Connection',incoming_connection);
-            //they have no stream so call them only if you do
-            //if(self.user.obj.stream){
-                //self.callPeer(aPeer);
-            //}
-        });
-
         /**
          * socket receiving
          */
@@ -223,7 +209,7 @@ App.controller('mainController', function($scope,$element,$state,$stateParams,us
          */
         //todo : save room chats on server, send up on first connection
         $scope.socket.on('updatechat', function (user, data) {
-            console.log('received updatechat',user.email+ ': ' + data );
+            //console.log('received updatechat',user.email+ ': ' + data );
 
             //update chat
             self.updateChat( user, data );
@@ -242,7 +228,7 @@ App.controller('mainController', function($scope,$element,$state,$stateParams,us
         $scope.socket.on('peer_id', function ( aPeer ) {
             console.log('received peer_id, calling', aPeer.email );
             //make the call here
-            self.callPeer(aPeer);
+            callPeer(aPeer);
         });
         /**
          * receive location of others
@@ -265,7 +251,7 @@ App.controller('mainController', function($scope,$element,$state,$stateParams,us
         $scope.socket.on('switchedRoom', function ( aPeer,connected_users ) {
             console.log('received switchedRoom', aPeer.email, aPeer,self.user.currentRoom );
             self.findOthersInRoom(connected_users);//removes them from others in room (i think TODO)
-            self.removePeer(aPeer);
+            //self.removePeer(aPeer);
         });
         
         /**
@@ -276,14 +262,32 @@ App.controller('mainController', function($scope,$element,$state,$stateParams,us
             console.log('received disconnect', aPeer, connected_users ,self.peers);
             if(connected_users)
             self.findOthersInRoom(connected_users);
-            self.removePeer(aPeer);
+            //self.removePeer(aPeer);
         });
     };
+
+    function callPeer(aPeer){
+        var call = $scope.peer.call( aPeer.peer_id, $scope.user.stream );
+        console.log('call',call)
+        // After they answer, we'll get a 'stream' event with their stream  
+        if(call)
+        call.on('stream', function(remoteStream) {
+            console.log("Got remote stream", remoteStream, aPeer.stream);
+            self.createPeer(aPeer, remoteStream);
+            for(var i=0;i<$scope.others_in_room.length;i++){
+                if($scope.others_in_room[i].peer_id === aPeer.peer_id){
+                    $scope.others_in_room[i].stream = remoteStream;
+                }
+            }
+            $scope.apply();
+        });
+    }
+
 
     /**
      * getMyMedia, send to socket
      */
-    function getMyMedia(){
+    function getMyMedia(done){
 
         //modal
         var notYetAllowed = document.getElementById('notYetAllowed');
@@ -297,20 +301,12 @@ App.controller('mainController', function($scope,$element,$state,$stateParams,us
                 //hide modal
                 OpenPath.Ui.closeModals();
 
-
-                console.log('got my stream')
                 //set user stream
                 $scope.user.stream = stream;
 
-
                 //send stream
-                $scope.socket.emit("stream", $scope.user);
-
-
-                //get location
-                //self.getMyLocation();
-                //render video
-                //self.video.render('stream');
+                //$scope.socket.emit("stream", $scope.user);
+                done();
             },
             function(err) {
                 console.log('Failed to get local stream' ,err);
@@ -331,7 +327,7 @@ App.controller('mainController', function($scope,$element,$state,$stateParams,us
     /**
      * getMyLocation, send to socket
      */
-    function getMyLocation(){
+    function getMyLocation(done){
         function setLocation(position){
             $scope.user.location = {
                 coords : {
@@ -340,14 +336,12 @@ App.controller('mainController', function($scope,$element,$state,$stateParams,us
                 },
                 timestamp : position.timestamp
             };
-            console.log("got my location - Latitude: " );
-            //, $scope.user.location,position.coords.latitude , " Longitude: " , position.coords.longitude );
+            // "- Latitude: ", $scope.user.location,position.coords.latitude , " Longitude: " , position.coords.longitude );
 
             //send location
-            $scope.socket.emit("location", $scope.user );
+            //$scope.socket.emit("location", $scope.user );
 
-            //re-render video
-            //self.video.render('location');
+            done();
         }
         //location error
         function showLocationError(error){
@@ -428,23 +422,14 @@ App.controller('mainController', function($scope,$element,$state,$stateParams,us
             var sameRoom = connected_users[i].currentRoom === $scope.user.currentRoom;
 
             if( notMe && sameRoom ){
-                console.log('other users in room', connected_users[i].email )
+                //console.log('other users in room', connected_users[i].email )
                 others.push( connected_users[i] );
             }
         }
         //set this.others_in_room
-        self.others_in_room = others;
-        console.log('others_in_room',self.others_in_room);
-    };
-
-    this.createPeer = function(){
-
-    };
-    this.joinEvent = function(){
-
-    };
-    this.removePeer = function(){
-
+        $scope.others_in_room = others;
+        console.log('others_in_room',$scope.others_in_room);
+        
     };
 });
 

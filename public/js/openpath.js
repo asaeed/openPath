@@ -420,9 +420,10 @@ return;//!!!!!!
 		console.log('peers',this.peers)
 	}
 };
-
+/*
 //try 	
 //document.addEventListener("DOMContentLoaded", function() {
 window.onload = function(){
 	OpenPath.init();
 };
+*/

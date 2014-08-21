@@ -1,7 +1,8 @@
 "use strict";
 
 App.controller('eventsController', function($scope,$state,eventFactory){
-    //show footer
+    //show footer fix header
+    $("#mainHeader").css({width:100+'%'});
     $('#mainFooter').show();
 
     //onload, default to upcoming

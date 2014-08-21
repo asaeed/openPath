@@ -1,7 +1,8 @@
 'use strict';
 
 App.controller('profileController', function($scope,$state,userFactory){
-    //show footer
+    //show footer fix header
+    $("#mainHeader").css({width:100+'%'});
     $('#mainFooter').show();
     
     //onload, default to myprofile

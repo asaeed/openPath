@@ -1,3 +1,20 @@
+<!-- invite to event front end template (remember \{{ }} ) -->
+<script id="headerTitleTemplate" type="text/x-handlebars-template">
+	\{{#if event}}
+		<div class="eventTitle title">
+			<h1>Open Path</h1>
+			<h2>\{{ event.name }}</h2>
+			<h3><span class="startTime">\{{ event.startTime }}</span> - <span class="endTime">\{{ event.endTime }}</span>&nbsp; <span class="location">\{{ event.location.name }}</span> </h3>
+		</div>
+		
+	\{{else}}
+		<div class="title">
+			<h1 class="title">Open Path</h1>
+		</div>
+	\{{/if}}
+</script>
+
+
 <header id="mainHeader">
 	<div class="content">
 		<a href="#/videos" data-title="videos" class="logo route tooltip">

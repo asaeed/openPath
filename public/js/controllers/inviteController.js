@@ -1,7 +1,8 @@
 'use strict';
 
 App.controller('inviteController', function($scope,$http){
-	//show footer
+	//show footer fix header
+    $("#mainHeader").css({width:100+'%'});
     $('#mainFooter').show();
     
     /**

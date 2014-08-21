@@ -2,7 +2,8 @@
  * videosController
  */
 App.controller('videosController',function($scope,$state,$stateParams,userFactory){
-	//hide footer
+	//header and footer
+	$("#mainHeader").css({width:75+'%'});
     $('#mainFooter').hide();
     
 	/**
