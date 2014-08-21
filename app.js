@@ -38,7 +38,7 @@ var http = http.createServer(function(req,res){
       res.writeHead(301, { "Location": "https://" + req.headers['host'] + req.url });
       res.end();
     }),*/
-var http.createServer(app),
+var http = http.createServer(app),
     https = https.createServer(sslOptions, app),
     io = require('socket.io').listen(https);//, { log: true }
 
