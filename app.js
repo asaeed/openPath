@@ -42,6 +42,7 @@ var http = http.createServer(app),
     https = https.createServer(sslOptions, app),
     io = require('socket.io').listen(https);//, { log: true }
 
+/*
 //create peer server
 var PeerServer = require('peer').PeerServer;
 
@@ -53,7 +54,7 @@ var peerServer = new PeerServer({
   },
   path:'/openpath'
 });
-
+*/
 
 //connect to mongo
 mongoose.connect( config.db );
