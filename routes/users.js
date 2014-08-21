@@ -8,8 +8,8 @@ var Utils = require('../utils/utils');
 module.exports = function(app){
 
 	app.get("/users", function (req, res) {
-		//var admin = req.user.email === 'jamiegilmartin@gmail.com' || req.user.email === 'jaredlamenzo@gmail.com';
-		//if(!admin) res.redirect("/");
+		var admin = req.user.email === 'jamiegilmartin@gmail.com' || req.user.email === 'jaredlamenzo@gmail.com';
+		if(!admin) res.redirect("/");
 
 		User.find(function (err, items) {
 			if (err) return console.error(err);
