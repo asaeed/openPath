@@ -194,10 +194,12 @@ App.controller('mainController', function($scope,$element,$state,$stateParams,us
             incoming_call.answer($scope.user.stream); // Answer the call with our stream from getUserMedia
             incoming_call.on('stream', function(remoteStream) {  // we receive a getUserMedia stream from the remote caller
                 console.log('got other\'s stream');
-                self.createPeer(incoming_call, remoteStream);
-
-
-                //$scope.$apply();
+                for(var i=0;i<$scope.others_in_room.length;i++){
+                    if($scope.others_in_room[i].peer_id === incoming_call.peer){
+                        $scope.others_in_room[i].stream = remoteStream;
+                    }
+                }
+                $scope.$apply();
             });
         });
         /**
@@ -273,13 +275,12 @@ App.controller('mainController', function($scope,$element,$state,$stateParams,us
         if(call)
         call.on('stream', function(remoteStream) {
             console.log("Got remote stream", remoteStream, aPeer.stream);
-            self.createPeer(aPeer, remoteStream);
             for(var i=0;i<$scope.others_in_room.length;i++){
                 if($scope.others_in_room[i].peer_id === aPeer.peer_id){
                     $scope.others_in_room[i].stream = remoteStream;
                 }
             }
-            $scope.apply();
+            $scope.$apply();
         });
     }
 

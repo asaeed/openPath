@@ -23,10 +23,11 @@ App.directive('video', function () {
 
             //set name
             scope.name;
-            if(scope.video.firstName){
+            console.log('scope.video.firstName',scope.video.firstName)
+            if(scope.video.firstName != undefined){
                 scope.name = scope.video.firstName+ ' '+scope.video.lastName;
             }else{
-                scope.video.email;
+                scope.name = scope.video.email;
             }
             
             
