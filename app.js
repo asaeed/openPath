@@ -45,7 +45,7 @@ var http = http.createServer(function(req,res){
 var PeerServer = require('peer').PeerServer;
 
 var peerServer = new PeerServer({
-  port: 9000,
+  port: 8000,//9000 //8000
   ssl: {
     key: sslOptions.key,
     certificate: sslOptions.cert
