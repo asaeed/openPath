@@ -42,12 +42,11 @@ var http = http.createServer(app),
     https = https.createServer(sslOptions, app),
     io = require('socket.io').listen(https);//, { log: true }
 
-
 //create peer server
 var PeerServer = require('peer').PeerServer;
 
 var peerServer = new PeerServer({
-  port: 8001,//9000 //8000 //8001 = old webrtc
+  port: 9000,//9000 //8000
   ssl: {
     key: sslOptions.key,
     certificate: sslOptions.cert
