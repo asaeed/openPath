@@ -154,7 +154,7 @@ App.controller('mainController', function($scope,$element,$state,$stateParams,us
      */
     function connect(){
         // No API key required when not using cloud server
-        $scope.peer = new Peer($scope.user.email.split('@')[0], {host: OpenPath.host, port: 9000, path: '/openpath'});
+        $scope.peer = new Peer($scope.user.email.split('@')[0], {host: 'ws://'+OpenPath.host, port: 9000, path: '/openpath'});
         $scope.socket = io.connect(OpenPath.socketConnection, {secure: true} );
         
         $scope.peer.on('error',function(error){

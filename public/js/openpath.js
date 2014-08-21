@@ -14,7 +14,7 @@ OpenPath = {
 	//configs
 	host : 'localhost',
 	//peerKey : 'w8hlftc242jzto6r',
-	socketConnection : 'https://localhost:3030',
+	socketConnection : 'https://openpath.me/',//https://localhost:3030',
 	// 'http://10.0.1.9:8080' 
 	// 'http://localhost:8080' 
 	// 'http://10.0.1.15:8080'
