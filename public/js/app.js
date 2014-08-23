@@ -87,7 +87,6 @@ App.config(function($stateProvider, $urlRouterProvider){
  * mainController
  */
 App.controller('mainController', function($scope,$element,$state,$stateParams,userFactory,eventFactory){
-    var self = this;
 
     //init ui 
     OpenPath.Ui.init();
@@ -196,8 +195,7 @@ App.controller('mainController', function($scope,$element,$state,$stateParams,us
          */
         $scope.peer.on('open', function(id) {
             console.log('got my peerID, sending it',$scope.user, id);
-            //update this.user
-            //self.user.updatePeerId(id);
+            //update $scope.user
             $scope.user.peer_id = id;
 
 
@@ -211,18 +209,10 @@ App.controller('mainController', function($scope,$element,$state,$stateParams,us
          */
         $scope.peer.on('call', function( incoming_call ) {
             console.log('INCOMING CaLL',incoming_call);
-            //WHAT TODO WITH INCOMING CALL USER....
-            incoming_call.answer($scope.user.stream); // Answer the call with our stream from getUserMedia
-            incoming_call.on('stream', function(remoteStream) {  // we receive a getUserMedia stream from the remote caller
-                console.log('got other\'s stream');
-                for(var i=0;i<$scope.others_in_room.length;i++){
-                    if($scope.others_in_room[i].peer_id === incoming_call.peer){
-                        $scope.others_in_room[i].stream = remoteStream;
-                    }
-                }
-                $scope.$apply();
-            });
+            incomingCall(incoming_call);
         });
+
+
         /**
          * socket receiving
          */
@@ -235,14 +225,14 @@ App.controller('mainController', function($scope,$element,$state,$stateParams,us
             //console.log('received updatechat',user.email+ ': ' + data );
 
             //update chat
-            self.updateChat( user, data );
+            updateChat( user, data );
         });
         /**
          * receive connected of others (not yourself on this one)
          */
         $scope.socket.on('connected', function (aPeer, connected_users) {
-            console.log('someone connected',aPeer.email);
-            self.findOthersInRoom(connected_users);
+            console.log('someone connected',aPeer.email,'doing nothing');
+            findOthersInRoom(connected_users);
         });
         /**
          * receive peer_ids of others
@@ -258,9 +248,8 @@ App.controller('mainController', function($scope,$element,$state,$stateParams,us
          * switch room
          */
         $scope.socket.on('switchedRoom', function ( aPeer,connected_users ) {
-            console.log('received switchedRoom', aPeer.email, aPeer,self.user.currentRoom );
-            self.findOthersInRoom(connected_users);//removes them from others in room (i think TODO)
-            //self.removePeer(aPeer);
+            console.log('received switchedRoom', aPeer.email, aPeer,$scope.user.currentRoom );
+            findOthersInRoom(connected_users);//removes them from others in room (i think TODO)
         });
         
         /**
@@ -268,13 +257,15 @@ App.controller('mainController', function($scope,$element,$state,$stateParams,us
          * find user instance and destroy it!!
          */
         $scope.socket.on('disconnect', function ( aPeer, connected_users ) {
-            console.log('received disconnect', aPeer, connected_users ,self.peers);
+            console.log('received disconnect', aPeer, connected_users);
             if(connected_users)
-            self.findOthersInRoom(connected_users);
-            //self.removePeer(aPeer);
+            findOthersInRoom(connected_users);
         });
     };
 
+    /**
+     * call peer
+     */
     function callPeer(aPeer){
         var call = $scope.peer.call( aPeer.peer_id, $scope.user.stream );
         console.log('call',call)
@@ -282,13 +273,46 @@ App.controller('mainController', function($scope,$element,$state,$stateParams,us
         if(call)
         call.on('stream', function(remoteStream) {
             console.log("Got remote stream", remoteStream, aPeer.stream);
+            //handle call
+            handleCall(remoteStream,aPeer.peer_id);
+        });
+    }
+    /**
+     * incoming call
+     */
+    function incomingCall(incoming_call){
+         //WHAT TODO WITH INCOMING CALL USER....
+        incoming_call.answer($scope.user.stream); // Answer the call with our stream from getUserMedia
+        incoming_call.on('stream', function(remoteStream) {  // we receive a getUserMedia stream from the remote caller
+            console.log('got other\'s stream');
+            //handle call
+            handleCall(remoteStream,incoming_call.peer);
+            /*
             for(var i=0;i<$scope.others_in_room.length;i++){
-                if($scope.others_in_room[i].peer_id === aPeer.peer_id){
+                if($scope.others_in_room[i].peer_id === incoming_call.peer){
                     $scope.others_in_room[i].stream = remoteStream;
                 }
             }
             $scope.$apply();
-        });
+            */
+        });       
+    }
+    /**
+     * handle call
+     */
+    function handleCall(remoteStream,peer_id){
+        for(var i=0;i<$scope.others_in_room.length;i++){
+            //match peer ids
+            if($scope.others_in_room[i].peer_id === peer_id){
+                $scope.others_in_room[i].stream = remoteStream;
+            }
+            //if presenter
+            if($scope.others_in_room[i].isPresenter == 'true'){
+                console.log('GOT ME A presenter');
+                $scope.presenter = $scope.others_in_room[i];
+            }
+        }
+        $scope.$apply();
     }
 
 
@@ -383,7 +407,7 @@ App.controller('mainController', function($scope,$element,$state,$stateParams,us
      * helpers
      */
     //update chat //TODO move to video controller
-    this.updateChat = function( user, msg ){
+    function updateChat( user, msg ){
         var from = user === 'SERVER' ? user : user.email;
         //dom vars
         var chat = document.getElementById("chat");
@@ -420,8 +444,9 @@ App.controller('mainController', function($scope,$element,$state,$stateParams,us
         if(chatwindow)//hack
         chatwindow.scrollTop = chatwindow.scrollHeight;
     };
+
     //find others in room
-    this.findOthersInRoom = function( connected_users ){
+    function findOthersInRoom( connected_users ){
         var others = [];
         for(var i=0;i<connected_users.length;i++){
 
@@ -437,7 +462,6 @@ App.controller('mainController', function($scope,$element,$state,$stateParams,us
         //set this.others_in_room
         $scope.others_in_room = others;
         console.log('others_in_room',$scope.others_in_room);
-        
     };
 });
 

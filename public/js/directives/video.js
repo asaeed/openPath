@@ -23,7 +23,7 @@ App.directive('video', function () {
 
             //set name
             scope.name;
-            console.log('scope.video.firstName',scope.video.firstName)
+            //console.log('scope.video.firstName',scope.video.firstName)
             if(scope.video.firstName != undefined){
                 scope.name = scope.video.firstName+ ' '+scope.video.lastName;
             }else{
@@ -34,7 +34,7 @@ App.directive('video', function () {
             //this takes forever!!!!
             //watch for location
             scope.$watch('video.location.coords.latitude',function(newValue,oldValue){
-                console.log('location change',newValue,oldValue)
+                //console.log('location change',newValue,oldValue)
 
                 if(newValue){
                     renderMap();
@@ -43,10 +43,10 @@ App.directive('video', function () {
 
             //watch for stream
             scope.$watch('video.stream',function(newValue,oldValue){
-                console.log('stream change',newValue,oldValue)
+                //console.log('stream change',newValue,oldValue)
 
                 if(newValue){
-                   console.log('dir got steram',scope.video.stream);
+                   //console.log('dir got steram',scope.video.stream);
                    renderStream();
                 }
             },true);
