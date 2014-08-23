@@ -1,10 +1,11 @@
 <section class="page" id="videos">
 	<section id="videosView" class="view">
 		<div id="presenter">
-			<div video="user"></div>
+			<div video="presenter"></div>
 		</div>
 		<aside>
 			<ul id="peersList">
+				<li ng-if="user.isPresenter == 'false'"><div video="user"></div></li>
 				<li ng-repeat="user in others_in_room">
 					<div video="user"></div>
 				</li>

@@ -98,8 +98,51 @@ App.controller('mainController', function($scope,$element,$state,$stateParams,us
     /**
      * get user
      */
-    userFactory.getByEmail(document.getElementById('email').value).then(function(data){
-        $scope.user = data;
+    userFactory.getByEmail(document.getElementById('email').value).then(function(user){
+        
+        //check if presenter
+        userFactory.checkIfPresenter(user).then(function(data){
+            //set presenter prop
+            user.isPresenter = data;
+            //set user
+            setUser(user);
+
+        },function(data){
+            alert(data);
+        });
+        
+        //check for event
+        if(user.currentEvent){
+            eventFactory.getOne(user.currentEvent).then(function(data){
+                console.log('you are connected to event : '+data.name);
+                OpenPath.Ui.updateHeader({event:data});
+            },function(data){
+                alert(data);
+            });
+            
+        }
+
+
+
+        
+
+        //connect
+        start();
+
+    },function(data){
+        alert(data);
+    });
+
+    //set user
+    function setUser(user){
+        console.log('up',user.isPresenter)
+        //set user as presenter
+        if(user.isPresenter == 'true'){
+           $scope.presenter = user;
+           console.log('presenting',$scope.presenter)
+        }
+        $scope.user = user;
+
         //set front end vars
         $scope.user.location = {
             coords : {
@@ -109,51 +152,22 @@ App.controller('mainController', function($scope,$element,$state,$stateParams,us
             timestamp : null
         };//set to watch in directive
         $scope.user.peer_id = null;
-
-
-        console.log('user',$scope.user.currentEvent)
-        
-        if($scope.user.currentEvent){
-            //TODO header
-            
-            eventFactory.getOne($scope.user.currentEvent).then(function(data){
-                console.log('you are connected to event : '+data.name);
-                OpenPath.Ui.updateHeader({event:data});
-            },function(data){
-                alert(data);
-            });
-            
-        }
-
-        //connect
-        start();
-
-    },function(data){
-        alert(data);
-    });
-
-
+    };
 
     //start
     function start(){
-
-        //check if presenter
-        userFactory.checkIfPresenter($scope.user,function(d){
-            console.log('checkIfPresenterf',d);
-            //TODO!!
-        });
 
         //load data chain
         getMyMedia(function(){
             console.log("got my media")
             getMyLocation(function(){
                 console.log("got my location" );
+                //apply scope
+                $scope.$apply();
+                //connect
                 connect();
             });  
         });
-        
-
-        
     }
 
     /**
@@ -165,7 +179,7 @@ App.controller('mainController', function($scope,$element,$state,$stateParams,us
         $scope.socket = io.connect(OpenPath.socketConnection, {secure: true} );
         
         $scope.peer.on('error',function(error){
-            console.log('error',error)
+            console.log('peer server error',error)
         });
 
         /**

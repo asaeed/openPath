@@ -37,13 +37,13 @@ App.factory('userFactory', function($http,$q){
 	};
 
 	service.checkIfPresenter = function(user,done){
-		$http({method: 'GET', url:'/presenter/'+user.currentRoom+'/'+user.email}).success(function(d){
-			console.log('presenter is',d)
-			done(d);
+		var deferred = $q.defer();
+		$http({method: 'GET', url:'/presenter/'+user.currentRoom+'/'+user.email}).success(function(data){
+			deferred.resolve(data);
 	    }).error(function(){
-	        console.log('service getting error')
+	        deferred.reject('There was an error');
 	    });
-
+	    return deferred.promise;
 	};
 
 
