@@ -123,12 +123,6 @@ App.controller('mainController', function($scope,$element,$state,$stateParams,us
         }
 
 
-
-        
-
-        //connect
-        start();
-
     },function(data){
         alert(data);
     });
@@ -152,6 +146,10 @@ App.controller('mainController', function($scope,$element,$state,$stateParams,us
             timestamp : null
         };//set to watch in directive
         $scope.user.peer_id = null;
+
+
+        //connect
+        start();
     };
 
     //start
