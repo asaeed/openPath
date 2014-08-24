@@ -8,8 +8,9 @@ App.directive('event', function () {
             var $inviteBtn = element.find('inviteBtn');
             var $joinBtn = element.find('joinBtn');
             
-            $editBtn.click(function(e){
+            $joinBtn.click(function(e){
             	e.preventDefault();
+                alert('join')
             	//console.log(scope.event.id);
             	//scope.currentEditEventId = scope.event.id;
             	//window.location = $editBtn.attr('href');

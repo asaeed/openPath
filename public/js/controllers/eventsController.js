@@ -8,9 +8,9 @@ App.controller('eventsController', function($scope,$state,eventFactory){
     //onload, default to upcoming
     if($state.current.name ==='events'){
         $state.go('.upcoming');
-
-
     }
+
+    console.log('events',$scope.$parent.user)
 
     /**
      * get events
@@ -117,16 +117,16 @@ App.controller('nearbyEventsController',function($scope,$state,eventFactory){
             //markers.push(new google.maps.LatLng(locations[i].latitude,locations[i].longitude));
             //
             /*
-date: "June 21, 2015"
-description: "ba ba ba ba ba barbra anne"
-endTime: "1:00 AM"
-id: "53a50985decc9ade03a75527"
-isMine: true
-link: "boster.com"
-location: Object
-name: "bosster"
-room: "53a50985decc9ade03a75526"
-startTime: "1:00 AM"
+            date: "June 21, 2015"
+            description: "ba ba ba ba ba barbra anne"
+            endTime: "1:00 AM"
+            id: "53a50985decc9ade03a75527"
+            isMine: true
+            link: "boster.com"
+            location: Object
+            name: "bosster"
+            room: "53a50985decc9ade03a75526"
+            startTime: "1:00 AM"
             */
             var e = $scope.events[i];
             markers.push([e.location.name,e.location.latitude,e.location.longitude]);
@@ -175,5 +175,41 @@ startTime: "1:00 AM"
             //this.setZoom(14);
             google.maps.event.removeListener(boundsListener);
         });
+    }
+});
+
+/**
+ * invite to event controller
+ */
+App.controller('inviteToEventController', function($scope,$http,$state,$stateParams,eventFactory){
+    //show footer fix header
+    $("#mainHeader").css({width:100+'%'});
+    $('#mainFooter').show();
+    
+    //if no $scope user yet
+    if(!$scope.user) $state.go('^.upcoming');
+
+    //set scope name
+    $scope.name;
+    if($scope.user.firstName != undefined){
+        $scope.name = $scope.user.firstName+ ' '+$scope.user.lastName;
+    }else{
+        $scope.name = $scope.user.email;
+    }
+    
+
+    if($stateParams.eventId){
+        //set invite url 
+        $scope.invite_url = '?e='+$stateParams.eventId;
+        
+        /**
+         * get event
+         */
+        eventFactory.getOne($stateParams.eventId).then(function(data){
+            $scope.item = data;
+        },function(data){
+            alert(data);
+        });
+            
     }
 });

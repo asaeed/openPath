@@ -25,8 +25,11 @@
 		</a>
 		<nav class="main">
 			<ul>
-				<li class="invite">
+				<li class="invite" ng-if="!user.currentEvent">
 					<a ui-sref="invite" class="tooltip" data-title="Add Participants"></a>
+				</li>
+				<li class="invite" ng-if="user.currentEvent">
+					<a ng-if="user.currentEvent" ui-sref="events.inviteToEvent" class="tooltip" data-title="Add Participants"></a>
 				</li>
 				<li class="events">
 					<a ui-sref="events.upcoming" class="tooltip" data-title="Events"></a>

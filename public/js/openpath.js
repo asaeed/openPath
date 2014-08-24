@@ -12,15 +12,15 @@ navigator.getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia 
  */
 OpenPath = {
 	//configs
-
+/*
 	//prod
 	
 	host : 'openpath.me',
 	socketConnection : 'https://openpath.me',//https://localhost:3030'
+*/	
 	
-/*	
 	//dev
 	host : 'localhost',
 	socketConnection : 'https://localhost:3030'
-*/
+
 };

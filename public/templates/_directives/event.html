@@ -5,7 +5,7 @@
 <p class="description">{{ event.description }}</p>
 <div class="buttons">
 	<a ng-if="event.isMine" ui-sref="^.editEvent({eventId:event.id})" class="btn editBtn">Edit</a>
-	<a href="#/invite" class="btn inviteBtn">Invite</a>
+	<a ui-sref="^.inviteToEvent({eventId:event.id})" class="btn inviteBtn">Invite</a>
 
 	<a href="?e={{ event.id }}" class="btn joinBtn">Join</a>
 </div>

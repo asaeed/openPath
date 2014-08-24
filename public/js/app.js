@@ -47,8 +47,9 @@ App.config(function($stateProvider, $urlRouterProvider){
             controller : 'editEventController'      
         })
         .state('events.inviteToEvent', {
-            url: '/inviteToEvent',
-            templateUrl: 'templates/events/inviteToEvent.html'     
+            url: '/inviteToEvent/:eventId',
+            templateUrl: 'templates/events/invite.html',
+            controller : 'inviteToEventController'
         })
 
         //PROFILE ROUTES

@@ -1,0 +1,39 @@
+<section class="page" id="invite">
+	<section id="inviteView" class="view">
+		<div class="content">
+			<h1>Invite Participants</h1>
+			<form action="/email" method="post">
+				<fieldset>
+					<label>Email Address</label>
+					<input type="text" name="to" placeholder="someone@somewhere.com">
+				</fieldset>
+				<fieldset>
+					<textarea rows="10" name="inviteMsg" id="inviteMsg">
+Hi there,
+
+You have been invited by {{name}} to the event "{{item.name}}" on Open Path.
+
+Date : {{item.date}}
+Starts : {{item.startTime}}
+Ends : {{item.endTime}}
+
+Click here to join:
+
+
+https://openpath.me/{{ invite_url }}
+
+
+Let&apos;s learn together!
+
+Regards,
+Open Path Team
+					
+					</textarea>
+				</fieldset>
+				<fieldset>
+					<input type="submit" class="btn" value="Send" />
+				</fieldset>
+			</form>
+		</div>
+	</section>
+</section>

@@ -1,10 +1,16 @@
 'use strict';
 
-App.controller('inviteController', function($scope,$http){
+/**
+ * invite controller
+ */
+App.controller('inviteController', function($scope,$http,$state){
 	//show footer fix header
     $("#mainHeader").css({width:100+'%'});
     $('#mainFooter').show();
     
+    //if no $scope user yet
+    if(!$scope.user) $state.go('home');
+
     //set scope name
     $scope.name;
     if($scope.user.firstName != undefined){
